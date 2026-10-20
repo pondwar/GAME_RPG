@@ -1,0 +1,12 @@
+# Ambientes e temporários
+node_modules/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.DS_Store
+
+# Screenshots de teste
+test_screen*.png
+screenshot_preview.png
+scratch/
