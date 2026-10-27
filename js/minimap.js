@@ -354,7 +354,7 @@ class MinimapSystem {
       const b = arch.blocks[k]; if (b.wx === undefined) continue;
       const cfg = arch.BLOCK_TYPES[b.type]; if (!cfg) continue;
       const kind = cfg.isFloor ? 0 : (cfg.layer === 'f' || String(b.type).indexOf('furn') >= 0 ? 2 : 1);
-      const p = { x: b.wx, y: b.wy, kind, temp: !!b.temp }; pts.push(p);
+      const p = { x: b.wx, y: b.wy, kind, temp: !!b.temp, town: b.town }; pts.push(p);
       const ck = Math.floor(b.wx / CELL) + ',' + Math.floor(b.wy / CELL);
       let c = cells.get(ck); if (!c) cells.set(ck, c = []); c.push(p);
     }
@@ -372,7 +372,10 @@ class MinimapSystem {
       let x0 = 1e18, x1 = -1e18, y0 = 1e18, y1 = -1e18, temp = 0;
       for (const p of mem) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); y0 = Math.min(y0, p.y); y1 = Math.max(y1, p.y); if (p.temp) temp++; }
       const pal = this.game.palaceOrigin, isPalace = pal && pal.x >= x0 - 200 && pal.x <= x1 + 200 && pal.y >= y0 - 200 && pal.y <= y1 + 200;
-      list.push({ pts: mem, x0, x1, y0, y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, name: isPalace ? 'Palácio de Zeus' : 'Construção', palace: isPalace });
+      // vila/cidade (js/town_plans.js): o grupo leva o nome dela
+      const townId = (mem.find(p => p.town && p.town.charAt(0) !== '_' && window.SURITTO_TOWNS && window.SURITTO_TOWNS[p.town]) || {}).town;
+      const name = isPalace ? 'Palácio de Zeus' : townId && this.game.town ? this.game.town.townName(townId) : 'Construção';
+      list.push({ pts: mem, x0, x1, y0, y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, name, palace: isPalace, town: !!townId });
     }
     this._sc = { t: now, list };
     return list;
@@ -409,7 +412,7 @@ class MinimapSystem {
       ctx.fillStyle = gold; ctx.strokeStyle = '#2a1d08'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(mx, top + 2); ctx.lineTo(mx - 6, top - 10); ctx.lineTo(mx + 6, top - 10); ctx.closePath(); ctx.stroke(); ctx.fill();
       ctx.font = 'bold 11px Outfit, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      const label = (c.palace ? '⚡ ' : '🏠 ') + c.name, tw = ctx.measureText(label).width + 10;
+      const label = (c.palace ? '⚡ ' : c.town ? '🏘️ ' : '🏠 ') + c.name, tw = ctx.measureText(label).width + 10;
       ctx.fillStyle = 'rgba(14,17,23,0.88)'; ctx.fillRect(mx - tw / 2, top - 28, tw, 16);
       ctx.strokeStyle = gold; ctx.lineWidth = 1; ctx.strokeRect(mx - tw / 2 + 0.5, top - 27.5, tw - 1, 15);
       ctx.fillStyle = c.palace ? '#ffe066' : '#d6ecff'; ctx.fillText(label, mx, top - 20);

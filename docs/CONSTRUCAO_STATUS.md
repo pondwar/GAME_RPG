@@ -150,3 +150,9 @@ Balcao (liga com vizinhos), balcao grande (2 blocos), estante de livros e adega 
 - **Cena de teste** `?scene=moveis`: duas salas com todos os moveis de 1 celula encostados nas 4 paredes (com e sem telhado). Pecas temporarias, nao salvam.
 - Chave de peca: `addDungeonPiece` procurava tile livre so nos 8 vizinhos e, sem vaga, sobrescrevia outra peca. Agora procura num raio de 2 tiles (`KEY_OFFSETS`) e nunca apaga; `isSolidAt` varre o raio maior.
 - Save com a vila: ~480 KB em 22 chunks no localStorage.
+
+### F16b - Vila como conteudo do mundo + nomes por regiao
+- A vila agora e montada sozinha em qualquer navegador (antes so existia no save de quem clicasse em 🏘️ Vila). Assinatura da planta em `suritto_town_sig:<id>`: mudou a planta (ou `TownBuilder.VERSION`), remonta na proxima carga. Construcoes do jogador nunca sao apagadas: lote com construcao e pulado e ruas/praca/enfeites deixam livres as celulas ocupadas.
+- Nome gerado pela macro-regiao (`js/regions.js`): a Vila Inicial (GMT 0, 50.6° N = Reino Unido) se chama **Elmford**. `name` fixo em `town_plans.js` sobrescreve o gerado.
+- Mapa-mundi: o grupo de construcoes da vila aparece com o nome dela (🏘️). Ao entrar na vila aparece aviso com o nome e a regiao.
+- Lembrete: o save e do navegador (localStorage). Navegadores/computadores diferentes nao enxergam as construcoes um do outro ate existir o servidor (tabela `world.build_chunk`).

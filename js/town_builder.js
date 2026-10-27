@@ -61,6 +61,63 @@
         exp.parentNode.insertBefore(btn, exp);
       }
       if (new URLSearchParams(location.search).get('scene') === 'moveis') this.buildFurnitureTestScene();
+      this.autoBuild();
+    }
+
+    // ---- nome e regiao ----
+    region(id) {
+      const t = window.SURITTO_TOWNS[id];
+      return window.SurittoRegions && t ? window.SurittoRegions.at(this.game.world, t.center.x, t.center.y) : null;
+    }
+    townName(id) {
+      const t = window.SURITTO_TOWNS[id]; if (!t) return id;
+      if (t.name) return t.name;
+      const r = this.region(id);
+      return r ? window.SurittoRegions.placeName(r, id) : id;
+    }
+
+    // ---- a vila e conteudo do MUNDO, nao do save do jogador ----
+    // Em todo navegador ela e montada sozinha na primeira carga e de novo sempre que a planta mudar
+    // (assinatura guardada em suritto_town_sig:<id>). As construcoes do jogador nunca sao apagadas.
+    _signature(id) {
+      const t = window.SURITTO_TOWNS[id], plans = {};
+      for (const b of t.buildings || []) plans[b.plan] = window.SURITTO_BUILDING_PLANS[b.plan];
+      const s = JSON.stringify([t, plans, TownBuilder.VERSION], (k, v) => (k.charAt(0) === '_' ? undefined : v));   // ignora caches (_bounds)
+      let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+      return (h >>> 0).toString(36);
+    }
+    async autoBuild() {
+      await this.whenReady();
+      for (const id of Object.keys(window.SURITTO_TOWNS)) {
+        if (id.charAt(0) === '_') continue;
+        const key = 'suritto_town_sig:' + id, sig = this._signature(id);
+        let saved = null; try { saved = localStorage.getItem(key); } catch (e) { }
+        if (saved === sig && this.isBuilt(id)) continue;
+        await this.build(id);
+        try { localStorage.setItem(key, sig); } catch (e) { }
+      }
+    }
+
+    // Aviso ao entrar/sair de uma vila (checado a cada ~0,5 s pelo game.update)
+    update(dt) {
+      this._chk = (this._chk || 0) + dt; if (this._chk < 0.5) return; this._chk = 0;
+      const P = this.game.player; let here = null;
+      for (const id in window.SURITTO_TOWNS) {
+        if (id.charAt(0) === '_') continue;
+        const t = window.SURITTO_TOWNS[id]; t._bounds = t._bounds || TownBuilder.bounds(t);
+        const dx = this.game.world.wrapDelta(P.x - t.center.x), dy = P.y - t.center.y;
+        const a = (dx / 54 + dy / 27) / 2 + 0.5, b = (dy / 27 - dx / 54) / 2 + 0.5, B = t._bounds;
+        if (a >= B.i0 && a <= B.i1 && b >= B.j0 && b <= B.j1) { here = id; break; }
+      }
+      if (here === this._here) return;
+      if (here) {
+        const r = this.region(here), name = this.townName(here);
+        this.game.spawnDamageText(P.x, P.y - 80, `🏘️ ${name}`, '#ffe08a', 20);
+        this.game.addLog(`🏘️ Você chegou a <b>${name}</b>${r ? ` • ${r.name} (${r.real})` : ''}.`, 'system');
+      } else if (this._here) {
+        this.game.addLog(`🌲 Você deixou ${this.townName(this._here)}.`, 'tip');
+      }
+      this._here = here;
     }
     get frames() { return this.game.structures && this.game.structures.frames; }
 
@@ -283,6 +340,21 @@
       return out;
     }
 
+    _cellOf(town, x, y) {
+      const dx = this.game.world.wrapDelta(x - town.center.x), dy = y - town.center.y;
+      return Math.floor((dx / 54 + dy / 27) / 2 + 0.5) + ',' + Math.floor((dy / 27 - dx / 54) / 2 + 0.5);
+    }
+    // Celulas da malha da vila ocupadas (ou encostadas) por pecas do jogador
+    _playerCells(town) {
+      const out = new Set();
+      for (const k in this.A.blocks) {
+        const b = this.A.blocks[k]; if (b.town || b.temp) continue;
+        const a0 = this.A.dungeonAnchor(b), x = b.wx !== undefined ? b.wx : a0.x, y = b.wy !== undefined ? b.wy : a0.y;
+        for (const [ox, oy] of [[0, 0], [27, 13], [-27, 13], [27, -13], [-27, -13]]) out.add(this._cellOf(town, x + ox, y + oy));
+      }
+      return out;
+    }
+
     async build(id = 'vila_inicial') {
       await this.whenReady();
       const { town, ops, report } = this.planTown(id);
@@ -292,14 +364,22 @@
         const c = this._conflicts(town, b, b);
         if (c.length) { skip.add(b.id); report.warnings.push(`${b.id}: pulado, ja existe construcao sua no lote (${c.length} peca(s))`); }
       }
+      // ruas, praca e enfeites desviam das celulas onde o jogador ja construiu
+      const mine = this._playerCells(town);
+      let streetSkips = 0;
       const counts = { floor: 0, wall: 0, furn: 0, roof: 0 };
-      for (const op of ops) { if (skip.has(op.tag)) continue; this._write(op, id, false); counts[op.kind]++; }
+      for (const op of ops) {
+        if (skip.has(op.tag)) continue;
+        if (op.tag === 'rua' && mine.has(this._cellOf(town, op.x, op.y))) { streetSkips++; continue; }
+        this._write(op, id, false); counts[op.kind]++;
+      }
+      if (streetSkips) report.warnings.push(`${streetSkips} celula(s) de rua/praca deixadas livres por causa das suas construcoes`);
       this._touched();
       this.A.saveWorldData();
       this._refreshTrees();
       report.counts = counts;
       const g = this.game;
-      g.addLog(`🏘️ [VILA] ${town.name}: ${report.buildings.length - skip.size} predios, ${counts.wall} paredes, ${counts.floor} pisos, ${counts.furn} moveis, ${counts.roof} telhados.`, 'action');
+      g.addLog(`🏘️ [VILA] ${this.townName(id)}: ${report.buildings.length - skip.size} predios, ${counts.wall} paredes, ${counts.floor} pisos, ${counts.furn} moveis, ${counts.roof} telhados.`, 'action');
       for (const w of report.warnings) g.addLog('⚠️ [VILA] ' + w, 'warning');
       console.info('[Vila]', id, report);
       return report;
@@ -382,5 +462,6 @@
     }
   }
 
+  TownBuilder.VERSION = 2;   // suba quando mudar a forma de montar (forca remontar em todos os saves)
   window.TownBuilder = TownBuilder;
 })();

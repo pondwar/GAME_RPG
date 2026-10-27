@@ -128,7 +128,7 @@ window.SURITTO_BUILDING_PLANS = {
 // Vilas e cidades. center = celula (0,0) no mundo. Ruas e praca sao pisos; predios entram por cima.
 window.SURITTO_TOWNS = {
   vila_inicial: {
-    name: 'Vila Inicial',                       // nome provisorio
+    name: null,                                 // null = nome gerado pela macro-regiao (js/regions.js)
     center: { x: 160952, y: 700444 },           // 8.7° L, 50.6° N
     clearMargin: 4,                             // celulas sem arvores alem dos predios e ruas
     streets: [

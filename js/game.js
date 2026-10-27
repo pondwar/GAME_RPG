@@ -1786,6 +1786,7 @@ class Game {
     this.timeSystem.update(dt);
     this.updateCalendarHUD();
     if (this.saveSystem) this.saveSystem.update(dt);
+    if (this.town) this.town.update(dt);
 
     // 0b. Procedural Chunk Manager Flora Update (Continuous Dynamic Streaming)
     if (this.world && this.world.chunks) {

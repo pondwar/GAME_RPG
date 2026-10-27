@@ -50,3 +50,30 @@ Se desejar gerar novas artes cartográficas de Marte Oceânico com todas as capi
 ```text
 Masterpiece hand-drawn vintage fantasy cartographic world map of the terraformed planet Mars (Ares) with blue oceans, rivers, and continents. Topography follows ancient Martian palaeo-hydrology: vast northern Oceanus Borealis, the colossal snow-peaked Mount Olympus (Olympus Mons) towering in the northwest, the great canyon fjord sea of Valles Marineris slicing through the south, the lush river deltas of Chryse, and the great southern ocean basin of Hellas. The globe is divided across 24 real-world timezone meridians labeled from 0° Prime Meridian GMT to GMT+12 and GMT-12. Marked with elegant hand-painted city banners and heraldic crests: 'Londen-Valoria' (Anglo-Saxon capital at GMT 0), 'Castela & Luzia' (Iberian twin towns of Portugal and Spain at GMT+1), 'Njordheim' (Nordic Viking fiords at GMT+2), 'Al-Zahra' (Golden Middle Eastern oasis of medicine and scimitars at GMT+4), 'Zul-Karim' (African savannah fortress with spear hunters at GMT+2 South), 'Tian-Zhu' (Walled imperial Chinese metropolis at GMT+8), 'Miyako-Yamato' (Japanese feudal pagoda city with cherry blossoms and samurais at GMT+9), 'Kora-Aotearoa' (Australia and New Zealand realm in the southern Hellas island sea with Maori waka war canoes, jade carvings, and Aboriginal boomerangs at GMT+10 to GMT+12), 'Porto de Santa Cruz' (Bustling coastal Brazilian rainforest city with Pau-Brasil and Atlantic rivers at GMT-3), 'Kukul-Tikal' (Central American stone step pyramid at GMT-6), and 'Fort Redstone' (North American red canyon outpost at GMT-7). Decorated with an ornate golden compass rose, sea monsters, sailing galleons, latitude and longitude grid, delicate medieval calligraphy labels, antique parchment texture with sepia, olive green, and indigo watercolor washes, ultra-detailed 8k resolution, cinematic fantasy atlas.
 ```
+
+---
+
+## 4. MACRO-REGIÕES NO CÓDIGO (`js/regions.js`)
+
+Cada ponto do mapa pertence a uma macro-região pelo **fuso (UTC)** e pela **latitude**. Os nomes de vilas e cidades são gerados com sons da língua da região (nomes inventados, não cidades reais) e sempre saem iguais para a mesma semente.
+
+| Macro-região | Região real | Fuso | Latitude | Exemplos de nome |
+|---|---|---|---|---|
+| Ilhas do Oeste | Reino Unido & Irlanda | 0 | ≥ 35° N | Elmford, Blackmere, Wickgate |
+| Península Ibérica | Portugal & Espanha | -1 a +1 | 15° a 35° N | Monte Alvado, San Toredo |
+| Gália | França & Europa Central | +1 | 35° a 55° N | Beaucourt, Verlac |
+| Norte Europeu | Escandinávia | +1 a +3 | ≥ 55° N | Viknes, Skelholm |
+| Europa Oriental | Leste Europeu & Rússia | +2 a +4 | ≥ 35° N | Krasinsk, Gradomir |
+| Oriente Médio | Arábia & Pérsia | +3 a +4 | 0° a 35° N | Al-Hadi, Qasran |
+| África | África | -1 a +3 | ≤ 15° N | Zulasi, Adeombe |
+| Sudoeste Asiático | Índia & Mongólia | +5 a +6 | todas | Kalipura, Rajagarh |
+| Norte Asiático | China | +7 a +8 | ≥ 20° N | Lian-Cheng, Tian-Hai |
+| Leste Asiático | Japão | +9 | ≥ 30° N | Takayama, Kirioka |
+| Sul Asiático | Coreia, Indochina & Indonésia | +7 a +9 | demais | Handong, Sukhwon |
+| Oceania | Austrália & Nova Zelândia | +10 a +12 | todas | Arohanui, Maratea |
+| América do Norte | EUA & Canadá | -9 a -4 | ≥ 25° N | Fort Elkwood, Wolf Falls |
+| América Central | México & América Central | -8 a -5 | 0° a 25° N | Itzatepec, Chakco |
+| América do Sul Hispânica | Andes & Pampas | -6 a -4 | ≤ 10° N | San Morelillo |
+| Terras de Santa Cruz | Brasil | -3 a -2 | todas | Porto Piraquema, Arraial Ipaní |
+
+A primeira linha que bater vence (ex.: GMT+3 a 50° N é Europa Oriental; a 20° N é Oriente Médio). As faixas podem ser ajustadas conforme o mapa de Ares for desenhado.
