@@ -237,15 +237,17 @@ class ProceduralChunkManager {
     const attempts = 11;
     for (let i = 0; i < attempts; i++) {
       const entityId = `chunk_${cx}_${cy}_tree_${i}`;
+      const relX = this.hash2D(cx, cy, 10 + i * 4) * (this.CHUNK_SIZE - 200) + 100;
+      const relY = this.hash2D(cx, cy, 11 + i * 4) * (this.CHUNK_SIZE - 220) + 110;
+
+      // Vilas e cidades (js/town_plans.js) sao clareiras: nenhuma arvore nasce dentro delas
+      if (window.TownBuilder && window.TownBuilder.isInClearing(chunkOriginX + relX, chunkOriginY + relY)) continue;
 
       // Check if player has modified this tree previously
       if (this.modifiedEntities.has(entityId)) {
         trees.push(this.modifiedEntities.get(entityId));
         continue;
       }
-
-      const relX = this.hash2D(cx, cy, 10 + i * 4) * (this.CHUNK_SIZE - 200) + 100;
-      const relY = this.hash2D(cx, cy, 11 + i * 4) * (this.CHUNK_SIZE - 220) + 110;
       const spot = this.world.getTerrainAt(chunkOriginX + relX, chunkOriginY + relY);
       if (this.hash2D(cx, cy, 15 + i * 4) > (DENS[spot.type] || 0)) continue;
       const woodCap = Math.floor(this.hash2D(cx, cy, 12 + i * 4) * 5) + 4;

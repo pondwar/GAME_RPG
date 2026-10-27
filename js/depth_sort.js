@@ -61,7 +61,9 @@
         if (t.x < w._ext[0] - PAD || t.x > w._ext[1] + PAD) continue;
         const r = lineAt(w.segs, t.x);
         if (!r || r.d > PAD) continue;
-        if (t.y >= r.y) edge(w, t); else edge(t, w);
+        // lineY: ponto do item que encosta no chao (moveis usam o centro da celula; o y de ordenacao deles e deslocado)
+        const ty = t.lineY !== undefined ? t.lineY : t.y;
+        if (ty >= r.y) edge(w, t); else edge(t, w);
       }
     }
     // parede x parede

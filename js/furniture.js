@@ -131,14 +131,17 @@
     for (const [a, b] of [[-0.2, 0], [0.2, 0], [0, -0.2], [0, 0.2], [0, 0]]) box(ctx, o, a - 0.035, a + 0.035, b - 0.035, b + 0.035, 41, (a === 0 && b === 0) ? 54 : 49, WAX);
     return trim(S);
   }
+  // Altura maxima dos moveis = MAX_H (abaixo do topo do muro, 77 px): o telhado assenta no topo do muro,
+  // entao qualquer coisa mais alta fura o telhado. So a chamine da lareira passa de proposito.
+  const MAX_H = 72;
   function lantern() {
     const S = newSprite(), { ctx, o } = S;
     box(ctx, o, -0.1, 0.1, -0.1, 0.1, 0, 5, IRON);
-    box(ctx, o, -0.035, 0.035, -0.035, 0.035, 5, 62, IRON);
-    box(ctx, o, -0.13, 0.13, -0.13, 0.13, 62, 66, IRON);
-    box(ctx, o, -0.1, 0.1, -0.1, 0.1, 66, 88, { top: '#ffe28a', left: '#f4b844', right: '#d9942a', line: '#3a2810' });   // vidro aceso
-    box(ctx, o, -0.15, 0.15, -0.15, 0.15, 88, 93, IRON);
-    box(ctx, o, -0.04, 0.04, -0.04, 0.04, 93, 99, IRON);
+    box(ctx, o, -0.035, 0.035, -0.035, 0.035, 5, 44, IRON);
+    box(ctx, o, -0.13, 0.13, -0.13, 0.13, 44, 47, IRON);
+    box(ctx, o, -0.1, 0.1, -0.1, 0.1, 47, 63, { top: '#ffe28a', left: '#f4b844', right: '#d9942a', line: '#3a2810' });   // vidro aceso
+    box(ctx, o, -0.15, 0.15, -0.15, 0.15, 63, 67, IRON);
+    box(ctx, o, -0.04, 0.04, -0.04, 0.04, 67, MAX_H, IRON);
     return trim(S);
   }
 
@@ -190,7 +193,7 @@
   // prateleira alta de 1 celula encostada num lado; face = lado aberto (rot 0:+b, 90:+a, 180:-b, 270:-a)
   function shelf(rot, kind) {
     const S = newSprite(), { ctx, o } = S;
-    const T = 0.3, H = kind === 'wine' ? 84 : 104;
+    const T = 0.3, H = kind === 'wine' ? 64 : MAX_H;
     const spec = { 0: ['b', -1], 90: ['a', -1], 180: ['b', 1], 270: ['a', 1] }[rot];      // eixo da face e lado onde fica a COSTA
     const fixedAxis = spec[0], back = spec[1];
     let a0 = -0.46, a1 = 0.46, b0 = -0.46, b1 = 0.46;

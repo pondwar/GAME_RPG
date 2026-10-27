@@ -574,10 +574,17 @@ class ArchitectSystem {
       // camadas de cima: chave propria (nao entram na colisao, que so olha o chao)
       let n = 0; do { key = `${layer}:${pgx},${pgy},z${z}${n ? '#' + n : ''}`; n++; } while (this.blocks[key]);
     } else {
-      for (const [ox, oy] of [[0, 0], [1, 0], [-1, 0], [0, -1], [0, 1], [1, 1], [-1, -1], [1, -1], [-1, 1]]) {
-        if (!this.blocks[`${layer}:${this.normGX(pgx + ox)},${pgy + oy}`]) { kgx = this.normGX(pgx + ox); kgy = pgy + oy; break; }
+      // Chave = tile livre mais proximo (a colisao procura as pecas pelos tiles em volta, +-2 em x e y).
+      // Antes, com os 9 tiles vizinhos ocupados, a peca nova sobrescrevia uma existente.
+      key = null;
+      for (const [ox, oy] of ArchitectSystem.KEY_OFFSETS) {
+        const k = `${layer}:${this.normGX(pgx + ox)},${pgy + oy}`;
+        if (!this.blocks[k]) { kgx = this.normGX(pgx + ox); kgy = pgy + oy; key = k; break; }
       }
-      key = `${layer}:${kgx},${kgy}`;
+      if (!key) {   // tudo ocupado: guarda mesmo assim (sem colisao) em vez de apagar outra peca
+        let n = 1; do { key = `${layer}:${pgx},${pgy}#${n++}`; } while (this.blocks[key]);
+        console.warn('[Construtor] sem tile livre perto de', pgx, pgy, '- peca sem colisao:', type);
+      }
     }
     const b = {
       type, gx: kgx, gy: kgy, wx: Math.round(wx), wy: Math.round(wy),
@@ -893,9 +900,9 @@ class ArchitectSystem {
     // Moveis so bloqueiam quando o player esta de fato NO andar deles (na escada, a meio caminho, o movel do andar de cima nao pode prender)
     if (!noFurn && Math.abs(z - level * this.STACK_STEP) <= 12 && this._furnSolid(worldX, worldY, level)) return true;
     if (level > 0) return this._isSolidUp(worldX, worldY, radius, level);
-    // As pecas do atlas chegam a ~130px da ancora (~2,5 tiles): varre os tiles vizinhos.
-    const minGX = Math.floor((worldX - (80 + radius)) / G), maxGX = Math.floor((worldX + (80 + radius)) / G);
-    const minGY = Math.floor((worldY - (50 + radius)) / G), maxGY = Math.floor((worldY + (50 + radius)) / G);
+    // As pecas do atlas chegam a ~130px da ancora (~2,5 tiles) e a chave pode estar ate 2 tiles da ancora (KEY_OFFSETS): varre os tiles vizinhos.
+    const minGX = Math.floor((worldX - (170 + radius)) / G), maxGX = Math.floor((worldX + (170 + radius)) / G);
+    const minGY = Math.floor((worldY - (100 + radius)) / G), maxGY = Math.floor((worldY + (100 + radius)) / G);
     const frames = this.game.structures && this.game.structures.frames;
     const Snap = window.DungeonSnap;
 
@@ -1751,7 +1758,10 @@ class ArchitectSystem {
           if (pl && pz < s2.z * this.STACK_STEP - 6) { const fd2 = Math.hypot(this.game.world.wrapDelta(s2.wx - pl.x), (s2.wy - (pl.y + 20)) * 1.4); sf = Math.max(0.22, Math.min(1, 0.22 + (fd2 - 80) / 140 * 0.78)); }
           (cuts = cuts || []).push([fxs, fys, sf]);
         }
-        renderList.push({ type: 'furniture', layer: 1, y: cy2 + 16 + z * 0.1, draw: () => {
+        // x/lineY: entram na comparacao com a linha de chao das paredes (DepthSort), senao um movel encostado
+        // no muro da frente era desenhado por cima dele (lampiao "atravessando" a parede)
+        const cx2 = f.cells.length > 1 ? (f.cells[0][0] + f.cells[1][0]) / 2 : b.wx;
+        renderList.push({ type: 'furniture', layer: 1, y: cy2 + 16 + z * 0.1, x: Math.round(this.game.world.wrapDelta(cx2 - this.game.camera.x)), lineY: cy2, draw: () => {
           const c = this.game.ctx; c.save(); c.globalAlpha = ffade;
           if (cuts) {
             const tc = this._cutCv || (this._cutCv = document.createElement('canvas'));
@@ -1764,7 +1774,7 @@ class ArchitectSystem {
           if (kind === 'fireplace') FR.flame(c, sx + (rotn === 90 ? 25 : -25), sy + 7, T, 1.15);
           else if (kind === 'candelabra') for (const [a, bb] of [[-0.2, 0], [0.2, 0], [0, -0.2], [0, 0.2]]) { const p = FR.pt(a, bb, 49); FR.flame(c, sx + p[0], sy + p[1], T + a * 900, 0.5); }
           else if (kind === 'brazier') { FR.flame(c, sx, sy - 54, T, 1.9); FR.flame(c, sx - 8, sy - 52, T + 400, 1.1); FR.flame(c, sx + 9, sy - 52, T + 900, 1.2); }
-          else if (kind === 'lantern') { const g = c.createRadialGradient(sx, sy - 77, 2, sx, sy - 77, 26); g.addColorStop(0, 'rgba(255,220,120,0.55)'); g.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = g; c.beginPath(); c.arc(sx, sy - 77, 26, 0, 7); c.fill(); }
+          else if (kind === 'lantern') { const g = c.createRadialGradient(sx, sy - 55, 2, sx, sy - 55, 26); g.addColorStop(0, 'rgba(255,220,120,0.55)'); g.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = g; c.beginPath(); c.arc(sx, sy - 55, 26, 0, 7); c.fill(); }
           c.restore();
         } });
       }
@@ -1959,5 +1969,12 @@ class ArchitectSystem {
     ctx.restore();
   }
 }
+
+// Tiles candidatos para a chave de uma peca do terreo, do mais perto ao mais longe (dentro do alcance da colisao)
+ArchitectSystem.KEY_OFFSETS = (() => {
+  const out = [];
+  for (let oy = -2; oy <= 2; oy++) for (let ox = -2; ox <= 2; ox++) out.push([ox, oy]);
+  return out.sort((p, q) => (p[0] * p[0] + p[1] * p[1] * 1.5) - (q[0] * q[0] + q[1] * q[1] * 1.5));
+})();
 
 window.ArchitectSystem = ArchitectSystem;

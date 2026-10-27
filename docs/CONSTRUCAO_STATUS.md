@@ -138,3 +138,15 @@ A escada "late" so passa por cima de lajes/paredes de andares ACIMA; muros do me
 
 ### F15 - Mobiliario lote 2 (v50)
 Balcao (liga com vizinhos), balcao grande (2 blocos), estante de livros e adega (4 lados), barril, bau (2 frentes). Todos solidos; bau ainda sem inventario. Aba Moveis (12).
+
+### F16 - Vila Inicial e validacao de moveis
+- **Vila gerada por dados**: `js/town_plans.js` (plantas dos predios + mapa da vila) e `js/town_builder.js` (monta com as mesmas pecas do construtor). Vila Inicial em 8.7° L / 50.6° N (x 160952, y 700444): 20 predios (5 casas de casal, 8 de familia, 3 nobres, prefeitura, cadeia, mercado, bar), praca, 2 ruas de pedra, lampioes. Paredes de madeira, telhado de telha.
+- Botao **🏘️ Vila** no rodape do construtor: (re)monta e leva ate a praca (Shift+clique so vai ate la). Console: `game.town.build()`, `game.town.clear()`, `game.town.goto()`.
+- Pecas da vila tem `town`/`bld`; remontar so troca elas. Lote com construcao do jogador e pulado (aviso no log).
+- Encaixe: paineis de madeira (42 px) distribuidos para fechar exatamente nos vertices da malha de pisos (54 px por celula); portas centradas na celula pedida. Porta tapada por movel desliza para o vao livre mais proximo.
+- **Clareira**: nenhuma arvore nasce dentro da area da vila (`TownBuilder.isInClearing`, usado em `world.js`).
+- **Moveis x telhado**: estante (104 -> 72 px), adega (84 -> 64) e lampiao (99 -> 72) estavam mais altos que o muro (77) e furavam o telhado. Limite `MAX_H = 72` em `furniture.js`; so a chamine da lareira passa de proposito. `game.town.auditFurniture()` lista as alturas; trono, estandarte, coluna e estatua (palace.js) passam de 130 px e so servem para area aberta.
+- **Moveis x parede**: moveis nao entravam na comparacao com a linha das paredes (DepthSort), entao um movel encostado no muro da frente era desenhado por cima dele (lampiao "atravessando" a parede). Agora usam `x`/`lineY`.
+- **Cena de teste** `?scene=moveis`: duas salas com todos os moveis de 1 celula encostados nas 4 paredes (com e sem telhado). Pecas temporarias, nao salvam.
+- Chave de peca: `addDungeonPiece` procurava tile livre so nos 8 vizinhos e, sem vaga, sobrescrevia outra peca. Agora procura num raio de 2 tiles (`KEY_OFFSETS`) e nunca apaga; `isSolidAt` varre o raio maior.
+- Save com a vila: ~480 KB em 22 chunks no localStorage.

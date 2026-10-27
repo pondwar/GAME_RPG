@@ -171,6 +171,7 @@ class Game {
     this.minimap = new MinimapSystem(this);
     this.structures = new StructureManager(this);
     this.architect = new ArchitectSystem(this);
+    this.town = new TownBuilder(this);   // vilas/cidades de js/town_plans.js
 
     this.lastTime = performance.now();
 
@@ -195,6 +196,7 @@ class Game {
     this.inventory.init();
     this.skills.init();
 
+    this.town.init();
     this.saveSystem.startAutosave();
     if (loaded) {
       this.updateHUD();
