@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=MedievalSharp&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
@@ -74,6 +74,9 @@
           <span class="weather-badge" id="weather-badge">🌤 Céu Limpo</span>
           <div class="time-controls">
             <button class="btn-time-speed" id="btn-toggle-weather" title="Mudar Clima (Chuva/Tempestade/Limpo)">🌧 Clima</button>
+            <button class="btn-time-speed" id="btn-walk-speed" title="Velocidade do personagem (teste): 1x / 3x / 10x / 30x">🏃 1x</button>
+            <button class="btn-time-speed" id="btn-set-day" title="Definir Horário para Meio-Dia (12:00)">☀️ Dia</button>
+            <button class="btn-time-speed" id="btn-set-night" title="Definir Horário para Meia-Noite (00:00)">🌙 Noite</button>
             <button class="btn-time-speed" id="btn-speed-time" title="Acelerar Tempo para Teste">⚡ 1x</button>
           </div>
         </div>
@@ -182,13 +185,23 @@
 
   <script src="js/sound.js"></script>
   <script src="js/dice.js"></script>
-  <script src="js/world.js"></script>
+  <script src="js/terrain.js?v=57"></script>
+  <script src="js/world.js?v=57"></script>
   <script src="js/calendar.js"></script>
   <script src="js/inventory.js"></script>
   <script src="js/skills.js"></script>
   <script src="js/player_sockets.js"></script>
-  <script src="js/minimap.js"></script>
-  <script src="js/architect.js?v=9"></script>
-  <script src="js/game.js"></script>
+  <script src="js/minimap.js?v=61"></script>
+  <script src="js/ground.js?v=66"></script>
+  <script src="js/iso.js"></script>
+  <script src="js/structures.js?v=62"></script>
+  <script src="js/dungeon_blocks_data.js?v=59"></script>
+  <script src="js/depth_sort.js?v=50"></script>
+  <script src="js/dungeon_snap.js?v=50"></script>
+  <script src="js/roofs.js?v=59"></script>
+  <script src="js/furniture.js?v=59"></script>
+  <script src="js/architect.js?v=71"></script>
+  <script src="js/palace.js?v=69"></script>
+  <script src="js/game.js?v=68"></script>
 </body>
 </html>

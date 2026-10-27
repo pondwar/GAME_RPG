@@ -236,6 +236,16 @@ class InventorySystem {
           g.buildCampfire();
         }
       },
+      stone: {
+        id: 'stone',
+        name: 'Pedra',
+        type: 'material',
+        rarity: 'common',
+        icon: '🪨',
+        maxStack: 60,
+        desc: 'Blocos de pedra bruta para erguer muros, arcos e portais.',
+        stats: 'Material de Construção • Demolir devolve 80%'
+      },
       resin: {
         id: 'resin',
         name: 'Resina de Carvalho',
@@ -269,6 +279,7 @@ class InventorySystem {
     this.addItem('fruit', 4);
     this.addItem('meat', 2);
     this.addItem('wood', 4);
+    this.addItem('stone', 24); // TEMPORARIO (F7): lote inicial de pedra ate existir mineracao
     this.addItem('potion_heal', 1);
     this.addItem('potion_mana', 1);
     this.addItem('axe', 1);

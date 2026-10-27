@@ -13,8 +13,8 @@ class Game {
 
     // Player State
     this.player = {
-      x: 0,
-      y: 800000,
+      x: 333005, // spawn em terra firme (planicies de Valória)
+      y: 960000,
       vx: 0,
       vy: 0,
       speed: 185, // pixels per second
@@ -154,6 +154,8 @@ class Game {
     this.calMoonEl = document.getElementById('cal-moon');
     this.weatherBadgeEl = document.getElementById('weather-badge');
     this.btnToggleWeather = document.getElementById('btn-toggle-weather');
+    this.btnSetDay = document.getElementById('btn-set-day');
+    this.btnSetNight = document.getElementById('btn-set-night');
     this.btnSpeedTime = document.getElementById('btn-speed-time');
     this.geoCoordEl = document.getElementById('geo-coord');
     this.geoFusoEl = document.getElementById('geo-fuso');
@@ -167,6 +169,7 @@ class Game {
     // God Mode [F2], Compass Minimap & World Map Modal [M]
     this.isGodMode = false;
     this.minimap = new MinimapSystem(this);
+    this.structures = new StructureManager(this);
     this.architect = new ArchitectSystem(this);
 
     this.lastTime = performance.now();
@@ -380,7 +383,7 @@ class Game {
       const zoom = this.camera.zoom || 1.0;
       const rawWX = (this.mouse.x - this.canvas.width / 2) / zoom + this.camera.x;
       this.mouse.worldX = this.world ? this.world.wrapX(rawWX) : rawWX;
-      this.mouse.worldY = (this.mouse.y - this.canvas.height / 2) / zoom + this.camera.y;
+      this.mouse.worldY = (this.mouse.y - this.canvas.height / 2) / zoom + this.camera.y + this.getLift();
 
       this.checkMouseHover();
     });
@@ -393,6 +396,14 @@ class Game {
       });
     }
 
+    // Velocidade do personagem (teste): 1x / 3x / 10x / 30x
+    this.speedMul = 1;
+    const btnWalk = document.getElementById('btn-walk-speed');
+    if (btnWalk) btnWalk.addEventListener('click', () => {
+      const o = [1, 3, 10, 30]; this.speedMul = o[(o.indexOf(this.speedMul) + 1) % o.length];
+      btnWalk.textContent = `🏃 ${this.speedMul}x`; btnWalk.blur();
+    });
+
     // Weather Toggle Button
     if (this.btnToggleWeather) {
       this.btnToggleWeather.addEventListener('click', () => {
@@ -404,6 +415,33 @@ class Game {
           this.timeSystem.triggerLightning();
         }
         this.addLog(`[Clima] Você alterou o clima para: <b>${this.timeSystem.weather}</b>`, 'tip');
+        this.updateHUD();
+      });
+    }
+
+    // Set Day Button (12:00 Midday in player's local timezone)
+    if (this.btnSetDay) {
+      this.btnSetDay.addEventListener('click', () => {
+        const fuso = this.world ? this.world.getTimezoneInfo(this.player.x).utcOffset : 0;
+        const d = new Date(this.timeSystem.virtualDate);
+        // Desired local solar hour = 12:00
+        // Since local = virtual + fuso => virtual = 12 - fuso
+        d.setHours(12 - fuso, 0, 0, 0);
+        this.timeSystem.virtualDate = d;
+        this.addLog(`☀️ [Tempo] Horário ajustado para <b>Pleno Dia (12:00)</b>!`, 'action');
+        this.updateHUD();
+      });
+    }
+
+    // Set Night Button (00:00 Midnight in player's local timezone)
+    if (this.btnSetNight) {
+      this.btnSetNight.addEventListener('click', () => {
+        const fuso = this.world ? this.world.getTimezoneInfo(this.player.x).utcOffset : 0;
+        const d = new Date(this.timeSystem.virtualDate);
+        // Desired local solar hour = 00:00
+        d.setHours(0 - fuso, 0, 0, 0);
+        this.timeSystem.virtualDate = d;
+        this.addLog(`🌙 [Tempo] Horário ajustado para <b>Noite Profunda (00:00)</b>!`, 'action');
         this.updateHUD();
       });
     }
@@ -1775,6 +1813,7 @@ class Game {
       this.player.isRunning = false;
       this.player.speed = this.player.isExhausted ? 90 : 165;
     }
+    if (this.speedMul > 1) { this.player.speed *= this.speedMul; this.player.stamina = Math.max(this.player.stamina, 50); this.player.isExhausted = false; }
 
     // Cancel sitting if player moves or commands movement
     if (this.player.isMoving && this.player.isSitting) {
@@ -1810,6 +1849,13 @@ class Game {
 
     let targetVx = 0;
     let targetVy = 0;
+
+    // O alvo do mouse acompanha o boneco a cada frame (antes so mudava ao mover o mouse: o boneco andava ate um ponto fixo e a direcao 'pulava' com qualquer tremida da mao)
+    if (this.mouse.x !== undefined && this.mouse.x !== null) {
+      const mz = this.camera.zoom || 1.0, rawWX = (this.mouse.x - this.canvas.width / 2) / mz + this.camera.x;
+      this.mouse.worldX = this.world ? this.world.wrapX(rawWX) : rawWX;
+      this.mouse.worldY = (this.mouse.y - this.canvas.height / 2) / mz + this.camera.y + this.getLift();
+    }
 
     // GOD MODE FAST FLIGHT (WASD or Right-Click 360° Flight at 650 px/s)
     if (this.isGodMode) {
@@ -1888,19 +1934,18 @@ class Game {
       const moveAngle = Math.atan2(this.player.vy, this.player.vx);
       this.updatePlayerDirectionFromAngle(moveAngle);
 
-      // Organic dynamic animation speed proportional to moving speed
-      const animSpeed = Math.max(0.06, 0.18 - (currentSpeed / this.player.speed) * 0.08);
-      this.player.animTimer += dt;
-      if (this.player.animTimer >= animSpeed) {
-        this.player.animTimer = 0;
-        this.player.frameIndex = (this.player.frameIndex + 1) % 4;
-      }
+      // Animacao presa a DISTANCIA andada (nao ao tempo): o pe nao desliza no chao e o passo acompanha a velocidade real.
+      // Um ciclo = 4 quadros = 2 passos. Contatos do pe caem nos quadros 0 e 2, onde o "quique" e minimo.
       this.player.walkDistance += currentSpeed * dt;
+      const cyc = this.player.isRunning ? 118 : 84;
+      this.player.stridePhase = ((this.player.walkDistance / cyc) % 1 + 1) % 1;
+      this.player.frameIndex = Math.floor(this.player.stridePhase * 4) % 4;
     } else {
       this.player.isMoving = false;
       this.player.vx = 0;
       this.player.vy = 0;
       this.player.frameIndex = 0; // neutral idle stance
+      this.player.stridePhase = 0;
     }
 
     // Collision with Trees (Bypassed in God Mode Noclip)
@@ -1956,14 +2001,14 @@ class Game {
     // Collision with Solid Architect Walls (Bypassed in God Mode Noclip)
     if (!this.isGodMode && this.architect && this.architect.isSolidAt) {
       // Check full step
-      if (this.architect.isSolidAt(currentX, currentY, playerFootRadius)) {
+      if (this.architect.isSolidAt(currentX, currentY, playerFootRadius, this.player.z || 0)) {
         // Try horizontal slide (X axis only)
-        if (!this.architect.isSolidAt(currentX, this.player.y, playerFootRadius)) {
+        if (!this.architect.isSolidAt(currentX, this.player.y, playerFootRadius, this.player.z || 0)) {
           currentY = this.player.y;
           this.player.vy = 0;
         }
         // Try vertical slide (Y axis only)
-        else if (!this.architect.isSolidAt(this.player.x, currentY, playerFootRadius)) {
+        else if (!this.architect.isSolidAt(this.player.x, currentY, playerFootRadius, this.player.z || 0)) {
           currentX = this.player.x;
           this.player.vx = 0;
         }
@@ -1977,10 +2022,39 @@ class Game {
       }
     }
 
+    // Andares: altura do chao sob o player (escadas e pisos de cima); null = borda/corpo da escada, bloqueia
+    if (!this.isGodMode && this.architect && this.architect.elevationAt) {
+      const z0 = this.player.z || 0;
+      let nz = this.architect.elevationAt(currentX, currentY, z0);
+      if (nz === null) {
+        const nzx = this.architect.elevationAt(currentX, this.player.y, z0);
+        if (nzx !== null) { currentY = this.player.y; this.player.vy = 0; nz = nzx; }
+        else {
+          const nzy = this.architect.elevationAt(this.player.x, currentY, z0);
+          if (nzy !== null) { currentX = this.player.x; this.player.vx = 0; nz = nzy; }
+          else { currentX = this.player.x; currentY = this.player.y; this.player.vx = 0; this.player.vy = 0; nz = z0; }
+        }
+      }
+      this.player.z = nz;
+    }
+
     // Water Barrier & Shoreline Collision (Bypassed in God Mode Noclip)
     if (!this.isGodMode && this.world && this.world.getTerrainAt) {
       const terr = this.world.getTerrainAt(currentX, currentY);
       if (terr && terr.isWater) {
+        // se o jogador ja esta dentro d'agua (save antigo / mapa novo), leva para a terra firme mais proxima em vez de prender
+        const cur = this.world.getTerrainAt(this.player.x, this.player.y);
+        if (cur && cur.isWater) {
+          let found = null;
+          for (let r = 512; r <= 120000 && !found; r *= 1.5) {
+            for (let a = 0; a < 16 && !found; a++) {
+              const px = this.world.wrapX(this.player.x + Math.cos(a * Math.PI / 8) * r), py = this.world.clampY(this.player.y + Math.sin(a * Math.PI / 8) * r);
+              const t2 = this.world.getTerrainAt(px, py);
+              if (!t2.isWater && t2.type !== 'shore') found = { x: px, y: py };
+            }
+          }
+          if (found) { this.player.x = found.x; this.player.y = found.y; currentX = found.x; currentY = found.y; this.addLog('🌊 Você foi levado de volta à praia mais próxima.', 'info'); }
+        }
         this.player.vx = 0;
         this.player.vy = 0;
         currentX = this.player.x;
@@ -1998,8 +2072,12 @@ class Game {
 
     // Smooth Camera follow with Seamless Toroidal Wrap
     const camDx = this.world ? this.world.wrapDelta(this.player.x - this.camera.x) : (this.player.x - this.camera.x);
-    this.camera.x = this.world ? this.world.wrapX(this.camera.x + camDx * 0.12) : (this.camera.x + camDx * 0.12);
-    this.camera.y += (this.player.y - this.camera.y) * 0.12;
+    // Camera TRAVADA no boneco (rolagem 1:1 com o chao = sem tremida/robo); so teleportes e a altura de andar (escadas) suavizam
+    this.camera.x = this.player.x;
+    const liftNow = this.getLift();
+    if (this._camLift === undefined || Math.abs(this._camLift - liftNow) > 400) this._camLift = liftNow;
+    this._camLift += (liftNow - this._camLift) * (1 - Math.pow(0.0005, Math.min(dt, 0.1)));
+    this.camera.y = this.player.y - this._camLift;
 
     // 2. BALANCED DEER ARTIFICIAL INTELLIGENCE & SENSORY SYSTEM
     for (const deer of this.deers) {
@@ -2577,8 +2655,16 @@ class Game {
     }
   }
 
+  // Desenha com a camera em pixels inteiros: todas as camadas (chao, pisos, paredes, boneco) arredondam do mesmo jeito -> sem tremida/cintilacao ao andar
   render() {
+    const cam = this.camera, cx0 = cam.x, cy0 = cam.y;
+    cam.x = Math.round(cx0); cam.y = Math.round(cy0);
+    try { this._renderScene(); } finally { cam.x = cx0; cam.y = cy0; }
+  }
+
+  _renderScene() {
     const ctx = this.ctx;
+    this._ph = this._ph || {};
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     const screenCenterX = this.canvas.width / 2;
@@ -2591,119 +2677,23 @@ class Game {
     ctx.scale(zoom, zoom);
     ctx.translate(-screenCenterX, -screenCenterY);
 
-    // 1. Draw Multi-Terrain Ground (Water, Shoreline Beaches, Grasslands) from Visible Chunks
-    if (this.world && this.world.chunks) {
-      const { cx, cy } = this.world.chunks.getChunkCoord(this.camera.x, this.camera.y);
-      const maxCX = Math.floor(this.world.WORLD_WIDTH / this.world.chunks.CHUNK_SIZE);
-      const chunkSize = this.world.chunks.CHUNK_SIZE;
-
-      const camChunkOffsetPxX = ((this.camera.x % chunkSize) + chunkSize) % chunkSize;
-      const camChunkOffsetPxY = ((this.camera.y % chunkSize) + chunkSize) % chunkSize;
-
-      // Expand render radius when zooming out to maintain seamless infinite horizon
-      const visibleRadius = Math.ceil((Math.max(this.canvas.width, this.canvas.height) / zoom) / (2 * chunkSize)) + 1;
-      const maxRange = Math.min(6, Math.max(2, visibleRadius));
-
-      for (let dx = -maxRange; dx <= maxRange; dx++) {
-        for (let dy = -maxRange; dy <= maxRange; dy++) {
-          const curCX = ((cx + dx) % maxCX + maxCX) % maxCX;
-          const curCY = Math.max(0, cy + dy);
-          const chunk = this.world.chunks.getChunk(curCX, curCY);
-
-          const screenChunkX = Math.round(dx * chunkSize - camChunkOffsetPxX + screenCenterX);
-          const screenChunkY = Math.round(dy * chunkSize - camChunkOffsetPxY + screenCenterY);
-
-          // Select texture based on chunk terrain
-          let tileImg = this.images.grass;
-          let isWater = false;
-
-          if (chunk.terrain === 'ocean' || chunk.terrain === 'water') {
-            tileImg = (this.images.water && this.images.water.complete && this.images.water.naturalWidth > 0) ? this.images.water : this.images.grass;
-            isWater = true;
-          } else if (chunk.terrain === 'shore') {
-            tileImg = (this.images.sand && this.images.sand.complete && this.images.sand.naturalWidth > 0) ? this.images.sand : this.images.grass;
-          }
-
-          if (tileImg && tileImg.complete && tileImg.naturalWidth > 0) {
-            const pat = ctx.createPattern(tileImg, 'repeat');
-            if (pat) {
-              ctx.save();
-              const tw = tileImg.width || 128;
-              const th = tileImg.height || 128;
-              const chunkWorldX = curCX * chunkSize;
-              const chunkWorldY = curCY * chunkSize;
-              // Animated gentle wave translation for flowing water!
-              const waveOffX = isWater ? Math.sin(performance.now() * 0.002) * 8 : 0;
-              const waveOffY = isWater ? (performance.now() * 0.008) % th : 0;
-              const ox = ((chunkWorldX + waveOffX) % tw + tw) % tw;
-              const oy = ((chunkWorldY + waveOffY) % th + th) % th;
-              ctx.translate(screenChunkX - ox, screenChunkY - oy);
-              ctx.fillStyle = pat;
-              ctx.fillRect(ox, oy, chunkSize, chunkSize);
-              ctx.restore();
-            }
-          } else {
-            ctx.fillStyle = isWater ? '#1864ab' : (chunk.terrain === 'shore' ? '#f08c00' : '#2b4421');
-            ctx.fillRect(screenChunkX, screenChunkY, chunkSize, chunkSize);
-          }
-
-          // Coastal Foam Waves (Softens the boundary between beach and ocean)
-          if (isWater) {
-            const hasLandLeft = curCX > 0 && this.world.chunks.getChunk(((curCX - 1) % maxCX + maxCX) % maxCX, curCY).terrain !== 'ocean';
-            const hasLandRight = this.world.chunks.getChunk((curCX + 1) % maxCX, curCY).terrain !== 'ocean';
-            const hasLandTop = curCY > 0 && this.world.chunks.getChunk(curCX, curCY - 1).terrain !== 'ocean';
-            const hasLandBottom = this.world.chunks.getChunk(curCX, curCY + 1).terrain !== 'ocean';
-
-            if (hasLandLeft || hasLandRight || hasLandTop || hasLandBottom) {
-              const t = performance.now() * 0.003;
-              ctx.save();
-              ctx.strokeStyle = 'rgba(210, 240, 255, 0.70)';
-              ctx.lineWidth = 4;
-              ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
-              ctx.shadowBlur = 6;
-
-              if (hasLandLeft) {
-                const waveX = screenChunkX + Math.sin(t + screenChunkY * 0.03) * 6;
-                ctx.beginPath();
-                ctx.moveTo(waveX, screenChunkY);
-                ctx.lineTo(waveX, screenChunkY + chunkSize);
-                ctx.stroke();
-              }
-              if (hasLandRight) {
-                const waveX = screenChunkX + chunkSize - Math.sin(t + screenChunkY * 0.03) * 6;
-                ctx.beginPath();
-                ctx.moveTo(waveX, screenChunkY);
-                ctx.lineTo(waveX, screenChunkY + chunkSize);
-                ctx.stroke();
-              }
-              if (hasLandTop) {
-                const waveY = screenChunkY + Math.cos(t + screenChunkX * 0.03) * 6;
-                ctx.beginPath();
-                ctx.moveTo(screenChunkX, waveY);
-                ctx.lineTo(screenChunkX + chunkSize, waveY);
-                ctx.stroke();
-              }
-              if (hasLandBottom) {
-                const waveY = screenChunkY + chunkSize - Math.cos(t + screenChunkX * 0.03) * 6;
-                ctx.beginPath();
-                ctx.moveTo(screenChunkX, waveY);
-                ctx.lineTo(screenChunkX + chunkSize, waveY);
-                ctx.stroke();
-              }
-              ctx.restore();
-            }
-          }
-        }
-      }
+    // 1. Chao: terreno continuo (mar, praia, planicie, floresta, deserto, colinas, neve) em blocos suaves em cache
+    if (this.world && this.world.getTerrainAt && window.GroundRenderer) {
+      if (!this.ground) this.ground = new GroundRenderer(this);
+      const _t0 = performance.now();
+      if (!this.dbg || this.dbg.ground !== false) this.ground.draw(ctx, this.camera, this.canvas.width, this.canvas.height, zoom, screenCenterX, screenCenterY, performance.now());
+      this._ph.g = performance.now() - _t0;
     } else {
       ctx.fillStyle = '#2b4421';
       ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     // 1c. Draw Architect Village Roads (Cobblestone / Dirt Trail)
-    if (this.architect) {
+    const _tf = performance.now();
+    if (this.architect && (!this.dbg || this.dbg.floors !== false)) {
       this.architect.drawRoads(ctx, screenCenterX, screenCenterY);
     }
+    this._ph.f = performance.now() - _tf;
 
     // 1b. Ground Click-to-Move Destination Waypoint Marker
     if (this.player.moveTarget) {
@@ -2730,11 +2720,13 @@ class Game {
 
     // 2. Y-SORTING RENDER LIST (True 2.5D Tibia Depth Sorting)
     const renderList = [];
+    const relX = (wx) => (this.world ? this.world.wrapDelta(wx - this.camera.x) : (wx - this.camera.x)); // F3: X relativo a camera p/ DepthSort
 
     // Player
     renderList.push({
       type: 'player',
-      y: this.player.y,
+      x: relX(this.player.x),
+      y: (this.architect && this.architect.playerSortY && this.architect.playerSortY()) || this.player.y,
       draw: () => this.drawPlayer(ctx, screenCenterX, screenCenterY)
     });
 
@@ -2742,6 +2734,7 @@ class Game {
     for (const f of this.fruitsOnGround) {
       renderList.push({
         type: 'fruit',
+        x: relX(f.x),
         y: f.y,
         draw: () => this.drawFruit(ctx, f, screenCenterX, screenCenterY)
       });
@@ -2751,6 +2744,7 @@ class Game {
     for (const c of this.carcasses) {
       renderList.push({
         type: 'carcass',
+        x: relX(c.x),
         y: c.y,
         draw: () => this.drawCarcass(ctx, c, screenCenterX, screenCenterY)
       });
@@ -2760,6 +2754,7 @@ class Game {
     for (const c of this.campfires) {
       renderList.push({
         type: 'campfire',
+        x: relX(c.x),
         y: c.y,
         draw: () => this.drawCampfire(ctx, c, screenCenterX, screenCenterY)
       });
@@ -2769,6 +2764,7 @@ class Game {
     for (const tree of this.trees) {
       renderList.push({
         type: 'tree',
+        x: relX(tree.x),
         y: tree.y + tree.trunkOffset.y,
         draw: () => this.drawTree(ctx, tree, screenCenterX, screenCenterY)
       });
@@ -2778,6 +2774,7 @@ class Game {
     for (const deer of this.deers) {
       renderList.push({
         type: 'deer',
+        x: relX(deer.x),
         y: deer.y,
         draw: () => this.drawDeer(ctx, deer, screenCenterX, screenCenterY)
       });
@@ -2787,6 +2784,7 @@ class Game {
     for (const wolf of this.wolves) {
       renderList.push({
         type: 'wolf',
+        x: relX(wolf.x),
         y: wolf.y,
         draw: () => this.drawWolf(ctx, wolf, screenCenterX, screenCenterY)
       });
@@ -2797,18 +2795,33 @@ class Game {
       this.architect.addStructuresToRenderList(renderList, screenCenterX, screenCenterY);
     }
 
+    // New Isometric Dungeon & Wall Structures System
+    if (this.structures) {
+      this.structures.addStructuresToRenderList(renderList, screenCenterX, screenCenterY);
+    }
+
     // Sort by Y (foot level) and break ties using layer priority (Layer 2 Roofs > Layer 1 Walls/Entities)
-    renderList.sort((a, b) => {
-      if (a.y !== b.y) return a.y - b.y;
-      const layerA = a.layer || 1;
-      const layerB = b.layer || 1;
-      return layerA - layerB;
-    });
+    // F3: DepthSort trata paredes como linhas (frente/tras pela reta); sem o modulo, usa a ordem antiga por Y.
+    if (window.DepthSort) {
+      window.DepthSort.sort(renderList);
+    } else {
+      renderList.sort((a, b) => {
+        if (a.y !== b.y) return a.y - b.y;
+        const layerA = a.layer || 1;
+        const layerB = b.layer || 1;
+        return layerA - layerB;
+      });
+    }
 
     // Draw sorted entities
-    for (const item of renderList) {
-      item.draw();
+    const _to = performance.now();
+    const _tp = this._perf && this._perf.el.style.display !== 'none', _ty = _tp ? {} : null;
+    if (!this.dbg || this.dbg.objects !== false) for (const item of renderList) {
+      if (_tp) { const a = performance.now(); item.draw(); const q = _ty[item.type] || (_ty[item.type] = [0, 0]); q[0] += performance.now() - a; q[1]++; }
+      else item.draw();
     }
+    this._ph.ty = _ty; this._ph.nlist = renderList.length;
+    this._ph.o = performance.now() - _to;
 
     // 3. Render Particles (Embers, Ripples & Leaves)
     for (const p of this.particles) {
@@ -2853,16 +2866,42 @@ class Game {
     ctx.restore(); // Restore camera zoom context for full-screen lighting & weather
 
     // 4. Render Ambient Sky Lighting (Solar & Moon Cycle)
-    this.renderLighting(ctx, screenCenterX, screenCenterY);
+    const _tl = performance.now();
+    if (!this.dbg || this.dbg.light !== false) this.renderLighting(ctx, screenCenterX, screenCenterY);
+    this._ph.l = performance.now() - _tl;
 
     // 5. Render Rain & Weather Effects
-    this.timeSystem.renderRain(ctx);
+    const _tr = performance.now();
+    if (!this.dbg || this.dbg.rain !== false) this.timeSystem.renderRain(ctx);
+    this._ph.r = performance.now() - _tr;
 
     // 6. Lightning Flash (Full Screen white blaze during storms)
     if (this.timeSystem.lightningFlash > 0) {
       ctx.fillStyle = `rgba(255, 255, 255, ${this.timeSystem.lightningFlash * 0.85})`;
       ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
+  }
+
+  // Sprites de luz pre-renderizados (um gradiente radial de 128px por tipo), desenhados escalados: bem mais barato que criar gradiente + arco por luz por frame
+  _lightSpr(name, ratio) {
+    const P = {
+      pErase: [[0, 'rgba(0,0,0,1)'], [0.45, 'rgba(0,0,0,0.85)'], [0.8, 'rgba(0,0,0,0.4)'], [1, 'rgba(0,0,0,0)']],
+      cErase: [[0, 'rgba(0,0,0,1)'], [0.35, 'rgba(0,0,0,0.95)'], [0.7, 'rgba(0,0,0,0.55)'], [1, 'rgba(0,0,0,0)']],
+      lErase: [[0, 'rgba(0,0,0,1)'], [0.5, 'rgba(0,0,0,0.6)'], [1, 'rgba(0,0,0,0)']],
+      fErase: [[0, 'rgba(0,0,0,1)'], [0.4, 'rgba(0,0,0,0.9)'], [0.75, 'rgba(0,0,0,0.45)'], [1, 'rgba(0,0,0,0)']],
+      cGlow: [[0, 'rgba(255,200,70,0.55)'], [0.3, 'rgba(255,140,35,0.32)'], [0.65, 'rgba(230,80,20,0.14)'], [1, 'rgba(0,0,0,0)']],
+      lGlow: [[0, 'rgba(255,212,59,0.55)'], [0.4, 'rgba(255,170,40,0.25)'], [1, 'rgba(0,0,0,0)']],
+      pGlow: [[0, 'rgba(255,185,75,0.38)'], [0.4, 'rgba(255,120,30,0.18)'], [1, 'rgba(0,0,0,0)']],
+      fGlow: [[0, 'rgba(255,200,80,0.36)'], [0.35, 'rgba(255,150,45,0.18)'], [0.7, 'rgba(230,90,25,0.1)'], [1, 'rgba(0,0,0,0)']],
+      fGlowS: [[0, 'rgba(255,200,80,0.5)'], [0.35, 'rgba(255,150,45,0.25)'], [0.7, 'rgba(230,90,25,0.1)'], [1, 'rgba(0,0,0,0)']]
+    };
+    this._lspr = this._lspr || {};
+    const rq = Math.round(Math.min(0.9, Math.max(0, ratio)) * 40) / 40, key = name + '|' + rq;
+    let c = this._lspr[key]; if (c) return c;
+    c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d');
+    const g = x.createRadialGradient(64, 64, 64 * rq, 64, 64, 64); for (const st of P[name]) g.addColorStop(st[0], st[1]);
+    x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+    return (this._lspr[key] = c);
   }
 
   renderLighting(ctx, screenCenterX, screenCenterY) {
@@ -2876,148 +2915,106 @@ class Game {
       this.lightCtx = this.lightCanvas.getContext('2d');
     }
 
+    // A mascara de escuridao e suave: calcula em meia resolucao (4x menos pixels) e estica por cima da cena
     const w = this.canvas.width;
     const h = this.canvas.height;
-    if (this.lightCanvas.width !== w || this.lightCanvas.height !== h) {
-      this.lightCanvas.width = w;
-      this.lightCanvas.height = h;
+    const lw = Math.ceil(w / 2), lh = Math.ceil(h / 2);
+    if (this.lightCanvas.width !== lw || this.lightCanvas.height !== lh) {
+      this.lightCanvas.width = lw;
+      this.lightCanvas.height = lh;
     }
 
     const lCtx = this.lightCtx;
-    lCtx.clearRect(0, 0, w, h);
+    lCtx.setTransform(1, 0, 0, 1, 0, 0);
+    lCtx.clearRect(0, 0, lw, lh);
+    lCtx.setTransform(0.5, 0, 0, 0.5, 0, 0);          // dai em diante, coordenadas em pixels da tela cheia
 
-    // 1. Fill offscreen light canvas with ambient sky darkness
+    // 1. Escuridao ambiente
     const darknessAlpha = Math.max(0.04, ambient.alpha);
     lCtx.fillStyle = `rgba(${ambient.r}, ${ambient.g}, ${ambient.b}, ${darknessAlpha})`;
     lCtx.fillRect(0, 0, w, h);
 
-    // 2. Cut holes of light into the ambient darkness layer using destination-out
+    // 2. Furos de luz na escuridao (destination-out), com sprites de gradiente pre-renderizados
     lCtx.save();
     lCtx.globalCompositeOperation = 'destination-out';
+    const blob = (c, spr, x, y, r) => { c.drawImage(spr, x - r, y - r, r * 2, r * 2); };
 
     const zoom = this.camera.zoom || 1.0;
+    const wd = (x) => this.world ? this.world.wrapDelta(x - this.camera.x) : (x - this.camera.x);
 
-    // 2a. Player Torch & Baseline Vision
-    const pdx = this.world ? this.world.wrapDelta(this.player.x - this.camera.x) : (this.player.x - this.camera.x);
+    // 2a. Tocha do jogador e visao basica
+    const pdx = wd(this.player.x);
     const px = Math.round(pdx * zoom + screenCenterX);
-    const py = Math.round((this.player.y - this.camera.y) * zoom + screenCenterY);
+    const py = Math.round((this.player.y - this.getLift() - this.camera.y) * zoom + screenCenterY);
     const isFiery = this.player.torchLit || this.player.equippedWeapon === 'fire_sword';
     let lightRadius = 90 * zoom;
     if (isFiery) {
       const flicker = Math.sin(performance.now() * 0.012) * 6 + (Math.random() - 0.5) * 4;
       lightRadius = (this.player.equippedWeapon === 'fire_sword' ? 240 : 190) * zoom + flicker;
     }
+    blob(lCtx, this._lightSpr('pErase', 15 * zoom / lightRadius), px, py, lightRadius);
 
-    const pGrad = lCtx.createRadialGradient(px, py, 15 * zoom, px, py, lightRadius);
-    pGrad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
-    pGrad.addColorStop(0.45, 'rgba(0, 0, 0, 0.85)');
-    pGrad.addColorStop(0.8, 'rgba(0, 0, 0, 0.4)');
-    pGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-    lCtx.fillStyle = pGrad;
-    lCtx.beginPath();
-    lCtx.arc(px, py, lightRadius, 0, Math.PI * 2);
-    lCtx.fill();
-
-    // 2b. Campfires - Clarão Grande (Big Warm Radius 290-340px)
+    // 2b. Fogueiras
+    const tN = performance.now() * 0.009;
+    const sprCE = this._lightSpr('cErase', 0.08);
     for (const c of this.campfires) {
-      const cdx = this.world ? this.world.wrapDelta(c.x - this.camera.x) : (c.x - this.camera.x);
-      const cx = Math.round(cdx * zoom + screenCenterX);
-      const cy = Math.round((c.y - this.camera.y) * zoom + screenCenterY);
-      const t = performance.now() * 0.009;
-      const flicker = Math.sin(t * 1.5) * 14 + Math.cos(t * 2.1) * 8;
-      const fireRad = (310 + flicker) * zoom;
-
-      const cGrad = lCtx.createRadialGradient(cx, cy, 25 * zoom, cx, cy, fireRad);
-      cGrad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
-      cGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.95)');
-      cGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.55)');
-      cGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-
-      lCtx.fillStyle = cGrad;
-      lCtx.beginPath();
-      lCtx.arc(cx, cy, fireRad, 0, Math.PI * 2);
-      lCtx.fill();
+      const cx = Math.round(wd(c.x) * zoom + screenCenterX), cy = Math.round((c.y - this.camera.y) * zoom + screenCenterY);
+      const fireRad = (310 + Math.sin(tN * 1.5) * 14 + Math.cos(tN * 2.1) * 8) * zoom;
+      if (cx < -fireRad || cx > w + fireRad || cy < -fireRad || cy > h + fireRad) continue;
+      blob(lCtx, sprCE, cx, cy, fireRad);
     }
 
-    // 2c. Architect Lanterns
-    if (this.architect && this.architect.structures) {
-      for (const s of this.architect.structures) {
-        if (s.type === 'lantern') {
-          const sdx = this.world ? this.world.wrapDelta(s.x - this.camera.x) : (s.x - this.camera.x);
-          const lx = Math.round(sdx * zoom + screenCenterX);
-          const ly = Math.round((s.y - this.camera.y) * zoom + screenCenterY - (s.height / 2 - 8) * zoom);
-          const lanternRad = 175 * zoom;
-          const lGrad = lCtx.createRadialGradient(lx, ly, 10 * zoom, lx, ly, lanternRad);
-          lGrad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
-          lGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.6)');
-          lGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-          lCtx.fillStyle = lGrad;
-          lCtx.beginPath();
-          lCtx.arc(lx, ly, lanternRad, 0, Math.PI * 2);
-          lCtx.fill();
-        }
+    // 2c. Lampioes do construtor
+    const lanterns = (this.architect && this.architect.structures) ? this.architect.structures.filter(s => s.type === 'lantern') : [];
+    const sprLE = this._lightSpr('lErase', 0.06), lanternRad = 175 * zoom;
+    for (const s of lanterns) {
+      const lx = Math.round(wd(s.x) * zoom + screenCenterX), ly = Math.round((s.y - this.camera.y) * zoom + screenCenterY - (s.height / 2 - 8) * zoom);
+      if (lx < -lanternRad || lx > w + lanternRad || ly < -lanternRad || ly > h + lanternRad) continue;
+      blob(lCtx, sprLE, lx, ly, lanternRad);
+    }
+
+    // 2d. Moveis com luz (lareira, candelabro, braseiro): so os que aparecem na tela
+    const furnLights = [];
+    if (this.architect && this.architect.getLights) {
+      for (const L of this.architect.getLights()) {
+        const fx = Math.round(wd(L.x) * zoom + screenCenterX), fy = Math.round((L.y - this.camera.y) * zoom + screenCenterY), R = L.r * zoom + 20;
+        if (fx < -R - 40 || fx > w + R + 40 || fy < -R - 40 || fy > h + R + 40) continue;
+        furnLights.push({ L, fx, fy });
       }
+    }
+    const sprFE = this._lightSpr('fErase', 0.04);
+    for (const f of furnLights) {
+      const L = f.L, fr = (L.r + Math.sin(tN * 1.5 + L.x) * 8 + Math.cos(tN * 2.1 + L.y) * 5) * zoom;
+      blob(lCtx, sprFE, f.fx, f.fy, fr);
     }
     lCtx.restore();
+    lCtx.setTransform(1, 0, 0, 1, 0, 0);
 
-    // 3. Draw darkness mask layer directly over the main canvas
-    ctx.drawImage(this.lightCanvas, 0, 0);
+    // 3. Camada de escuridao por cima da cena (esticada de meia para resolucao cheia)
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(this.lightCanvas, 0, 0, lw, lh, 0, 0, lw * 2, lh * 2);
 
-    // 4. Add warm glowing atmospheric fire radiance (Screen blend mode)
+    // 4. Brilho quente do fogo (blend screen)
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
-
+    const sprCG = this._lightSpr('cGlow', 0.03);
     for (const c of this.campfires) {
-      const cdx = this.world ? this.world.wrapDelta(c.x - this.camera.x) : (c.x - this.camera.x);
-      const cx = Math.round(cdx * zoom + screenCenterX);
-      const cy = Math.round((c.y - this.camera.y) * zoom + screenCenterY);
-      const t = performance.now() * 0.009;
-      const flicker = Math.sin(t * 1.5) * 12;
-      const glowRad = (300 + flicker) * zoom;
-
-      const warmGrad = ctx.createRadialGradient(cx, cy, 10 * zoom, cx, cy, glowRad);
-      warmGrad.addColorStop(0, 'rgba(255, 200, 70, 0.55)');
-      warmGrad.addColorStop(0.3, 'rgba(255, 140, 35, 0.32)');
-      warmGrad.addColorStop(0.65, 'rgba(230, 80, 20, 0.14)');
-      warmGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-
-      ctx.fillStyle = warmGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, glowRad, 0, Math.PI * 2);
-      ctx.fill();
+      const cx = Math.round(wd(c.x) * zoom + screenCenterX), cy = Math.round((c.y - this.camera.y) * zoom + screenCenterY);
+      const glowRad = (300 + Math.sin(tN * 1.5) * 12) * zoom;
+      if (cx < -glowRad || cx > w + glowRad || cy < -glowRad || cy > h + glowRad) continue;
+      blob(ctx, sprCG, cx, cy, glowRad);
     }
-
-    // 4b. Architect Lanterns Warm Glow
-    if (this.architect && this.architect.structures) {
-      for (const s of this.architect.structures) {
-        if (s.type === 'lantern') {
-          const sdx = this.world ? this.world.wrapDelta(s.x - this.camera.x) : (s.x - this.camera.x);
-          const lx = Math.round(sdx * zoom + screenCenterX);
-          const ly = Math.round((s.y - this.camera.y) * zoom + screenCenterY - (s.height / 2 - 8) * zoom);
-          const lanternRad = 175 * zoom;
-          const warmGrad = ctx.createRadialGradient(lx, ly, 8 * zoom, lx, ly, lanternRad);
-          warmGrad.addColorStop(0, 'rgba(255, 212, 59, 0.55)');
-          warmGrad.addColorStop(0.4, 'rgba(255, 170, 40, 0.25)');
-          warmGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-          ctx.fillStyle = warmGrad;
-          ctx.beginPath();
-          ctx.arc(lx, ly, lanternRad, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
+    for (const f of furnLights) {
+      const L = f.L, gr = (L.r * 0.9 + Math.sin(tN * 1.5 + L.x) * 8) * zoom;
+      blob(ctx, this._lightSpr(L.kind === 'fireplace' ? 'fGlowS' : 'fGlow', 0.02), f.fx, f.fy, gr);
     }
-
-    if (isFiery) {
-      const warmGradP = ctx.createRadialGradient(px, py, 10, px, py, lightRadius);
-      warmGradP.addColorStop(0, 'rgba(255, 185, 75, 0.38)');
-      warmGradP.addColorStop(0.4, 'rgba(255, 120, 30, 0.18)');
-      warmGradP.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-      ctx.fillStyle = warmGradP;
-      ctx.beginPath();
-      ctx.arc(px, py, lightRadius, 0, Math.PI * 2);
-      ctx.fill();
+    const sprLG = this._lightSpr('lGlow', 0.05);
+    for (const s of lanterns) {
+      const lx = Math.round(wd(s.x) * zoom + screenCenterX), ly = Math.round((s.y - this.camera.y) * zoom + screenCenterY - (s.height / 2 - 8) * zoom);
+      if (lx < -lanternRad || lx > w + lanternRad || ly < -lanternRad || ly > h + lanternRad) continue;
+      blob(ctx, sprLG, lx, ly, lanternRad);
     }
-
+    if (isFiery) blob(ctx, this._lightSpr('pGlow', 10 / lightRadius), px, py, lightRadius);
     ctx.restore();
   }
 
@@ -3077,10 +3074,13 @@ class Game {
     }
   }
 
+  // Altura (px) do player acima do chao: andares/escadas (0 no modo Deus)
+  getLift() { return this.isGodMode ? 0 : (this.player && this.player.z) || 0; }
+
   drawPlayer(ctx, screenCenterX, screenCenterY) {
     const pdx = this.world ? this.world.wrapDelta(this.player.x - this.camera.x) : (this.player.x - this.camera.x);
     const px = Math.round(pdx + screenCenterX);
-    const py = Math.round(this.player.y - this.camera.y + screenCenterY);
+    const py = Math.round(this.player.y - this.getLift() - this.camera.y + screenCenterY);
 
     const jumpOff = this.player.jumpOffset || 0;
     const isSit = this.player.isSitting;
@@ -3089,9 +3089,10 @@ class Game {
     let stepBounce = 0;
     let swayAngle = 0;
     if (this.player.isMoving && !jumpOff && !isSit) {
-      const strideRate = this.player.isRunning ? 0.18 : 0.12;
-      stepBounce = Math.abs(Math.sin(this.player.walkDistance * strideRate)) * (this.player.isRunning ? 3.5 : 2.0);
-      swayAngle = Math.sin(this.player.walkDistance * (strideRate * 0.5)) * (this.player.isRunning ? 0.05 : 0.025);
+      // quique e balanco ligados a fase do passo (2 quiques por ciclo, minimo nos contatos do pe)
+      const ph = (this.player.stridePhase || 0) * Math.PI * 2, spd = Math.min(1, Math.hypot(this.player.vx, this.player.vy) / 150);
+      stepBounce = Math.sin(ph) ** 2 * (this.player.isRunning ? 3.2 : 1.8) * spd;   // sin^2: suave, sem "quina" de |sin|
+      swayAngle = Math.sin(ph) * (this.player.isRunning ? 0.045 : 0.022) * spd;
     }
 
     // 1. Ground Shadow (shrinks smoothly when jumping in air)
@@ -3635,12 +3636,60 @@ class Game {
     this.logMessages.scrollTop = this.logMessages.scrollHeight;
   }
 
+  _loopErr(where, e) {
+    this._seenErr = this._seenErr || {};
+    const k = where + ':' + (e && e.message);
+    if (this._seenErr[k]) return;
+    this._seenErr[k] = true;
+    console.error('[Game.' + where + '] erro (o jogo continua):', e);
+  }
+
+  // HUD de desempenho (tecla F9): fps, tempos por frame e grafico de picos -> ajuda a achar tremidas/engasgos
+  _perfInit() {
+    if (this._perf) return; const el = document.createElement('div');
+    el.style.cssText = 'position:fixed;left:8px;top:140px;z-index:99999;background:rgba(0,0,0,0.78);color:#9ef;font:11px monospace;padding:6px 8px;border:1px solid #468;border-radius:4px;pointer-events:none;display:none;white-space:pre';
+    const cv = document.createElement('canvas'); cv.width = 240; cv.height = 56; cv.style.cssText = 'display:block;margin-top:4px';
+    const tx = document.createElement('div'); el.appendChild(tx); el.appendChild(cv); document.body.appendChild(el);
+    this.dbg = { rain: true, water: true, ground: true, floors: true, objects: true, light: true };
+    const bar = document.createElement('div'); bar.style.cssText = 'margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;pointer-events:auto';
+    for (const [k, n] of [['ground', 'chão'], ['water', 'água'], ['floors', 'pisos'], ['objects', 'objetos'], ['light', 'luz'], ['rain', 'chuva']]) {
+      const b = document.createElement('button'); b.textContent = n + ': ON'; b.style.cssText = 'font:10px monospace;padding:1px 5px;background:#123;color:#9ef;border:1px solid #468;cursor:pointer';
+      b.addEventListener('click', () => { this.dbg[k] = !this.dbg[k]; b.textContent = n + (this.dbg[k] ? ': ON' : ': OFF'); b.style.background = this.dbg[k] ? '#123' : '#611'; b.blur(); });
+      bar.appendChild(b);
+    }
+    el.appendChild(bar);
+    this._ph = this._ph || {}; this._perf = { el, cv, tx, c2: cv.getContext('2d'), iv: new Array(240).fill(16.7), ms: new Array(240).fill(0), i: 0, last: 0, upd: 0, ren: 0, worst: 0 };
+    const btn = document.createElement('button'); btn.textContent = '📊 FPS'; btn.title = 'Painel de desempenho (F9)';
+    btn.style.cssText = 'position:fixed;left:8px;top:112px;z-index:99999;font:11px sans-serif;padding:2px 8px;background:rgba(20,24,32,0.85);color:#9ef;border:1px solid #468;border-radius:4px;cursor:pointer';
+    btn.addEventListener('click', () => { el.style.display = el.style.display === 'none' ? 'block' : 'none'; btn.blur(); }); document.body.appendChild(btn);
+    window.addEventListener('keydown', (e) => { if (e.key === 'F9') { e.preventDefault(); el.style.display = el.style.display === 'none' ? 'block' : 'none'; } });
+  }
+  _perfFrame(interval, upd, ren, now) {
+    const P = this._perf; if (!P || P.el.style.display === 'none') return;
+    P.iv[P.i] = interval; P.ms[P.i] = upd + ren; P.i = (P.i + 1) % 240;
+    const c = P.c2; c.clearRect(0, 0, 240, 56);
+    for (let k = 0; k < 240; k++) { const j = (P.i + k) % 240, v = P.iv[j], h = Math.min(56, v * 1.1); c.fillStyle = v > 25 ? '#f55' : (v > 18.5 ? '#fb3' : '#4c8'); c.fillRect(k, 56 - h, 1, h); c.fillStyle = '#fff'; c.fillRect(k, 56 - Math.min(56, P.ms[j] * 1.1), 1, 1); }
+    c.fillStyle = 'rgba(255,255,255,0.35)'; c.fillRect(0, 56 - 16.7 * 1.1, 240, 1);
+    if (now - P.last > 500) {
+      P.last = now; const a = P.iv, avg = a.reduce((x, y) => x + y, 0) / a.length, sd = Math.sqrt(a.reduce((x, y) => x + (y - avg) * (y - avg), 0) / a.length), mx = Math.max(...a);
+      const G = this.ground; const dpr = window.devicePixelRatio || 1;
+      P.tx.textContent = `FPS ${(1000 / avg).toFixed(0)}  intervalo ${avg.toFixed(1)}ms  desvio ${sd.toFixed(1)}  pico ${mx.toFixed(0)}ms\nupdate ${upd.toFixed(1)}ms  render ${ren.toFixed(1)}ms\nchão ${(this._ph.g||0).toFixed(1)} pisos ${(this._ph.f||0).toFixed(1)} objetos ${(this._ph.o||0).toFixed(1)} luz ${(this._ph.l||0).toFixed(1)} chuva ${(this._ph.r||0).toFixed(1)} ms\nobjetos(${this._ph.nlist||0}): ${this._ph.ty ? Object.entries(this._ph.ty).sort((a,b)=>b[1][0]-a[1][0]).slice(0,5).map(([k,v])=>k+' '+v[0].toFixed(1)+'ms/'+v[1]).join('  ') : ''}\nblocos ${G ? G.cache.size : 0}\ntela ${this.canvas.width}x${this.canvas.height}  DPR ${dpr}  zoom ${(this.camera.zoom || 1).toFixed(2)}`;
+    }
+  }
+
   loop(timestamp) {
     const dt = Math.min((timestamp - this.lastTime) / 1000, 0.1);
+    const interval = timestamp - this.lastTime;
     this.lastTime = timestamp;
+    if (!this._perf) this._perfInit();
+    const t0 = performance.now();
 
-    this.update(dt);
-    this.render();
+    // Um erro pontual de desenho/logica nao pode derrubar o loop (tela preta): registra (no maximo 1x por erro) e segue
+    try { this.update(dt); } catch (e) { this._loopErr('update', e); }
+    const t1 = performance.now();
+    // Com o mapa-mundi aberto o jogo por tras fica parado na tela (nao redesenha a cena inteira 60x por segundo)
+    if (!(this.minimap && this.minimap.isWorldMapOpen)) { try { this.render(); } catch (e) { this._loopErr('render', e); } }
+    this._perfFrame(interval, t1 - t0, performance.now() - t1, timestamp);
 
     requestAnimationFrame((t) => this.loop(t));
   }

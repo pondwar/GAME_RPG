@@ -6,6 +6,7 @@ class WorldCoordinates {
     // 10 Hours of continuous walking at 185 px/s (25 minutes per 15° timezone)
     this.WORLD_WIDTH = 6660096;  // 166.5 km equatorial circumference (exactly 6504 chunks of 1024px)
     this.WORLD_HEIGHT = 3200000; // 80.0 km polar axis (North Pole to South Pole, exactly 3125 chunks)
+    this.terrain = new TerrainModel(this.WORLD_WIDTH, this.WORLD_HEIGHT); // modelo continuo do terreno (terrain.js)
     this.TIMEZONES_COUNT = 24;
     this.TIMEZONE_WIDTH = this.WORLD_WIDTH / this.TIMEZONES_COUNT; // 277,504 px (exactly 271 chunks per fuso)
 
@@ -139,92 +140,30 @@ class WorldCoordinates {
   // PLANETARY TOPOGRAPHY & HYDROLOGY MODEL (TERRAFORMED MARS / ARES)
   // ========================================================
   getTerrainAt(worldX, worldY) {
-    const normX = this.wrapX(worldX);
-    const normY = this.clampY(worldY);
-    const u = normX / this.WORLD_WIDTH;  // 0.0 to 1.0 (West to East)
-    const v = normY / this.WORLD_HEIGHT; // 0.0 (North Pole) to 1.0 (South Pole)
+    const T = this.terrain || (this.terrain = new TerrainModel(this.WORLD_WIDTH, this.WORLD_HEIGHT));
+    const f = this._tf || (this._tf = {});
+    const u = this.wrapX(worldX) / this.WORLD_WIDTH, v = this.clampY(worldY) / this.WORLD_HEIGHT;
+    T.field(u, v, f);
+    let type = T.classify(f.e, f.m, f.t, f.c);
+    const isWater = type === 'deep' || type === 'ocean' || type === 'water';
+    return { type, isWater, isWalkable: !isWater, name: this.terrainName(type, f, u, v) };
+  }
 
-    // 1. Organic coastline wave perturbation
-    const wave = Math.sin(u * 28 * Math.PI) * 0.02 + Math.sin(u * 56 * Math.PI) * 0.01 + Math.cos(v * 32 * Math.PI) * 0.01;
-
-    // 2. Northern Ocean: Oceanus Borealis
-    // Baseline ocean boundary around v = 0.20 (Latitude ~54° N)
-    let oceanBaseline = 0.20 + wave;
-
-    // Land protrusion around Olympus Mons & Arcadia (u between 0.08 and 0.28)
-    if (u >= 0.08 && u <= 0.28) {
-      const arcadiaProtrusion = Math.sin(((u - 0.08) / 0.20) * Math.PI) * 0.08;
-      oceanBaseline -= arcadiaProtrusion;
+  terrainName(type, f, u, v) {
+    const T = TerrainModel, A = this.WORLD_WIDTH / this.WORLD_HEIGHT;
+    if (type === 'deep' || type === 'ocean' || type === 'water') {
+      if (f.cd < T.CHANNEL.w * 3) return 'Estreito de Valles Marineris';
+      if (f.hr < T.HELLAS.sea + 0.03) return 'Mar Interior de Hellas';
+      if (v < 0.22) return 'Oceanus Borealis';
+      return type === 'deep' ? 'Oceano Profundo' : (type === 'ocean' ? 'Mar de Aethel' : 'Águas Rasas');
     }
-
-    // Is it in the Great Northern Ocean?
-    if (v < oceanBaseline) {
-      return { type: 'ocean', isWater: true, isWalkable: false, name: 'Oceanus Borealis' };
-    }
-    // Coastal Shoreline (Sand Beach)
-    if (v < oceanBaseline + 0.018) {
-      return { type: 'shore', isWater: false, isWalkable: true, name: 'Costa Boreal' };
-    }
-
-    // 3. Mount Olympus (Olympus Mons) - Northwest Volcano Caldera
-    const oX = 0.18, oY = 0.22;
-    const oDist = Math.hypot((u - oX) * 1.5, v - oY);
-    if (oDist < 0.055) {
-      if (oDist < 0.025) {
-        return { type: 'snow', isWater: false, isWalkable: true, name: 'Caldeira de Olympus Mons' };
-      }
-      return { type: 'mountain', isWater: false, isWalkable: true, name: 'Encostas de Olympus Mons' };
-    }
-
-    // 4. Valles Marineris (The Grand Canyon Fjord Sea)
-    // Slices across u = 0.46 to 0.78, around v = 0.58 to 0.68
-    if (u >= 0.46 && u <= 0.78) {
-      const t = (u - 0.46) / 0.32;
-      const fjordCenterY = 0.66 - Math.sin(t * Math.PI) * 0.06 + Math.sin(u * 40) * 0.012;
-      const fjordDistY = Math.abs(v - fjordCenterY);
-      if (fjordDistY < 0.018) {
-        return { type: 'water', isWater: true, isWalkable: false, name: 'Estreito de Valles Marineris' };
-      }
-      if (fjordDistY < 0.028) {
-        return { type: 'canyon', isWater: false, isWalkable: true, name: 'Canyons de Valles Marineris' };
-      }
-    }
-
-    // 5. Hellas Sea Basin (Bacia e Mar de Hellas / Kora-Aotearoa)
-    const hX = 0.74, hY = 0.75;
-    const hDist = Math.hypot((u - hX) * 1.3, v - hY);
-    if (hDist < 0.065) {
-      // Inland island in the center of Hellas sea
-      if (hDist < 0.022) {
-        return { type: 'shore', isWater: false, isWalkable: true, name: 'Ilha de Aotearoa' };
-      }
-      return { type: 'water', isWater: true, isWalkable: false, name: 'Mar Interior de Hellas' };
-    }
-    if (hDist < 0.078) {
-      return { type: 'shore', isWater: false, isWalkable: true, name: 'Praias de Hellas' };
-    }
-
-    // 6. Eastern Ocean Separation & Yamato Archipelago
-    if (u >= 0.81 && u <= 0.86 && v >= 0.22 && v <= 0.60) {
-      return { type: 'ocean', isWater: true, isWalkable: false, name: 'Estreito Oriental' };
-    }
-    if (u >= 0.88 && u <= 0.96 && v >= 0.28 && v <= 0.44) {
-      return { type: 'grass', isWater: false, isWalkable: true, name: 'Ilha de Yamato' };
-    }
-    if (u >= 0.86 && u <= 0.98 && (v < 0.28 || v > 0.44)) {
-      return { type: 'ocean', isWater: true, isWalkable: false, name: 'Grande Oceano Oriental' };
-    }
-
-    // 7. Tharsis Highlands & Canyons (u = 0.24 to 0.42, v = 0.35 to 0.60)
-    if (u >= 0.24 && u <= 0.42 && v >= 0.35 && v <= 0.60) {
-      const tharsisNoise = Math.sin(u * 30) * Math.cos(v * 30);
-      if (tharsisNoise > 0.40) {
-        return { type: 'canyon', isWater: false, isWalkable: true, name: 'Planaltos de Tharsis' };
-      }
-    }
-
-    // Default: Lush Continental Plains & Oak Forests (Arcadia, Valória, Chryse, Santa Cruz)
-    return { type: 'grass', isWater: false, isWalkable: true, name: 'Campos & Bosques' };
+    let du = u - 0.20; du -= Math.round(du);
+    if (Math.hypot(du * A, v - 0.22) < 0.05) return 'Encostas de Olympus Mons';
+    if (f.hr < T.HELLAS.island) return 'Ilha de Aotearoa';
+    if (type === 'canyon') return 'Canyons de Valles Marineris';
+    const names = { shore: 'Praia', desert: 'Deserto Vermelho', plains: 'Planícies', forest: 'Floresta', dense_forest: 'Floresta Densa',
+      hills: 'Colinas', mountain: 'Montanhas', snow: 'Terras Geladas' };
+    return names[type] || 'Terras de Aethel';
   }
 }
 
@@ -293,14 +232,12 @@ class ProceduralChunkManager {
     const trees = [];
     const fruits = [];
 
-    // Only generate flora on walkable fertile land (not in deep ocean or water)
-    const treeCount = (!terrain.isWater && terrain.type === 'grass')
-      ? Math.floor(this.hash2D(cx, cy, 1) * 4) + 3
-      : (terrain.type === 'shore' && this.hash2D(cx, cy, 2) < 0.25 ? 1 : 0);
-
-    for (let i = 0; i < treeCount; i++) {
+    // Flora por bioma: cada tentativa sorteia uma posicao e so vira arvore se o terreno ali (nao so o centro do chunk) permitir
+    const DENS = { forest: 0.55, dense_forest: 0.95, plains: 0.10, hills: 0.14, shore: 0.03 };
+    const attempts = 11;
+    for (let i = 0; i < attempts; i++) {
       const entityId = `chunk_${cx}_${cy}_tree_${i}`;
-      
+
       // Check if player has modified this tree previously
       if (this.modifiedEntities.has(entityId)) {
         trees.push(this.modifiedEntities.get(entityId));
@@ -309,6 +246,8 @@ class ProceduralChunkManager {
 
       const relX = this.hash2D(cx, cy, 10 + i * 4) * (this.CHUNK_SIZE - 200) + 100;
       const relY = this.hash2D(cx, cy, 11 + i * 4) * (this.CHUNK_SIZE - 220) + 110;
+      const spot = this.world.getTerrainAt(chunkOriginX + relX, chunkOriginY + relY);
+      if (this.hash2D(cx, cy, 15 + i * 4) > (DENS[spot.type] || 0)) continue;
       const woodCap = Math.floor(this.hash2D(cx, cy, 12 + i * 4) * 5) + 4;
 
       const tree = {
