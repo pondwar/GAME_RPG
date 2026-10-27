@@ -1,4 +1,4 @@
-// minimap.js - Radar minimap + Mapa Global interativo de Aethelgard
+// minimap.js - Radar minimap + Mapa Global interativo de Suritto
 // O mapa global NAO e mais uma imagem: e desenhado direto de WorldCoordinates.getTerrainAt() (a mesma funcao que o jogo usa para
 // decidir o que e agua e o que e terra), entao o pino do jogador e a costa sempre batem com o que se ve jogando.
 // Zoom (roda / botoes / duplo clique), arrastar, grade de latitude/longitude, fusos e regioes, escala em km.
@@ -89,7 +89,7 @@ class MinimapSystem {
       <div class="world-map-container">
         <div class="world-map-header">
           <div class="world-map-title">
-            <h2><span class="world-map-icon">🗺️</span> CARTOGRAFIA DE ARES • PLANETA AETHELGARD</h2>
+            <h2><span class="world-map-icon">🗺️</span> CARTOGRAFIA DE ARES • PLANETA SURITTO</h2>
             <span class="world-map-sub">24 Fusos Horários • Circunferência 166.5 km • Terreno gerado do próprio mundo do jogo</span>
           </div>
           <div class="world-map-controls">

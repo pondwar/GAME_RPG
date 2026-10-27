@@ -1,5 +1,5 @@
 # 📜 GDD — Sistema de Habilidades, Interdependência & Escalabilidade de EXP
-**Projeto**: Aethelgard RPG  
+**Projeto**: Suritto RPG  
 **Versão**: 3.0 (Gamer Architecture Edition)  
 **Inspirações Centrais**: RuneScape (Progressão Orgânica), Tormenta20 / D&D 5e (Perícias e Testes D20), Lineage 2 (Encantamento de Armas +16) e Tibia/ArcheAge (Habitação e Terrenos).
 

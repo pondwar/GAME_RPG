@@ -10,3 +10,7 @@ __pycache__/
 test_screen*.png
 screenshot_preview.png
 scratch/
+
+# Segredos (senha do banco etc.)
+.env
+server/.env

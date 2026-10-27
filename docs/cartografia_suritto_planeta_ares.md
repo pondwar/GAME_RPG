@@ -1,4 +1,4 @@
-# 🗺️ CARTOGRAFIA GLOBAL DE ARES (AETHELGARD)
+# 🗺️ CARTOGRAFIA GLOBAL DE ARES (SURITTO)
 ## O Planeta Marte Oceânico, Fusos Horários GMT & Cidades-Estado
 
 ![Mapa Cartográfico Oficial de Marte Oceânico com Cidades-Estado](C:/Users/david.campos/.gemini/antigravity-ide/brain/442262b4-4f50-4963-a62c-8a4b67bfc369/mars_oceanic_cities_map_1792291061715.jpg)
@@ -7,7 +7,7 @@
 
 ## 1. VISÃO GEOPOLÍTICA & FILOSOFIA DE SPAWN (ESTILO RDR2)
 
-Em Aethelgard, cada jogador que cria sua conta é direcionado para a **Região Cultural correspondente ao seu fuso horário real (GMT)**, posicionada diretamente sobre a gloriosa geografia de **Marte com Mares e Rios (Paleohidrológico / Terraformado)**:
+Em Suritto, cada jogador que cria sua conta é direcionado para a **Região Cultural correspondente ao seu fuso horário real (GMT)**, posicionada diretamente sobre a gloriosa geografia de **Marte com Mares e Rios (Paleohidrológico / Terraformado)**:
 1. **Topografia 100% Marciana:** O mapa preserva o gigantesco **Oceanus Borealis** no hemisfério norte, o colossal **Monte Olimpo (*Olympus Mons*)** a noroeste, o épico estreito navegável de **Valles Marineris** no equador sul e a grande bacia marítima de **Hellas** a sudeste.
 2. **Respeito & Representatividade Global:** Cada nação do planeta possui vilarejos com vida própria, arquitetura tradicional, vestimentas, armas e botânica nativa autênticas.
 3. **Economia Viva dos Vilarejos (Estilo Red Dead Redemption 2):**

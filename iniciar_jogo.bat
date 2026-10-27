@@ -1,7 +1,7 @@
 @echo off
-title Aethelgard RPG - Servidor Local
+title Suritto RPG - Servidor Local
 echo ====================================================
-echo     INICIANDO AETHELGARD - RPG DE SOBREVIVENCIA
+echo     INICIANDO SURITTO - RPG DE SOBREVIVENCIA
 echo ====================================================
 echo Abrindo o jogo no seu navegador...
 start http://localhost:3000

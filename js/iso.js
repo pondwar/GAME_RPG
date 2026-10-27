@@ -1,4 +1,4 @@
-// js/iso.js - Isometric 2:1 Projection & Coordinate Transformations for Aethelgard
+// js/iso.js - Isometric 2:1 Projection & Coordinate Transformations for Suritto
 // 26.565° isometric angle (2:1 slope)
 // cos = 2/sqrt(5) ≈ 0.894427, sin = 1/sqrt(5) ≈ 0.447214
 

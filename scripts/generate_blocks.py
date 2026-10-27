@@ -1,4 +1,4 @@
-# scripts/generate_blocks.py - Procedural High-Detail Pixel-Art Block Generator for Aethelgard
+# scripts/generate_blocks.py - Procedural High-Detail Pixel-Art Block Generator for Suritto
 import os
 import math
 from PIL import Image, ImageDraw

@@ -1,0 +1,397 @@
+{
+  "arch_stone_01": {
+    "category": "arches",
+    "h": 232,
+    "source_index": 50,
+    "w": 158
+  },
+  "arch_stone_mossy_01": {
+    "category": "arches",
+    "h": 234,
+    "source_index": 51,
+    "w": 163
+  },
+  "brick_corner_torch_01": {
+    "category": "brick_walls",
+    "h": 225,
+    "source_index": 18,
+    "w": 200
+  },
+  "brick_corner_window_01": {
+    "category": "brick_walls",
+    "h": 219,
+    "source_index": 17,
+    "w": 201
+  },
+  "brick_corner_window_torch_01": {
+    "category": "brick_walls",
+    "h": 219,
+    "source_index": 28,
+    "w": 201
+  },
+  "brick_wall_barred_window_01": {
+    "category": "brick_walls",
+    "h": 208,
+    "source_index": 6,
+    "w": 203
+  },
+  "brick_wall_barred_window_02": {
+    "category": "brick_walls",
+    "h": 208,
+    "source_index": 7,
+    "w": 207
+  },
+  "brick_wall_barred_window_03": {
+    "category": "brick_walls",
+    "h": 192,
+    "source_index": 29,
+    "w": 208
+  },
+  "brick_wall_broken_torch_01": {
+    "category": "brick_walls",
+    "h": 235,
+    "source_index": 19,
+    "w": 199
+  },
+  "brick_wall_round_window_01": {
+    "category": "brick_walls",
+    "h": 228,
+    "source_index": 20,
+    "w": 140
+  },
+  "brick_wall_torch_01": {
+    "category": "brick_walls",
+    "h": 208,
+    "source_index": 8,
+    "w": 204
+  },
+  "dark_brick_wall_torch_01": {
+    "category": "brick_walls",
+    "h": 233,
+    "source_index": 30,
+    "w": 201
+  },
+  "dark_brick_wall_window_01": {
+    "category": "brick_walls",
+    "h": 230,
+    "source_index": 31,
+    "w": 148
+  },
+  "door_wood_01": {
+    "category": "doors",
+    "h": 228,
+    "source_index": 9,
+    "w": 121
+  },
+  "door_wood_02": {
+    "category": "doors",
+    "h": 218,
+    "source_index": 10,
+    "w": 107
+  },
+  "door_wood_03": {
+    "category": "doors",
+    "h": 222,
+    "source_index": 32,
+    "w": 110
+  },
+  "door_wood_04": {
+    "category": "doors",
+    "h": 231,
+    "source_index": 44,
+    "w": 118
+  },
+  "door_wood_05": {
+    "category": "doors",
+    "h": 232,
+    "source_index": 45,
+    "w": 117
+  },
+  "door_wood_06": {
+    "category": "doors",
+    "h": 228,
+    "source_index": 46,
+    "w": 110
+  },
+  "door_wood_07": {
+    "category": "doors",
+    "h": 230,
+    "source_index": 55,
+    "w": 116
+  },
+  "door_wood_ajar_01": {
+    "category": "doors",
+    "h": 231,
+    "source_index": 48,
+    "w": 119
+  },
+  "door_wood_open_01": {
+    "category": "doors",
+    "h": 232,
+    "source_index": 47,
+    "w": 118
+  },
+  "double_door_iron_gate_01": {
+    "category": "doors",
+    "h": 197,
+    "source_index": 53,
+    "w": 209
+  },
+  "double_door_magic_portal_01": {
+    "category": "doors",
+    "h": 234,
+    "source_index": 54,
+    "w": 180
+  },
+  "double_door_stone_arch_01": {
+    "category": "doors",
+    "h": 206,
+    "source_index": 52,
+    "w": 202
+  },
+  "fence_iron_spiked_01": {
+    "category": "gates",
+    "h": 235,
+    "source_index": 43,
+    "w": 165
+  },
+  "gate_iron_01": {
+    "category": "gates",
+    "h": 234,
+    "source_index": 39,
+    "w": 124
+  },
+  "gate_iron_02": {
+    "category": "gates",
+    "h": 233,
+    "source_index": 40,
+    "w": 126
+  },
+  "gate_iron_03": {
+    "category": "gates",
+    "h": 230,
+    "source_index": 41,
+    "w": 152
+  },
+  "gate_iron_04": {
+    "category": "gates",
+    "h": 223,
+    "source_index": 42,
+    "w": 154
+  },
+  "gate_iron_door_01": {
+    "category": "gates",
+    "h": 214,
+    "source_index": 21,
+    "w": 106
+  },
+  "gate_wood_grate_01": {
+    "category": "gates",
+    "h": 237,
+    "source_index": 49,
+    "w": 136
+  },
+  "ruin_scattered_bricks_01": {
+    "category": "ruins",
+    "h": 218,
+    "source_index": 64,
+    "w": 187
+  },
+  "ruin_wall_cracked_01": {
+    "category": "ruins",
+    "h": 223,
+    "source_index": 62,
+    "w": 195
+  },
+  "ruin_wall_hole_01": {
+    "category": "ruins",
+    "h": 225,
+    "source_index": 61,
+    "w": 194
+  },
+  "ruin_wall_rubble_01": {
+    "category": "ruins",
+    "h": 223,
+    "source_index": 63,
+    "w": 171
+  },
+  "stone_corner_01": {
+    "category": "stone_walls",
+    "h": 227,
+    "source_index": 1,
+    "w": 200
+  },
+  "stone_corner_02": {
+    "category": "stone_walls",
+    "h": 216,
+    "source_index": 11,
+    "w": 206
+  },
+  "stone_corner_03": {
+    "category": "stone_walls",
+    "h": 203,
+    "source_index": 12,
+    "w": 184
+  },
+  "stone_corner_04": {
+    "category": "stone_walls",
+    "h": 210,
+    "source_index": 13,
+    "w": 186
+  },
+  "stone_corner_mossy_01": {
+    "category": "stone_walls",
+    "h": 210,
+    "source_index": 0,
+    "w": 192
+  },
+  "stone_corner_mossy_02": {
+    "category": "stone_walls",
+    "h": 220,
+    "source_index": 22,
+    "w": 207
+  },
+  "stone_corner_mossy_03": {
+    "category": "stone_walls",
+    "h": 218,
+    "source_index": 23,
+    "w": 203
+  },
+  "stone_corner_mossy_04": {
+    "category": "stone_walls",
+    "h": 216,
+    "source_index": 26,
+    "w": 198
+  },
+  "stone_corner_north_01": {
+    "category": "stone_walls",
+    "name": "stone_corner_north_01",
+    "rel_path": "stone_walls/stone_corner_north_01.png"
+  },
+  "stone_pillar_ruined_01": {
+    "category": "stone_walls",
+    "h": 193,
+    "source_index": 15,
+    "w": 102
+  },
+  "stone_wall_broken_01": {
+    "category": "stone_walls",
+    "h": 228,
+    "source_index": 2,
+    "w": 184
+  },
+  "stone_wall_broken_02": {
+    "category": "stone_walls",
+    "h": 227,
+    "source_index": 4,
+    "w": 182
+  },
+  "stone_wall_broken_03": {
+    "category": "stone_walls",
+    "h": 216,
+    "source_index": 24,
+    "w": 202
+  },
+  "stone_wall_mossy_01": {
+    "category": "stone_walls",
+    "h": 233,
+    "source_index": 3,
+    "w": 194
+  },
+  "stone_wall_mossy_02": {
+    "category": "stone_walls",
+    "h": 231,
+    "source_index": 5,
+    "w": 189
+  },
+  "stone_wall_mossy_03": {
+    "category": "stone_walls",
+    "h": 232,
+    "source_index": 25,
+    "w": 195
+  },
+  "stone_wall_mossy_04": {
+    "category": "stone_walls",
+    "h": 229,
+    "source_index": 27,
+    "w": 175
+  },
+  "stone_wall_ruined_01": {
+    "category": "stone_walls",
+    "h": 232,
+    "source_index": 14,
+    "w": 192
+  },
+  "stone_wall_ruined_02": {
+    "category": "stone_walls",
+    "h": 225,
+    "source_index": 16,
+    "w": 166
+  },
+  "stone_wall_straight_01": {
+    "category": "stone_walls",
+    "h": 225,
+    "source_index": 59,
+    "w": 199
+  },
+  "stone_wall_straight_02": {
+    "category": "stone_walls",
+    "h": 223,
+    "source_index": 60,
+    "w": 137
+  },
+  "wood_corner_cross_01": {
+    "category": "wood_walls",
+    "h": 230,
+    "source_index": 33,
+    "w": 206
+  },
+  "wood_corner_cross_02": {
+    "category": "wood_walls",
+    "h": 229,
+    "source_index": 35,
+    "w": 206
+  },
+  "wood_corner_diagonal_01": {
+    "category": "wood_walls",
+    "h": 229,
+    "source_index": 34,
+    "w": 206
+  },
+  "wood_corner_gate_01": {
+    "category": "wood_walls",
+    "h": 226,
+    "source_index": 36,
+    "w": 205
+  },
+  "wood_wall_cross_01": {
+    "category": "wood_walls",
+    "h": 213,
+    "source_index": 57,
+    "w": 195
+  },
+  "wood_wall_low_01": {
+    "category": "wood_walls",
+    "h": 123,
+    "source_index": 56,
+    "w": 208
+  },
+  "wood_wall_panel_01": {
+    "category": "wood_walls",
+    "h": 229,
+    "source_index": 37,
+    "w": 122
+  },
+  "wood_wall_panel_02": {
+    "category": "wood_walls",
+    "h": 238,
+    "source_index": 38,
+    "w": 198
+  },
+  "wood_wall_slot_01": {
+    "category": "wood_walls",
+    "h": 230,
+    "source_index": 58,
+    "w": 204
+  }
+}

@@ -1,0 +1,1822 @@
+{
+  "dungeon_wood_wall_panel_02": {
+    "name": "Wood Wall Panel 02",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_wall_panel_02",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 135,
+    "anchor": {
+      "x": 60,
+      "y": 128
+    },
+    "frame": {
+      "x": 4,
+      "y": 4,
+      "w": 121,
+      "h": 146
+    }
+  },
+  "dungeon_gate_wood_grate_01": {
+    "name": "Gate Wood Grate 01",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "gate_wood_grate_01",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 93,
+    "anchor": {
+      "x": 41,
+      "y": 119
+    },
+    "frame": {
+      "x": 129,
+      "y": 4,
+      "w": 83,
+      "h": 145
+    }
+  },
+  "dungeon_brick_wall_broken_torch_01": {
+    "name": "Brick Wall Broken Torch 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_wall_broken_torch_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 136,
+    "anchor": {
+      "x": 61,
+      "y": 120
+    },
+    "frame": {
+      "x": 216,
+      "y": 4,
+      "w": 122,
+      "h": 144
+    }
+  },
+  "dungeon_fence_iron_spiked_01": {
+    "name": "Fence Iron Spiked 01",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "fence_iron_spiked_01",
+    "kind": "fence",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 113,
+    "anchor": {
+      "x": 50,
+      "y": 123
+    },
+    "frame": {
+      "x": 342,
+      "y": 4,
+      "w": 101,
+      "h": 144
+    }
+  },
+  "dungeon_arch_stone_mossy_01": {
+    "name": "Arch Stone Mossy 01",
+    "category": "dungeon",
+    "subCategory": "arches",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "arch_stone_mossy_01",
+    "kind": "arch",
+    "w": 1,
+    "h": 1,
+    "solid": false,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": true,
+    "groundLengthPx": 112,
+    "anchor": {
+      "x": 50,
+      "y": 126
+    },
+    "frame": {
+      "x": 447,
+      "y": 4,
+      "w": 100,
+      "h": 143
+    }
+  },
+  "dungeon_dark_brick_wall_torch_01": {
+    "name": "Dark Brick Wall Torch 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "dark_brick_wall_torch_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 138,
+    "anchor": {
+      "x": 61,
+      "y": 119
+    },
+    "frame": {
+      "x": 551,
+      "y": 4,
+      "w": 123,
+      "h": 143
+    }
+  },
+  "dungeon_double_door_magic_portal_01": {
+    "name": "Double Door Magic Portal 01",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "double_door_magic_portal_01",
+    "kind": "double_door_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 123,
+    "anchor": {
+      "x": 55,
+      "y": 126
+    },
+    "frame": {
+      "x": 678,
+      "y": 4,
+      "w": 110,
+      "h": 143
+    }
+  },
+  "dungeon_gate_iron_01": {
+    "name": "Gate Iron 01",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "gate_iron_01",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 85,
+    "anchor": {
+      "x": 38,
+      "y": 119
+    },
+    "frame": {
+      "x": 792,
+      "y": 4,
+      "w": 76,
+      "h": 143
+    }
+  },
+  "dungeon_gate_iron_02": {
+    "name": "Gate Iron 02",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "gate_iron_02",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 86,
+    "anchor": {
+      "x": 38,
+      "y": 119
+    },
+    "frame": {
+      "x": 872,
+      "y": 4,
+      "w": 77,
+      "h": 143
+    }
+  },
+  "dungeon_stone_wall_mossy_01": {
+    "name": "Stone Wall Mossy 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_mossy_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 133,
+    "anchor": {
+      "x": 59,
+      "y": 119
+    },
+    "frame": {
+      "x": 953,
+      "y": 4,
+      "w": 119,
+      "h": 143
+    }
+  },
+  "dungeon_arch_stone_01": {
+    "name": "Arch Stone 01",
+    "category": "dungeon",
+    "subCategory": "arches",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "arch_stone_01",
+    "kind": "arch",
+    "w": 1,
+    "h": 1,
+    "solid": false,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": true,
+    "groundLengthPx": 108,
+    "anchor": {
+      "x": 48,
+      "y": 125
+    },
+    "frame": {
+      "x": 1076,
+      "y": 4,
+      "w": 97,
+      "h": 142
+    }
+  },
+  "dungeon_door_wood_05": {
+    "name": "Door Wood 05",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_05",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 80,
+    "anchor": {
+      "x": 35,
+      "y": 125
+    },
+    "frame": {
+      "x": 1177,
+      "y": 4,
+      "w": 72,
+      "h": 142
+    }
+  },
+  "dungeon_door_wood_open_01": {
+    "name": "Door Wood Open 01",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_open_01",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 80,
+    "anchor": {
+      "x": 36,
+      "y": 119
+    },
+    "frame": {
+      "x": 1253,
+      "y": 4,
+      "w": 72,
+      "h": 142
+    }
+  },
+  "dungeon_stone_wall_mossy_03": {
+    "name": "Stone Wall Mossy 03",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_mossy_03",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 133,
+    "anchor": {
+      "x": 59,
+      "y": 119
+    },
+    "frame": {
+      "x": 1329,
+      "y": 4,
+      "w": 119,
+      "h": 142
+    }
+  },
+  "dungeon_stone_wall_ruined_01": {
+    "name": "Stone Wall Ruined 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_ruined_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 131,
+    "anchor": {
+      "x": 58,
+      "y": 119
+    },
+    "frame": {
+      "x": 1452,
+      "y": 4,
+      "w": 117,
+      "h": 142
+    }
+  },
+  "dungeon_dark_brick_wall_window_01": {
+    "name": "Dark Brick Wall Window 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "dark_brick_wall_window_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 102,
+    "anchor": {
+      "x": 45,
+      "y": 124
+    },
+    "frame": {
+      "x": 1573,
+      "y": 4,
+      "w": 91,
+      "h": 141
+    }
+  },
+  "dungeon_door_wood_04": {
+    "name": "Door Wood 04",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_04",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 80,
+    "anchor": {
+      "x": 36,
+      "y": 125
+    },
+    "frame": {
+      "x": 1668,
+      "y": 4,
+      "w": 72,
+      "h": 141
+    }
+  },
+  "dungeon_door_wood_07": {
+    "name": "Door Wood 07",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_07",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 79,
+    "anchor": {
+      "x": 35,
+      "y": 124
+    },
+    "frame": {
+      "x": 1744,
+      "y": 4,
+      "w": 71,
+      "h": 141
+    }
+  },
+  "dungeon_door_wood_ajar_01": {
+    "name": "Door Wood Ajar 01",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_ajar_01",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 82,
+    "anchor": {
+      "x": 36,
+      "y": 135
+    },
+    "frame": {
+      "x": 1819,
+      "y": 4,
+      "w": 73,
+      "h": 141
+    }
+  },
+  "dungeon_gate_iron_03": {
+    "name": "Gate Iron 03",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "gate_iron_03",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 104,
+    "anchor": {
+      "x": 46,
+      "y": 117
+    },
+    "frame": {
+      "x": 1896,
+      "y": 4,
+      "w": 93,
+      "h": 141
+    }
+  },
+  "dungeon_stone_wall_mossy_02": {
+    "name": "Stone Wall Mossy 02",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_mossy_02",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 130,
+    "anchor": {
+      "x": 58,
+      "y": 119
+    },
+    "frame": {
+      "x": 4,
+      "y": 154,
+      "w": 116,
+      "h": 141
+    }
+  },
+  "dungeon_wood_corner_cross_01": {
+    "name": "Wood Corner Cross 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_corner_cross_01",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 141,
+    "anchor": {
+      "x": 63,
+      "y": 140
+    },
+    "frame": {
+      "x": 124,
+      "y": 154,
+      "w": 126,
+      "h": 141
+    }
+  },
+  "dungeon_wood_wall_slot_01": {
+    "name": "Wood Wall Slot 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_wall_slot_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 140,
+    "anchor": {
+      "x": 62,
+      "y": 114
+    },
+    "frame": {
+      "x": 254,
+      "y": 154,
+      "w": 125,
+      "h": 141
+    }
+  },
+  "dungeon_stone_wall_mossy_04": {
+    "name": "Stone Wall Mossy 04",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_mossy_04",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 120,
+    "anchor": {
+      "x": 53,
+      "y": 120
+    },
+    "frame": {
+      "x": 383,
+      "y": 154,
+      "w": 107,
+      "h": 140
+    }
+  },
+  "dungeon_wood_corner_cross_02": {
+    "name": "Wood Corner Cross 02",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_corner_cross_02",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 141,
+    "anchor": {
+      "x": 63,
+      "y": 139
+    },
+    "frame": {
+      "x": 494,
+      "y": 154,
+      "w": 126,
+      "h": 140
+    }
+  },
+  "dungeon_wood_corner_diagonal_01": {
+    "name": "Wood Corner Diagonal 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_corner_diagonal_01",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 141,
+    "anchor": {
+      "x": 63,
+      "y": 139
+    },
+    "frame": {
+      "x": 624,
+      "y": 154,
+      "w": 126,
+      "h": 140
+    }
+  },
+  "dungeon_wood_wall_panel_01": {
+    "name": "Wood Wall Panel 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_wall_panel_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 84,
+    "anchor": {
+      "x": 37,
+      "y": 125
+    },
+    "frame": {
+      "x": 754,
+      "y": 154,
+      "w": 75,
+      "h": 140
+    }
+  },
+  "dungeon_brick_wall_round_window_01": {
+    "name": "Brick Wall Round Window 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_wall_round_window_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 96,
+    "anchor": {
+      "x": 43,
+      "y": 124
+    },
+    "frame": {
+      "x": 833,
+      "y": 154,
+      "w": 86,
+      "h": 139
+    }
+  },
+  "dungeon_door_wood_01": {
+    "name": "Door Wood 01",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_01",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 83,
+    "anchor": {
+      "x": 37,
+      "y": 123
+    },
+    "frame": {
+      "x": 923,
+      "y": 154,
+      "w": 74,
+      "h": 139
+    }
+  },
+  "dungeon_door_wood_06": {
+    "name": "Door Wood 06",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_06",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 75,
+    "anchor": {
+      "x": 33,
+      "y": 123
+    },
+    "frame": {
+      "x": 1001,
+      "y": 154,
+      "w": 67,
+      "h": 139
+    }
+  },
+  "dungeon_stone_corner_01": {
+    "name": "Stone Corner 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_01",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 136,
+    "anchor": {
+      "x": 61,
+      "y": 138
+    },
+    "frame": {
+      "x": 1072,
+      "y": 154,
+      "w": 122,
+      "h": 139
+    }
+  },
+  "dungeon_stone_wall_broken_01": {
+    "name": "Stone Wall Broken 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_broken_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 126,
+    "anchor": {
+      "x": 56,
+      "y": 118
+    },
+    "frame": {
+      "x": 1198,
+      "y": 154,
+      "w": 113,
+      "h": 139
+    }
+  },
+  "dungeon_stone_wall_broken_02": {
+    "name": "Stone Wall Broken 02",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_broken_02",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 124,
+    "anchor": {
+      "x": 55,
+      "y": 118
+    },
+    "frame": {
+      "x": 1315,
+      "y": 154,
+      "w": 111,
+      "h": 139
+    }
+  },
+  "dungeon_brick_corner_torch_01": {
+    "name": "Brick Corner Torch 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_corner_torch_01",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 136,
+    "anchor": {
+      "x": 61,
+      "y": 137
+    },
+    "frame": {
+      "x": 1430,
+      "y": 154,
+      "w": 122,
+      "h": 138
+    }
+  },
+  "dungeon_ruin_wall_hole_01": {
+    "name": "Ruin Wall Hole 01",
+    "category": "dungeon",
+    "subCategory": "ruins",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "ruin_wall_hole_01",
+    "kind": "ruin",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 133,
+    "anchor": {
+      "x": 59,
+      "y": 113
+    },
+    "frame": {
+      "x": 1556,
+      "y": 154,
+      "w": 119,
+      "h": 138
+    }
+  },
+  "dungeon_stone_wall_ruined_02": {
+    "name": "Stone Wall Ruined 02",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_ruined_02",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 114,
+    "anchor": {
+      "x": 50,
+      "y": 119
+    },
+    "frame": {
+      "x": 1679,
+      "y": 154,
+      "w": 102,
+      "h": 138
+    }
+  },
+  "dungeon_stone_wall_straight_01": {
+    "name": "Stone Wall Straight 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_straight_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 136,
+    "anchor": {
+      "x": 61,
+      "y": 113
+    },
+    "frame": {
+      "x": 1785,
+      "y": 154,
+      "w": 122,
+      "h": 138
+    }
+  },
+  "dungeon_wood_corner_gate_01": {
+    "name": "Wood Corner Gate 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_corner_gate_01",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 140,
+    "anchor": {
+      "x": 62,
+      "y": 136
+    },
+    "frame": {
+      "x": 1911,
+      "y": 154,
+      "w": 125,
+      "h": 138
+    }
+  },
+  "dungeon_door_wood_03": {
+    "name": "Door Wood 03",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_03",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 75,
+    "anchor": {
+      "x": 33,
+      "y": 122
+    },
+    "frame": {
+      "x": 4,
+      "y": 299,
+      "w": 67,
+      "h": 136
+    }
+  },
+  "dungeon_gate_iron_04": {
+    "name": "Gate Iron 04",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "gate_iron_04",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 105,
+    "anchor": {
+      "x": 47,
+      "y": 117
+    },
+    "frame": {
+      "x": 75,
+      "y": 299,
+      "w": 94,
+      "h": 136
+    }
+  },
+  "dungeon_ruin_wall_cracked_01": {
+    "name": "Ruin Wall Cracked 01",
+    "category": "dungeon",
+    "subCategory": "ruins",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "ruin_wall_cracked_01",
+    "kind": "ruin",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 133,
+    "anchor": {
+      "x": 59,
+      "y": 113
+    },
+    "frame": {
+      "x": 173,
+      "y": 299,
+      "w": 119,
+      "h": 136
+    }
+  },
+  "dungeon_ruin_wall_rubble_01": {
+    "name": "Ruin Wall Rubble 01",
+    "category": "dungeon",
+    "subCategory": "ruins",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "ruin_wall_rubble_01",
+    "kind": "ruin",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 117,
+    "anchor": {
+      "x": 52,
+      "y": 126
+    },
+    "frame": {
+      "x": 296,
+      "y": 299,
+      "w": 105,
+      "h": 136
+    }
+  },
+  "dungeon_stone_wall_straight_02": {
+    "name": "Stone Wall Straight 02",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_straight_02",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 94,
+    "anchor": {
+      "x": 42,
+      "y": 120
+    },
+    "frame": {
+      "x": 405,
+      "y": 299,
+      "w": 84,
+      "h": 136
+    }
+  },
+  "dungeon_stone_corner_mossy_02": {
+    "name": "Stone Corner Mossy 02",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_mossy_02",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 142,
+    "anchor": {
+      "x": 63,
+      "y": 134
+    },
+    "frame": {
+      "x": 493,
+      "y": 299,
+      "w": 127,
+      "h": 135
+    }
+  },
+  "dungeon_brick_corner_window_01": {
+    "name": "Brick Corner Window 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_corner_window_01",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 138,
+    "anchor": {
+      "x": 61,
+      "y": 133
+    },
+    "frame": {
+      "x": 624,
+      "y": 299,
+      "w": 123,
+      "h": 134
+    }
+  },
+  "dungeon_brick_corner_window_torch_01": {
+    "name": "Brick Corner Window Torch 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_corner_window_torch_01",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 138,
+    "anchor": {
+      "x": 61,
+      "y": 133
+    },
+    "frame": {
+      "x": 751,
+      "y": 299,
+      "w": 123,
+      "h": 134
+    }
+  },
+  "dungeon_door_wood_02": {
+    "name": "Door Wood 02",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "door_wood_02",
+    "kind": "door",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 73,
+    "anchor": {
+      "x": 32,
+      "y": 119
+    },
+    "frame": {
+      "x": 878,
+      "y": 299,
+      "w": 65,
+      "h": 133
+    }
+  },
+  "dungeon_ruin_scattered_bricks_01": {
+    "name": "Ruin Scattered Bricks 01",
+    "category": "dungeon",
+    "subCategory": "ruins",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "ruin_scattered_bricks_01",
+    "kind": "ruin",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 127,
+    "anchor": {
+      "x": 57,
+      "y": 126
+    },
+    "frame": {
+      "x": 947,
+      "y": 299,
+      "w": 114,
+      "h": 133
+    }
+  },
+  "dungeon_stone_corner_mossy_03": {
+    "name": "Stone Corner Mossy 03",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_mossy_03",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 139,
+    "anchor": {
+      "x": 62,
+      "y": 133
+    },
+    "frame": {
+      "x": 1065,
+      "y": 299,
+      "w": 124,
+      "h": 133
+    }
+  },
+  "dungeon_stone_corner_02": {
+    "name": "Stone Corner 02",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_02",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 141,
+    "anchor": {
+      "x": 63,
+      "y": 132
+    },
+    "frame": {
+      "x": 1193,
+      "y": 299,
+      "w": 126,
+      "h": 132
+    }
+  },
+  "dungeon_stone_corner_mossy_04": {
+    "name": "Stone Corner Mossy 04",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_mossy_04",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 135,
+    "anchor": {
+      "x": 60,
+      "y": 132
+    },
+    "frame": {
+      "x": 1323,
+      "y": 299,
+      "w": 121,
+      "h": 132
+    }
+  },
+  "dungeon_stone_wall_broken_03": {
+    "name": "Stone Wall Broken 03",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_wall_broken_03",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 139,
+    "anchor": {
+      "x": 61,
+      "y": 127
+    },
+    "frame": {
+      "x": 1448,
+      "y": 299,
+      "w": 124,
+      "h": 132
+    }
+  },
+  "dungeon_gate_iron_door_01": {
+    "name": "Gate Iron Door 01",
+    "category": "dungeon",
+    "subCategory": "gates",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "gate_iron_door_01",
+    "kind": "gate",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": true,
+    "isArch": false,
+    "groundLengthPx": 73,
+    "anchor": {
+      "x": 32,
+      "y": 117
+    },
+    "frame": {
+      "x": 1576,
+      "y": 299,
+      "w": 65,
+      "h": 131
+    }
+  },
+  "dungeon_wood_wall_cross_01": {
+    "name": "Wood Wall Cross 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_wall_cross_01",
+    "kind": "wall",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": true,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 133,
+    "anchor": {
+      "x": 59,
+      "y": 106
+    },
+    "frame": {
+      "x": 1645,
+      "y": 299,
+      "w": 119,
+      "h": 130
+    }
+  },
+  "dungeon_stone_corner_04": {
+    "name": "Stone Corner 04",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_04",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 127,
+    "anchor": {
+      "x": 57,
+      "y": 128
+    },
+    "frame": {
+      "x": 1768,
+      "y": 299,
+      "w": 114,
+      "h": 128
+    }
+  },
+  "dungeon_stone_corner_mossy_01": {
+    "name": "Stone Corner Mossy 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_mossy_01",
+    "kind": "corner_concave",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 131,
+    "anchor": {
+      "x": 58,
+      "y": 68
+    },
+    "frame": {
+      "x": 1886,
+      "y": 299,
+      "w": 117,
+      "h": 128
+    }
+  },
+  "dungeon_brick_wall_barred_window_01": {
+    "name": "Brick Wall Barred Window 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_wall_barred_window_01",
+    "kind": "wall_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 139,
+    "anchor": {
+      "x": 62,
+      "y": 127
+    },
+    "frame": {
+      "x": 4,
+      "y": 439,
+      "w": 124,
+      "h": 127
+    }
+  },
+  "dungeon_brick_wall_barred_window_02": {
+    "name": "Brick Wall Barred Window 02",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_wall_barred_window_02",
+    "kind": "wall_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 142,
+    "anchor": {
+      "x": 63,
+      "y": 127
+    },
+    "frame": {
+      "x": 132,
+      "y": 439,
+      "w": 127,
+      "h": 127
+    }
+  },
+  "dungeon_brick_wall_torch_01": {
+    "name": "Brick Wall Torch 01",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_wall_torch_01",
+    "kind": "wall_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 140,
+    "anchor": {
+      "x": 62,
+      "y": 127
+    },
+    "frame": {
+      "x": 263,
+      "y": 439,
+      "w": 125,
+      "h": 127
+    }
+  },
+  "dungeon_double_door_stone_arch_01": {
+    "name": "Double Door Stone Arch 01",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "double_door_stone_arch_01",
+    "kind": "double_door_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 139,
+    "anchor": {
+      "x": 61,
+      "y": 123
+    },
+    "frame": {
+      "x": 392,
+      "y": 439,
+      "w": 124,
+      "h": 126
+    }
+  },
+  "dungeon_stone_corner_03": {
+    "name": "Stone Corner 03",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_corner_03",
+    "kind": "corner_convex",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": true,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 126,
+    "anchor": {
+      "x": 56,
+      "y": 124
+    },
+    "frame": {
+      "x": 520,
+      "y": 439,
+      "w": 113,
+      "h": 124
+    }
+  },
+  "dungeon_double_door_iron_gate_01": {
+    "name": "Double Door Iron Gate 01",
+    "category": "dungeon",
+    "subCategory": "doors",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "double_door_iron_gate_01",
+    "kind": "double_door_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": true,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 143,
+    "anchor": {
+      "x": 64,
+      "y": 117
+    },
+    "frame": {
+      "x": 637,
+      "y": 439,
+      "w": 128,
+      "h": 121
+    }
+  },
+  "dungeon_stone_pillar_ruined_01": {
+    "name": "Stone Pillar Ruined 01",
+    "category": "dungeon",
+    "subCategory": "stone_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "stone_pillar_ruined_01",
+    "kind": "pillar",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 69,
+    "anchor": {
+      "x": 31,
+      "y": 109
+    },
+    "frame": {
+      "x": 769,
+      "y": 439,
+      "w": 62,
+      "h": 118
+    }
+  },
+  "dungeon_brick_wall_barred_window_03": {
+    "name": "Brick Wall Barred Window 03",
+    "category": "dungeon",
+    "subCategory": "brick_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "brick_wall_barred_window_03",
+    "kind": "wall_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 142,
+    "anchor": {
+      "x": 63,
+      "y": 117
+    },
+    "frame": {
+      "x": 835,
+      "y": 439,
+      "w": 127,
+      "h": 117
+    }
+  },
+  "dungeon_wood_wall_low_01": {
+    "name": "Wood Wall Low 01",
+    "category": "dungeon",
+    "subCategory": "wood_walls",
+    "layer": 1,
+    "isDungeon": true,
+    "sprite": "wood_wall_low_01",
+    "kind": "wall_frontal",
+    "w": 1,
+    "h": 1,
+    "solid": true,
+    "isWall": false,
+    "isCorner": false,
+    "isDoor": false,
+    "isGate": false,
+    "isArch": false,
+    "groundLengthPx": 142,
+    "anchor": {
+      "x": 63,
+      "y": 74
+    },
+    "frame": {
+      "x": 966,
+      "y": 439,
+      "w": 127,
+      "h": 75
+    }
+  }
+}

@@ -1,14 +1,14 @@
 # GDD — SISTEMA DE PLANETA, CARTOGRAFIA & ECOLOGIA GLOBAL
-**Aethelgard: O Mundo Contínuo com Fusos Horários Reais & Ecossistema Vivo**  
+**Suritto: O Mundo Contínuo com Fusos Horários Reais & Ecossistema Vivo**  
 *Documento de Design Oficial • Versão 1.0*  
-*Autor: Equipe de Desenvolvimento & Game Design Aethelgard*  
+*Autor: Equipe de Desenvolvimento & Game Design Suritto*  
 *Status: Aprovado para Arquitetura & Implementação*
 
 ---
 
 ## 1. VISÃO GERAL & FILOSOFIA DE DESIGN
 
-O objetivo de Aethelgard é criar uma experiência de RPG medieval com **99% de realismo ecológico e geográfico**, eliminando barreiras invisíveis, telas de carregamento entre continentes e instâncias isoladas de servidores.
+O objetivo de Suritto é criar uma experiência de RPG medieval com **99% de realismo ecológico e geográfico**, eliminando barreiras invisíveis, telas de carregamento entre continentes e instâncias isoladas de servidores.
 
 ### Pilares Fundamentais:
 1. **Planeta Contínuo Esférico/Cilíndrico (*Seamless Toroidal Wrap*):**
@@ -84,7 +84,7 @@ O eixo vertical ($Y$) do planeta dita a **Latitude Geográfica**, governada pelo
 
 ## 4. ENCICLOPÉDIA BOTÂNICA: ÁRVORES & CORTE DE MADEIRA (1 a 99)
 
-A flora de Aethelgard foi desenhada para integrar a botânica real com o sistema de progressão de níveis de **Corte de Madeira (Woodcutting)**:
+A flora de Suritto foi desenhada para integrar a botânica real com o sistema de progressão de níveis de **Corte de Madeira (Woodcutting)**:
 
 ### Tabela Completa de Espécies Arbóreas
 
@@ -98,7 +98,7 @@ A flora de Aethelgard foi desenhada para integrar a botânica real com o sistema
 | **30** | **Pau-Brasil / Ipê de Fogo** | Selvas Tropicais Úmidas | 8 Toras duras avermelhadas • Seiva carmesim | Tingimento de capas nobres, escudos de alto impacto |
 | **35** | **Pinheiro Nórdico** (*Pinus*) | Taiga Boreal e Cordilheiras | 8 a 10 Toras • 60% chance de Resina pura | Tochas de longa duração, vigas mestras de casas |
 | **40** | **Seringueira Nativa** (*Hevea*) | Florestas Pluviais Equatoriais | 4 Toras • Extração de Látex elástico puro | Vedações impermeáveis, estilingues, botas de caça |
-| **50** | **Teixo Nobre** (*Taxus*) | Bosques Místicos e Santuários | 6 Toras de altíssima elasticidade | **Forja dos Melhores Arcos Longos** de Aethelgard |
+| **50** | **Teixo Nobre** (*Taxus*) | Bosques Místicos e Santuários | 6 Toras de altíssima elasticidade | **Forja dos Melhores Arcos Longos** de Suritto |
 | **55** | **Lariço da Geada** (*Larix*) | Tundras de Gelo e Encostas Árticas | 6 Toras densas que afundam na água | Trenós de alta velocidade, estacas à prova de podridão |
 | **60** | **Ginkgo Biloba Dourado** | Bosques Sagrados do Oriente | 6 Toras douradas • Sementes medicinais | Elixires de antídoto de veneno, móveis de imperador |
 | **65** | **Mogno Tropical** (*Swietenia*) | Selvas Fechadas Equatoriais | 10 Toras avermelhadas densas e nobres | **Construção de Naus Oceânicas** e caravelas |
@@ -170,4 +170,4 @@ Cada ponto $(X, Y)$ no planeta calcula deterministicamente:
 - [ ] **Fase 6:** Transição de Biomas contínuos (Bosque Temperado -> Taiga Fria -> Deserto).
 
 ---
-*Aethelgard Game Design Document • Documento protegido e catalogado no repositório do projeto.*
+*Suritto Game Design Document • Documento protegido e catalogado no repositório do projeto.*

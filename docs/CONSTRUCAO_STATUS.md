@@ -1,4 +1,4 @@
-# Sistema de construção — status (Aethelgard)
+# Sistema de construção — status (Suritto)
 
 Atualizado em 22/10/2026. Fases do `GDD_CONSTRUCAO_E_SPRITES.md` já feitas e testadas no jogo: **F0, F1, F2, F3, F4, F5**.
 
@@ -20,7 +20,7 @@ Atualizado em 22/10/2026. Fases do `GDD_CONSTRUCAO_E_SPRITES.md` já feitas e te
 - **Tranca (guardado para o futuro):** **Shift + clique** numa porta/grade tranca (CD 12) ou destranca. Clique normal numa trancada rola D20 de **Ladinagem** (`window.diceSystem.rollD20('Arrombar fechadura', bonus, cd, cb)`); sucesso destranca e dá 12 XP de `ladinagem`. Estado em `block.lock = {locked, cd}`; abertura em `block.isOpen` + `block.openT`. Próximo passo possível: botão de tranca no painel do construtor, CD por peça, chave como item, força bruta com `forca`.
 
 ## Saves
-Chave do `localStorage`: `aethelgard_blocks_v2` (inalterada). Peças da cena de teste têm `temp:true` e **não** são salvas nem exportadas. Antes de limpar cache do navegador, use **Exportar** no construtor.
+Chave do `localStorage`: `suritto_blocks_v2` (inalterada). Peças da cena de teste têm `temp:true` e **não** são salvas nem exportadas. Antes de limpar cache do navegador, use **Exportar** no construtor.
 
 ## Cuidados
 - Ao mudar qualquer `.js`, aumente o `?v=` no `index.html` (o navegador guarda em cache).
@@ -39,8 +39,8 @@ Chave do `localStorage`: `aethelgard_blocks_v2` (inalterada). Peças da cena de 
 - Arte nova gerada por `dungeon_sprites/extra/append_extras.py` (idempotente, anexa ao atlas; EXTRA_W=40 controla a largura do portal duplo). **Se o atlas for regenerado por make_game_atlas, rode `python append_extras.py <assets/dungeon>` de novo.**
 
 ## F6 - Persistencia por chunk
-- Save em chunks de 16x16 tiles: chaves `aethelgard_chunk_v1:<cx>,<cy>` + indice `aethelgard_chunks_v1` (localStorage). So chunks alterados sao regravados (debounce 250 ms; tambem ao fechar/ocultar a aba).
-- Migracao automatica na 1a carga a partir de `aethelgard_blocks_v2`, que fica intacto como backup (pode ser apagado depois).
+- Save em chunks de 16x16 tiles: chaves `suritto_chunk_v1:<cx>,<cy>` + indice `suritto_chunks_v1` (localStorage). So chunks alterados sao regravados (debounce 250 ms; tambem ao fechar/ocultar a aba).
+- Migracao automatica na 1a carga a partir de `suritto_blocks_v2`, que fica intacto como backup (pode ser apagado depois).
 - Se o navegador estourar a cota, aparece aviso no log (usar 💾 Exportar). Estado das portas (aberta/trancada) vai junto no save.
 - Proximo passo possivel: carregar so os chunks proximos do jogador (hoje carrega todos ao iniciar).
 
@@ -56,7 +56,7 @@ Chave do `localStorage`: `aethelgard_blocks_v2` (inalterada). Peças da cena de 
 - (substituido pela secao F8 abaixo)
 
 ## F8 - Limpeza geral e encaixe unico
-- Mapa zerado: na 1a carga o jogo apaga os saves antigos (chunks + `aethelgard_blocks_v2`) e grava `aethelgard_reset='f8_clean'` (so roda uma vez; para zerar de novo, mude a tag em `loadSavedWorldData`).
+- Mapa zerado: na 1a carga o jogo apaga os saves antigos (chunks + `suritto_blocks_v2`) e grava `suritto_reset='f8_clean'` (so roda uma vez; para zerar de novo, mude a tag em `loadSavedWorldData`).
 - Catalogo so tem pecas do atlas (48): pedras 20, portas 6, grades 7, tijolos 6, madeiras 8, arco 1. Apagados: todos os blocos classicos (parede/porta/piso/telhado/objeto + imagens preload), ruinas, variacoes tecnicas, wood_wall_low_01, tijolos 7-11, arch_stone_01 (igual ao portal de pedra), stone_wall_broken_03 (encaixe torto). Dead code dos classicos ainda existe em `architect.js` (inofensivo). As imagens em `assets/blocks/` nao sao mais usadas e podem ser apagadas.
 - Encaixe: ja era um modulo unico (`DungeonSnap`, usado por TODAS as pecas). Cada peca so precisa de metadados no atlas: `face` A/B (retas, portas, grades, arcos) ou bracos (quinas). Arcos ganharam `face` via `dungeon_sprites/extra/patch_atlas_meta.py` (idempotente; rodar de novo se o atlas for regenerado, junto com `append_extras.py`).
 - Verificado em folha de conferencia: todas as 48 pecas encaixam parede-peca-parede (quinas concavas so encaixam com parede espelhada, por geometria; pilar e livre, sem pontas).

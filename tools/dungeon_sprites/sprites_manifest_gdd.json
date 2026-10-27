@@ -1,0 +1,1082 @@
+{
+ "meta": {
+  "targetColumnHeightPx": 104,
+  "projection": "2:1 isometrico (26.565 graus)",
+  "cosAngle": 0.894,
+  "spriteScaleBase": "1x",
+  "note": "Todos os valores são medidos no PNG 1x. Verifique visualmente em contact_sheet.png."
+ },
+ "sprites": {
+  "stone_corner_mossy_01": {
+   "category": "stone_walls",
+   "kind": "corner_concave",
+   "screenSlope": "^",
+   "axis": null,
+   "w": 192,
+   "h": 210,
+   "columnHeightPx": 174,
+   "recommendedScale": 0.598,
+   "anchor": [
+    96,
+    181
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_corner_01": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "\\",
+   "axis": null,
+   "w": 200,
+   "h": 227,
+   "columnHeightPx": 169,
+   "recommendedScale": 0.615,
+   "anchor": [
+    100,
+    217
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_wall_broken_01": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "/",
+   "axis": "y",
+   "w": 184,
+   "h": 228,
+   "columnHeightPx": 162,
+   "recommendedScale": 0.642,
+   "anchor": [
+    92,
+    201
+   ],
+   "groundLengthPxAtRecScale": 132
+  },
+  "stone_wall_mossy_01": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 194,
+   "h": 233,
+   "columnHeightPx": 163,
+   "recommendedScale": 0.638,
+   "anchor": [
+    97,
+    203
+   ],
+   "groundLengthPxAtRecScale": 138
+  },
+  "stone_wall_broken_02": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "/",
+   "axis": "y",
+   "w": 182,
+   "h": 227,
+   "columnHeightPx": 162,
+   "recommendedScale": 0.642,
+   "anchor": [
+    91,
+    200
+   ],
+   "groundLengthPxAtRecScale": 131
+  },
+  "stone_wall_mossy_02": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 189,
+   "h": 231,
+   "columnHeightPx": 164,
+   "recommendedScale": 0.634,
+   "anchor": [
+    94,
+    201
+   ],
+   "groundLengthPxAtRecScale": 134
+  },
+  "brick_wall_barred_window_01": {
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "screenSlope": "flat",
+   "axis": null,
+   "w": 203,
+   "h": 208,
+   "columnHeightPx": 208,
+   "recommendedScale": 0.5,
+   "anchor": [
+    101,
+    207
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "brick_wall_barred_window_02": {
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "screenSlope": "flat",
+   "axis": null,
+   "w": 207,
+   "h": 208,
+   "columnHeightPx": 208,
+   "recommendedScale": 0.5,
+   "anchor": [
+    103,
+    207
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "brick_wall_torch_01": {
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "screenSlope": "flat",
+   "axis": null,
+   "w": 204,
+   "h": 208,
+   "columnHeightPx": 208,
+   "recommendedScale": 0.5,
+   "anchor": [
+    102,
+    207
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "door_wood_01": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 121,
+   "h": 228,
+   "columnHeightPx": 180,
+   "recommendedScale": 0.578,
+   "anchor": [
+    60,
+    206
+   ],
+   "groundLengthPxAtRecScale": 78
+  },
+  "door_wood_02": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 107,
+   "h": 218,
+   "columnHeightPx": 175,
+   "recommendedScale": 0.594,
+   "anchor": [
+    53,
+    197
+   ],
+   "groundLengthPxAtRecScale": 71
+  },
+  "stone_corner_02": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 206,
+   "h": 216,
+   "columnHeightPx": 176,
+   "recommendedScale": 0.591,
+   "anchor": [
+    103,
+    215
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_corner_03": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 184,
+   "h": 203,
+   "columnHeightPx": 171,
+   "recommendedScale": 0.608,
+   "anchor": [
+    92,
+    202
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_corner_04": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 186,
+   "h": 210,
+   "columnHeightPx": 175,
+   "recommendedScale": 0.594,
+   "anchor": [
+    93,
+    209
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_wall_ruined_01": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 192,
+   "h": 232,
+   "columnHeightPx": 160,
+   "recommendedScale": 0.65,
+   "anchor": [
+    96,
+    201
+   ],
+   "groundLengthPxAtRecScale": 140
+  },
+  "stone_pillar_ruined_01": {
+   "category": "stone_walls",
+   "kind": "pillar",
+   "screenSlope": "\\",
+   "axis": null,
+   "w": 102,
+   "h": 193,
+   "columnHeightPx": 159,
+   "recommendedScale": 0.615,
+   "anchor": [
+    51,
+    183
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "stone_wall_ruined_02": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 166,
+   "h": 225,
+   "columnHeightPx": 165,
+   "recommendedScale": 0.63,
+   "anchor": [
+    83,
+    199
+   ],
+   "groundLengthPxAtRecScale": 117
+  },
+  "brick_corner_window_01": {
+   "category": "brick_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 201,
+   "h": 219,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    100,
+    218
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "brick_corner_torch_01": {
+   "category": "brick_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 200,
+   "h": 225,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    100,
+    224
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "brick_wall_broken_torch_01": {
+   "category": "brick_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 199,
+   "h": 235,
+   "columnHeightPx": 158,
+   "recommendedScale": 0.658,
+   "anchor": [
+    99,
+    203
+   ],
+   "groundLengthPxAtRecScale": 146
+  },
+  "brick_wall_round_window_01": {
+   "category": "brick_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 140,
+   "h": 228,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    70,
+    209
+   ],
+   "groundLengthPxAtRecScale": 91
+  },
+  "gate_iron_door_01": {
+   "category": "gates",
+   "kind": "gate",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 106,
+   "h": 214,
+   "columnHeightPx": 173,
+   "recommendedScale": 0.601,
+   "anchor": [
+    53,
+    195
+   ],
+   "groundLengthPxAtRecScale": 71
+  },
+  "stone_corner_mossy_02": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 207,
+   "h": 220,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    103,
+    219
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_corner_mossy_03": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 203,
+   "h": 218,
+   "columnHeightPx": 178,
+   "recommendedScale": 0.584,
+   "anchor": [
+    101,
+    217
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_wall_broken_03": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 202,
+   "h": 216,
+   "columnHeightPx": 169,
+   "recommendedScale": 0.615,
+   "anchor": [
+    101,
+    215
+   ],
+   "groundLengthPxAtRecScale": 139
+  },
+  "stone_wall_mossy_03": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 195,
+   "h": 232,
+   "columnHeightPx": 161,
+   "recommendedScale": 0.646,
+   "anchor": [
+    97,
+    201
+   ],
+   "groundLengthPxAtRecScale": 141
+  },
+  "stone_corner_mossy_04": {
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 198,
+   "h": 216,
+   "columnHeightPx": 178,
+   "recommendedScale": 0.584,
+   "anchor": [
+    99,
+    215
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "stone_wall_mossy_04": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 175,
+   "h": 229,
+   "columnHeightPx": 165,
+   "recommendedScale": 0.63,
+   "anchor": [
+    87,
+    202
+   ],
+   "groundLengthPxAtRecScale": 123
+  },
+  "brick_corner_window_torch_01": {
+   "category": "brick_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 201,
+   "h": 219,
+   "columnHeightPx": 180,
+   "recommendedScale": 0.578,
+   "anchor": [
+    100,
+    218
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "brick_wall_barred_window_03": {
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "screenSlope": "flat",
+   "axis": null,
+   "w": 208,
+   "h": 192,
+   "columnHeightPx": 192,
+   "recommendedScale": 0.542,
+   "anchor": [
+    104,
+    191
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "dark_brick_wall_torch_01": {
+   "category": "brick_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 201,
+   "h": 233,
+   "columnHeightPx": 158,
+   "recommendedScale": 0.658,
+   "anchor": [
+    100,
+    203
+   ],
+   "groundLengthPxAtRecScale": 148
+  },
+  "dark_brick_wall_window_01": {
+   "category": "brick_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 148,
+   "h": 230,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    74,
+    209
+   ],
+   "groundLengthPxAtRecScale": 96
+  },
+  "door_wood_03": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 110,
+   "h": 222,
+   "columnHeightPx": 177,
+   "recommendedScale": 0.588,
+   "anchor": [
+    55,
+    204
+   ],
+   "groundLengthPxAtRecScale": 72
+  },
+  "wood_corner_cross_01": {
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 206,
+   "h": 230,
+   "columnHeightPx": 185,
+   "recommendedScale": 0.562,
+   "anchor": [
+    103,
+    229
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "wood_corner_diagonal_01": {
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 206,
+   "h": 229,
+   "columnHeightPx": 186,
+   "recommendedScale": 0.559,
+   "anchor": [
+    103,
+    228
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "wood_corner_cross_02": {
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 206,
+   "h": 229,
+   "columnHeightPx": 185,
+   "recommendedScale": 0.562,
+   "anchor": [
+    103,
+    228
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "wood_corner_gate_01": {
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "screenSlope": "\\",
+   "axis": null,
+   "w": 205,
+   "h": 226,
+   "columnHeightPx": 184,
+   "recommendedScale": 0.565,
+   "anchor": [
+    102,
+    224
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "wood_wall_panel_01": {
+   "category": "wood_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 122,
+   "h": 229,
+   "columnHeightPx": 184,
+   "recommendedScale": 0.565,
+   "anchor": [
+    61,
+    209
+   ],
+   "groundLengthPxAtRecScale": 77
+  },
+  "wood_wall_panel_02": {
+   "category": "wood_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 198,
+   "h": 238,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    99,
+    215
+   ],
+   "groundLengthPxAtRecScale": 129
+  },
+  "gate_iron_01": {
+   "category": "gates",
+   "kind": "gate",
+   "screenSlope": "/",
+   "axis": "y",
+   "w": 124,
+   "h": 234,
+   "columnHeightPx": 182,
+   "recommendedScale": 0.571,
+   "anchor": [
+    62,
+    209
+   ],
+   "groundLengthPxAtRecScale": 79
+  },
+  "gate_iron_02": {
+   "category": "gates",
+   "kind": "gate",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 126,
+   "h": 233,
+   "columnHeightPx": 183,
+   "recommendedScale": 0.568,
+   "anchor": [
+    63,
+    209
+   ],
+   "groundLengthPxAtRecScale": 80
+  },
+  "gate_iron_03": {
+   "category": "gates",
+   "kind": "gate",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 152,
+   "h": 230,
+   "columnHeightPx": 178,
+   "recommendedScale": 0.584,
+   "anchor": [
+    76,
+    202
+   ],
+   "groundLengthPxAtRecScale": 99
+  },
+  "gate_iron_04": {
+   "category": "gates",
+   "kind": "gate",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 154,
+   "h": 223,
+   "columnHeightPx": 180,
+   "recommendedScale": 0.578,
+   "anchor": [
+    77,
+    200
+   ],
+   "groundLengthPxAtRecScale": 100
+  },
+  "fence_iron_spiked_01": {
+   "category": "gates",
+   "kind": "fence",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 165,
+   "h": 235,
+   "columnHeightPx": 175,
+   "recommendedScale": 0.594,
+   "anchor": [
+    82,
+    208
+   ],
+   "groundLengthPxAtRecScale": 110
+  },
+  "door_wood_04": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "/",
+   "axis": "y",
+   "w": 118,
+   "h": 231,
+   "columnHeightPx": 183,
+   "recommendedScale": 0.568,
+   "anchor": [
+    59,
+    210
+   ],
+   "groundLengthPxAtRecScale": 75
+  },
+  "door_wood_05": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 117,
+   "h": 232,
+   "columnHeightPx": 185,
+   "recommendedScale": 0.562,
+   "anchor": [
+    58,
+    211
+   ],
+   "groundLengthPxAtRecScale": 74
+  },
+  "door_wood_06": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 110,
+   "h": 228,
+   "columnHeightPx": 179,
+   "recommendedScale": 0.581,
+   "anchor": [
+    55,
+    204
+   ],
+   "groundLengthPxAtRecScale": 71
+  },
+  "door_wood_open_01": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 118,
+   "h": 232,
+   "columnHeightPx": 171,
+   "recommendedScale": 0.608,
+   "anchor": [
+    59,
+    189
+   ],
+   "groundLengthPxAtRecScale": 80
+  },
+  "door_wood_ajar_01": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 119,
+   "h": 231,
+   "columnHeightPx": 190,
+   "recommendedScale": 0.547,
+   "anchor": [
+    59,
+    230
+   ],
+   "groundLengthPxAtRecScale": 73
+  },
+  "gate_wood_grate_01": {
+   "category": "gates",
+   "kind": "gate",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 136,
+   "h": 237,
+   "columnHeightPx": 173,
+   "recommendedScale": 0.601,
+   "anchor": [
+    68,
+    206
+   ],
+   "groundLengthPxAtRecScale": 91
+  },
+  "arch_stone_01": {
+   "category": "arches",
+   "kind": "arch",
+   "screenSlope": "^",
+   "axis": null,
+   "w": 158,
+   "h": 232,
+   "columnHeightPx": 175,
+   "recommendedScale": 0.615,
+   "anchor": [
+    79,
+    194
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "arch_stone_mossy_01": {
+   "category": "arches",
+   "kind": "arch",
+   "screenSlope": "^",
+   "axis": null,
+   "w": 163,
+   "h": 234,
+   "columnHeightPx": 186,
+   "recommendedScale": 0.615,
+   "anchor": [
+    81,
+    206
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "double_door_stone_arch_01": {
+   "category": "doors",
+   "kind": "double_door_frontal",
+   "screenSlope": "^",
+   "axis": null,
+   "w": 202,
+   "h": 206,
+   "columnHeightPx": 197,
+   "recommendedScale": 0.528,
+   "anchor": [
+    101,
+    201
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "double_door_iron_gate_01": {
+   "category": "doors",
+   "kind": "double_door_frontal",
+   "screenSlope": "V",
+   "axis": null,
+   "w": 209,
+   "h": 197,
+   "columnHeightPx": 165,
+   "recommendedScale": 0.63,
+   "anchor": [
+    104,
+    191
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "double_door_magic_portal_01": {
+   "category": "doors",
+   "kind": "double_door_frontal",
+   "screenSlope": "^",
+   "axis": null,
+   "w": 180,
+   "h": 234,
+   "columnHeightPx": 207,
+   "recommendedScale": 0.502,
+   "anchor": [
+    90,
+    211
+   ],
+   "groundLengthPxAtRecScale": null
+  },
+  "door_wood_07": {
+   "category": "doors",
+   "kind": "door",
+   "screenSlope": "/",
+   "axis": "y",
+   "w": 116,
+   "h": 230,
+   "columnHeightPx": 181,
+   "recommendedScale": 0.575,
+   "anchor": [
+    58,
+    206
+   ],
+   "groundLengthPxAtRecScale": 75
+  },
+  "wood_wall_low_01": {
+   "category": "wood_walls",
+   "kind": "wall_frontal",
+   "screenSlope": "flat",
+   "axis": null,
+   "w": 208,
+   "h": 123,
+   "columnHeightPx": 123,
+   "recommendedScale": 0.5,
+   "anchor": [
+    104,
+    122
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mureta baixa: mesma escala dos painéis frontais"
+  },
+  "wood_wall_cross_01": {
+   "category": "wood_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 195,
+   "h": 213,
+   "columnHeightPx": 134,
+   "recommendedScale": 0.776,
+   "anchor": [
+    97,
+    180
+   ],
+   "groundLengthPxAtRecScale": 169
+  },
+  "wood_wall_slot_01": {
+   "category": "wood_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 204,
+   "h": 230,
+   "columnHeightPx": 146,
+   "recommendedScale": 0.712,
+   "anchor": [
+    102,
+    195
+   ],
+   "groundLengthPxAtRecScale": 162
+  },
+  "stone_wall_straight_01": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 199,
+   "h": 225,
+   "columnHeightPx": 146,
+   "recommendedScale": 0.712,
+   "anchor": [
+    99,
+    193
+   ],
+   "groundLengthPxAtRecScale": 158
+  },
+  "stone_wall_straight_02": {
+   "category": "stone_walls",
+   "kind": "wall",
+   "screenSlope": "\\",
+   "axis": "x",
+   "w": 137,
+   "h": 223,
+   "columnHeightPx": 174,
+   "recommendedScale": 0.598,
+   "anchor": [
+    68,
+    203
+   ],
+   "groundLengthPxAtRecScale": 92
+  },
+  "ruin_wall_hole_01": {
+   "category": "ruins",
+   "kind": "ruin",
+   "screenSlope": "\\",
+   "axis": null,
+   "w": 194,
+   "h": 225,
+   "columnHeightPx": 142,
+   "recommendedScale": 0.615,
+   "anchor": [
+    97,
+    193
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "ruin_wall_cracked_01": {
+   "category": "ruins",
+   "kind": "ruin",
+   "screenSlope": "\\",
+   "axis": null,
+   "w": 195,
+   "h": 223,
+   "columnHeightPx": 136,
+   "recommendedScale": 0.615,
+   "anchor": [
+    97,
+    190
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "ruin_wall_rubble_01": {
+   "category": "ruins",
+   "kind": "ruin",
+   "screenSlope": "\\",
+   "axis": null,
+   "w": 171,
+   "h": 223,
+   "columnHeightPx": 126,
+   "recommendedScale": 0.615,
+   "anchor": [
+    85,
+    222
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "ruin_scattered_bricks_01": {
+   "category": "ruins",
+   "kind": "ruin",
+   "screenSlope": "free",
+   "axis": null,
+   "w": 187,
+   "h": 218,
+   "columnHeightPx": 106,
+   "recommendedScale": 0.615,
+   "anchor": [
+    93,
+    217
+   ],
+   "groundLengthPxAtRecScale": null,
+   "scaleNote": "mediana das paredes de pedra (peça sem altura de coluna confiável)"
+  },
+  "stone_corner_north_01": {
+   "category": "stone_walls",
+   "kind": "corner_concave",
+   "screenSlope": "^",
+   "axis": null,
+   "w": 192,
+   "h": 210,
+   "columnHeightPx": 174,
+   "recommendedScale": 0.598,
+   "anchor": [
+    96,
+    181
+   ],
+   "groundLengthPxAtRecScale": null
+  }
+ },
+ "defaultsByKind": {
+  "wall": {
+   "collision": "linha sólida na base, espessura ~14 px (0,35 m)",
+   "blocksSight": true,
+   "blocksMove": true
+  },
+  "wall_frontal": {
+   "collision": "linha sólida na base (horizontal na tela)",
+   "blocksSight": true,
+   "blocksMove": true
+  },
+  "corner_convex": {
+   "collision": "dois braços em L, vértice no centro-base; braços para -X e -Y",
+   "blocksSight": true,
+   "blocksMove": true
+  },
+  "corner_concave": {
+   "collision": "dois braços em L, vértice no centro-base; braços para +X e +Y",
+   "blocksSight": true,
+   "blocksMove": true
+  },
+  "door": {
+   "collision": "fechada=sólida; aberta/entreaberta=livre (só batentes)",
+   "blocksSight": "fechada",
+   "blocksMove": "fechada",
+   "states": [
+    "closed",
+    "ajar",
+    "open"
+   ]
+  },
+  "double_door_frontal": {
+   "collision": "fechada=sólida; aberta=livre",
+   "blocksSight": "fechada",
+   "blocksMove": "fechada"
+  },
+  "gate": {
+   "collision": "sólida enquanto fechada",
+   "blocksSight": false,
+   "blocksMove": "fechada",
+   "states": [
+    "closed",
+    "open"
+   ]
+  },
+  "fence": {
+   "collision": "linha sólida",
+   "blocksSight": false,
+   "blocksMove": true
+  },
+  "arch": {
+   "collision": "dois pilares laterais; vão central livre",
+   "blocksSight": false,
+   "blocksMove": "só pilares"
+  },
+  "pillar": {
+   "collision": "círculo/retângulo pequeno",
+   "blocksSight": true,
+   "blocksMove": true
+  },
+  "ruin": {
+   "collision": "só a base mais alta; ajustar manualmente",
+   "blocksSight": false,
+   "blocksMove": "parcial"
+  }
+ },
+ "conventions": {
+  "axisX": "peça \"\\\" (desce para a direita na tela) = parede ao longo do eixo X do mundo",
+  "axisY": "use a peça \"\\\" com flipX = parede ao longo do eixo Y (\"/\")",
+  "cornerConvexV": "silhueta em V: canto da frente/sul, braços para -X e -Y",
+  "cornerConcave": "silhueta em ^: canto de trás/norte visto por dentro, braços para +X e +Y",
+  "frontal": "painéis de frente (sem inclinação) – só para projeção ortogonal ou paredes voltadas à câmera"
+ }
+}

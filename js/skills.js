@@ -1,4 +1,4 @@
-// skills.js - Aethelgard Hybrid Skills System (RuneScape 1-99 Core + Tormenta20/D&D D20 Codex)
+// skills.js - Suritto Hybrid Skills System (RuneScape 1-99 Core + Tormenta20/D&D D20 Codex)
 class SkillsSystem {
   constructor(game) {
     this.game = game;
@@ -28,7 +28,7 @@ class SkillsSystem {
           { lvl: 25, text: 'Extração Avançada de Resinas Aromáticas (Dobra chance de resina)' },
           { lvl: 50, text: 'Corte de Pinheiros Ancestrais & Madeiras Mágicas' },
           { lvl: 75, text: 'Golpe Rachador de Troncos (+50% chance de extração crítica)' },
-          { lvl: 99, text: 'Capa da Maestria dos Lenhadores Ancestrais de Aethelgard' }
+          { lvl: 99, text: 'Capa da Maestria dos Lenhadores Ancestrais de Suritto' }
         ]
       },
       mining: {
@@ -66,7 +66,7 @@ class SkillsSystem {
           { lvl: 15, text: 'Extração Perfeita de Couros (Valor Comercial +35%)' },
           { lvl: 35, text: 'Rastreamento Furtivo de Predadores e Alcateias de Lobos' },
           { lvl: 60, text: 'Armadilhas Pesadas & Caça de Ursos Pardos' },
-          { lvl: 99, text: 'Capa da Maestria do Predador Supremo de Aethelgard' }
+          { lvl: 99, text: 'Capa da Maestria do Predador Supremo de Suritto' }
         ]
       },
       fishing: {
@@ -84,7 +84,7 @@ class SkillsSystem {
           { lvl: 1, text: 'Varas de Salgueiro & Iscas de Minhoca da Terra' },
           { lvl: 20, text: 'Pesca com Mosca em Corredeiras Rápidas' },
           { lvl: 50, text: 'Captura de Trutas Douradas e Peixes Mágicos de Lagoa' },
-          { lvl: 99, text: 'Capa da Maestria dos Mares e Rios de Aethelgard' }
+          { lvl: 99, text: 'Capa da Maestria dos Mares e Rios de Suritto' }
         ]
       },
       cooking: {
@@ -267,13 +267,13 @@ class SkillsSystem {
         level: 1,
         xp: 0,
         synergy: 'arcanismo',
-        desc: 'Manipulação das linhas de mana que cruzam a terra de Aethelgard. Invocação de labaredas protetoras, luz mística e barreiras cintilantes.',
+        desc: 'Manipulação das linhas de mana que cruzam a terra de Suritto. Invocação de labaredas protetoras, luz mística e barreiras cintilantes.',
         milestones: [
           { lvl: 1, text: 'Centelha de Fogo Mística & Encantamento de Tochas' },
           { lvl: 20, text: 'Projetil de Energia Arcana e Escudo Mágico Menor' },
           { lvl: 45, text: 'Torrente de Chamas e Encantamento de Armas (+16)' },
           { lvl: 75, text: 'Teletransporte Curto de Éter e Chuva de Meteoros' },
-          { lvl: 99, text: 'Capa da Maestria dos Arquimagos de Aethelgard' }
+          { lvl: 99, text: 'Capa da Maestria dos Arquimagos de Suritto' }
         ]
       },
       agility: {
@@ -463,9 +463,10 @@ class SkillsSystem {
     return Object.values(this.primarySkills).reduce((acc, s) => acc + s.level, 0);
   }
 
+  // XP ganho na vida toda (xpTotal); `xp` e so o progresso dentro do nivel atual
   getTotalXp() {
-    const primaryTotal = Object.values(this.primarySkills).reduce((acc, s) => acc + s.xp, 0);
-    const secondaryTotal = Object.values(this.secondarySkills).reduce((acc, s) => acc + s.xp, 0);
+    const primaryTotal = Object.values(this.primarySkills).reduce((acc, s) => acc + (s.xpTotal || 0), 0);
+    const secondaryTotal = Object.values(this.secondarySkills).reduce((acc, s) => acc + (s.xpTotal || 0), 0);
     return primaryTotal + secondaryTotal;
   }
 
@@ -481,6 +482,7 @@ class SkillsSystem {
       if (skill.level >= 99) return;
 
       skill.xp += amount;
+      skill.xpTotal = (skill.xpTotal || 0) + amount;
       let leveledUp = false;
       let newLevel = skill.level;
 
@@ -524,6 +526,7 @@ class SkillsSystem {
     if (this.secondarySkills[skillId]) {
       const pericia = this.secondarySkills[skillId];
       pericia.xp += amount;
+      pericia.xpTotal = (pericia.xpTotal || 0) + amount;
       let bonusIncreased = false;
 
       while (pericia.bonus < 15) {
@@ -704,7 +707,7 @@ class SkillsSystem {
             <div class="skills-header-left">
               <div class="skills-crest">📜</div>
               <div class="skills-title-box">
-                <h2 class="skills-title">AETHELGARD • CÓDICE DE HABILIDADES</h2>
+                <h2 class="skills-title">SURITTO • CÓDICE DE HABILIDADES</h2>
                 <span class="skills-subtitle">Progressão RuneScape (1-99) & Perícias D20 Tormenta/D&D</span>
               </div>
             </div>

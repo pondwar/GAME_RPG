@@ -1,0 +1,1244 @@
+{
+  "meta": {
+    "image": "dungeon_game_atlas.png",
+    "size": {
+      "w": 2048,
+      "h": 576
+    },
+    "targetWallHeightPx": 104,
+    "totalSprites": 66
+  },
+  "defaultsByKind": {
+    "wall": {
+      "solid": true,
+      "blocksVision": true,
+      "thicknessPx": 14
+    },
+    "corner_convex": {
+      "solid": true,
+      "blocksVision": true,
+      "thicknessPx": 14
+    },
+    "corner_concave": {
+      "solid": true,
+      "blocksVision": true,
+      "thicknessPx": 14
+    },
+    "door": {
+      "solid": true,
+      "blocksVision": true,
+      "interactable": true
+    },
+    "gate": {
+      "solid": true,
+      "blocksVision": false,
+      "interactable": true
+    },
+    "fence": {
+      "solid": true,
+      "blocksVision": false
+    },
+    "arch": {
+      "solid": false,
+      "blocksVision": false
+    },
+    "ruin": {
+      "solid": true,
+      "blocksVision": false
+    },
+    "pillar": {
+      "solid": true,
+      "blocksVision": false
+    }
+  },
+  "sprites": {
+    "wood_wall_panel_02": {
+      "frame": {
+        "x": 4,
+        "y": 4,
+        "w": 121,
+        "h": 146
+      },
+      "kind": "wall",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 60,
+        "y": 128
+      },
+      "groundLengthPx": 135,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "gate_wood_grate_01": {
+      "frame": {
+        "x": 129,
+        "y": 4,
+        "w": 83,
+        "h": 145
+      },
+      "kind": "gate",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 41,
+        "y": 119
+      },
+      "groundLengthPx": 93,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_wall_broken_torch_01": {
+      "frame": {
+        "x": 216,
+        "y": 4,
+        "w": 122,
+        "h": 144
+      },
+      "kind": "wall",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 120
+      },
+      "groundLengthPx": 136,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "fence_iron_spiked_01": {
+      "frame": {
+        "x": 342,
+        "y": 4,
+        "w": 101,
+        "h": 144
+      },
+      "kind": "fence",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 50,
+        "y": 123
+      },
+      "groundLengthPx": 113,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "arch_stone_mossy_01": {
+      "frame": {
+        "x": 447,
+        "y": 4,
+        "w": 100,
+        "h": 143
+      },
+      "kind": "arch",
+      "category": "arches",
+      "axis": "x",
+      "anchor": {
+        "x": 50,
+        "y": 126
+      },
+      "groundLengthPx": 112,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "dark_brick_wall_torch_01": {
+      "frame": {
+        "x": 551,
+        "y": 4,
+        "w": 123,
+        "h": 143
+      },
+      "kind": "wall",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 119
+      },
+      "groundLengthPx": 138,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "double_door_magic_portal_01": {
+      "frame": {
+        "x": 678,
+        "y": 4,
+        "w": 110,
+        "h": 143
+      },
+      "kind": "double_door_frontal",
+      "category": "doors",
+      "axis": null,
+      "anchor": {
+        "x": 55,
+        "y": 126
+      },
+      "groundLengthPx": 123,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "gate_iron_01": {
+      "frame": {
+        "x": 792,
+        "y": 4,
+        "w": 76,
+        "h": 143
+      },
+      "kind": "gate",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 38,
+        "y": 119
+      },
+      "groundLengthPx": 85,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "gate_iron_02": {
+      "frame": {
+        "x": 872,
+        "y": 4,
+        "w": 77,
+        "h": 143
+      },
+      "kind": "gate",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 38,
+        "y": 119
+      },
+      "groundLengthPx": 86,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_mossy_01": {
+      "frame": {
+        "x": 953,
+        "y": 4,
+        "w": 119,
+        "h": 143
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 126
+      },
+      "groundLengthPx": 133,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "arch_stone_01": {
+      "frame": {
+        "x": 1076,
+        "y": 4,
+        "w": 97,
+        "h": 142
+      },
+      "kind": "arch",
+      "category": "arches",
+      "axis": "x",
+      "anchor": {
+        "x": 48,
+        "y": 125
+      },
+      "groundLengthPx": 108,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_05": {
+      "frame": {
+        "x": 1177,
+        "y": 4,
+        "w": 72,
+        "h": 142
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 35,
+        "y": 125
+      },
+      "groundLengthPx": 80,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_open_01": {
+      "frame": {
+        "x": 1253,
+        "y": 4,
+        "w": 72,
+        "h": 142
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 36,
+        "y": 119
+      },
+      "groundLengthPx": 80,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_mossy_03": {
+      "frame": {
+        "x": 1329,
+        "y": 4,
+        "w": 119,
+        "h": 142
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 126
+      },
+      "groundLengthPx": 133,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_ruined_01": {
+      "frame": {
+        "x": 1452,
+        "y": 4,
+        "w": 117,
+        "h": 142
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 58,
+        "y": 126
+      },
+      "groundLengthPx": 131,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "dark_brick_wall_window_01": {
+      "frame": {
+        "x": 1573,
+        "y": 4,
+        "w": 91,
+        "h": 141
+      },
+      "kind": "wall",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 45,
+        "y": 124
+      },
+      "groundLengthPx": 102,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_04": {
+      "frame": {
+        "x": 1668,
+        "y": 4,
+        "w": 72,
+        "h": 141
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 36,
+        "y": 125
+      },
+      "groundLengthPx": 80,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_07": {
+      "frame": {
+        "x": 1744,
+        "y": 4,
+        "w": 71,
+        "h": 141
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 35,
+        "y": 124
+      },
+      "groundLengthPx": 79,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_ajar_01": {
+      "frame": {
+        "x": 1819,
+        "y": 4,
+        "w": 73,
+        "h": 141
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 36,
+        "y": 135
+      },
+      "groundLengthPx": 82,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "gate_iron_03": {
+      "frame": {
+        "x": 1896,
+        "y": 4,
+        "w": 93,
+        "h": 141
+      },
+      "kind": "gate",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 46,
+        "y": 117
+      },
+      "groundLengthPx": 104,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_mossy_02": {
+      "frame": {
+        "x": 4,
+        "y": 154,
+        "w": 116,
+        "h": 141
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 58,
+        "y": 125
+      },
+      "groundLengthPx": 130,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_corner_cross_01": {
+      "frame": {
+        "x": 124,
+        "y": 154,
+        "w": 126,
+        "h": 141
+      },
+      "kind": "corner_convex",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 60,
+        "y": 140
+      },
+      "groundLengthPx": 141,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_wall_slot_01": {
+      "frame": {
+        "x": 254,
+        "y": 154,
+        "w": 125,
+        "h": 141
+      },
+      "kind": "wall",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 62,
+        "y": 114
+      },
+      "groundLengthPx": 140,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_mossy_04": {
+      "frame": {
+        "x": 383,
+        "y": 154,
+        "w": 107,
+        "h": 140
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 53,
+        "y": 123
+      },
+      "groundLengthPx": 120,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_corner_cross_02": {
+      "frame": {
+        "x": 494,
+        "y": 154,
+        "w": 126,
+        "h": 140
+      },
+      "kind": "corner_convex",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 139
+      },
+      "groundLengthPx": 141,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_corner_diagonal_01": {
+      "frame": {
+        "x": 624,
+        "y": 154,
+        "w": 126,
+        "h": 140
+      },
+      "kind": "corner_convex",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 139
+      },
+      "groundLengthPx": 141,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_wall_panel_01": {
+      "frame": {
+        "x": 754,
+        "y": 154,
+        "w": 75,
+        "h": 140
+      },
+      "kind": "wall",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 37,
+        "y": 125
+      },
+      "groundLengthPx": 84,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_wall_round_window_01": {
+      "frame": {
+        "x": 833,
+        "y": 154,
+        "w": 86,
+        "h": 139
+      },
+      "kind": "wall",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 43,
+        "y": 124
+      },
+      "groundLengthPx": 96,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_01": {
+      "frame": {
+        "x": 923,
+        "y": 154,
+        "w": 74,
+        "h": 139
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 37,
+        "y": 123
+      },
+      "groundLengthPx": 83,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_06": {
+      "frame": {
+        "x": 1001,
+        "y": 154,
+        "w": 67,
+        "h": 139
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 33,
+        "y": 123
+      },
+      "groundLengthPx": 75,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_01": {
+      "frame": {
+        "x": 1072,
+        "y": 154,
+        "w": 122,
+        "h": 139
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 81,
+        "y": 138
+      },
+      "groundLengthPx": 136,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_broken_01": {
+      "frame": {
+        "x": 1198,
+        "y": 154,
+        "w": 113,
+        "h": 139
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 56,
+        "y": 118
+      },
+      "groundLengthPx": 126,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_broken_02": {
+      "frame": {
+        "x": 1315,
+        "y": 154,
+        "w": 111,
+        "h": 139
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 55,
+        "y": 118
+      },
+      "groundLengthPx": 124,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_corner_torch_01": {
+      "frame": {
+        "x": 1430,
+        "y": 154,
+        "w": 122,
+        "h": 138
+      },
+      "kind": "corner_convex",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 67,
+        "y": 137
+      },
+      "groundLengthPx": 136,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "ruin_wall_hole_01": {
+      "frame": {
+        "x": 1556,
+        "y": 154,
+        "w": 119,
+        "h": 138
+      },
+      "kind": "ruin",
+      "category": "ruins",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 113
+      },
+      "groundLengthPx": 133,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_ruined_02": {
+      "frame": {
+        "x": 1679,
+        "y": 154,
+        "w": 102,
+        "h": 138
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 50,
+        "y": 122
+      },
+      "groundLengthPx": 114,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_straight_01": {
+      "frame": {
+        "x": 1785,
+        "y": 154,
+        "w": 122,
+        "h": 138
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 127
+      },
+      "groundLengthPx": 136,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_corner_gate_01": {
+      "frame": {
+        "x": 1911,
+        "y": 154,
+        "w": 125,
+        "h": 138
+      },
+      "kind": "gate",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 62,
+        "y": 136
+      },
+      "groundLengthPx": 140,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_03": {
+      "frame": {
+        "x": 4,
+        "y": 299,
+        "w": 67,
+        "h": 136
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 33,
+        "y": 122
+      },
+      "groundLengthPx": 75,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "gate_iron_04": {
+      "frame": {
+        "x": 75,
+        "y": 299,
+        "w": 94,
+        "h": 136
+      },
+      "kind": "gate",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 47,
+        "y": 117
+      },
+      "groundLengthPx": 105,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "ruin_wall_cracked_01": {
+      "frame": {
+        "x": 173,
+        "y": 299,
+        "w": 119,
+        "h": 136
+      },
+      "kind": "ruin",
+      "category": "ruins",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 113
+      },
+      "groundLengthPx": 133,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "ruin_wall_rubble_01": {
+      "frame": {
+        "x": 296,
+        "y": 299,
+        "w": 105,
+        "h": 136
+      },
+      "kind": "ruin",
+      "category": "ruins",
+      "axis": "x",
+      "anchor": {
+        "x": 52,
+        "y": 126
+      },
+      "groundLengthPx": 117,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_straight_02": {
+      "frame": {
+        "x": 405,
+        "y": 299,
+        "w": 84,
+        "h": 136
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 42,
+        "y": 117
+      },
+      "groundLengthPx": 94,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_mossy_02": {
+      "frame": {
+        "x": 493,
+        "y": 299,
+        "w": 127,
+        "h": 135
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 134
+      },
+      "groundLengthPx": 142,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_corner_window_01": {
+      "frame": {
+        "x": 624,
+        "y": 299,
+        "w": 123,
+        "h": 134
+      },
+      "kind": "corner_convex",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 133
+      },
+      "groundLengthPx": 138,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_corner_window_torch_01": {
+      "frame": {
+        "x": 751,
+        "y": 299,
+        "w": 123,
+        "h": 134
+      },
+      "kind": "corner_convex",
+      "category": "brick_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 133
+      },
+      "groundLengthPx": 138,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "door_wood_02": {
+      "frame": {
+        "x": 878,
+        "y": 299,
+        "w": 65,
+        "h": 133
+      },
+      "kind": "door",
+      "category": "doors",
+      "axis": "x",
+      "anchor": {
+        "x": 32,
+        "y": 119
+      },
+      "groundLengthPx": 73,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "ruin_scattered_bricks_01": {
+      "frame": {
+        "x": 947,
+        "y": 299,
+        "w": 114,
+        "h": 133
+      },
+      "kind": "ruin",
+      "category": "ruins",
+      "axis": "x",
+      "anchor": {
+        "x": 57,
+        "y": 126
+      },
+      "groundLengthPx": 127,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_mossy_03": {
+      "frame": {
+        "x": 1065,
+        "y": 299,
+        "w": 124,
+        "h": 133
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 133
+      },
+      "groundLengthPx": 139,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_02": {
+      "frame": {
+        "x": 1193,
+        "y": 299,
+        "w": 126,
+        "h": 132
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 132
+      },
+      "groundLengthPx": 141,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_mossy_04": {
+      "frame": {
+        "x": 1323,
+        "y": 299,
+        "w": 121,
+        "h": 132
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 58,
+        "y": 132
+      },
+      "groundLengthPx": 135,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_wall_broken_03": {
+      "frame": {
+        "x": 1448,
+        "y": 299,
+        "w": 124,
+        "h": 132
+      },
+      "kind": "wall",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 61,
+        "y": 127
+      },
+      "groundLengthPx": 139,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "gate_iron_door_01": {
+      "frame": {
+        "x": 1576,
+        "y": 299,
+        "w": 65,
+        "h": 131
+      },
+      "kind": "gate",
+      "category": "gates",
+      "axis": "x",
+      "anchor": {
+        "x": 32,
+        "y": 117
+      },
+      "groundLengthPx": 73,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_wall_cross_01": {
+      "frame": {
+        "x": 1645,
+        "y": 299,
+        "w": 119,
+        "h": 130
+      },
+      "kind": "wall",
+      "category": "wood_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 59,
+        "y": 106
+      },
+      "groundLengthPx": 133,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_04": {
+      "frame": {
+        "x": 1768,
+        "y": 299,
+        "w": 114,
+        "h": 128
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 54,
+        "y": 128
+      },
+      "groundLengthPx": 127,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_mossy_01": {
+      "frame": {
+        "x": 1886,
+        "y": 299,
+        "w": 117,
+        "h": 128
+      },
+      "kind": "corner_concave",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 56,
+        "y": 106
+      },
+      "groundLengthPx": 131,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_north_01": {
+      "frame": {
+        "x": 4,
+        "y": 439,
+        "w": 117,
+        "h": 128
+      },
+      "kind": "corner_concave",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 56,
+        "y": 106
+      },
+      "groundLengthPx": 131,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_wall_barred_window_01": {
+      "frame": {
+        "x": 125,
+        "y": 439,
+        "w": 124,
+        "h": 127
+      },
+      "kind": "wall_frontal",
+      "category": "brick_walls",
+      "axis": null,
+      "anchor": {
+        "x": 62,
+        "y": 127
+      },
+      "groundLengthPx": 139,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_wall_barred_window_02": {
+      "frame": {
+        "x": 253,
+        "y": 439,
+        "w": 127,
+        "h": 127
+      },
+      "kind": "wall_frontal",
+      "category": "brick_walls",
+      "axis": null,
+      "anchor": {
+        "x": 63,
+        "y": 127
+      },
+      "groundLengthPx": 142,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_wall_torch_01": {
+      "frame": {
+        "x": 384,
+        "y": 439,
+        "w": 125,
+        "h": 127
+      },
+      "kind": "wall_frontal",
+      "category": "brick_walls",
+      "axis": null,
+      "anchor": {
+        "x": 62,
+        "y": 127
+      },
+      "groundLengthPx": 140,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "double_door_stone_arch_01": {
+      "frame": {
+        "x": 513,
+        "y": 439,
+        "w": 124,
+        "h": 126
+      },
+      "kind": "double_door_frontal",
+      "category": "doors",
+      "axis": null,
+      "anchor": {
+        "x": 61,
+        "y": 123
+      },
+      "groundLengthPx": 139,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_corner_03": {
+      "frame": {
+        "x": 641,
+        "y": 439,
+        "w": 113,
+        "h": 124
+      },
+      "kind": "corner_convex",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 54,
+        "y": 124
+      },
+      "groundLengthPx": 126,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "double_door_iron_gate_01": {
+      "frame": {
+        "x": 758,
+        "y": 439,
+        "w": 128,
+        "h": 121
+      },
+      "kind": "double_door_frontal",
+      "category": "doors",
+      "axis": null,
+      "anchor": {
+        "x": 64,
+        "y": 117
+      },
+      "groundLengthPx": 143,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "stone_pillar_ruined_01": {
+      "frame": {
+        "x": 890,
+        "y": 439,
+        "w": 62,
+        "h": 118
+      },
+      "kind": "pillar",
+      "category": "stone_walls",
+      "axis": "x",
+      "anchor": {
+        "x": 31,
+        "y": 112
+      },
+      "groundLengthPx": 69,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "brick_wall_barred_window_03": {
+      "frame": {
+        "x": 956,
+        "y": 439,
+        "w": 127,
+        "h": 117
+      },
+      "kind": "wall_frontal",
+      "category": "brick_walls",
+      "axis": null,
+      "anchor": {
+        "x": 63,
+        "y": 117
+      },
+      "groundLengthPx": 142,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    },
+    "wood_wall_low_01": {
+      "frame": {
+        "x": 1087,
+        "y": 439,
+        "w": 127,
+        "h": 75
+      },
+      "kind": "wall_frontal",
+      "category": "wood_walls",
+      "axis": null,
+      "anchor": {
+        "x": 63,
+        "y": 74
+      },
+      "groundLengthPx": 142,
+      "columnHeightPx": 104,
+      "scaleApplied": 0.6118
+    }
+  }
+}

@@ -183,6 +183,10 @@ class Game {
   }
 
   init() {
+    // Save: carrega o personagem antes de gerar o mundo (o mundo nasce em volta da posicao salva)
+    this.saveSystem = new SaveSystem(this);
+    const loaded = this.saveSystem.load();
+
     this.loadAssets();
     this.setupInputs();
     this.generateWorld();
@@ -190,6 +194,12 @@ class Game {
     this.setupMobileControls();
     this.inventory.init();
     this.skills.init();
+
+    this.saveSystem.startAutosave();
+    if (loaded) {
+      this.updateHUD();
+      this.addLog('💾 Progresso carregado: personagem, skills e mochila restaurados.', 'system');
+    }
 
     // Start game loop
     requestAnimationFrame((t) => this.loop(t));
@@ -1773,6 +1783,7 @@ class Game {
     // 0. Astronomical Time & Calendar Update
     this.timeSystem.update(dt);
     this.updateCalendarHUD();
+    if (this.saveSystem) this.saveSystem.update(dt);
 
     // 0b. Procedural Chunk Manager Flora Update (Continuous Dynamic Streaming)
     if (this.world && this.world.chunks) {

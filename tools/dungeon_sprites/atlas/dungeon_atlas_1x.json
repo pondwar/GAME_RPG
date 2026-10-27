@@ -1,0 +1,857 @@
+{
+ "meta": {
+  "image": "dungeon_atlas_1x.png",
+  "size": {
+   "w": 2048,
+   "h": 1420
+  },
+  "scale": 1
+ },
+ "frames": {
+  "stone_corner_01": {
+   "frame": {
+    "x": 2,
+    "y": 2,
+    "w": 200,
+    "h": 227
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_02": {
+   "frame": {
+    "x": 204,
+    "y": 2,
+    "w": 206,
+    "h": 216
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_03": {
+   "frame": {
+    "x": 412,
+    "y": 2,
+    "w": 184,
+    "h": 203
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_04": {
+   "frame": {
+    "x": 598,
+    "y": 2,
+    "w": 186,
+    "h": 210
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_mossy_01": {
+   "frame": {
+    "x": 786,
+    "y": 2,
+    "w": 192,
+    "h": 210
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_mossy_02": {
+   "frame": {
+    "x": 980,
+    "y": 2,
+    "w": 207,
+    "h": 220
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_mossy_03": {
+   "frame": {
+    "x": 1189,
+    "y": 2,
+    "w": 203,
+    "h": 218
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_corner_mossy_04": {
+   "frame": {
+    "x": 1394,
+    "y": 2,
+    "w": 198,
+    "h": 216
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_pillar_ruined_01": {
+   "frame": {
+    "x": 1594,
+    "y": 2,
+    "w": 102,
+    "h": 193
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_broken_01": {
+   "frame": {
+    "x": 1698,
+    "y": 2,
+    "w": 184,
+    "h": 228
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_broken_02": {
+   "frame": {
+    "x": 2,
+    "y": 232,
+    "w": 182,
+    "h": 227
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_broken_03": {
+   "frame": {
+    "x": 186,
+    "y": 232,
+    "w": 202,
+    "h": 216
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_mossy_01": {
+   "frame": {
+    "x": 390,
+    "y": 232,
+    "w": 194,
+    "h": 233
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_mossy_02": {
+   "frame": {
+    "x": 586,
+    "y": 232,
+    "w": 189,
+    "h": 231
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_mossy_03": {
+   "frame": {
+    "x": 777,
+    "y": 232,
+    "w": 195,
+    "h": 232
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_mossy_04": {
+   "frame": {
+    "x": 974,
+    "y": 232,
+    "w": 175,
+    "h": 229
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_ruined_01": {
+   "frame": {
+    "x": 1151,
+    "y": 232,
+    "w": 192,
+    "h": 232
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_ruined_02": {
+   "frame": {
+    "x": 1345,
+    "y": 232,
+    "w": 166,
+    "h": 225
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_straight_01": {
+   "frame": {
+    "x": 1513,
+    "y": 232,
+    "w": 199,
+    "h": 225
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "stone_wall_straight_02": {
+   "frame": {
+    "x": 1714,
+    "y": 232,
+    "w": 137,
+    "h": 223
+   },
+   "category": "stone_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_corner_torch_01": {
+   "frame": {
+    "x": 2,
+    "y": 467,
+    "w": 200,
+    "h": 225
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_corner_window_01": {
+   "frame": {
+    "x": 204,
+    "y": 467,
+    "w": 201,
+    "h": 219
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_corner_window_torch_01": {
+   "frame": {
+    "x": 407,
+    "y": 467,
+    "w": 201,
+    "h": 219
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_wall_barred_window_01": {
+   "frame": {
+    "x": 610,
+    "y": 467,
+    "w": 203,
+    "h": 208
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_wall_barred_window_02": {
+   "frame": {
+    "x": 815,
+    "y": 467,
+    "w": 207,
+    "h": 208
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_wall_barred_window_03": {
+   "frame": {
+    "x": 1024,
+    "y": 467,
+    "w": 208,
+    "h": 192
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_wall_broken_torch_01": {
+   "frame": {
+    "x": 1234,
+    "y": 467,
+    "w": 199,
+    "h": 235
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_wall_round_window_01": {
+   "frame": {
+    "x": 1435,
+    "y": 467,
+    "w": 140,
+    "h": 228
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "brick_wall_torch_01": {
+   "frame": {
+    "x": 1577,
+    "y": 467,
+    "w": 204,
+    "h": 208
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "dark_brick_wall_torch_01": {
+   "frame": {
+    "x": 1783,
+    "y": 467,
+    "w": 201,
+    "h": 233
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "dark_brick_wall_window_01": {
+   "frame": {
+    "x": 2,
+    "y": 704,
+    "w": 148,
+    "h": 230
+   },
+   "category": "brick_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_corner_cross_01": {
+   "frame": {
+    "x": 152,
+    "y": 704,
+    "w": 206,
+    "h": 230
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_corner_cross_02": {
+   "frame": {
+    "x": 360,
+    "y": 704,
+    "w": 206,
+    "h": 229
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_corner_diagonal_01": {
+   "frame": {
+    "x": 568,
+    "y": 704,
+    "w": 206,
+    "h": 229
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_corner_gate_01": {
+   "frame": {
+    "x": 776,
+    "y": 704,
+    "w": 205,
+    "h": 226
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_wall_cross_01": {
+   "frame": {
+    "x": 983,
+    "y": 704,
+    "w": 195,
+    "h": 213
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_wall_low_01": {
+   "frame": {
+    "x": 1180,
+    "y": 704,
+    "w": 208,
+    "h": 123
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_wall_panel_01": {
+   "frame": {
+    "x": 1390,
+    "y": 704,
+    "w": 122,
+    "h": 229
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_wall_panel_02": {
+   "frame": {
+    "x": 1514,
+    "y": 704,
+    "w": 198,
+    "h": 238
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "wood_wall_slot_01": {
+   "frame": {
+    "x": 1714,
+    "y": 704,
+    "w": 204,
+    "h": 230
+   },
+   "category": "wood_walls",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_01": {
+   "frame": {
+    "x": 1920,
+    "y": 704,
+    "w": 121,
+    "h": 228
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_02": {
+   "frame": {
+    "x": 2,
+    "y": 944,
+    "w": 107,
+    "h": 218
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_03": {
+   "frame": {
+    "x": 111,
+    "y": 944,
+    "w": 110,
+    "h": 222
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_04": {
+   "frame": {
+    "x": 223,
+    "y": 944,
+    "w": 118,
+    "h": 231
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_05": {
+   "frame": {
+    "x": 343,
+    "y": 944,
+    "w": 117,
+    "h": 232
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_06": {
+   "frame": {
+    "x": 462,
+    "y": 944,
+    "w": 110,
+    "h": 228
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_07": {
+   "frame": {
+    "x": 574,
+    "y": 944,
+    "w": 116,
+    "h": 230
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_ajar_01": {
+   "frame": {
+    "x": 692,
+    "y": 944,
+    "w": 119,
+    "h": 231
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "door_wood_open_01": {
+   "frame": {
+    "x": 813,
+    "y": 944,
+    "w": 118,
+    "h": 232
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "double_door_iron_gate_01": {
+   "frame": {
+    "x": 933,
+    "y": 944,
+    "w": 209,
+    "h": 197
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "double_door_magic_portal_01": {
+   "frame": {
+    "x": 1144,
+    "y": 944,
+    "w": 180,
+    "h": 234
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "double_door_stone_arch_01": {
+   "frame": {
+    "x": 1326,
+    "y": 944,
+    "w": 202,
+    "h": 206
+   },
+   "category": "doors",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "fence_iron_spiked_01": {
+   "frame": {
+    "x": 1530,
+    "y": 944,
+    "w": 165,
+    "h": 235
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "gate_iron_01": {
+   "frame": {
+    "x": 1697,
+    "y": 944,
+    "w": 124,
+    "h": 234
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "gate_iron_02": {
+   "frame": {
+    "x": 1823,
+    "y": 944,
+    "w": 126,
+    "h": 233
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "gate_iron_03": {
+   "frame": {
+    "x": 2,
+    "y": 1181,
+    "w": 152,
+    "h": 230
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "gate_iron_04": {
+   "frame": {
+    "x": 156,
+    "y": 1181,
+    "w": 154,
+    "h": 223
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "gate_iron_door_01": {
+   "frame": {
+    "x": 312,
+    "y": 1181,
+    "w": 106,
+    "h": 214
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "gate_wood_grate_01": {
+   "frame": {
+    "x": 420,
+    "y": 1181,
+    "w": 136,
+    "h": 237
+   },
+   "category": "gates",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "arch_stone_01": {
+   "frame": {
+    "x": 558,
+    "y": 1181,
+    "w": 158,
+    "h": 232
+   },
+   "category": "arches",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "arch_stone_mossy_01": {
+   "frame": {
+    "x": 718,
+    "y": 1181,
+    "w": 163,
+    "h": 234
+   },
+   "category": "arches",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "ruin_scattered_bricks_01": {
+   "frame": {
+    "x": 883,
+    "y": 1181,
+    "w": 187,
+    "h": 218
+   },
+   "category": "ruins",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "ruin_wall_cracked_01": {
+   "frame": {
+    "x": 1072,
+    "y": 1181,
+    "w": 195,
+    "h": 223
+   },
+   "category": "ruins",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "ruin_wall_hole_01": {
+   "frame": {
+    "x": 1269,
+    "y": 1181,
+    "w": 194,
+    "h": 225
+   },
+   "category": "ruins",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  },
+  "ruin_wall_rubble_01": {
+   "frame": {
+    "x": 1465,
+    "y": 1181,
+    "w": 171,
+    "h": 223
+   },
+   "category": "ruins",
+   "pivot": {
+    "x": 0.5,
+    "y": 1.0
+   }
+  }
+ }
+}

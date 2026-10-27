@@ -1,0 +1,3010 @@
+{
+ "meta": {
+  "image": "dungeon_game_atlas.png",
+  "size": {
+   "w": 2048,
+   "h": 544
+  },
+  "targetColumnHeightPx": 90.0,
+  "projection": "2:1 isometrico",
+  "cosAngle": 0.894,
+  "drawScale": 1,
+  "note": "Desenhe com escala 1, imageSmoothingEnabled=false, posição inteira. anchor = pixel do sprite que fica sobre o ponto do chão."
+ },
+ "frames": {
+  "stone_corner_01": {
+   "frame": {
+    "x": 2,
+    "y": 2,
+    "w": 106,
+    "h": 121
+   },
+   "anchor": {
+    "x": 53,
+    "y": 115
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -53,
+     "dy": -36
+    },
+    "right": {
+     "dx": 52,
+     "dy": -11
+    },
+    "front": {
+     "dx": 18,
+     "dy": 5
+    },
+    "back": {
+     "dx": -53,
+     "dy": -36
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 119,
+   "columnHeightPx": 90
+  },
+  "stone_corner_02": {
+   "frame": {
+    "x": 110,
+    "y": 2,
+    "w": 105,
+    "h": 110
+   },
+   "anchor": {
+    "x": 53,
+    "y": 110
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -53,
+     "dy": -33
+    },
+    "right": {
+     "dx": 51,
+     "dy": -29
+    },
+    "front": {
+     "dx": -3,
+     "dy": -1
+    },
+    "back": {
+     "dx": -53,
+     "dy": -33
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 117,
+   "columnHeightPx": 90
+  },
+  "stone_corner_03": {
+   "frame": {
+    "x": 217,
+    "y": 2,
+    "w": 97,
+    "h": 107
+   },
+   "anchor": {
+    "x": 48,
+    "y": 106
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -48,
+     "dy": -26
+    },
+    "right": {
+     "dx": 48,
+     "dy": -25
+    },
+    "front": {
+     "dx": -1,
+     "dy": 0
+    },
+    "back": {
+     "dx": -48,
+     "dy": -26
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 109,
+   "columnHeightPx": 90
+  },
+  "stone_corner_04": {
+   "frame": {
+    "x": 316,
+    "y": 2,
+    "w": 96,
+    "h": 108
+   },
+   "anchor": {
+    "x": 48,
+    "y": 107
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -48,
+     "dy": -26
+    },
+    "right": {
+     "dx": 47,
+     "dy": -26
+    },
+    "front": {
+     "dx": -3,
+     "dy": 0
+    },
+    "back": {
+     "dx": -48,
+     "dy": -26
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 107,
+   "columnHeightPx": 90
+  },
+  "stone_corner_mossy_01": {
+   "frame": {
+    "x": 414,
+    "y": 2,
+    "w": 99,
+    "h": 109
+   },
+   "anchor": {
+    "x": 50,
+    "y": 94
+   },
+   "category": "stone_walls",
+   "kind": "corner_concave",
+   "axis": null,
+   "screenSlope": "^",
+   "nativeSlope": "^",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": 7
+    },
+    "right": {
+     "dx": 48,
+     "dy": -19
+    },
+    "front": {
+     "dx": -39,
+     "dy": 14
+    },
+    "back": {
+     "dx": 48,
+     "dy": -19
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 111,
+   "columnHeightPx": 90
+  },
+  "stone_corner_mossy_02": {
+   "frame": {
+    "x": 515,
+    "y": 2,
+    "w": 104,
+    "h": 111
+   },
+   "anchor": {
+    "x": 52,
+    "y": 110
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -52,
+     "dy": -29
+    },
+    "right": {
+     "dx": 51,
+     "dy": -30
+    },
+    "front": {
+     "dx": -4,
+     "dy": 0
+    },
+    "back": {
+     "dx": 51,
+     "dy": -30
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 116,
+   "columnHeightPx": 90
+  },
+  "stone_corner_mossy_03": {
+   "frame": {
+    "x": 621,
+    "y": 2,
+    "w": 103,
+    "h": 110
+   },
+   "anchor": {
+    "x": 51,
+    "y": 110
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -51,
+     "dy": -30
+    },
+    "right": {
+     "dx": 51,
+     "dy": -28
+    },
+    "front": {
+     "dx": -2,
+     "dy": -1
+    },
+    "back": {
+     "dx": -51,
+     "dy": -30
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 115,
+   "columnHeightPx": 90
+  },
+  "stone_corner_mossy_04": {
+   "frame": {
+    "x": 726,
+    "y": 2,
+    "w": 100,
+    "h": 109
+   },
+   "anchor": {
+    "x": 50,
+    "y": 109
+   },
+   "category": "stone_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -28
+    },
+    "right": {
+     "dx": 49,
+     "dy": -27
+    },
+    "front": {
+     "dx": -2,
+     "dy": -1
+    },
+    "back": {
+     "dx": -50,
+     "dy": -28
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 90
+  },
+  "stone_corner_north_01": {
+   "frame": {
+    "x": 828,
+    "y": 2,
+    "w": 99,
+    "h": 109
+   },
+   "anchor": {
+    "x": 50,
+    "y": 94
+   },
+   "category": "stone_walls",
+   "kind": "corner_concave",
+   "axis": null,
+   "screenSlope": "^",
+   "nativeSlope": "^",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": 7
+    },
+    "right": {
+     "dx": 48,
+     "dy": -19
+    },
+    "front": {
+     "dx": -39,
+     "dy": 14
+    },
+    "back": {
+     "dx": 48,
+     "dy": -19
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 111,
+   "columnHeightPx": 90
+  },
+  "stone_pillar_ruined_01": {
+   "frame": {
+    "x": 929,
+    "y": 2,
+    "w": 54,
+    "h": 103
+   },
+   "anchor": {
+    "x": 27,
+    "y": 97
+   },
+   "category": "stone_walls",
+   "kind": "pillar",
+   "axis": null,
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -27,
+     "dy": -16
+    },
+    "right": {
+     "dx": 26,
+     "dy": 0
+    },
+    "front": {
+     "dx": 12,
+     "dy": 5
+    },
+    "back": {
+     "dx": -27,
+     "dy": -16
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 60,
+   "columnHeightPx": 85
+  },
+  "stone_wall_broken_01": {
+   "frame": {
+    "x": 985,
+    "y": 2,
+    "w": 102,
+    "h": 127
+   },
+   "anchor": {
+    "x": 51,
+    "y": 112
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "y",
+   "screenSlope": "/",
+   "nativeSlope": "/",
+   "ground": {
+    "left": {
+     "dx": -51,
+     "dy": 7
+    },
+    "right": {
+     "dx": 50,
+     "dy": -39
+    },
+    "front": {
+     "dx": -40,
+     "dy": 14
+    },
+    "back": {
+     "dx": 50,
+     "dy": -39
+    }
+   },
+   "face": {
+    "A": {
+     "dx": 50,
+     "dy": -30
+    },
+    "B": {
+     "dx": -38,
+     "dy": 14
+    },
+    "dx": 88,
+    "cap": 13,
+    "reliable": true
+   },
+   "groundLengthPx": 98,
+   "spriteWidthLengthPx": 114,
+   "columnHeightPx": 90
+  },
+  "stone_wall_broken_02": {
+   "frame": {
+    "x": 1089,
+    "y": 2,
+    "w": 101,
+    "h": 126
+   },
+   "anchor": {
+    "x": 51,
+    "y": 111
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "y",
+   "screenSlope": "/",
+   "nativeSlope": "/",
+   "ground": {
+    "left": {
+     "dx": -51,
+     "dy": -18
+    },
+    "right": {
+     "dx": 49,
+     "dy": -32
+    },
+    "front": {
+     "dx": -40,
+     "dy": 14
+    },
+    "back": {
+     "dx": 49,
+     "dy": -32
+    }
+   },
+   "face": {
+    "A": {
+     "dx": 49,
+     "dy": -29
+    },
+    "B": {
+     "dx": -38,
+     "dy": 14
+    },
+    "dx": 87,
+    "cap": 13,
+    "reliable": true
+   },
+   "groundLengthPx": 97,
+   "spriteWidthLengthPx": 113,
+   "columnHeightPx": 90
+  },
+  "stone_wall_broken_03": {
+   "frame": {
+    "x": 1192,
+    "y": 2,
+    "w": 108,
+    "h": 115
+   },
+   "anchor": {
+    "x": 54,
+    "y": 114
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -54,
+     "dy": -52
+    },
+    "right": {
+     "dx": 53,
+     "dy": -24
+    },
+    "front": {
+     "dx": 3,
+     "dy": 0
+    },
+    "back": {
+     "dx": -54,
+     "dy": -52
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -54,
+     "dy": -40
+    },
+    "B": {
+     "dx": 16,
+     "dy": -5
+    },
+    "dx": 70,
+    "cap": 37,
+    "reliable": false
+   },
+   "groundLengthPx": 78,
+   "spriteWidthLengthPx": 121,
+   "columnHeightPx": 90
+  },
+  "stone_wall_mossy_01": {
+   "frame": {
+    "x": 1302,
+    "y": 2,
+    "w": 107,
+    "h": 129
+   },
+   "anchor": {
+    "x": 54,
+    "y": 112
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -54,
+     "dy": -35
+    },
+    "right": {
+     "dx": 52,
+     "dy": -5
+    },
+    "front": {
+     "dx": 38,
+     "dy": 16
+    },
+    "back": {
+     "dx": -54,
+     "dy": -35
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -54,
+     "dy": -31
+    },
+    "B": {
+     "dx": 40,
+     "dy": 16
+    },
+    "dx": 94,
+    "cap": 12,
+    "reliable": true
+   },
+   "groundLengthPx": 105,
+   "spriteWidthLengthPx": 120,
+   "columnHeightPx": 90
+  },
+  "stone_wall_mossy_02": {
+   "frame": {
+    "x": 1411,
+    "y": 2,
+    "w": 104,
+    "h": 127
+   },
+   "anchor": {
+    "x": 52,
+    "y": 110
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -52,
+     "dy": -31
+    },
+    "right": {
+     "dx": 51,
+     "dy": 10
+    },
+    "front": {
+     "dx": 36,
+     "dy": 16
+    },
+    "back": {
+     "dx": -52,
+     "dy": -31
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -52,
+     "dy": -29
+    },
+    "B": {
+     "dx": 38,
+     "dy": 16
+    },
+    "dx": 90,
+    "cap": 13,
+    "reliable": true
+   },
+   "groundLengthPx": 101,
+   "spriteWidthLengthPx": 116,
+   "columnHeightPx": 90
+  },
+  "stone_wall_mossy_03": {
+   "frame": {
+    "x": 1517,
+    "y": 2,
+    "w": 109,
+    "h": 130
+   },
+   "anchor": {
+    "x": 54,
+    "y": 112
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -54,
+     "dy": -31
+    },
+    "right": {
+     "dx": 54,
+     "dy": -1
+    },
+    "front": {
+     "dx": 39,
+     "dy": 17
+    },
+    "back": {
+     "dx": -54,
+     "dy": -31
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -54,
+     "dy": -30
+    },
+    "B": {
+     "dx": 41,
+     "dy": 17
+    },
+    "dx": 95,
+    "cap": 13,
+    "reliable": true
+   },
+   "groundLengthPx": 106,
+   "spriteWidthLengthPx": 122,
+   "columnHeightPx": 90
+  },
+  "stone_wall_mossy_04": {
+   "frame": {
+    "x": 1628,
+    "y": 2,
+    "w": 95,
+    "h": 125
+   },
+   "anchor": {
+    "x": 47,
+    "y": 110
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -47,
+     "dy": -30
+    },
+    "right": {
+     "dx": 47,
+     "dy": -2
+    },
+    "front": {
+     "dx": 33,
+     "dy": 14
+    },
+    "back": {
+     "dx": -47,
+     "dy": -30
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -47,
+     "dy": -27
+    },
+    "B": {
+     "dx": 35,
+     "dy": 14
+    },
+    "dx": 82,
+    "cap": 12,
+    "reliable": true
+   },
+   "groundLengthPx": 92,
+   "spriteWidthLengthPx": 106,
+   "columnHeightPx": 90
+  },
+  "stone_wall_ruined_01": {
+   "frame": {
+    "x": 1725,
+    "y": 2,
+    "w": 108,
+    "h": 130
+   },
+   "anchor": {
+    "x": 54,
+    "y": 113
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -54,
+     "dy": -82
+    },
+    "right": {
+     "dx": 53,
+     "dy": 10
+    },
+    "front": {
+     "dx": 38,
+     "dy": 16
+    },
+    "back": {
+     "dx": -54,
+     "dy": -82
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -54,
+     "dy": -31
+    },
+    "B": {
+     "dx": 40,
+     "dy": 16
+    },
+    "dx": 94,
+    "cap": 13,
+    "reliable": true
+   },
+   "groundLengthPx": 105,
+   "spriteWidthLengthPx": 121,
+   "columnHeightPx": 90
+  },
+  "stone_wall_ruined_02": {
+   "frame": {
+    "x": 1835,
+    "y": 2,
+    "w": 91,
+    "h": 123
+   },
+   "anchor": {
+    "x": 45,
+    "y": 108
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -45,
+     "dy": -40
+    },
+    "right": {
+     "dx": 45,
+     "dy": 4
+    },
+    "front": {
+     "dx": 30,
+     "dy": 14
+    },
+    "back": {
+     "dx": -45,
+     "dy": -40
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -45,
+     "dy": -24
+    },
+    "B": {
+     "dx": 32,
+     "dy": 14
+    },
+    "dx": 77,
+    "cap": 13,
+    "reliable": true
+   },
+   "groundLengthPx": 86,
+   "spriteWidthLengthPx": 102,
+   "columnHeightPx": 90
+  },
+  "stone_wall_straight_01": {
+   "frame": {
+    "x": 2,
+    "y": 134,
+    "w": 123,
+    "h": 139
+   },
+   "anchor": {
+    "x": 61,
+    "y": 119
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -61,
+     "dy": -111
+    },
+    "right": {
+     "dx": 61,
+     "dy": -15
+    },
+    "front": {
+     "dx": 46,
+     "dy": 19
+    },
+    "back": {
+     "dx": -61,
+     "dy": -111
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -61,
+     "dy": -35
+    },
+    "B": {
+     "dx": 47,
+     "dy": 19
+    },
+    "dx": 108,
+    "cap": 14,
+    "reliable": true
+   },
+   "groundLengthPx": 121,
+   "spriteWidthLengthPx": 138,
+   "columnHeightPx": 90
+  },
+  "stone_wall_straight_02": {
+   "frame": {
+    "x": 127,
+    "y": 134,
+    "w": 71,
+    "h": 115
+   },
+   "anchor": {
+    "x": 35,
+    "y": 105
+   },
+   "category": "stone_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -35,
+     "dy": -23
+    },
+    "right": {
+     "dx": 35,
+     "dy": -15
+    },
+    "front": {
+     "dx": 24,
+     "dy": 9
+    },
+    "back": {
+     "dx": -35,
+     "dy": -23
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -35,
+     "dy": -21
+    },
+    "B": {
+     "dx": 25,
+     "dy": 9
+    },
+    "dx": 60,
+    "cap": 10,
+    "reliable": true
+   },
+   "groundLengthPx": 67,
+   "spriteWidthLengthPx": 79,
+   "columnHeightPx": 90
+  },
+  "brick_corner_torch_01": {
+   "frame": {
+    "x": 200,
+    "y": 134,
+    "w": 101,
+    "h": 113
+   },
+   "anchor": {
+    "x": 50,
+    "y": 113
+   },
+   "category": "brick_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -32
+    },
+    "right": {
+     "dx": 50,
+     "dy": -24
+    },
+    "front": {
+     "dx": 6,
+     "dy": -1
+    },
+    "back": {
+     "dx": -50,
+     "dy": -32
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 113,
+   "columnHeightPx": 90
+  },
+  "brick_corner_window_01": {
+   "frame": {
+    "x": 303,
+    "y": 134,
+    "w": 101,
+    "h": 110
+   },
+   "anchor": {
+    "x": 50,
+    "y": 110
+   },
+   "category": "brick_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -28
+    },
+    "right": {
+     "dx": 50,
+     "dy": -28
+    },
+    "front": {
+     "dx": -2,
+     "dy": -1
+    },
+    "back": {
+     "dx": -50,
+     "dy": -28
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 113,
+   "columnHeightPx": 90
+  },
+  "brick_corner_window_torch_01": {
+   "frame": {
+    "x": 406,
+    "y": 134,
+    "w": 101,
+    "h": 110
+   },
+   "anchor": {
+    "x": 50,
+    "y": 109
+   },
+   "category": "brick_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -27
+    },
+    "right": {
+     "dx": 50,
+     "dy": -26
+    },
+    "front": {
+     "dx": -1,
+     "dy": 0
+    },
+    "back": {
+     "dx": -50,
+     "dy": -27
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 113,
+   "columnHeightPx": 90
+  },
+  "brick_wall_barred_window_01": {
+   "frame": {
+    "x": 509,
+    "y": 134,
+    "w": 88,
+    "h": 90
+   },
+   "anchor": {
+    "x": 44,
+    "y": 90
+   },
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "axis": null,
+   "screenSlope": "flat",
+   "nativeSlope": "flat",
+   "ground": {
+    "left": {
+     "dx": -44,
+     "dy": -1
+    },
+    "right": {
+     "dx": 43,
+     "dy": -1
+    },
+    "front": {
+     "dx": -44,
+     "dy": -1
+    },
+    "back": {
+     "dx": -44,
+     "dy": -1
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 98,
+   "columnHeightPx": 90
+  },
+  "brick_wall_barred_window_02": {
+   "frame": {
+    "x": 599,
+    "y": 134,
+    "w": 90,
+    "h": 90
+   },
+   "anchor": {
+    "x": 45,
+    "y": 90
+   },
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "axis": null,
+   "screenSlope": "flat",
+   "nativeSlope": "flat",
+   "ground": {
+    "left": {
+     "dx": -45,
+     "dy": -1
+    },
+    "right": {
+     "dx": 44,
+     "dy": -1
+    },
+    "front": {
+     "dx": -45,
+     "dy": -1
+    },
+    "back": {
+     "dx": -45,
+     "dy": -1
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 101,
+   "columnHeightPx": 90
+  },
+  "brick_wall_barred_window_03": {
+   "frame": {
+    "x": 691,
+    "y": 134,
+    "w": 98,
+    "h": 90
+   },
+   "anchor": {
+    "x": 49,
+    "y": 90
+   },
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "axis": null,
+   "screenSlope": "flat",
+   "nativeSlope": "flat",
+   "ground": {
+    "left": {
+     "dx": -49,
+     "dy": -3
+    },
+    "right": {
+     "dx": 48,
+     "dy": -3
+    },
+    "front": {
+     "dx": -47,
+     "dy": -1
+    },
+    "back": {
+     "dx": -49,
+     "dy": -3
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 110,
+   "columnHeightPx": 90
+  },
+  "brick_wall_broken_torch_01": {
+   "frame": {
+    "x": 791,
+    "y": 134,
+    "w": 113,
+    "h": 134
+   },
+   "anchor": {
+    "x": 56,
+    "y": 116
+   },
+   "category": "brick_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -56,
+     "dy": -33
+    },
+    "right": {
+     "dx": 56,
+     "dy": 11
+    },
+    "front": {
+     "dx": 43,
+     "dy": 17
+    },
+    "back": {
+     "dx": -56,
+     "dy": -33
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -56,
+     "dy": -33
+    },
+    "B": {
+     "dx": 45,
+     "dy": 17
+    },
+    "dx": 101,
+    "cap": 11,
+    "reliable": true
+   },
+   "groundLengthPx": 113,
+   "spriteWidthLengthPx": 126,
+   "columnHeightPx": 90
+  },
+  "brick_wall_round_window_01": {
+   "frame": {
+    "x": 906,
+    "y": 134,
+    "w": 70,
+    "h": 115
+   },
+   "anchor": {
+    "x": 35,
+    "y": 105
+   },
+   "category": "brick_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -35,
+     "dy": -22
+    },
+    "right": {
+     "dx": 34,
+     "dy": 3
+    },
+    "front": {
+     "dx": 22,
+     "dy": 9
+    },
+    "back": {
+     "dx": -35,
+     "dy": -22
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -35,
+     "dy": -20
+    },
+    "B": {
+     "dx": 23,
+     "dy": 9
+    },
+    "dx": 58,
+    "cap": 11,
+    "reliable": true
+   },
+   "groundLengthPx": 65,
+   "spriteWidthLengthPx": 78,
+   "columnHeightPx": 90
+  },
+  "brick_wall_torch_01": {
+   "frame": {
+    "x": 978,
+    "y": 134,
+    "w": 88,
+    "h": 90
+   },
+   "anchor": {
+    "x": 44,
+    "y": 90
+   },
+   "category": "brick_walls",
+   "kind": "wall_frontal",
+   "axis": null,
+   "screenSlope": "flat",
+   "nativeSlope": "flat",
+   "ground": {
+    "left": {
+     "dx": -44,
+     "dy": -1
+    },
+    "right": {
+     "dx": 43,
+     "dy": -1
+    },
+    "front": {
+     "dx": -44,
+     "dy": -1
+    },
+    "back": {
+     "dx": -44,
+     "dy": -1
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 98,
+   "columnHeightPx": 90
+  },
+  "dark_brick_wall_torch_01": {
+   "frame": {
+    "x": 1068,
+    "y": 134,
+    "w": 114,
+    "h": 133
+   },
+   "anchor": {
+    "x": 57,
+    "y": 116
+   },
+   "category": "brick_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -57,
+     "dy": -35
+    },
+    "right": {
+     "dx": 56,
+     "dy": -9
+    },
+    "front": {
+     "dx": 42,
+     "dy": 16
+    },
+    "back": {
+     "dx": -57,
+     "dy": -35
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -57,
+     "dy": -35
+    },
+    "B": {
+     "dx": 45,
+     "dy": 16
+    },
+    "dx": 102,
+    "cap": 11,
+    "reliable": true
+   },
+   "groundLengthPx": 114,
+   "spriteWidthLengthPx": 128,
+   "columnHeightPx": 90
+  },
+  "dark_brick_wall_window_01": {
+   "frame": {
+    "x": 1184,
+    "y": 134,
+    "w": 74,
+    "h": 116
+   },
+   "anchor": {
+    "x": 37,
+    "y": 105
+   },
+   "category": "brick_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -37,
+     "dy": -22
+    },
+    "right": {
+     "dx": 36,
+     "dy": 5
+    },
+    "front": {
+     "dx": 23,
+     "dy": 10
+    },
+    "back": {
+     "dx": -37,
+     "dy": -22
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -37,
+     "dy": -21
+    },
+    "B": {
+     "dx": 26,
+     "dy": 10
+    },
+    "dx": 63,
+    "cap": 10,
+    "reliable": true
+   },
+   "groundLengthPx": 70,
+   "spriteWidthLengthPx": 83,
+   "columnHeightPx": 90
+  },
+  "wood_corner_cross_01": {
+   "frame": {
+    "x": 1260,
+    "y": 134,
+    "w": 100,
+    "h": 112
+   },
+   "anchor": {
+    "x": 50,
+    "y": 111
+   },
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -26
+    },
+    "right": {
+     "dx": 49,
+     "dy": -27
+    },
+    "front": {
+     "dx": -2,
+     "dy": 0
+    },
+    "back": {
+     "dx": 49,
+     "dy": -27
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 90
+  },
+  "wood_corner_cross_02": {
+   "frame": {
+    "x": 1362,
+    "y": 134,
+    "w": 100,
+    "h": 111
+   },
+   "anchor": {
+    "x": 50,
+    "y": 111
+   },
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -29
+    },
+    "right": {
+     "dx": 49,
+     "dy": -28
+    },
+    "front": {
+     "dx": -1,
+     "dy": -1
+    },
+    "back": {
+     "dx": -50,
+     "dy": -29
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 90
+  },
+  "wood_corner_diagonal_01": {
+   "frame": {
+    "x": 1464,
+    "y": 134,
+    "w": 100,
+    "h": 111
+   },
+   "anchor": {
+    "x": 50,
+    "y": 110
+   },
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -27
+    },
+    "right": {
+     "dx": 49,
+     "dy": -27
+    },
+    "front": {
+     "dx": -1,
+     "dy": 0
+    },
+    "back": {
+     "dx": -50,
+     "dy": -27
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 90
+  },
+  "wood_corner_gate_01": {
+   "frame": {
+    "x": 1566,
+    "y": 134,
+    "w": 100,
+    "h": 111
+   },
+   "anchor": {
+    "x": 50,
+    "y": 110
+   },
+   "category": "wood_walls",
+   "kind": "corner_convex",
+   "axis": null,
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -26
+    },
+    "right": {
+     "dx": 49,
+     "dy": -1
+    },
+    "front": {
+     "dx": -2,
+     "dy": 0
+    },
+    "back": {
+     "dx": -50,
+     "dy": -26
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 90
+  },
+  "wood_wall_cross_01": {
+   "frame": {
+    "x": 1668,
+    "y": 134,
+    "w": 131,
+    "h": 143
+   },
+   "anchor": {
+    "x": 65,
+    "y": 121
+   },
+   "category": "wood_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -65,
+     "dy": -38
+    },
+    "right": {
+     "dx": 65,
+     "dy": 16
+    },
+    "front": {
+     "dx": 52,
+     "dy": 21
+    },
+    "back": {
+     "dx": -65,
+     "dy": -38
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -65,
+     "dy": -38
+    },
+    "B": {
+     "dx": 54,
+     "dy": 21
+    },
+    "dx": 119,
+    "cap": 11,
+    "reliable": true
+   },
+   "groundLengthPx": 133,
+   "spriteWidthLengthPx": 147,
+   "columnHeightPx": 90
+  },
+  "wood_wall_low_01": {
+   "frame": {
+    "x": 1801,
+    "y": 134,
+    "w": 90,
+    "h": 53
+   },
+   "anchor": {
+    "x": 45,
+    "y": 53
+   },
+   "category": "wood_walls",
+   "kind": "wall_frontal",
+   "axis": null,
+   "screenSlope": "flat",
+   "nativeSlope": "flat",
+   "ground": {
+    "left": {
+     "dx": -45,
+     "dy": -3
+    },
+    "right": {
+     "dx": 44,
+     "dy": -3
+    },
+    "front": {
+     "dx": -44,
+     "dy": -1
+    },
+    "back": {
+     "dx": -45,
+     "dy": -3
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 101,
+   "columnHeightPx": 53
+  },
+  "wood_wall_panel_01": {
+   "frame": {
+    "x": 1893,
+    "y": 134,
+    "w": 60,
+    "h": 112
+   },
+   "anchor": {
+    "x": 30,
+    "y": 102
+   },
+   "category": "wood_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -30,
+     "dy": -19
+    },
+    "right": {
+     "dx": 29,
+     "dy": 5
+    },
+    "front": {
+     "dx": 20,
+     "dy": 9
+    },
+    "back": {
+     "dx": -30,
+     "dy": -19
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -30,
+     "dy": -16
+    },
+    "B": {
+     "dx": 20,
+     "dy": 9
+    },
+    "dx": 50,
+    "cap": 9,
+    "reliable": true
+   },
+   "groundLengthPx": 56,
+   "spriteWidthLengthPx": 67,
+   "columnHeightPx": 90
+  },
+  "wood_wall_panel_02": {
+   "frame": {
+    "x": 2,
+    "y": 279,
+    "w": 100,
+    "h": 120
+   },
+   "anchor": {
+    "x": 50,
+    "y": 108
+   },
+   "category": "wood_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -50,
+     "dy": -24
+    },
+    "right": {
+     "dx": 49,
+     "dy": 5
+    },
+    "front": {
+     "dx": 35,
+     "dy": 11
+    },
+    "back": {
+     "dx": -50,
+     "dy": -24
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -50,
+     "dy": -33
+    },
+    "B": {
+     "dx": 39,
+     "dy": 11
+    },
+    "dx": 89,
+    "cap": 10,
+    "reliable": true
+   },
+   "groundLengthPx": 100,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 90
+  },
+  "wood_wall_slot_01": {
+   "frame": {
+    "x": 104,
+    "y": 279,
+    "w": 126,
+    "h": 142
+   },
+   "anchor": {
+    "x": 63,
+    "y": 120
+   },
+   "category": "wood_walls",
+   "kind": "wall",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -63,
+     "dy": -37
+    },
+    "right": {
+     "dx": 62,
+     "dy": 16
+    },
+    "front": {
+     "dx": 50,
+     "dy": 21
+    },
+    "back": {
+     "dx": -63,
+     "dy": -37
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -63,
+     "dy": -36
+    },
+    "B": {
+     "dx": 51,
+     "dy": 21
+    },
+    "dx": 114,
+    "cap": 11,
+    "reliable": true
+   },
+   "groundLengthPx": 128,
+   "spriteWidthLengthPx": 141,
+   "columnHeightPx": 90
+  },
+  "door_wood_01": {
+   "frame": {
+    "x": 232,
+    "y": 279,
+    "w": 61,
+    "h": 114
+   },
+   "anchor": {
+    "x": 30,
+    "y": 103
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -30,
+     "dy": -17
+    },
+    "right": {
+     "dx": 30,
+     "dy": 7
+    },
+    "front": {
+     "dx": 21,
+     "dy": 10
+    },
+    "back": {
+     "dx": -30,
+     "dy": -17
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -30,
+     "dy": -16
+    },
+    "B": {
+     "dx": 22,
+     "dy": 10
+    },
+    "dx": 52,
+    "cap": 8,
+    "reliable": true
+   },
+   "groundLengthPx": 58,
+   "spriteWidthLengthPx": 68,
+   "columnHeightPx": 90
+  },
+  "door_wood_02": {
+   "frame": {
+    "x": 295,
+    "y": 279,
+    "w": 55,
+    "h": 112
+   },
+   "anchor": {
+    "x": 27,
+    "y": 101
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -27,
+     "dy": -13
+    },
+    "right": {
+     "dx": 27,
+     "dy": 7
+    },
+    "front": {
+     "dx": 19,
+     "dy": 10
+    },
+    "back": {
+     "dx": -27,
+     "dy": -13
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -27,
+     "dy": -13
+    },
+    "B": {
+     "dx": 20,
+     "dy": 10
+    },
+    "dx": 47,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 53,
+   "spriteWidthLengthPx": 62,
+   "columnHeightPx": 90
+  },
+  "door_wood_03": {
+   "frame": {
+    "x": 352,
+    "y": 279,
+    "w": 56,
+    "h": 113
+   },
+   "anchor": {
+    "x": 28,
+    "y": 104
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -28,
+     "dy": -16
+    },
+    "right": {
+     "dx": 27,
+     "dy": 5
+    },
+    "front": {
+     "dx": 20,
+     "dy": 8
+    },
+    "back": {
+     "dx": -28,
+     "dy": -16
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -28,
+     "dy": -16
+    },
+    "B": {
+     "dx": 21,
+     "dy": 8
+    },
+    "dx": 49,
+    "cap": 6,
+    "reliable": true
+   },
+   "groundLengthPx": 55,
+   "spriteWidthLengthPx": 63,
+   "columnHeightPx": 90
+  },
+  "door_wood_04": {
+   "frame": {
+    "x": 410,
+    "y": 279,
+    "w": 58,
+    "h": 114
+   },
+   "anchor": {
+    "x": 29,
+    "y": 103
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "y",
+   "screenSlope": "/",
+   "nativeSlope": "/",
+   "ground": {
+    "left": {
+     "dx": -29,
+     "dy": 7
+    },
+    "right": {
+     "dx": 28,
+     "dy": -16
+    },
+    "front": {
+     "dx": -23,
+     "dy": 10
+    },
+    "back": {
+     "dx": 27,
+     "dy": -16
+    }
+   },
+   "face": {
+    "A": {
+     "dx": 28,
+     "dy": -14
+    },
+    "B": {
+     "dx": -21,
+     "dy": 10
+    },
+    "dx": 49,
+    "cap": 8,
+    "reliable": true
+   },
+   "groundLengthPx": 55,
+   "spriteWidthLengthPx": 65,
+   "columnHeightPx": 90
+  },
+  "door_wood_05": {
+   "frame": {
+    "x": 470,
+    "y": 279,
+    "w": 57,
+    "h": 113
+   },
+   "anchor": {
+    "x": 28,
+    "y": 103
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -28,
+     "dy": -16
+    },
+    "right": {
+     "dx": 28,
+     "dy": 6
+    },
+    "front": {
+     "dx": 19,
+     "dy": 9
+    },
+    "back": {
+     "dx": -28,
+     "dy": -16
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -28,
+     "dy": -15
+    },
+    "B": {
+     "dx": 20,
+     "dy": 9
+    },
+    "dx": 48,
+    "cap": 8,
+    "reliable": true
+   },
+   "groundLengthPx": 54,
+   "spriteWidthLengthPx": 64,
+   "columnHeightPx": 90
+  },
+  "door_wood_06": {
+   "frame": {
+    "x": 529,
+    "y": 279,
+    "w": 55,
+    "h": 115
+   },
+   "anchor": {
+    "x": 28,
+    "y": 103
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -28,
+     "dy": -16
+    },
+    "right": {
+     "dx": 26,
+     "dy": 8
+    },
+    "front": {
+     "dx": 19,
+     "dy": 11
+    },
+    "back": {
+     "dx": -28,
+     "dy": -16
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -28,
+     "dy": -13
+    },
+    "B": {
+     "dx": 20,
+     "dy": 11
+    },
+    "dx": 48,
+    "cap": 6,
+    "reliable": true
+   },
+   "groundLengthPx": 54,
+   "spriteWidthLengthPx": 62,
+   "columnHeightPx": 90
+  },
+  "door_wood_07": {
+   "frame": {
+    "x": 586,
+    "y": 279,
+    "w": 58,
+    "h": 114
+   },
+   "anchor": {
+    "x": 29,
+    "y": 103
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "y",
+   "screenSlope": "/",
+   "nativeSlope": "/",
+   "ground": {
+    "left": {
+     "dx": -29,
+     "dy": 7
+    },
+    "right": {
+     "dx": 28,
+     "dy": -15
+    },
+    "front": {
+     "dx": -24,
+     "dy": 10
+    },
+    "back": {
+     "dx": 27,
+     "dy": -15
+    }
+   },
+   "face": {
+    "A": {
+     "dx": 28,
+     "dy": -15
+    },
+    "B": {
+     "dx": -22,
+     "dy": 10
+    },
+    "dx": 50,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 56,
+   "spriteWidthLengthPx": 65,
+   "columnHeightPx": 90
+  },
+  "door_wood_ajar_01": {
+   "frame": {
+    "x": 646,
+    "y": 279,
+    "w": 56,
+    "h": 109
+   },
+   "anchor": {
+    "x": 28,
+    "y": 109
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -28,
+     "dy": -25
+    },
+    "right": {
+     "dx": 27,
+     "dy": -4
+    },
+    "front": {
+     "dx": 3,
+     "dy": -1
+    },
+    "back": {
+     "dx": 9,
+     "dy": -79
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -28,
+     "dy": -25
+    },
+    "B": {
+     "dx": 20,
+     "dy": -1
+    },
+    "dx": 48,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 54,
+   "spriteWidthLengthPx": 63,
+   "columnHeightPx": 90
+  },
+  "door_wood_open_01": {
+   "frame": {
+    "x": 704,
+    "y": 279,
+    "w": 62,
+    "h": 122
+   },
+   "anchor": {
+    "x": 31,
+    "y": 99
+   },
+   "category": "doors",
+   "kind": "door",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -31,
+     "dy": -5
+    },
+    "right": {
+     "dx": 30,
+     "dy": 19
+    },
+    "front": {
+     "dx": 20,
+     "dy": 22
+    },
+    "back": {
+     "dx": 7,
+     "dy": -68
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -31,
+     "dy": -4
+    },
+    "B": {
+     "dx": 22,
+     "dy": 22
+    },
+    "dx": 53,
+    "cap": 8,
+    "reliable": true
+   },
+   "groundLengthPx": 59,
+   "spriteWidthLengthPx": 69,
+   "columnHeightPx": 90
+  },
+  "double_door_iron_gate_01": {
+   "frame": {
+    "x": 768,
+    "y": 279,
+    "w": 114,
+    "h": 107
+   },
+   "anchor": {
+    "x": 57,
+    "y": 104
+   },
+   "category": "doors",
+   "kind": "double_door_frontal",
+   "axis": null,
+   "screenSlope": "V",
+   "nativeSlope": "V",
+   "ground": {
+    "left": {
+     "dx": -57,
+     "dy": -85
+    },
+    "right": {
+     "dx": 56,
+     "dy": -7
+    },
+    "front": {
+     "dx": -54,
+     "dy": 2
+    },
+    "back": {
+     "dx": -57,
+     "dy": -85
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 128,
+   "columnHeightPx": 90
+  },
+  "double_door_magic_portal_01": {
+   "frame": {
+    "x": 884,
+    "y": 279,
+    "w": 78,
+    "h": 102
+   },
+   "anchor": {
+    "x": 39,
+    "y": 92
+   },
+   "category": "doors",
+   "kind": "double_door_frontal",
+   "axis": null,
+   "screenSlope": "^",
+   "nativeSlope": "^",
+   "ground": {
+    "left": {
+     "dx": -39,
+     "dy": -13
+    },
+    "right": {
+     "dx": 38,
+     "dy": 5
+    },
+    "front": {
+     "dx": 26,
+     "dy": 9
+    },
+    "back": {
+     "dx": -39,
+     "dy": -13
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 87,
+   "columnHeightPx": 90
+  },
+  "double_door_stone_arch_01": {
+   "frame": {
+    "x": 964,
+    "y": 279,
+    "w": 92,
+    "h": 94
+   },
+   "anchor": {
+    "x": 46,
+    "y": 92
+   },
+   "category": "doors",
+   "kind": "double_door_frontal",
+   "axis": null,
+   "screenSlope": "^",
+   "nativeSlope": "^",
+   "ground": {
+    "left": {
+     "dx": -46,
+     "dy": 0
+    },
+    "right": {
+     "dx": 45,
+     "dy": 0
+    },
+    "front": {
+     "dx": -45,
+     "dy": 1
+    },
+    "back": {
+     "dx": -31,
+     "dy": -1
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 103,
+   "columnHeightPx": 90
+  },
+  "fence_iron_spiked_01": {
+   "frame": {
+    "x": 1058,
+    "y": 279,
+    "w": 85,
+    "h": 121
+   },
+   "anchor": {
+    "x": 42,
+    "y": 107
+   },
+   "category": "gates",
+   "kind": "fence",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -42,
+     "dy": -14
+    },
+    "right": {
+     "dx": 42,
+     "dy": 11
+    },
+    "front": {
+     "dx": 37,
+     "dy": 13
+    },
+    "back": {
+     "dx": -34,
+     "dy": -23
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -42,
+     "dy": -27
+    },
+    "B": {
+     "dx": 38,
+     "dy": 13
+    },
+    "dx": 80,
+    "cap": 4,
+    "reliable": true
+   },
+   "groundLengthPx": 89,
+   "spriteWidthLengthPx": 95,
+   "columnHeightPx": 90
+  },
+  "gate_iron_01": {
+   "frame": {
+    "x": 1145,
+    "y": 279,
+    "w": 61,
+    "h": 116
+   },
+   "anchor": {
+    "x": 31,
+    "y": 103
+   },
+   "category": "gates",
+   "kind": "gate",
+   "axis": "y",
+   "screenSlope": "/",
+   "nativeSlope": "/",
+   "ground": {
+    "left": {
+     "dx": -31,
+     "dy": 9
+    },
+    "right": {
+     "dx": 29,
+     "dy": -13
+    },
+    "front": {
+     "dx": -26,
+     "dy": 12
+    },
+    "back": {
+     "dx": 8,
+     "dy": -20
+    }
+   },
+   "face": {
+    "A": {
+     "dx": 29,
+     "dy": -14
+    },
+    "B": {
+     "dx": -24,
+     "dy": 12
+    },
+    "dx": 53,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 59,
+   "spriteWidthLengthPx": 68,
+   "columnHeightPx": 90
+  },
+  "gate_iron_02": {
+   "frame": {
+    "x": 1208,
+    "y": 279,
+    "w": 62,
+    "h": 115
+   },
+   "anchor": {
+    "x": 31,
+    "y": 103
+   },
+   "category": "gates",
+   "kind": "gate",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -31,
+     "dy": -14
+    },
+    "right": {
+     "dx": 30,
+     "dy": 9
+    },
+    "front": {
+     "dx": 21,
+     "dy": 11
+    },
+    "back": {
+     "dx": -17,
+     "dy": -21
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -31,
+     "dy": -16
+    },
+    "B": {
+     "dx": 23,
+     "dy": 11
+    },
+    "dx": 54,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 60,
+   "spriteWidthLengthPx": 69,
+   "columnHeightPx": 90
+  },
+  "gate_iron_03": {
+   "frame": {
+    "x": 1272,
+    "y": 279,
+    "w": 77,
+    "h": 116
+   },
+   "anchor": {
+    "x": 38,
+    "y": 102
+   },
+   "category": "gates",
+   "kind": "gate",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -38,
+     "dy": -12
+    },
+    "right": {
+     "dx": 38,
+     "dy": 11
+    },
+    "front": {
+     "dx": 29,
+     "dy": 13
+    },
+    "back": {
+     "dx": -16,
+     "dy": -20
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -38,
+     "dy": -22
+    },
+    "B": {
+     "dx": 32,
+     "dy": 13
+    },
+    "dx": 70,
+    "cap": 6,
+    "reliable": true
+   },
+   "groundLengthPx": 78,
+   "spriteWidthLengthPx": 86,
+   "columnHeightPx": 90
+  },
+  "gate_iron_04": {
+   "frame": {
+    "x": 1351,
+    "y": 279,
+    "w": 77,
+    "h": 112
+   },
+   "anchor": {
+    "x": 39,
+    "y": 100
+   },
+   "category": "gates",
+   "kind": "gate",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -39,
+     "dy": -12
+    },
+    "right": {
+     "dx": 37,
+     "dy": 8
+    },
+    "front": {
+     "dx": 28,
+     "dy": 11
+    },
+    "back": {
+     "dx": -14,
+     "dy": -17
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -39,
+     "dy": -23
+    },
+    "B": {
+     "dx": 30,
+     "dy": 11
+    },
+    "dx": 69,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 77,
+   "spriteWidthLengthPx": 86,
+   "columnHeightPx": 90
+  },
+  "gate_iron_door_01": {
+   "frame": {
+    "x": 1430,
+    "y": 279,
+    "w": 55,
+    "h": 111
+   },
+   "anchor": {
+    "x": 28,
+    "y": 101
+   },
+   "category": "gates",
+   "kind": "gate",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -28,
+     "dy": -16
+    },
+    "right": {
+     "dx": 26,
+     "dy": 6
+    },
+    "front": {
+     "dx": 19,
+     "dy": 9
+    },
+    "back": {
+     "dx": -28,
+     "dy": -16
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -28,
+     "dy": -15
+    },
+    "B": {
+     "dx": 20,
+     "dy": 9
+    },
+    "dx": 48,
+    "cap": 6,
+    "reliable": true
+   },
+   "groundLengthPx": 54,
+   "spriteWidthLengthPx": 62,
+   "columnHeightPx": 90
+  },
+  "gate_wood_grate_01": {
+   "frame": {
+    "x": 1487,
+    "y": 279,
+    "w": 71,
+    "h": 123
+   },
+   "anchor": {
+    "x": 35,
+    "y": 107
+   },
+   "category": "gates",
+   "kind": "gate",
+   "axis": "x",
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -35,
+     "dy": -19
+    },
+    "right": {
+     "dx": 35,
+     "dy": 11
+    },
+    "front": {
+     "dx": 27,
+     "dy": 15
+    },
+    "back": {
+     "dx": -17,
+     "dy": -21
+    }
+   },
+   "face": {
+    "A": {
+     "dx": -35,
+     "dy": -16
+    },
+    "B": {
+     "dx": 28,
+     "dy": 15
+    },
+    "dx": 63,
+    "cap": 7,
+    "reliable": true
+   },
+   "groundLengthPx": 70,
+   "spriteWidthLengthPx": 79,
+   "columnHeightPx": 90
+  },
+  "arch_stone_01": {
+   "frame": {
+    "x": 1560,
+    "y": 279,
+    "w": 84,
+    "h": 123
+   },
+   "anchor": {
+    "x": 42,
+    "y": 103
+   },
+   "category": "arches",
+   "kind": "arch",
+   "axis": null,
+   "screenSlope": "^",
+   "nativeSlope": "^",
+   "ground": {
+    "left": {
+     "dx": -42,
+     "dy": -14
+    },
+    "right": {
+     "dx": 41,
+     "dy": 13
+    },
+    "front": {
+     "dx": 26,
+     "dy": 19
+    },
+    "back": {
+     "dx": -2,
+     "dy": -74
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 94,
+   "columnHeightPx": 93
+  },
+  "arch_stone_mossy_01": {
+   "frame": {
+    "x": 1646,
+    "y": 279,
+    "w": 87,
+    "h": 125
+   },
+   "anchor": {
+    "x": 43,
+    "y": 110
+   },
+   "category": "arches",
+   "kind": "arch",
+   "axis": null,
+   "screenSlope": "^",
+   "nativeSlope": "^",
+   "ground": {
+    "left": {
+     "dx": -43,
+     "dy": -20
+    },
+    "right": {
+     "dx": 43,
+     "dy": 7
+    },
+    "front": {
+     "dx": 27,
+     "dy": 14
+    },
+    "back": {
+     "dx": 3,
+     "dy": -78
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 97,
+   "columnHeightPx": 99
+  },
+  "ruin_scattered_bricks_01": {
+   "frame": {
+    "x": 1735,
+    "y": 279,
+    "w": 100,
+    "h": 116
+   },
+   "anchor": {
+    "x": 49,
+    "y": 115
+   },
+   "category": "ruins",
+   "kind": "ruin",
+   "axis": null,
+   "screenSlope": "free",
+   "nativeSlope": "free",
+   "ground": {
+    "left": {
+     "dx": -49,
+     "dy": -21
+    },
+    "right": {
+     "dx": 50,
+     "dy": -22
+    },
+    "front": {
+     "dx": -4,
+     "dy": 0
+    },
+    "back": {
+     "dx": 22,
+     "dy": -50
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 112,
+   "columnHeightPx": 56
+  },
+  "ruin_wall_cracked_01": {
+   "frame": {
+    "x": 1837,
+    "y": 279,
+    "w": 104,
+    "h": 119
+   },
+   "anchor": {
+    "x": 52,
+    "y": 101
+   },
+   "category": "ruins",
+   "kind": "ruin",
+   "axis": null,
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -52,
+     "dy": -43
+    },
+    "right": {
+     "dx": 51,
+     "dy": 12
+    },
+    "front": {
+     "dx": 35,
+     "dy": 17
+    },
+    "back": {
+     "dx": -52,
+     "dy": -43
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 116,
+   "columnHeightPx": 72
+  },
+  "ruin_wall_hole_01": {
+   "frame": {
+    "x": 1943,
+    "y": 279,
+    "w": 103,
+    "h": 120
+   },
+   "anchor": {
+    "x": 52,
+    "y": 103
+   },
+   "category": "ruins",
+   "kind": "ruin",
+   "axis": null,
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -52,
+     "dy": -30
+    },
+    "right": {
+     "dx": 50,
+     "dy": 12
+    },
+    "front": {
+     "dx": 39,
+     "dy": 16
+    },
+    "back": {
+     "dx": -52,
+     "dy": -30
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 115,
+   "columnHeightPx": 76
+  },
+  "ruin_wall_rubble_01": {
+   "frame": {
+    "x": 2,
+    "y": 423,
+    "w": 91,
+    "h": 119
+   },
+   "anchor": {
+    "x": 45,
+    "y": 118
+   },
+   "category": "ruins",
+   "kind": "ruin",
+   "axis": null,
+   "screenSlope": "\\",
+   "nativeSlope": "\\",
+   "ground": {
+    "left": {
+     "dx": -45,
+     "dy": -47
+    },
+    "right": {
+     "dx": 45,
+     "dy": -11
+    },
+    "front": {
+     "dx": 6,
+     "dy": 0
+    },
+    "back": {
+     "dx": -45,
+     "dy": -47
+    }
+   },
+   "face": null,
+   "groundLengthPx": null,
+   "spriteWidthLengthPx": 102,
+   "columnHeightPx": 67
+  }
+ }
+}

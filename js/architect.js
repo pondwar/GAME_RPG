@@ -763,7 +763,7 @@ class ArchitectSystem {
 
   // ---- F6: persistencia por chunk ----
   // Cada chunk (16x16 tiles) vira uma chave propria no localStorage; so os chunks que mudaram sao regravados
-  // (em lote, com debounce). Indice: 'aethelgard_chunks_v1'. O save antigo ('aethelgard_blocks_v2') e migrado
+  // (em lote, com debounce). Indice: 'suritto_chunks_v1'. O save antigo ('suritto_blocks_v2') e migrado
   // uma vez e fica intacto como copia de seguranca.
   _chunkIdOf(b) {
     const T = this.CHUNK_TILES || 16;
@@ -792,15 +792,15 @@ class ArchitectSystem {
     for (const id of ids) {
       const str = JSON.stringify(chunks[id]);
       if (this._chunkCache[id] === str) continue;
-      try { localStorage.setItem('aethelgard_chunk_v1:' + id, str); this._chunkCache[id] = str; wrote++; }
+      try { localStorage.setItem('suritto_chunk_v1:' + id, str); this._chunkCache[id] = str; wrote++; }
       catch (e) { failed = true; }
     }
     for (const id of Object.keys(this._chunkCache)) {       // chunks que ficaram vazios
       if (chunks[id]) continue;
-      try { localStorage.removeItem('aethelgard_chunk_v1:' + id); delete this._chunkCache[id]; wrote++; } catch (e) { }
+      try { localStorage.removeItem('suritto_chunk_v1:' + id); delete this._chunkCache[id]; wrote++; } catch (e) { }
     }
     if (wrote || !this._indexWritten) {
-      try { localStorage.setItem('aethelgard_chunks_v1', JSON.stringify({ v: 1, tiles: this.CHUNK_TILES || 16, ids: Object.keys(this._chunkCache) })); this._indexWritten = true; }
+      try { localStorage.setItem('suritto_chunks_v1', JSON.stringify({ v: 1, tiles: this.CHUNK_TILES || 16, ids: Object.keys(this._chunkCache) })); this._indexWritten = true; }
       catch (e) { failed = true; }
     }
     if (failed && !this._saveWarned) {
@@ -823,30 +823,30 @@ class ArchitectSystem {
     this._chunkCache = {};
     // Limpeza unica (F8): todas as construcoes feitas ate aqui eram de teste e foram apagadas.
     try {
-      if (localStorage.getItem('aethelgard_reset') !== 'f8_clean') {
+      if (localStorage.getItem('suritto_reset') !== 'f8_clean') {
         const del = [];
         for (let i = 0; i < localStorage.length; i++) {
           const k = localStorage.key(i);
-          if (k && (k.indexOf('aethelgard_chunk_v1:') === 0 || k === 'aethelgard_chunks_v1' || k === 'aethelgard_blocks_v2')) del.push(k);
+          if (k && (k.indexOf('suritto_chunk_v1:') === 0 || k === 'suritto_chunks_v1' || k === 'suritto_blocks_v2')) del.push(k);
         }
         del.forEach(k => localStorage.removeItem(k));
-        localStorage.setItem('aethelgard_reset', 'f8_clean');
+        localStorage.setItem('suritto_reset', 'f8_clean');
       }
     } catch (e) { }
     let list = null;
     try {
-      const idx = localStorage.getItem('aethelgard_chunks_v1');
+      const idx = localStorage.getItem('suritto_chunks_v1');
       if (idx) {
         list = [];
         for (const id of JSON.parse(idx).ids || []) {
-          const raw = localStorage.getItem('aethelgard_chunk_v1:' + id);
+          const raw = localStorage.getItem('suritto_chunk_v1:' + id);
           if (!raw) continue;
           this._chunkCache[id] = raw;
           for (const [k, b] of JSON.parse(raw)) { b._key = k; list.push(b); }
         }
         this._indexWritten = true;
       } else {
-        const saved = localStorage.getItem('aethelgard_blocks_v2');   // migracao do save antigo (fica como backup)
+        const saved = localStorage.getItem('suritto_blocks_v2');   // migracao do save antigo (fica como backup)
         if (saved) { list = Object.values(JSON.parse(saved)); this._migrate = true; }
       }
     } catch (e) { list = list || []; }
@@ -874,7 +874,7 @@ class ArchitectSystem {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `aethelgard_castelo_vilarejo_${Date.now()}.json`;
+    a.download = `suritto_castelo_vilarejo_${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
 

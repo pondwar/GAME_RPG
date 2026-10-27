@@ -1,4 +1,4 @@
-// terrain.js - Modelo de terreno de Aethelgard: um "Marte terraformado" (continuo, sem blocos).
+// terrain.js - Modelo de terreno de Suritto: um "Marte terraformado" (continuo, sem blocos).
 // Entrada: u (0..1, longitude, com volta em X) e v (0..1, 0 = polo norte, 1 = polo sul).
 // Saida: e (elevacao, nivel do mar = 0), m (umidade 0..1), t (temperatura 0..1), c (cânion 0..1) e o bioma.
 // Tudo e funcao pura de (u,v): o mundo e o mapa sempre concordam. Para mexer na geografia, edite BLOBS / SEAS / MOUNTS abaixo.

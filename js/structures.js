@@ -1,4 +1,4 @@
-// js/structures.js - Unified Structure Management & Dungeon Atlas Renderer for Aethelgard
+// js/structures.js - Unified Structure Management & Dungeon Atlas Renderer for Suritto
 // Loads atlas_game (104px wall height standard) and handles F3 debug overlay + test scene
 
 class StructureManager {
