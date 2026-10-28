@@ -226,8 +226,10 @@
       let painted = false;
       if (tex) {
         const k = (60 * (tex.celulas || 1)) / tex.img.width;     // largura da textura = tex.celulas celulas
-        const O = Gf(0, rise), Q1 = Gf(1, rise), H1 = Gf(0, rise - 1);
+        const th = tex.img.height * k;                            // base da textura (viga de baixo) na base da empena
+        const O = Gf(0, th), Q1 = Gf(1, th), H1 = Gf(0, th - 1);
         painted = paintTexture(tex, poly, O, [(Q1[0] - O[0]) / 60.4 * k, (Q1[1] - O[1]) / 60.4 * k], [(H1[0] - O[0]) * k, (H1[1] - O[1]) * k]);
+        if (painted) { ctx.save(); ctx.globalCompositeOperation = 'multiply'; fillPoly(poly, '#ecdcb6'); ctx.restore(); }   // reboco puxado para o creme das paredes
       }
       if (!painted) {
         fillPoly(poly, PLASTER[0]);

@@ -197,21 +197,49 @@
   "telhado_palha.png": {
     "tipo": "textura_telhado",
     "estilo": "thatch",
-    "linhas": 8
+    "linhas": 7,
+    "recorte": [
+      8,
+      263,
+      2047,
+      2040
+    ],
+    "emendar": false
   },
   "telhado_madeira.png": {
     "tipo": "textura_telhado",
     "estilo": "wood",
-    "linhas": 8
+    "linhas": 7,
+    "recorte": [
+      8,
+      274,
+      2045,
+      2046
+    ],
+    "emendar": false
   },
   "telhado_ardosia.png": {
     "tipo": "textura_telhado",
     "estilo": "slate",
-    "linhas": 8
+    "linhas": 7,
+    "recorte": [
+      9,
+      263,
+      2038,
+      2046
+    ],
+    "emendar": false
   },
   "empena_enxaimel.png": {
     "tipo": "textura_telhado",
     "estilo": "empena",
-    "celulas": 2
+    "celulas": 2,
+    "recorte": [
+      0,
+      0,
+      1922,
+      2048
+    ],
+    "emendar": false
   }
 }

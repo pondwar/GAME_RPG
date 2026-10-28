@@ -390,6 +390,22 @@
   "tile": {
    "file": "telhado_tile.png",
    "linhas": 7
+  },
+  "thatch": {
+   "file": "telhado_thatch.png",
+   "linhas": 7
+  },
+  "wood": {
+   "file": "telhado_wood.png",
+   "linhas": 7
+  },
+  "slate": {
+   "file": "telhado_slate.png",
+   "linhas": 7
+  },
+  "empena": {
+   "file": "telhado_empena.png",
+   "celulas": 2
   }
  }
 }
