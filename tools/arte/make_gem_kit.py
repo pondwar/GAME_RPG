@@ -5,6 +5,7 @@ Gera:
   gabarito_parede.png      trecho de parede de 2 celulas, altura do muro (77) em 4x, nos dois sentidos
   gabarito_movel_1.png     volume maximo de um movel de 1 celula (altura 72) em 4x
   gabarito_movel_2.png     volume maximo de um movel de 2 celulas (cama, balcao grande) em 4x
+  gabarito_movel_3.png     3 celulas em fila (mesa comprida, que o importador corta em ponta/meio/ponta)
   referencia_pecas.png     pecas atuais do atlas (paredes, portas, pisos, escada) para o estilo
   referencia_personagem.png  boneco parado/andando nas 4 direcoes
   paleta.png / paleta.txt  32 cores tiradas das pecas atuais
@@ -65,18 +66,18 @@ def gabarito_parede():
 
 
 def box_template(cells):
-    w = (CELL_W * (1 + (cells - 1) / 2) + 40) * S
-    h = (CELL_H * (1 + (cells - 1) / 2) + FURN_H + 40) * S
-    im, d = canvas(int(w), int(h))
-    cx, cy = 20 * S + CELL_W / 2 * S, h - 20 * S - CELL_H / 2 * S * (1 + (cells - 1) / 2) + (cells - 1) * CELL_H / 4 * S
-    cells_pts = []
-    for n in range(cells):
-        c = (cx + n * CELL_W / 2 * S, cy - (cells - 1) * CELL_H / 4 * S + n * CELL_H / 2 * S)
-        cells_pts.append(diamond(*c))
+    """volume maximo de um movel de N celulas em fila no eixo i (desce para a direita)"""
+    m = 20                                                   # margem (px do jogo)
+    # pegada: celula k tem centro c0 + k*(54, 27); limites em px do jogo, relativos a c0
+    x0, x1 = -CELL_W / 2, CELL_W / 2 * (cells - 1) + CELL_W / 2
+    y0, y1 = -CELL_H / 2 - FURN_H, CELL_H / 2 * (cells - 1) + CELL_H / 2
+    im, d = canvas(int((x1 - x0 + 2 * m) * S), int((y1 - y0 + 2 * m) * S))
+    c0 = ((m - x0) * S, (m - y0) * S)
+    cells_pts = [diamond(c0[0] + k * CELL_W / 2 * S, c0[1] + k * CELL_H / 2 * S) for k in range(cells)]
     for poly in cells_pts:
         d.polygon(poly, outline=GUIDE, width=3)
-    # contorno da base e arestas verticais ate a altura maxima
-    left = cells_pts[0][0]; back = cells_pts[0][1]; right = cells_pts[-1][2]; front = cells_pts[-1][3]
+    left, back = cells_pts[0][0], cells_pts[0][1]
+    right, front = cells_pts[-1][2], cells_pts[-1][3]
     for p in (left, right, front, back):
         d.line([p, (p[0], p[1] - FURN_H * S)], fill=GUIDE2, width=2)
     top = [(p[0], p[1] - FURN_H * S) for p in (left, back, right, front)]
@@ -148,6 +149,7 @@ if __name__ == '__main__':
     gabarito_parede()
     box_template(1)
     box_template(2)
+    box_template(3)
     pecas = referencia_pecas()
     boneco = referencia_personagem()
     paleta(pecas + boneco)
