@@ -230,7 +230,7 @@ class Game {
     // 2. Walk
     ['down', 'up', 'left', 'right'].forEach(dir => {
       this.images.player.walk[dir] = [];
-      const count = (dir === 'left' || dir === 'right') ? 4 : 2;
+      const count = 4;   // 4 quadros em todas as direcoes (cima/baixo: tools/player/make_walk_vertical.py)
       for (let i = 0; i < count; i++) {
         const img = new Image();
         img.src = `assets/player/v2/walk/${dir}_${i}.png?v=${v}`;
@@ -242,7 +242,7 @@ class Game {
     // 3. Run (Athletic Sprint)
     ['down', 'up', 'left', 'right'].forEach(dir => {
       this.images.player.run[dir] = [];
-      const count = (dir === 'left' || dir === 'right') ? 4 : 2;
+      const count = 4;   // 4 quadros em todas as direcoes (cima/baixo: tools/player/make_walk_vertical.py)
       for (let i = 0; i < count; i++) {
         const img = new Image();
         img.src = `assets/player/v2/run/${dir}_${i}.png?v=${v}`;
@@ -3102,11 +3102,14 @@ class Game {
     // Organic walking/running step cadence and subtle torso weight sway
     let stepBounce = 0;
     let swayAngle = 0;
+    let swayX = 0;
     if (this.player.isMoving && !jumpOff && !isSit) {
       // quique e balanco ligados a fase do passo (2 quiques por ciclo, minimo nos contatos do pe)
       const ph = (this.player.stridePhase || 0) * Math.PI * 2, spd = Math.min(1, Math.hypot(this.player.vx, this.player.vy) / 150);
       stepBounce = Math.sin(ph) ** 2 * (this.player.isRunning ? 3.2 : 1.8) * spd;   // sin^2: suave, sem "quina" de |sin|
-      swayAngle = Math.sin(ph) * (this.player.isRunning ? 0.045 : 0.022) * spd;
+      // De lado o corpo inclina; de frente/costas inclinar parece um pendulo: o peso passa de um pe para o outro (desliza para o lado)
+      if (this.player.direction === 'up' || this.player.direction === 'down') swayX = Math.sin(ph) * (this.player.isRunning ? 1.6 : 1.0) * spd;
+      else swayAngle = Math.sin(ph) * (this.player.isRunning ? 0.045 : 0.022) * spd;
     }
 
     // 1. Ground Shadow (shrinks smoothly when jumping in air)
@@ -3192,7 +3195,7 @@ class Game {
     if (frame && frame.naturalHeight > 0) {
       targetW = Math.round((frame.naturalWidth / frame.naturalHeight) * targetH);
     }
-    const drawX = px - targetW / 2;
+    const drawX = px - targetW / 2 + swayX;
     const drawY = py - targetH + 6 - jumpOff - stepBounce;
 
     // Precision Hand Socket Lookup
