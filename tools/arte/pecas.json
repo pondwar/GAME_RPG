@@ -1,0 +1,6 @@
+{
+  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao (rot 0 = eixo i com a parte de tras no fundo-esquerda, 90 = eixo j com a parte de tras no fundo-direita, 180/270 = parte de tras perto da camera).",
+  "piso_tabuas_carvalho.png": { "tipo": "piso", "substitui": "floor_wood_01" },
+  "cama_casal_carvalho_A_eixo_a.webp": { "tipo": "movel", "movel": "bed", "rot": 0, "celulas": 2 },
+  "cama_casal_carvalho_A_eixo_b.png": { "tipo": "movel", "movel": "bed", "rot": 90, "celulas": 2 }
+}

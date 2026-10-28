@@ -1,0 +1,31 @@
+{
+ "floors": {
+  "floor_wood_01": {
+   "file": "floor_wood_01.png",
+   "w": 108,
+   "h": 54,
+   "anchor": {
+    "x": 54,
+    "y": 27
+   }
+  }
+ },
+ "furniture": {
+  "bed": {
+   "0": {
+    "file": "bed_0.png",
+    "w": 162,
+    "h": 148,
+    "ox": 54,
+    "oy": 94
+   },
+   "90": {
+    "file": "bed_90.png",
+    "w": 162,
+    "h": 121,
+    "ox": 108,
+    "oy": 67
+   }
+  }
+ }
+}

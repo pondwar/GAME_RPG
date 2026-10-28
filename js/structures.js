@@ -132,6 +132,15 @@ class StructureManager {
     const f = meta.frame;
     const anc = meta.anchor;
 
+    // Arte nova importada (js/art_overrides.js) no lugar do sprite do atlas, com a mesma ancora
+    const ov = !flipX && window.SurittoArt && window.SurittoArt.floor(name);
+    if (ov) {
+      ctx.save(); ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(ov.img, Math.round(sx - ov.anchor.x), Math.round(sy - ov.anchor.y));
+      ctx.restore();
+      return;
+    }
+
     // Draw position on screen: (sx - anc.x, sy - anc.y)
     const drawX = Math.round(sx - anc.x);
     const drawY = Math.round(sy - anc.y);

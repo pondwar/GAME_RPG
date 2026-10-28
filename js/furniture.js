@@ -415,6 +415,9 @@
 
   const cache = {};
   function sprite(kind, rot, mask) {
+    // arte nova importada para este movel/rotacao (js/art_overrides.js); senao, o desenho por codigo abaixo
+    const art = window.SurittoArt && window.SurittoArt.furnitureSprite(kind, rot);
+    if (art) return art;
     const k = kind + '|' + (rot || 0) + '|' + (mask || 0);
     if (cache[k]) return cache[k];
     let r;

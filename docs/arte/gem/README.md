@@ -30,4 +30,12 @@ Tudo aqui é gerado por `tools/arte/make_gem_kit.py` (menos os .md e as cenas .j
 2. Cama de casal (`gabarito_movel_2.png`)
 3. Textura de telha cerâmica (losango do piso, para virar o material do telhado)
 
-Com essas três aprovadas, o próximo passo é o importador (`assets/_novas/` → atlas do jogo).
+## Importar para o jogo
+1. Salve a imagem aprovada em `assets/_novas/`.
+2. Diga em `tools/arte/pecas.json` o que ela é (piso que substitui, ou móvel + rotação + células).
+3. Rode `python tools/arte/importar_novas.py`. Ele tira o fundo magenta, acerta o piso para 2:1 (corta espessura), escala o móvel pela pegada no chão, calcula o ponto de encaixe e grava em `assets/arte/` + `manifest.json`.
+4. Recarregue o jogo: onde houver arte nova ela substitui a antiga; o resto continua igual (`js/art_overrides.js`).
+
+O importador avisa se o móvel passar da altura do muro (furaria o telhado).
+
+Rotações de móvel: `rot 0` = eixo ↘ com a parte de trás no fundo; `rot 90` = eixo ↙ com a parte de trás no fundo; `rot 180`/`270` = a parte de trás perto da câmera (vista B). Rotação sem arte continua com o desenho por código.
