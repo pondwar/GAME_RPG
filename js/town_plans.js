@@ -95,7 +95,7 @@ window.SURITTO_BUILDING_PLANS = {
 
   mercado: {
     name: 'Mercado', W: 10, D: 7,
-    floor: 'dungeon_floor_stone', roof: 'dungeon_roof_tile',
+    floor: 'dungeon_floor_terracotta', roof: 'dungeon_roof_tile',
     doors: [{ side: 'S', at: 4, span: 2, type: 'dungeon_portal_wood_wide' }],
     furniture: [
       ['barrel', 0, 0, 0], ['barrel', 1, 0, 0], ['winerack', 2, 0, 0], ['winerack', 3, 0, 0],
