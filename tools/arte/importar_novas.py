@@ -11,7 +11,8 @@ Para cada imagem listada em tools/arte/pecas.json:
            escala do jogo ('linhas' fileiras de telha = linhas * 18 px de altura; empena: 'celulas' de largura
            = celulas * 60 px) e emenda as bordas para repetir sem costura (js/roofs.js pinta e inclina);
            'recorte' [x0,y0,x1,y1] corta so fileiras e colunas inteiras, e 'emendar': false dispensa a emenda
-  textura_terreno -> chao de um bioma (vista de cima): emenda as bordas, reduz para 'largura_px' (potencia de 2,
+  textura_terreno -> chao de um bioma (vista de cima): emenda as bordas, nivela as manchas grandes ('nivelar',
+           fracao da largura do desfoque; 0 desliga), reduz para 'largura_px' (potencia de 2,
            padrao 256), achata pela metade na vertical (angulo da camera) e repete 2x na vertical: tile quadrado
            que js/ground.js usa no lugar da grama/areia recolorida
 Grava os PNGs em assets/arte/ e o assets/arte/manifest.json que o jogo le (js/art_overrides.js).
@@ -314,6 +315,17 @@ def importar_textura_telhado(path, spec):
 BIOMAS = ('PLAINS', 'FOREST', 'DENSE', 'HILLS', 'DESERT', 'SHORE', 'CANYON', 'MOUNTAIN', 'SNOW')     # GroundRenderer.B
 
 
+def nivelar(a, frac):
+    """Tira as manchas grandes de claro/escuro (que denunciam a repeticao do tile) e deixa so os detalhes pequenos:
+    imagem - desfoque largo + media. O desfoque e feito no tile repetido 3x3, entao continua emendando."""
+    from PIL import ImageFilter
+    h, w = a.shape[:2]
+    big = np.tile(a, (3, 3, 1))
+    blur = np.array(Image.fromarray(big).filter(ImageFilter.GaussianBlur(radius=max(4, w * frac))))[h:2 * h, w:2 * w].astype(float)
+    out = a.astype(float) - blur + a.reshape(-1, 3).mean(0)
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
 def importar_textura_terreno(path, spec):
     bio = spec['bioma']
     assert bio in BIOMAS, f'bioma desconhecido: {bio}'
@@ -325,6 +337,8 @@ def importar_textura_terreno(path, spec):
         a = emendar(a, 0.08)
     w = int(spec.get('largura_px', 256))
     assert w & (w - 1) == 0, 'largura_px tem que ser potencia de 2'
+    if spec.get('nivelar', 1 / 6):
+        a = nivelar(a, spec.get('nivelar', 1 / 6))
     half = np.array(Image.fromarray(a).resize((w, w // 2), Image.LANCZOS))   # achatado 2:1 (camera do jogo)
     tile = np.concatenate([half, half], axis=0)
     name = f'chao_{bio.lower()}.png'

@@ -147,7 +147,11 @@ class GroundRenderer {
         const sh = SH[g0] * w00 + SH[g1] * w10 + SH[g2] * w01 + SH[g3] * w11;
         let bio, wet = 1;
         if (dn < 2700) { bio = t < 0.17 ? B.SNOW : B.SHORE; if (dn < 300) wet = 0.80 + 0.2 * Math.max(0, dn) / 300; }
-        else { const am = lod ? 0.25 : 1; bio = this._land(Math.max(e + nz * 0.025 * am, 0.031), m + nz * 0.11 * am, t, c + nz * 0.2 * am); }
+        else {
+          // divisa entre biomas: ruido largo (manchas de ~40-80 px de mundo), nao o fino por pixel (virava um camuflado granulado)
+          const am = lod ? 0.25 : 1, nb = (this._ns(((bx * size + px) << lod) / 10, ((by * size + py) << lod) / 10) - 0.5) * 1.6 + nz * 0.25;
+          bio = this._land(Math.max(e + nb * 0.025 * am, 0.031), m + nb * 0.11 * am, t, c + nb * 0.2 * am);
+        }
         let r, gg, b;
         if (tiles) {
           const tl = tiles[bio], sz = tl.size >> lod, lg = tl.lg - lod, gx = bx * size + px, gy = by * size + py;

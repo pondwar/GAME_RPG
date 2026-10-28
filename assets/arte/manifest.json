@@ -408,5 +408,33 @@
    "celulas": 2
   }
  },
- "ground": {}
+ "ground": {
+  "PLAINS": {
+   "file": "chao_plains.png"
+  },
+  "FOREST": {
+   "file": "chao_forest.png"
+  },
+  "DENSE": {
+   "file": "chao_dense.png"
+  },
+  "HILLS": {
+   "file": "chao_hills.png"
+  },
+  "DESERT": {
+   "file": "chao_desert.png"
+  },
+  "SHORE": {
+   "file": "chao_shore.png"
+  },
+  "CANYON": {
+   "file": "chao_canyon.png"
+  },
+  "MOUNTAIN": {
+   "file": "chao_mountain.png"
+  },
+  "SNOW": {
+   "file": "chao_snow.png"
+  }
+ }
 }

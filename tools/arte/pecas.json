@@ -245,46 +245,109 @@
   "chao_campo.png": {
     "tipo": "textura_terreno",
     "bioma": "PLAINS",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_floresta.png": {
     "tipo": "textura_terreno",
     "bioma": "FOREST",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_mata.png": {
     "tipo": "textura_terreno",
     "bioma": "DENSE",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_colinas.png": {
     "tipo": "textura_terreno",
     "bioma": "HILLS",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_deserto.png": {
     "tipo": "textura_terreno",
     "bioma": "DESERT",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_praia.png": {
     "tipo": "textura_terreno",
     "bioma": "SHORE",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_canion.png": {
     "tipo": "textura_terreno",
     "bioma": "CANYON",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_montanha.png": {
     "tipo": "textura_terreno",
     "bioma": "MOUNTAIN",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   },
   "chao_neve.png": {
     "tipo": "textura_terreno",
     "bioma": "SNOW",
-    "largura_px": 256
+    "largura_px": 512,
+    "recorte": [
+      320,
+      320,
+      1728,
+      1728
+    ],
+    "nivelar": 0.05
   }
 }
