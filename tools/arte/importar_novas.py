@@ -7,6 +7,10 @@ Para cada imagem listada em tools/arte/pecas.json:
            2 celulas = 162 px; 'largura' < 1 para movel menor que a celula) e calcula o ponto de encaixe
   mesa  -> como movel, mais as 16 pecas de emenda com os vizinhos (sem as pernas do lado emendado)
            e 'encurtar_pernas_px' para baixar o tampo sem mudar o pe das pernas
+  textura_telhado -> textura chapada (vista de frente) de uma agua do telhado ou da empena: reduz para a
+           escala do jogo ('linhas' fileiras de telha = linhas * 18 px de altura; empena: 'celulas' de largura
+           = celulas * 60 px) e emenda as bordas para repetir sem costura (js/roofs.js pinta e inclina);
+           'recorte' [x0,y0,x1,y1] corta so fileiras e colunas inteiras, e 'emendar': false dispensa a emenda
 Grava os PNGs em assets/arte/ e o assets/arte/manifest.json que o jogo le (js/art_overrides.js).
 
 Uso: python tools/arte/importar_novas.py
@@ -266,10 +270,48 @@ def importar_movel(path, spec):
     return name, entry, aviso, (mirror, mentry)
 
 
+ROW_PX, GABLE_CELL_PX = 18, 60          # ROW_PX = TEX_ROW de js/roofs.js
+
+
+def emendar(a, frac):
+    """Deixa a textura repetir sem costura: o fim de cada eixo (ultimos m px) entra em fade sobre o comeco e sai.
+    Ao repetir, o ultimo px que fica e vizinho do primeiro (que agora e o px logo apos ele na imagem original)."""
+    a = a.astype(float)
+    for ax in (1, 0):
+        n = a.shape[ax]; m = max(2, int(n * frac))
+        shp = [1, 1, 1]; shp[ax] = m
+        t = (np.arange(m) / m).reshape(shp)                           # 0 no comeco (so o fim), 1 em m (so o comeco)
+        head = np.take(a, range(m), axis=ax); tail = np.take(a, range(n - m, n), axis=ax)
+        body = np.take(a, range(m, n - m), axis=ax)
+        a = np.concatenate([head * t + tail * (1 - t), body], axis=ax)
+    return np.clip(a, 0, 255).astype(np.uint8)
+
+
+def importar_textura_telhado(path, spec):
+    im = Image.open(path).convert('RGB')
+    if spec.get('recorte'):                      # [x0, y0, x1, y1]: so fileiras/colunas inteiras (ai repete sem precisar emendar)
+        im = im.crop(tuple(spec['recorte']))
+    if spec['estilo'] == 'empena':
+        cel = spec.get('celulas', 1)
+        w = int(GABLE_CELL_PX * cel); h = max(8, round(im.height * w / im.width))
+    else:
+        h = int(ROW_PX * spec.get('linhas', 8)); w = max(8, round(im.width * h / im.height))
+    a = np.array(im)
+    if spec.get('emendar', True):
+        a = emendar(a, 0.08)
+    a = np.array(Image.fromarray(a).resize((w, h), Image.LANCZOS))
+    name = f'telhado_{spec["estilo"]}.png'
+    Image.fromarray(a, 'RGB').save(os.path.join(OUT, name))
+    entry = {'file': name}
+    if spec['estilo'] == 'empena': entry['celulas'] = spec.get('celulas', 1)
+    else: entry['linhas'] = spec.get('linhas', 8)
+    return name, entry, f'{w}x{h} px'
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     pecas = json.load(open(os.path.join(HERE, 'pecas.json'), encoding='utf-8'))
-    manifest = {'floors': {}, 'furniture': {}}
+    manifest = {'floors': {}, 'furniture': {}, 'roofs': {}}
     for fname, spec in pecas.items():
         if fname.startswith('_'):
             continue
@@ -279,6 +321,9 @@ def main():
         if spec['tipo'] == 'piso':
             name, entry, info = importar_piso(path, spec['substitui'])
             manifest['floors'][spec['substitui']] = entry
+        elif spec['tipo'] == 'textura_telhado':
+            name, entry, info = importar_textura_telhado(path, spec)
+            manifest['roofs'][spec['estilo']] = entry
         elif spec['tipo'] == 'mesa':
             name, entries, info = importar_mesa(path, spec)
             manifest['furniture'].setdefault(spec['movel'], {}).update(entries)

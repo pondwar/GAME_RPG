@@ -1,5 +1,5 @@
 {
-  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida). tipo mesa: mesa de 1 celula; o importador gera as 16 pecas de emenda (mascara de vizinhos bit0 +a, bit1 -a, bit2 +b, bit3 -b) tirando as pernas do lado emendado. largura: fracao da celula que o movel ocupa (cadeira). encurtar_pernas_px: px do jogo tirados das pernas (base_do_tampo = px da imagem original abaixo da borda da frente do tampo onde comeca o corte). Outros campos de movel: altura (escala pela altura em px do jogo, com pe = largura do pe), encosto (estante na parede: costas na borda da celula), chamas/brilho (pontos na imagem original onde o jogo desenha o fogo animado / o halo), apagar/so_maior (retoques de sobras do gerador).",
+  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida). tipo mesa: mesa de 1 celula; o importador gera as 16 pecas de emenda (mascara de vizinhos bit0 +a, bit1 -a, bit2 +b, bit3 -b) tirando as pernas do lado emendado. largura: fracao da celula que o movel ocupa (cadeira). encurtar_pernas_px: px do jogo tirados das pernas (base_do_tampo = px da imagem original abaixo da borda da frente do tampo onde comeca o corte). Outros campos de movel: altura (escala pela altura em px do jogo, com pe = largura do pe), encosto (estante na parede: costas na borda da celula), chamas/brilho (pontos na imagem original onde o jogo desenha o fogo animado / o halo), apagar/so_maior (retoques de sobras do gerador). tipo textura_telhado: textura chapada de uma agua (estilo tile, thatch, wood ou slate; linhas = fileiras de telha de cima a baixo na imagem) ou da empena (estilo empena; celulas = largura da imagem em celulas); o importador reduz para a escala do jogo e emenda as bordas.",
   "piso_tabuas_carvalho.png": {
     "tipo": "piso",
     "substitui": "floor_wood_01"
@@ -181,5 +181,37 @@
     "altura": 64,
     "espelho": 270,
     "comprimento_max": 0.95
+  },
+  "telhado_telha.png": {
+    "tipo": "textura_telhado",
+    "estilo": "tile",
+    "linhas": 7,
+    "recorte": [
+      9,
+      248,
+      2037,
+      2046
+    ],
+    "emendar": false
+  },
+  "telhado_palha.png": {
+    "tipo": "textura_telhado",
+    "estilo": "thatch",
+    "linhas": 8
+  },
+  "telhado_madeira.png": {
+    "tipo": "textura_telhado",
+    "estilo": "wood",
+    "linhas": 8
+  },
+  "telhado_ardosia.png": {
+    "tipo": "textura_telhado",
+    "estilo": "slate",
+    "linhas": 8
+  },
+  "empena_enxaimel.png": {
+    "tipo": "textura_telhado",
+    "estilo": "empena",
+    "celulas": 2
   }
 }

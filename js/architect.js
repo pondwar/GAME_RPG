@@ -1447,10 +1447,32 @@ class ArchitectSystem {
 
   // ---- Telhados (duas aguas, desenhados por codigo: js/roofs.js) ----
   // Area = piso conectado (do andar atual) sob o clique; telhado = retangulo que envolve essa area, assentado no topo das paredes do andar.
-  _roofImg(style, W, D, ridge) {
+  _roofImg(style, W, D, ridge, chimneys) {
     this._roofCache = this._roofCache || {};
-    const k = style + '|' + W + 'x' + D + ridge;
-    return this._roofCache[k] || (this._roofCache[k] = window.RoofRenderer.render(style, W, D, ridge));
+    const k = style + '|' + W + 'x' + D + ridge + (chimneys && chimneys.length ? '|' + chimneys.join(';') : '');
+    return this._roofCache[k] || (this._roofCache[k] = window.RoofRenderer.render(style, W, D, ridge, { chimneys }));
+  }
+  // Chamines do telhado r: uma por lareira debaixo dele (no andar logo abaixo), junto da parede de tras da lareira.
+  // Em coordenadas do telhado: [p ao longo da cumeeira, q atravessando], em celulas a partir do vertice de tras.
+  _roofChimneys(r) {
+    const fl = this._furnList();
+    if (!this._chC || this._chC.fl !== fl) this._chC = { fl, m: new Map() };      // refaz quando a lista de moveis muda
+    let out = this._chC.m.get(r);
+    if (!out) this._chC.m.set(r, out = this._roofChimneysCalc(r));
+    return out;
+  }
+  _roofChimneysCalc(r) {
+    const out = [], W = this.game.world;
+    for (const f of this._furnList()) {
+      if (f.cfg.furn !== 'fireplace' || (f.b.z || 0) !== r.z - 1) continue;
+      const dx = W.wrapDelta(f.b.wx - r.wx), dy = f.b.wy - r.wy;
+      let a = (dx / 54 + dy / 27) / 2, b = (dy / 27 - dx / 54) / 2;
+      if (a < 0 || a > r.W || b < 0 || b > r.D) continue;
+      if (f.b.rot === 90) a -= 0.28; else b -= 0.28;        // boca em +b (rot 0) ou +a (rot 90): chamine nas costas
+      const pq = r.ridge === 'a' ? [a, b] : [b, a];
+      out.push([Math.round(pq[0] * 20) / 20, Math.round(pq[1] * 20) / 20]);
+    }
+    return out;
   }
   _roofPlan(wx, wy) {
     const L = this.buildLevel, c = this.floorCellAt(wx, wy), Wd = this.game.world;
@@ -1845,7 +1867,7 @@ class ArchitectSystem {
         const r = this.blocks[rk], rc = this.BLOCK_TYPES[r.type]; if (!rc || !rc.isRoof) continue;
         const dxr = this.game.world.wrapDelta(r.wx - this.game.camera.x), dyr = r.wy - this.game.camera.y - r.z * this.STACK_STEP;
         if (Math.abs(dxr) > viewW / 2 + 54 * (r.W + r.D) + 60 || Math.abs(dyr) > viewH / 2 + 27 * (r.W + r.D) + 160) continue;
-        const R = this._roofImg(rc.roofStyle, r.W, r.D, r.ridge);
+        const R = this._roofImg(rc.roofStyle, r.W, r.D, r.ridge, this._roofChimneys(r));
         const sx = Math.round(dxr + screenCenterX), sy = Math.round(dyr + screenCenterY);
         let tgt = 1;
         if (this.game.isGodMode) tgt = 0.4;

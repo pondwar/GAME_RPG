@@ -385,5 +385,11 @@
     "espelhado": true
    }
   }
+ },
+ "roofs": {
+  "tile": {
+   "file": "telhado_tile.png",
+   "linhas": 7
+  }
  }
 }

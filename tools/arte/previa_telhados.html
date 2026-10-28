@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<base href="../../">
+<title>Prévia dos telhados</title>
+<style>
+  body { margin: 0; background: #3a4a2a; color: #eee; font: 13px sans-serif; }
+  canvas { display: block; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<!-- Prévia dos telhados (js/roofs.js) sobre casas de enxaimel simples, com e sem chaminé, nos 4 estilos.
+     Abra com o servidor do jogo: http://localhost:3000/tools/arte/previa_telhados.html -->
+<canvas id="c" width="1500" height="900"></canvas>
+<script src="js/roofs.js"></script>
+<script src="js/art_overrides.js"></script>
+<script>
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  const WALL = 77;
+  // casa: piso + paredes de enxaimel nas faces da frente (+a e +b), telhado em cima
+  function house(x, y, W, D, style, chimneys) {
+    const P = (a, b, h) => [x + 54 * (a - b), y + 27 * (a + b) - h];
+    const poly = (pts, col) => { ctx.beginPath(); ctx.moveTo(...pts[0]); for (const p of pts.slice(1)) ctx.lineTo(...p); ctx.closePath(); ctx.fillStyle = col; ctx.fill(); };
+    poly([P(0, 0, 0), P(W, 0, 0), P(W, D, 0), P(0, D, 0)], '#6b5a40');
+    const wall = (A, B, lit) => {
+      poly([A(0), B(0), B(WALL), A(WALL)], lit ? '#d8c9a5' : '#b4a585');
+      ctx.strokeStyle = '#4a3220'; ctx.lineWidth = 4;
+      const n = 6; for (let i = 0; i <= n; i++) { const a = A(0), b = B(0), t = i / n; ctx.beginPath(); ctx.moveTo(a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t); ctx.lineTo(a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t - WALL); ctx.stroke(); }
+      for (const h of [2, WALL - 2, WALL / 2]) { const a = A(h), b = B(h); ctx.beginPath(); ctx.moveTo(...a); ctx.lineTo(...b); ctx.stroke(); }
+    };
+    wall(h => P(W, 0, h), h => P(W, D, h), false);   // face +a
+    wall(h => P(0, D, h), h => P(W, D, h), true);    // face +b
+    const ridge = W >= D ? 'a' : 'b';
+    const R = RoofRenderer.render(style, W, D, ridge, { chimneys: chimneys(ridge) });
+    ctx.drawImage(R.canvas, Math.round(x - R.ox), Math.round(y - WALL - R.oy));
+  }
+  // lareira na celula (i,j) com a boca em +b: chamine nas costas, em coordenadas [p,q] do telhado
+  const lareira = (i, j) => (ridge) => { const a = i + 0.5, b = j + 0.5 - 0.28; return [ridge === 'a' ? [a, b] : [b, a]]; };
+  const nada = () => [];
+  function draw() {
+    ctx.fillStyle = '#3a4a2a'; ctx.fillRect(0, 0, cv.width, cv.height);
+    house(250, 140, 4, 3, 'tile', lareira(2, 0));
+    house(720, 160, 3, 3, 'tile', nada);
+    house(1150, 120, 2, 5, 'tile', lareira(0, 2));
+    house(170, 560, 3, 2, 'thatch', lareira(1, 0));
+    house(530, 560, 3, 2, 'wood', nada);
+    house(890, 560, 3, 2, 'slate', lareira(1, 0));
+    house(1270, 600, 2, 2, 'tile', nada);
+  }
+  draw();
+  const t = setInterval(() => { if (window.SurittoArt && SurittoArt.ready) { clearInterval(t); draw(); } }, 200);
+</script>
+</body>
+</html>
