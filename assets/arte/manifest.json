@@ -322,19 +322,19 @@
    }
   },
   "bookshelf": {
-   "90": {
-    "file": "bookshelf_90.png",
-    "w": 52,
-    "h": 98,
-    "ox": 45,
-    "oy": 94
-   },
    "0": {
     "file": "bookshelf_0.png",
-    "w": 52,
-    "h": 98,
-    "ox": 7,
-    "oy": 94,
+    "w": 68,
+    "h": 91,
+    "ox": 15,
+    "oy": 83
+   },
+   "90": {
+    "file": "bookshelf_90.png",
+    "w": 68,
+    "h": 91,
+    "ox": 53,
+    "oy": 83,
     "espelhado": true
    },
    "180": {

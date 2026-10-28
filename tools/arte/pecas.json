@@ -149,10 +149,10 @@
   "estante_livros_A.png": {
     "tipo": "movel",
     "movel": "bookshelf",
-    "rot": 90,
+    "rot": 0,
     "encosto": true,
     "altura": 72,
-    "espelho": 0,
+    "espelho": 90,
     "comprimento_max": 0.95
   },
   "estante_livros_B.png": {
