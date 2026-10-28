@@ -88,7 +88,7 @@ def importar_piso(path, substitui):
     return name, {'file': name, 'w': CELL_W, 'h': CELL_H, 'anchor': {'x': CELL_W // 2, 'y': CELL_H // 2}}, f'losango de origem {ratio:.2f}:1 achatado para 2:1'
 
 
-def importar_movel(path, kind, rot, cells):
+def importar_movel(path, kind, rot, cells, mirror=None):
     im = load_rgba(path)
     bbox = im.getbbox()
     im = im.crop(bbox)
@@ -109,7 +109,14 @@ def importar_movel(path, kind, rot, cells):
     out.save(os.path.join(OUT, name))
     altura = oy - 27                                # do chao (canto de tras da celula) ate o topo do sprite
     aviso = f'altura {altura:.0f} px' + (' - PASSA DO MURO, vai furar o telhado' if altura > WALL_TOP else '')
-    return name, {'file': name, 'w': w, 'h': h, 'ox': round(ox), 'oy': round(oy)}, aviso
+    entry = {'file': name, 'w': w, 'h': h, 'ox': round(ox), 'oy': round(oy)}
+    if mirror is None:
+        return name, entry, aviso
+    # espelho: troca o eixo (0<->90, 180<->270); a ancora continua no mesmo canto da pegada, do outro lado
+    mname = f'{kind}_{mirror}.png'
+    out.transpose(Image.FLIP_LEFT_RIGHT).save(os.path.join(OUT, mname))
+    mentry = {'file': mname, 'w': w, 'h': h, 'ox': round(w - ox), 'oy': round(oy), 'espelhado': True}
+    return name, entry, aviso, (mirror, mentry)
 
 
 def main():
@@ -126,8 +133,14 @@ def main():
             name, entry, info = importar_piso(path, spec['substitui'])
             manifest['floors'][spec['substitui']] = entry
         else:
-            name, entry, info = importar_movel(path, spec['movel'], spec['rot'], spec.get('celulas', 1))
-            manifest['furniture'].setdefault(spec['movel'], {})[str(spec['rot'])] = entry
+            res = importar_movel(path, spec['movel'], spec['rot'], spec.get('celulas', 1), spec.get('espelho'))
+            name, entry, info = res[:3]
+            rots = manifest['furniture'].setdefault(spec['movel'], {})
+            rots[str(spec['rot'])] = entry
+            if len(res) > 3:
+                m_rot, m_entry = res[3]
+                rots.setdefault(str(m_rot), m_entry)        # arte propria daquela rotacao (se houver) vale mais que o espelho
+                info += f'; espelhada -> {spec["movel"]}_{m_rot}.png'
         print(f'{fname} -> assets/arte/{name}  ({info})')
     with open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifest, f, indent=1, ensure_ascii=False)

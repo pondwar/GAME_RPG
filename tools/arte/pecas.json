@@ -1,6 +1,21 @@
 {
-  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao (rot 0 = eixo i com a parte de tras no fundo-esquerda, 90 = eixo j com a parte de tras no fundo-direita, 180/270 = parte de tras perto da camera).",
-  "piso_tabuas_carvalho.png": { "tipo": "piso", "substitui": "floor_wood_01" },
-  "cama_casal_carvalho_A_eixo_a.webp": { "tipo": "movel", "movel": "bed", "rot": 0, "celulas": 2 },
-  "cama_casal_carvalho_A_eixo_b.png": { "tipo": "movel", "movel": "bed", "rot": 90, "celulas": 2 }
+  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida).",
+  "piso_tabuas_carvalho.png": {
+    "tipo": "piso",
+    "substitui": "floor_wood_01"
+  },
+  "cama_casal_carvalho_A_eixo_a.webp": {
+    "tipo": "movel",
+    "movel": "bed",
+    "rot": 0,
+    "celulas": 2,
+    "espelho": 90
+  },
+  "cama_casal_carvalho_B_eixo_b.png": {
+    "tipo": "movel",
+    "movel": "bed",
+    "rot": 270,
+    "celulas": 2,
+    "espelho": 180
+  }
 }
