@@ -78,7 +78,7 @@
 
     // ---- a vila e conteudo do MUNDO, nao do save do jogador ----
     // Em todo navegador ela e montada sozinha na primeira carga e de novo sempre que a planta mudar
-    // (assinatura guardada em suritto_town_sig:<id>). As construcoes do jogador nunca sao apagadas.
+    // (assinatura no banco, world.settlement; sem servidor, em suritto_town_sig:<id>). As construcoes do jogador nunca sao apagadas.
     _signature(id) {
       const t = window.SURITTO_TOWNS[id], plans = {};
       for (const b of t.buildings || []) plans[b.plan] = window.SURITTO_BUILDING_PLANS[b.plan];
@@ -90,11 +90,16 @@
       await this.whenReady();
       for (const id of Object.keys(window.SURITTO_TOWNS)) {
         if (id.charAt(0) === '_') continue;
-        const key = 'suritto_town_sig:' + id, sig = this._signature(id);
-        let saved = null; try { saved = localStorage.getItem(key); } catch (e) { }
+        const key = 'suritto_town_sig:' + id, sig = this._signature(id), srv = window.SurittoServer;
+        let saved = null;
+        if (srv && srv.online) saved = srv.settlements[id] ? srv.settlements[id].signature : null;
+        else try { saved = localStorage.getItem(key); } catch (e) { }
         if (saved === sig && this.isBuilt(id)) continue;
         await this.build(id);
-        try { localStorage.setItem(key, sig); } catch (e) { }
+        if (srv && srv.online) {
+          const t = window.SURITTO_TOWNS[id], r = this.region(id);
+          srv.saveSettlement(id, { name: this.townName(id), region_code: r ? r.id : null, center_x: t.center.x, center_y: t.center.y, signature: sig }).catch(() => { });
+        } else try { localStorage.setItem(key, sig); } catch (e) { }
       }
     }
 
@@ -139,6 +144,7 @@
       const grow = (a0, b0, w, d) => { i0 = Math.min(i0, a0); j0 = Math.min(j0, b0); i1 = Math.max(i1, a0 + w); j1 = Math.max(j1, b0 + d); };
       for (const s of town.streets || []) grow(s.i0, s.j0, s.W, s.D);
       for (const b of town.buildings || []) {
+        if (b.reserved) { grow(b.i0, b.j0, b.W, b.D); continue; }
         const p = window.SURITTO_BUILDING_PLANS[b.plan]; if (!p) continue;
         grow(b.i0, b.j0, b.transpose ? p.D : p.W, b.transpose ? p.W : p.D);
       }
@@ -234,6 +240,10 @@
       for (const s of town.streets || []) for (let i = s.i0; i < s.i0 + s.W; i++) for (let j = s.j0; j < s.j0 + s.D; j++) floors.set(i + ',' + j, { type: s.floor, tag: 'rua' });
 
       for (const bld of town.buildings) {
+        if (bld.reserved) {        // lote de uma construcao do jogador: so marca o espaco (nenhuma peca da vila entra ali)
+          for (let i = 0; i < bld.W; i++) for (let j = 0; j < bld.D; j++) occupied.set((bld.i0 + i) + ',' + (bld.j0 + j), bld.id);
+          continue;
+        }
         const base = window.SURITTO_BUILDING_PLANS[bld.plan];
         if (!base) { report.warnings.push(`${bld.id}: planta "${bld.plan}" nao existe`); continue; }
         const p = orient(base, bld), tag = bld.id;

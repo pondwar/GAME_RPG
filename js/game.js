@@ -3710,6 +3710,8 @@ class Game {
 }
 
 // Instantiate game when DOM is loaded
-window.addEventListener('DOMContentLoaded', () => {
+// Antes de criar o jogo, tenta o servidor local (js/net.js): com ele no ar, mundo e personagem vem do banco
+window.addEventListener('DOMContentLoaded', async () => {
+  if (window.SurittoServer) await window.SurittoServer.connect();
   window.game = new Game();
 });

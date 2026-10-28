@@ -7,7 +7,9 @@
   "scripts": {
     "db:create": "node --env-file=.env scripts/db_create.js",
     "db:migrate": "node --env-file=.env scripts/db_migrate.js",
-    "db:setup": "npm run db:create && npm run db:migrate"
+    "db:setup": "npm run db:create && npm run db:migrate",
+    "start": "node --env-file=.env server.js",
+    "db:import": "node --env-file=.env scripts/import_blocks.js"
   },
   "engines": {
     "node": ">=20.6"

@@ -45,8 +45,20 @@ class LocalStorageAdapter {
   clear() { localStorage.removeItem(this.key); }
 }
 
+// Servidor no ar (js/net.js): personagem no banco (player.*). O localStorage continua com uma copia,
+// usada so quando o jogo abrir sem servidor. Personagem que ainda nao existe no banco sobe a partir da copia local.
+class ServerAdapter {
+  constructor(server, local) { this.server = server; this.local = local; }
+  load() { return this.server.character || this.local.load(); }
+  save(snapshot) {
+    try { this.local.save(snapshot); } catch (e) { }
+    this.server.saveCharacter(snapshot, document.visibilityState === 'hidden').catch(() => { });
+  }
+  clear() { this.local.clear(); }
+}
+
 class SaveSystem {
-  constructor(game, adapter = new LocalStorageAdapter(SURITTO_STORAGE.character)) {
+  constructor(game, adapter = SaveSystem.defaultAdapter()) {
     this.game = game;
     this.adapter = adapter;
     this.VERSION = 1;
@@ -54,6 +66,11 @@ class SaveSystem {
     this.playTimeSeconds = 0;
     this._sinceSave = 0;
     this._warned = false;
+  }
+
+  static defaultAdapter() {
+    const local = new LocalStorageAdapter(SURITTO_STORAGE.character);
+    return window.SurittoServer && window.SurittoServer.online ? new ServerAdapter(window.SurittoServer, local) : local;
   }
 
   // ---- montar o snapshot a partir do estado do jogo ----

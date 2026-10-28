@@ -129,7 +129,8 @@ window.SURITTO_BUILDING_PLANS = {
 window.SURITTO_TOWNS = {
   vila_inicial: {
     name: null,                                 // null = nome gerado pela macro-regiao (js/regions.js)
-    center: { x: 160952, y: 700444 },           // 8.7° L, 50.6° N
+    // 8.6° L, 50.6° N. Centro alinhado a malha de pisos da casa do David (o piso (0,0) dela e a celula (29,-11) da vila)
+    center: { x: 159084, y: 699732 },
     clearMargin: 4,                             // celulas sem arvores alem dos predios e ruas
     streets: [
       { i0: -38, j0: -1, W: 86, D: 3, floor: 'dungeon_floor_stone' },          // rua principal (eixo i)
@@ -163,7 +164,7 @@ window.SURITTO_TOWNS = {
       { id: 'familia_7', plan: 'casa_familia', transpose: true, i0: 3, j0: 29, door: 'W', beds: 5 },
       { id: 'familia_8', plan: 'casa_familia', i0: 32, j0: 3, door: 'N' },
       // casais
-      { id: 'pequena_1', plan: 'casa_pequena', i0: 29, j0: -6 },
+      { id: 'casa_david', reserved: true, i0: 29, j0: -11, W: 6, D: 9, note: 'Casa do David (construida a mao, fica no banco como construcao do jogador)' },
       { id: 'pequena_2', plan: 'casa_pequena', i0: 41, j0: 3, door: 'N' },
       { id: 'pequena_3', plan: 'casa_pequena', i0: -33, j0: -6 },
       { id: 'pequena_4', plan: 'casa_pequena', i0: -37, j0: 3, door: 'N' },

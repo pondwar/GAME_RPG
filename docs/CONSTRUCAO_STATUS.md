@@ -156,3 +156,8 @@ Balcao (liga com vizinhos), balcao grande (2 blocos), estante de livros e adega 
 - Nome gerado pela macro-regiao (`js/regions.js`): a Vila Inicial (GMT 0, 50.6° N = Reino Unido) se chama **Elmford**. `name` fixo em `town_plans.js` sobrescreve o gerado.
 - Mapa-mundi: o grupo de construcoes da vila aparece com o nome dela (🏘️). Ao entrar na vila aparece aviso com o nome e a regiao.
 - Lembrete: o save e do navegador (localStorage). Navegadores/computadores diferentes nao enxergam as construcoes um do outro ate existir o servidor (tabela `world.build_chunk`).
+
+### F17 - Mundo no banco (PostgreSQL)
+- `iniciar_jogo.bat` agora sobe o servidor Node (`server/server.js`) em vez do python. Com ele no ar, o construtor le e grava os chunks no banco (`world.build_chunk`), a vila registra a assinatura em `world.settlement` e o personagem vai para `player.*` (o localStorage fica so como copia para jogar sem servidor).
+- Primeira conexao de um navegador: as construcoes que so existiam nele sobem para o banco (marca `suritto_uploaded:<realm>`).
+- Casa do David importada do JSON exportado (167 pecas) e mantida no lugar; a vila foi deslocada (centro 159084, 699732) para a casa ocupar o lote `casa_david` (6x9, reservado) ao lado da rua principal, no lugar de uma casa de casal.

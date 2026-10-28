@@ -794,6 +794,8 @@ class ArchitectSystem {
     const pb = this._persistentBlocks();
     for (const k in pb) { const id = this._chunkIdOf(pb[k]); (chunks[id] = chunks[id] || []).push([k, pb[k]]); }
     this._chunkCache = this._chunkCache || {};
+    const srv = window.SurittoServer;
+    if (srv && srv.online) return this._flushToServer(chunks);
     let failed = false, wrote = 0;
     const ids = Object.keys(chunks);
     for (const id of ids) {
@@ -815,6 +817,41 @@ class ArchitectSystem {
       if (this.game.addLog) this.game.addLog('⚠️ [CONSTRUTOR] Nao foi possivel salvar (armazenamento do navegador cheio). Use 💾 Exportar para guardar sua construcao.', 'system');
     } else if (!failed) this._saveWarned = false;
     return !failed;
+  }
+
+  // Servidor no ar (js/net.js): so os chunks que mudaram vao para o banco (world.build_chunk), num lote.
+  // Se o envio falhar, o chunk volta a contar como "mudado" e vai de novo no proximo salvamento.
+  _flushToServer(chunks, keepalive) {
+    const batch = {}, prev = {};
+    for (const id in chunks) {
+      const str = JSON.stringify(chunks[id]);
+      if (this._chunkCache[id] === str) continue;
+      prev[id] = this._chunkCache[id]; batch[id] = chunks[id]; this._chunkCache[id] = str;
+    }
+    for (const id of Object.keys(this._chunkCache)) {
+      if (chunks[id]) continue;
+      prev[id] = this._chunkCache[id]; batch[id] = []; delete this._chunkCache[id];
+    }
+    if (!Object.keys(batch).length) return true;
+    window.SurittoServer.saveChunks(batch, keepalive || document.visibilityState === 'hidden').then(() => { this._saveWarned = false; }).catch(() => {
+      for (const id in prev) { if (prev[id] === undefined) delete this._chunkCache[id]; else this._chunkCache[id] = prev[id]; }
+      if (!this._saveWarned && this.game.addLog) { this._saveWarned = true; this.game.addLog('⚠️ [CONSTRUTOR] O servidor nao respondeu: as construcoes serao reenviadas no proximo salvamento.', 'warning'); }
+    });
+    return true;
+  }
+
+  // Le os chunks salvos neste navegador (localStorage) como lista de blocos com _key
+  _localChunkBlocks() {
+    const list = [];
+    try {
+      const idx = localStorage.getItem('suritto_chunks_v1');
+      if (!idx) return list;
+      for (const id of JSON.parse(idx).ids || []) {
+        const raw = localStorage.getItem('suritto_chunk_v1:' + id);
+        if (raw) for (const [k, b] of JSON.parse(raw)) { b._key = k; list.push(b); }
+      }
+    } catch (e) { }
+    return list;
   }
 
   // Blocos que vao para save/exportacao (pecas de cena temporaria ficam de fora).
@@ -841,7 +878,25 @@ class ArchitectSystem {
       }
     } catch (e) { }
     let list = null;
-    try {
+    const srv = window.SurittoServer;
+    if (srv && srv.online) {
+      // Mundo vem do banco. Na primeira vez que este navegador fala com o servidor, as construcoes que so
+      // existiam aqui (localStorage) sao juntadas ao mundo e enviadas (as pecas de vila nao: a vila e remontada).
+      list = [];
+      const have = new Set();
+      for (const ch of srv.chunks) {
+        this._chunkCache[ch.id] = JSON.stringify(ch.blocks);
+        for (const [k, b] of ch.blocks) { b._key = k; list.push(b); have.add(k); }
+      }
+      const flag = 'suritto_uploaded:' + srv.realm;
+      let uploaded = true; try { uploaded = !!localStorage.getItem(flag); } catch (e) { }
+      if (!uploaded) {
+        const mine = this._localChunkBlocks().filter(b => !b.town && !b.temp && !have.has(b._key));
+        list.push(...mine);
+        if (mine.length) { this._migrate = true; console.info(`[Construtor] ${mine.length} peca(s) deste navegador enviadas ao servidor.`); }
+        try { localStorage.setItem(flag, new Date().toISOString()); } catch (e) { }
+      }
+    } else try {
       const idx = localStorage.getItem('suritto_chunks_v1');
       if (idx) {
         list = [];

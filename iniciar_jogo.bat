@@ -3,9 +3,10 @@ title Suritto RPG - Servidor Local
 echo ====================================================
 echo     INICIANDO SURITTO - RPG DE SOBREVIVENCIA
 echo ====================================================
-echo Abrindo o jogo no seu navegador...
-start http://localhost:3000
-echo Servidor rodando na porta 3000. Deixe esta janela aberta enquanto joga!
-echo Pressione CTRL+C para encerrar o jogo quando terminar.
+echo Servidor com banco de dados (PostgreSQL) na porta 3000.
+echo Deixe esta janela aberta enquanto joga! CTRL+C encerra.
 echo ====================================================
-python -m http.server 3000
+cd /d "%~dp0server"
+if not exist node_modules call npm install
+start http://localhost:3000
+node --env-file=.env server.js
