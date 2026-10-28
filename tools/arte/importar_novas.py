@@ -4,7 +4,9 @@ Para cada imagem listada em tools/arte/pecas.json:
   piso  -> acha a face de cima do losango (mesmo com angulo errado e com espessura), achata para 2:1,
            reduz para 108x54 e usa o contorno exato do piso do atlas (emenda sem fresta)
   movel -> tira o fundo magenta, recorta, escala pela pegada no chao (1 celula = 108 px de largura,
-           2 celulas = 162 px) e calcula o ponto de encaixe (centro da celula ancora no plano do piso)
+           2 celulas = 162 px; 'largura' < 1 para movel menor que a celula) e calcula o ponto de encaixe
+  mesa  -> como movel, mais as 16 pecas de emenda com os vizinhos (sem as pernas do lado emendado)
+           e 'encurtar_pernas_px' para baixar o tampo sem mudar o pe das pernas
 Grava os PNGs em assets/arte/ e o assets/arte/manifest.json que o jogo le (js/art_overrides.js).
 
 Uso: python tools/arte/importar_novas.py
@@ -88,19 +90,102 @@ def importar_piso(path, substitui):
     return name, {'file': name, 'w': CELL_W, 'h': CELL_H, 'anchor': {'x': CELL_W // 2, 'y': CELL_H // 2}}, f'losango de origem {ratio:.2f}:1 achatado para 2:1'
 
 
-def importar_movel(path, kind, rot, cells, mirror=None):
+def tampo(a):
+    """cantos da face de cima de um tampo isometrico (mascara alfa): topo, esquerda, direita e frente"""
+    ys, xs = np.where(a)
+    T = np.array([xs[ys.argmin()], ys.min()], float)
+    L = np.array([xs.min(), ys[xs <= xs.min() + 3].min()], float)
+    R = np.array([xs.max(), ys[xs >= xs.max() - 3].min()], float)
+    return T, L, R, L + R - T
+
+
+def borda_frente(L, F, R, x):
+    """y da borda da frente do tampo (esquerda->frente->direita) na coluna x"""
+    if x <= F[0]:
+        return L[1] + (x - L[0]) / max(1, F[0] - L[0]) * (F[1] - L[1])
+    return F[1] + (x - F[0]) / max(1, R[0] - F[0]) * (R[1] - F[1])
+
+
+def encurtar_pernas(im, k, base):
+    """tira k linhas das pernas logo abaixo do tampo+saia (base = px da imagem abaixo da borda da frente):
+    em cada coluna o que esta acima desce k px, entao o tampo baixa e o pe das pernas fica no lugar"""
+    arr = np.array(im)
+    _, L, R, F = tampo(arr[..., 3] > 0)
+    out = np.zeros_like(arr)
+    for x in range(arr.shape[1]):
+        yc = int(borda_frente(L, F, R, x) + base)
+        out[yc + k:, x] = arr[yc + k:, x]
+        out[k:yc + k, x] = arr[:yc, x]
+    return Image.fromarray(out, 'RGBA')
+
+
+def pernas(im, base):
+    """colunas de cada perna visivel (abaixo do tampo+saia): {'esq','frente','dir'} -> (x0, x1, linha de corte)"""
+    arr = np.array(im)
+    a = arr[..., 3] > 0
+    _, L, R, F = tampo(a)
+    cut = np.array([borda_frente(L, F, R, x) + base for x in range(a.shape[1])])
+    below = a & (np.arange(a.shape[0])[:, None] >= cut[None, :])
+    cols = below.any(0)
+    runs, x = [], 0
+    while x < len(cols):
+        if cols[x]:
+            x0 = x
+            while x < len(cols) and cols[x]:
+                x += 1
+            if x - x0 > 8:
+                runs.append((x0, x))
+        x += 1
+    if len(runs) != 3:
+        raise SystemExit(f'esperava 3 pernas visiveis abaixo do tampo, achei {len(runs)}: ajuste "base_do_tampo"')
+    return dict(zip(('esq', 'frente', 'dir'), runs)), cut
+
+
+def importar_mesa(path, spec):
+    """mesa de 1 celula + as pecas emendadas: para cada mascara de vizinhos (bit0 +a, bit1 -a, bit2 +b, bit3 -b)
+    some com as pernas do lado emendado; o tampo ja cobre a celula inteira, entao as mesas se juntam sem fresta"""
+    im = load_rgba(path)
+    im = im.crop(im.getbbox())
+    scale = CELL_W / im.width
+    base = spec.get('base_do_tampo', 245)
+    if spec.get('encurtar_pernas_px'):
+        im = encurtar_pernas(im, round(spec['encurtar_pernas_px'] / scale), base)
+        im = im.crop(im.getbbox())
+    legs, cut = pernas(im, base)
+    # perna da esquerda = canto (a-, b+); da direita = (a+, b-); da frente = (a+, b+); a de tras fica escondida
+    some = {1: ('dir', 'frente'), 2: ('esq',), 4: ('esq', 'frente'), 8: ('dir',)}
+    entries, size = {}, (max(1, round(im.width * scale)), max(1, round(im.height * scale)))
+    for mask in range(16):
+        arr = np.array(im)
+        for bit, names in some.items():
+            if mask & bit:
+                for n in names:
+                    x0, x1 = legs[n]
+                    for x in range(x0, x1):
+                        arr[int(cut[x]) - 20:, x, 3] = 0     # um pouco acima do corte: sem toco de perna na emenda
+        out = Image.fromarray(arr, 'RGBA').convert('RGBa').resize(size, Image.LANCZOS).convert('RGBA')
+        w, h = out.size
+        name = f'{spec["movel"]}_m{mask}.png'
+        out.save(os.path.join(OUT, name))
+        entries['m' + str(mask)] = {'file': name, 'w': w, 'h': h, 'ox': round(w / 2), 'oy': h - 27}
+    altura = entries['m0']['oy'] - 27
+    return f'{spec["movel"]}_m0..m15.png', entries, f'altura {altura} px, 16 pecas de emenda'
+
+
+def importar_movel(path, kind, rot, cells, mirror=None, largura=1.0):
     im = load_rgba(path)
     bbox = im.getbbox()
     im = im.crop(bbox)
-    foot_w = CELL_W if cells == 1 else CELL_W + CELL_W // 2      # largura da pegada no chao
+    # largura da pegada no chao; largura < 1 = movel menor que a celula (cadeira), centrado nela
+    foot_w = CELL_W * largura if cells == 1 else CELL_W + CELL_W // 2
     scale = foot_w / im.width
     out = im.convert('RGBa').resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS).convert('RGBA')
     w, h = out.size
     # centro da celula ancora, no plano do piso:
-    #   1 celula: centro no meio, 27 acima do ponto mais baixo
+    #   1 celula: centro no meio, 27*largura acima do ponto mais baixo
     #   2 celulas: rot 0/180 (eixo i) -> ancora na ponta esquerda; rot 90/270 (eixo j) -> na ponta direita
     if cells == 1:
-        ox, oy = w / 2, h - 27
+        ox, oy = w / 2, h - 27 * largura
     elif rot % 180 == 0:
         ox, oy = 54, h - 54
     else:
@@ -132,8 +217,11 @@ def main():
         if spec['tipo'] == 'piso':
             name, entry, info = importar_piso(path, spec['substitui'])
             manifest['floors'][spec['substitui']] = entry
+        elif spec['tipo'] == 'mesa':
+            name, entries, info = importar_mesa(path, spec)
+            manifest['furniture'].setdefault(spec['movel'], {}).update(entries)
         else:
-            res = importar_movel(path, spec['movel'], spec['rot'], spec.get('celulas', 1), spec.get('espelho'))
+            res = importar_movel(path, spec['movel'], spec['rot'], spec.get('celulas', 1), spec.get('espelho'), spec.get('largura', 1.0))
             name, entry, info = res[:3]
             rots = manifest['furniture'].setdefault(spec['movel'], {})
             rots[str(spec['rot'])] = entry

@@ -42,6 +42,152 @@
     "oy": 84,
     "espelhado": true
    }
+  },
+  "table": {
+   "m0": {
+    "file": "table_m0.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m1": {
+    "file": "table_m1.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m2": {
+    "file": "table_m2.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m3": {
+    "file": "table_m3.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m4": {
+    "file": "table_m4.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m5": {
+    "file": "table_m5.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m6": {
+    "file": "table_m6.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m7": {
+    "file": "table_m7.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m8": {
+    "file": "table_m8.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m9": {
+    "file": "table_m9.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m10": {
+    "file": "table_m10.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m11": {
+    "file": "table_m11.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m12": {
+    "file": "table_m12.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m13": {
+    "file": "table_m13.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m14": {
+    "file": "table_m14.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   },
+   "m15": {
+    "file": "table_m15.png",
+    "w": 108,
+    "h": 98,
+    "ox": 54,
+    "oy": 71
+   }
+  },
+  "chair": {
+   "0": {
+    "file": "chair_0.png",
+    "w": 49,
+    "h": 77,
+    "ox": 24,
+    "oy": 65
+   },
+   "90": {
+    "file": "chair_90.png",
+    "w": 49,
+    "h": 77,
+    "ox": 24,
+    "oy": 65,
+    "espelhado": true
+   },
+   "270": {
+    "file": "chair_270.png",
+    "w": 49,
+    "h": 72,
+    "ox": 24,
+    "oy": 60
+   },
+   "180": {
+    "file": "chair_180.png",
+    "w": 49,
+    "h": 72,
+    "ox": 24,
+    "oy": 60,
+    "espelhado": true
+   }
   }
  }
 }

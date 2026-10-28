@@ -5,7 +5,7 @@
   const BASE = 'assets/arte/';
   const SurittoArt = {
     floors: {},       // nome do sprite do atlas -> { img, anchor }
-    furniture: {},    // "tipo|rot" -> { canvas: img, ox, oy }
+    furniture: {},    // "tipo|rot" ou "tipo|m<mascara>" (mesa emendada com os vizinhos) -> { canvas: img, ox, oy }
     ready: false,
 
     async load() {
@@ -30,7 +30,7 @@
       console.info(`[Arte] ${Object.keys(this.floors).length} piso(s) e ${Object.keys(this.furniture).length} movel(is)/rotacao importados.`);
     },
     floor(name) { return this.floors[name] || null; },
-    furnitureSprite(kind, rot) { return this.furniture[kind + '|' + (rot || 0)] || null; }
+    furnitureSprite(kind, rot, mask) { return this.furniture[kind + '|m' + (mask || 0)] || this.furniture[kind + '|' + (rot || 0)] || null; }
   };
   window.SurittoArt = SurittoArt;
   SurittoArt.load();

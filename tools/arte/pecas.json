@@ -1,5 +1,5 @@
 {
-  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida).",
+  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida). tipo mesa: mesa de 1 celula; o importador gera as 16 pecas de emenda (mascara de vizinhos bit0 +a, bit1 -a, bit2 +b, bit3 -b) tirando as pernas do lado emendado. largura: fracao da celula que o movel ocupa (cadeira). encurtar_pernas_px: px do jogo tirados das pernas (base_do_tampo = px da imagem original abaixo da borda da frente do tampo onde comeca o corte).",
   "piso_tabuas_carvalho.png": {
     "tipo": "piso",
     "substitui": "floor_wood_01"
@@ -16,6 +16,26 @@
     "movel": "bed",
     "rot": 270,
     "celulas": 2,
+    "espelho": 180
+  },
+  "mesa_carvalho.png": {
+    "tipo": "mesa",
+    "movel": "table",
+    "encurtar_pernas_px": 10,
+    "base_do_tampo": 245
+  },
+  "cadeira_carvalho_A_eixo_a.png": {
+    "tipo": "movel",
+    "movel": "chair",
+    "rot": 0,
+    "largura": 0.45,
+    "espelho": 90
+  },
+  "cadeira_carvalho_B_eixo_b.png": {
+    "tipo": "movel",
+    "movel": "chair",
+    "rot": 270,
+    "largura": 0.45,
     "espelho": 180
   }
 }
