@@ -18,6 +18,8 @@ class StructureManager {
       const res = await fetch('assets/dungeon/dungeon_game_atlas.json?v=' + Date.now());
       this.manifest = await res.json();
       this.frames = this.manifest.frames || {};
+      // pisos que so existem na arte nova (assets/arte, js/art_overrides.js): mesmo losango e ancora do piso de pedra do atlas
+      for (const n of ['floor_terracotta_01', 'floor_gravel_01', 'floor_dirt_01']) if (!this.frames[n] && this.frames.floor_stone_01) this.frames[n] = this.frames.floor_stone_01;
 
       this.atlasImage.onload = () => {
         this.loaded = true;
@@ -124,7 +126,8 @@ class StructureManager {
   }
 
   // Core drawing method: draws a structure from atlas at screen position
-  drawStructure(ctx, name, sx, sy, flipX = false) {
+  // wx, wy (opcional): posicao de mundo da celula; o piso feito de textura escolhe o pedaco pela celula (sem grade repetida)
+  drawStructure(ctx, name, sx, sy, flipX = false, wx, wy) {
     if (!this.loaded) return;
     const meta = this.frames[name];
     if (!meta) return;
@@ -133,7 +136,7 @@ class StructureManager {
     const anc = meta.anchor;
 
     // Arte nova importada (js/art_overrides.js) no lugar do sprite do atlas, com a mesma ancora
-    const ov = !flipX && window.SurittoArt && window.SurittoArt.floor(name);
+    const ov = !flipX && window.SurittoArt && window.SurittoArt.floor(name, wx, wy);
     if (ov) {
       ctx.save(); ctx.imageSmoothingEnabled = false;
       ctx.drawImage(ov.img, Math.round(sx - ov.anchor.x), Math.round(sy - ov.anchor.y));

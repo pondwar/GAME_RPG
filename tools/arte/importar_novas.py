@@ -11,6 +11,10 @@ Para cada imagem listada em tools/arte/pecas.json:
            escala do jogo ('linhas' fileiras de telha = linhas * 18 px de altura; empena: 'celulas' de largura
            = celulas * 60 px) e emenda as bordas para repetir sem costura (js/roofs.js pinta e inclina);
            'recorte' [x0,y0,x1,y1] corta so fileiras e colunas inteiras, e 'emendar': false dispensa a emenda
+  piso_textura -> textura quadrada de piso vista de cima (emendavel) que cobre 'celulas' x 'celulas' celulas:
+           corta em pedacos de 1 celula e projeta cada um no losango 108x54; o jogo escolhe o pedaco pela
+           posicao da celula (i mod n, j mod n), entao as pedras continuam de uma celula para a outra sem grade.
+           'substitui' = sprite do atlas, ou 'novo' = sprite que so existe na arte nova (tipo de piso novo)
   textura_terreno -> chao de um bioma (vista de cima): emenda as bordas, nivela as manchas grandes ('nivelar',
            fracao da largura do desfoque; 0 desliga), reduz para 'largura_px' (potencia de 2,
            padrao 256), achata pela metade na vertical (angulo da camera) e repete 2x na vertical: tile quadrado
@@ -312,6 +316,40 @@ def importar_textura_telhado(path, spec):
     return name, entry, f'{w}x{h} px'
 
 
+def importar_piso_textura(path, spec):
+    k = int(spec.get('celulas', 2))
+    name = spec.get('substitui') or spec['novo']
+    im = Image.open(path).convert('RGB')
+    if spec.get('recorte'):
+        im = im.crop(tuple(spec['recorte']))
+    a = np.array(im)
+    if spec.get('emendar', True):
+        a = emendar(a, 0.06)
+    S = 4                                            # amostra em 4x e reduz no fim
+    n = 64 * S                                       # px de textura por celula (o lado do losango tem ~60 px)
+    N = n * k
+    tex = np.array(Image.fromarray(a).resize((N, N), Image.LANCZOS))
+    W, H = CELL_W * S, CELL_H * S
+    y, x = np.mgrid[0:H, 0:W].astype(float)
+    X, Y = x + 0.5 - W / 2, y + 0.5
+    ua = (X / (W / 2) + Y / (H / 2)) / 2             # eixo a (+i, desce para a direita) = x da textura
+    vb = (Y / (H / 2) - X / (W / 2)) / 2             # eixo b (+j, desce para a esquerda) = y da textura
+    ref, _ = atlas_frame('floor_stone_01')           # contorno exato do losango do atlas
+    alpha = np.array(ref)[..., 3]
+    pecas = {}
+    for ci in range(k):
+        for cj in range(k):
+            u = (((ci + ua) * n).astype(int)) % N
+            v = (((cj + vb) * n).astype(int)) % N
+            big = tex[v, u]
+            tile = np.array(Image.fromarray(big).resize((CELL_W, CELL_H), Image.LANCZOS))
+            fname = f'{name}_{ci}{cj}.png'
+            Image.fromarray(np.dstack([tile, alpha]), 'RGBA').save(os.path.join(OUT, fname))
+            pecas[f'{ci},{cj}'] = fname
+    entry = {'file': pecas['0,0'], 'w': CELL_W, 'h': CELL_H, 'anchor': {'x': CELL_W // 2, 'y': CELL_H // 2}, 'celulas': k, 'pecas': pecas}
+    return name, entry, f'{k}x{k} pecas de losango'
+
+
 BIOMAS = ('PLAINS', 'FOREST', 'DENSE', 'HILLS', 'DESERT', 'SHORE', 'CANYON', 'MOUNTAIN', 'SNOW')     # GroundRenderer.B
 
 
@@ -362,6 +400,10 @@ def main():
         elif spec['tipo'] == 'textura_telhado':
             name, entry, info = importar_textura_telhado(path, spec)
             manifest['roofs'][spec['estilo']] = entry
+        elif spec['tipo'] == 'piso_textura':
+            name, entry, info = importar_piso_textura(path, spec)
+            manifest['floors'][name] = entry
+            name = name + '_*.png'
         elif spec['tipo'] == 'textura_terreno':
             name, entry, info = importar_textura_terreno(path, spec)
             manifest['ground'][spec['bioma']] = entry

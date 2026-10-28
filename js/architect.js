@@ -251,7 +251,9 @@ class ArchitectSystem {
         const dh = fh * scale;
         const dx = (38 - dw) / 2;
         const dy = (38 - dh) / 2;
-        cctx.drawImage(
+        const art = cfg.isFloor && window.SurittoArt && window.SurittoArt.floor(cfg.sprite);    // piso com arte nova: o icone mostra ela
+        if (art) cctx.drawImage(art.img, dx, dy, dw, dh);
+        else cctx.drawImage(
           this.game.structures.atlasImage,
           cfg.frame.x, cfg.frame.y, fw, fh,
           dx, dy, dw, dh
@@ -1171,10 +1173,10 @@ class ArchitectSystem {
         if (!cfg || !cfg.isFloor || b.wx === undefined || b.z) continue;
         const dx = W.wrapDelta(b.wx - cam.x), dy = b.wy - cam.y;
         if (Math.abs(dx) > viewW / 2 + 120 || Math.abs(dy) > viewH / 2 + 80) continue;
-        list.push([b.wy, cfg.sprite, Math.round(dx + screenCenterX), Math.round(dy + screenCenterY)]);
+        list.push([b.wy, cfg.sprite, Math.round(dx + screenCenterX), Math.round(dy + screenCenterY), b.wx]);
       }
       list.sort((a, c) => a[0] - c[0]);
-      for (const f of list) this.game.structures.drawStructure(ctx, f[1], f[2], f[3], false);
+      for (const f of list) this.game.structures.drawStructure(ctx, f[1], f[2], f[3], false, f[4], f[0]);
       return;
     }
     for (const [k, cx, cy] of visible) {
@@ -1182,7 +1184,7 @@ class ArchitectSystem {
       if (!cv) {
         cv = document.createElement('canvas'); cv.width = CS + M * 2; cv.height = CS + M * 2;
         const c2 = cv.getContext('2d'), ox = cx * CS - M, oy = cy * CS - M;
-        for (const f of fc.idx.get(k)) this.game.structures.drawStructure(c2, f[1], Math.round(f[2] - ox), Math.round(f[0] - oy), false);
+        for (const f of fc.idx.get(k)) this.game.structures.drawStructure(c2, f[1], Math.round(f[2] - ox), Math.round(f[0] - oy), false, f[2], f[0]);
         fc.cv.set(k, cv);
         if (fc.cv.size > 40) fc.cv.delete(fc.cv.keys().next().value);
       } else { fc.cv.delete(k); fc.cv.set(k, cv); }
