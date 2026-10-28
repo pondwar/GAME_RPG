@@ -172,19 +172,70 @@ def importar_mesa(path, spec):
     return f'{spec["movel"]}_m0..m15.png', entries, f'altura {altura} px, 16 pecas de emenda'
 
 
-def importar_movel(path, kind, rot, cells, mirror=None, largura=1.0):
-    im = load_rgba(path)
+def limpar(im, spec):
+    """retoques na imagem original: 'apagar' = retangulos [x0,y0,x1,y1] a apagar (sobras do gerador);
+    'so_maior' = fica so com a maior peca (some pedaco solto)"""
+    arr = np.array(im)
+    for x0, y0, x1, y1 in spec.get('apagar', []):
+        arr[y0:y1, x0:x1, 3] = 0
+    if spec.get('so_maior'):
+        a = arr[::4, ::4, 3] > 0                       # componentes numa copia 1/4 (rapido)
+        lab = np.zeros(a.shape, int); best, n = (0, 0), 0
+        for y, x in zip(*np.where(a)):
+            if lab[y, x]:
+                continue
+            n += 1; lab[y, x] = n; stack, size = [(y, x)], 0
+            while stack:
+                cy, cx = stack.pop(); size += 1
+                for ny, nx in ((cy + 1, cx), (cy - 1, cx), (cy, cx + 1), (cy, cx - 1)):
+                    if 0 <= ny < a.shape[0] and 0 <= nx < a.shape[1] and a[ny, nx] and not lab[ny, nx]:
+                        lab[ny, nx] = n; stack.append((ny, nx))
+            best = max(best, (size, n))
+        keep = lab == best[1]
+        keep = keep | np.roll(keep, 1, 0) | np.roll(keep, -1, 0) | np.roll(keep, 1, 1) | np.roll(keep, -1, 1)
+        keep = np.repeat(np.repeat(keep, 4, 0), 4, 1)[:arr.shape[0], :arr.shape[1]]
+        arr[~keep, 3] = 0
+    return Image.fromarray(arr, 'RGBA')
+
+
+def importar_movel(path, spec):
+    """spec (pecas.json): movel, rot, celulas, espelho e o tamanho:
+      largura  -> fracao da celula que a pegada ocupa (1 = celula inteira; cadeira 0.45), centrada nela
+      altura   -> escala pela altura em px do jogo (poste, candelabro); 'pe' = largura do pe, ancora no x do pe
+      encosto  -> movel fino encostado na parede (estante): 'altura' = altura da caixa, costas na borda da celula
+      chamas / brilho -> pontos [x, y(, tamanho)] na imagem original onde o jogo desenha fogo / halo de luz"""
+    kind, rot, cells, mirror = spec['movel'], spec['rot'], spec.get('celulas', 1), spec.get('espelho')
+    largura = spec.get('largura', 1.0)
+    im = limpar(load_rgba(path), spec)
     bbox = im.getbbox()
     im = im.crop(bbox)
-    # largura da pegada no chao; largura < 1 = movel menor que a celula (cadeira), centrado nela
-    foot_w = CELL_W * largura if cells == 1 else CELL_W + CELL_W // 2
-    scale = foot_w / im.width
+    if spec.get('encosto'):
+        scale = spec['altura'] / (im.height - im.width / 2)     # caixa: altura do sprite = altura + largura/2
+        if 'comprimento_max' in spec:                           # mais comprido que isso sai da celula: reduz tudo
+            scale = min(scale, 54 * (spec['comprimento_max'] + spec.get('profundidade', 0.3)) / im.width)
+    elif spec.get('altura'):
+        scale = spec['altura'] / im.height
+    else:
+        foot_w = CELL_W * largura if cells == 1 else CELL_W + CELL_W // 2      # largura da pegada no chao
+        scale = foot_w / im.width
     out = im.convert('RGBa').resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS).convert('RGBA')
     w, h = out.size
     # centro da celula ancora, no plano do piso:
     #   1 celula: centro no meio, 27*largura acima do ponto mais baixo
     #   2 celulas: rot 0/180 (eixo i) -> ancora na ponta esquerda; rot 90/270 (eixo j) -> na ponta direita
-    if cells == 1:
+    #   encosto: costas na borda da celula, centrado no comprimento (prof. 0.3 celula)
+    #   altura: x do pe (media das linhas mais baixas), 27*pe acima do ponto mais baixo
+    if spec.get('encosto'):
+        L = w / 54 - spec.get('profundidade', 0.3)
+        if rot in (90, 180):
+            ox, oy = 54 * (L / 2 + 0.5), h - 27 * (L / 2 + 0.5) if rot == 180 else h - 27 * (spec.get('profundidade', 0.3) + L / 2 - 0.5)
+        else:
+            ox, oy = w - 54 * (L / 2 + 0.5), h - 27 * (L / 2 + 0.5) if rot == 270 else h - 27 * (spec.get('profundidade', 0.3) + L / 2 - 0.5)
+    elif spec.get('altura'):
+        a = np.array(out)[..., 3] > 8
+        ys, xs = np.where(a)
+        ox, oy = xs[ys >= ys.max() - 3].mean(), h - 27 * spec.get('pe', 0.2)
+    elif cells == 1:
         ox, oy = w / 2, h - 27 * largura
     elif rot % 180 == 0:
         ox, oy = 54, h - 54
@@ -194,13 +245,24 @@ def importar_movel(path, kind, rot, cells, mirror=None, largura=1.0):
     out.save(os.path.join(OUT, name))
     altura = oy - 27                                # do chao (canto de tras da celula) ate o topo do sprite
     aviso = f'altura {altura:.0f} px' + (' - PASSA DO MURO, vai furar o telhado' if altura > WALL_TOP else '')
+    if spec.get('encosto'):
+        aviso += f', comprimento {L:.2f} celula'
     entry = {'file': name, 'w': w, 'h': h, 'ox': round(ox), 'oy': round(oy)}
+    pt = lambda q: [round((q[0] - bbox[0]) * scale - ox), round((q[1] - bbox[1]) * scale - oy)]   # relativo a ancora
+    if spec.get('chamas'):
+        entry['chamas'] = [pt(q) + [q[2] if len(q) > 2 else 0.5] for q in spec['chamas']]
+    if spec.get('brilho'):
+        entry['brilho'] = pt(spec['brilho'])
     if mirror is None:
         return name, entry, aviso
     # espelho: troca o eixo (0<->90, 180<->270); a ancora continua no mesmo canto da pegada, do outro lado
     mname = f'{kind}_{mirror}.png'
     out.transpose(Image.FLIP_LEFT_RIGHT).save(os.path.join(OUT, mname))
     mentry = {'file': mname, 'w': w, 'h': h, 'ox': round(w - ox), 'oy': round(oy), 'espelhado': True}
+    if 'chamas' in entry:
+        mentry['chamas'] = [[-c[0], c[1], c[2]] for c in entry['chamas']]
+    if 'brilho' in entry:
+        mentry['brilho'] = [-entry['brilho'][0], entry['brilho'][1]]
     return name, entry, aviso, (mirror, mentry)
 
 
@@ -221,7 +283,7 @@ def main():
             name, entries, info = importar_mesa(path, spec)
             manifest['furniture'].setdefault(spec['movel'], {}).update(entries)
         else:
-            res = importar_movel(path, spec['movel'], spec['rot'], spec.get('celulas', 1), spec.get('espelho'), spec.get('largura', 1.0))
+            res = importar_movel(path, spec)
             name, entry, info = res[:3]
             rots = manifest['furniture'].setdefault(spec['movel'], {})
             rots[str(spec['rot'])] = entry

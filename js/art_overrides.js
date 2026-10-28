@@ -5,7 +5,8 @@
   const BASE = 'assets/arte/';
   const SurittoArt = {
     floors: {},       // nome do sprite do atlas -> { img, anchor }
-    furniture: {},    // "tipo|rot" ou "tipo|m<mascara>" (mesa emendada com os vizinhos) -> { canvas: img, ox, oy }
+    furniture: {},    // "tipo|rot" ou "tipo|m<mascara>" (mesa emendada com os vizinhos) -> { canvas: img, ox, oy, chamas?, brilho? }
+                      // chamas: [[dx, dy, tamanho]] e brilho: [dx, dy], relativos a ancora (onde o jogo desenha fogo / halo)
     ready: false,
 
     async load() {
@@ -19,7 +20,7 @@
       }
       for (const [kind, rots] of Object.entries(m.furniture || {})) {
         for (const [rot, e] of Object.entries(rots)) {
-          jobs.push(img(e.file).then(i => { if (i) this.furniture[kind + '|' + rot] = { canvas: i, ox: e.ox, oy: e.oy }; }));
+          jobs.push(img(e.file).then(i => { if (i) this.furniture[kind + '|' + rot] = { canvas: i, ox: e.ox, oy: e.oy, chamas: e.chamas, brilho: e.brilho }; }));
         }
       }
       await Promise.all(jobs);

@@ -1826,7 +1826,10 @@ class ArchitectSystem {
             tx.globalCompositeOperation = 'source-over';
             c.drawImage(tc, 0, 0, wf, hf, x0f, y0f, wf, hf);
           } else c.drawImage(S.canvas, x0f, y0f);
-          if (kind === 'fireplace') FR.flame(c, sx + (rotn === 90 ? 25 : -25), sy + 7, T, 1.15);
+          const art = window.SurittoArt && window.SurittoArt.furnitureSprite(kind, rotn, 0);
+          if (art && art.chamas) art.chamas.forEach((q, i) => FR.flame(c, sx + q[0], sy + q[1], T + i * 700, q[2]));   // fogo nos pontos da arte nova
+          else if (art && art.brilho) { const gx = sx + art.brilho[0], gy = sy + art.brilho[1], g = c.createRadialGradient(gx, gy, 2, gx, gy, 26); g.addColorStop(0, 'rgba(255,220,120,0.55)'); g.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = g; c.beginPath(); c.arc(gx, gy, 26, 0, 7); c.fill(); }
+          else if (kind === 'fireplace') FR.flame(c, sx + (rotn === 90 ? 25 : -25), sy + 7, T, 1.15);
           else if (kind === 'candelabra') for (const [a, bb] of [[-0.2, 0], [0.2, 0], [0, -0.2], [0, 0.2]]) { const p = FR.pt(a, bb, 49); FR.flame(c, sx + p[0], sy + p[1], T + a * 900, 0.5); }
           else if (kind === 'brazier') { FR.flame(c, sx, sy - 54, T, 1.9); FR.flame(c, sx - 8, sy - 52, T + 400, 1.1); FR.flame(c, sx + 9, sy - 52, T + 900, 1.2); }
           else if (kind === 'lantern') { const g = c.createRadialGradient(sx, sy - 55, 2, sx, sy - 55, 26); g.addColorStop(0, 'rgba(255,220,120,0.55)'); g.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = g; c.beginPath(); c.arc(sx, sy - 55, 26, 0, 7); c.fill(); }

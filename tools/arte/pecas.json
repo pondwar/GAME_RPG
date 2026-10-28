@@ -1,5 +1,5 @@
 {
-  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida). tipo mesa: mesa de 1 celula; o importador gera as 16 pecas de emenda (mascara de vizinhos bit0 +a, bit1 -a, bit2 +b, bit3 -b) tirando as pernas do lado emendado. largura: fracao da celula que o movel ocupa (cadeira). encurtar_pernas_px: px do jogo tirados das pernas (base_do_tampo = px da imagem original abaixo da borda da frente do tampo onde comeca o corte).",
+  "_comentario": "O que cada imagem de assets/_novas/ vira no jogo. tipo piso: substitui um sprite de piso do atlas. tipo movel: substitui o desenho por codigo de um movel (js/furniture.js) numa rotacao. Rotacoes: 0 = eixo i (desce para a direita) com a parte de tras no fundo; 90 = eixo j (desce para a esquerda) com a parte de tras no fundo; 180 = eixo i com a parte de tras perto da camera (vista B); 270 = eixo j, vista B. espelho: rotacao que sai espelhando esta imagem (0<->90, 180<->270; a luz fica invertida). tipo mesa: mesa de 1 celula; o importador gera as 16 pecas de emenda (mascara de vizinhos bit0 +a, bit1 -a, bit2 +b, bit3 -b) tirando as pernas do lado emendado. largura: fracao da celula que o movel ocupa (cadeira). encurtar_pernas_px: px do jogo tirados das pernas (base_do_tampo = px da imagem original abaixo da borda da frente do tampo onde comeca o corte). Outros campos de movel: altura (escala pela altura em px do jogo, com pe = largura do pe), encosto (estante na parede: costas na borda da celula), chamas/brilho (pontos na imagem original onde o jogo desenha o fogo animado / o halo), apagar/so_maior (retoques de sobras do gerador).",
   "piso_tabuas_carvalho.png": {
     "tipo": "piso",
     "substitui": "floor_wood_01"
@@ -37,5 +37,149 @@
     "rot": 270,
     "largura": 0.45,
     "espelho": 180
+  },
+  "barril_carvalho.png": {
+    "tipo": "movel",
+    "movel": "barrel",
+    "rot": 0,
+    "largura": 0.5
+  },
+  "bau_carvalho.png": {
+    "tipo": "movel",
+    "movel": "chest",
+    "rot": 90,
+    "largura": 0.6,
+    "espelho": 0
+  },
+  "balcao_carvalho.png": {
+    "tipo": "movel",
+    "movel": "counter",
+    "rot": 0
+  },
+  "balcao_grande_carvalho.png": {
+    "tipo": "movel",
+    "movel": "counterbig",
+    "rot": 0,
+    "celulas": 2,
+    "espelho": 90
+  },
+  "candelabro_ferro.png": {
+    "tipo": "movel",
+    "movel": "candelabra",
+    "rot": 0,
+    "altura": 62,
+    "pe": 0.25,
+    "chamas": [
+      [
+        1024,
+        150,
+        0.55
+      ],
+      [
+        722,
+        196,
+        0.5
+      ],
+      [
+        1338,
+        212,
+        0.5
+      ],
+      [
+        708,
+        520,
+        0.5
+      ],
+      [
+        1330,
+        504,
+        0.5
+      ]
+    ]
+  },
+  "lampiao_poste.png": {
+    "tipo": "movel",
+    "movel": "lantern",
+    "rot": 0,
+    "altura": 76,
+    "pe": 0.15,
+    "apagar": [
+      [
+        1275,
+        150,
+        1430,
+        450
+      ]
+    ],
+    "so_maior": true,
+    "brilho": [
+      1212,
+      790
+    ]
+  },
+  "lareira_pedra.png": {
+    "tipo": "movel",
+    "movel": "fireplace",
+    "rot": 0,
+    "largura": 0.75,
+    "espelho": 90,
+    "so_maior": true,
+    "chamas": [
+      [
+        880,
+        1545,
+        1.1
+      ]
+    ],
+    "apagar": [
+      [
+        0,
+        150,
+        740,
+        176
+      ],
+      [
+        1310,
+        150,
+        2048,
+        176
+      ]
+    ]
+  },
+  "estante_livros_A.png": {
+    "tipo": "movel",
+    "movel": "bookshelf",
+    "rot": 90,
+    "encosto": true,
+    "altura": 72,
+    "espelho": 0,
+    "comprimento_max": 0.95
+  },
+  "estante_livros_B.png": {
+    "tipo": "movel",
+    "movel": "bookshelf",
+    "rot": 180,
+    "encosto": true,
+    "altura": 72,
+    "espelho": 270,
+    "comprimento_max": 0.95
+  },
+  "adega_A.png": {
+    "tipo": "movel",
+    "movel": "winerack",
+    "rot": 0,
+    "encosto": true,
+    "altura": 64,
+    "espelho": 90,
+    "comprimento_max": 0.95
+  },
+  "adega_B.png": {
+    "tipo": "movel",
+    "movel": "winerack",
+    "rot": 180,
+    "encosto": true,
+    "altura": 64,
+    "espelho": 270,
+    "comprimento_max": 0.95
   }
 }

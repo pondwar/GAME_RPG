@@ -188,6 +188,202 @@
     "oy": 60,
     "espelhado": true
    }
+  },
+  "barrel": {
+   "0": {
+    "file": "barrel_0.png",
+    "w": 54,
+    "h": 74,
+    "ox": 27,
+    "oy": 60
+   }
+  },
+  "chest": {
+   "90": {
+    "file": "chest_90.png",
+    "w": 65,
+    "h": 64,
+    "ox": 32,
+    "oy": 48
+   },
+   "0": {
+    "file": "chest_0.png",
+    "w": 65,
+    "h": 64,
+    "ox": 32,
+    "oy": 48,
+    "espelhado": true
+   }
+  },
+  "counter": {
+   "0": {
+    "file": "counter_0.png",
+    "w": 108,
+    "h": 108,
+    "ox": 54,
+    "oy": 81
+   }
+  },
+  "counterbig": {
+   "0": {
+    "file": "counterbig_0.png",
+    "w": 162,
+    "h": 141,
+    "ox": 54,
+    "oy": 87
+   },
+   "90": {
+    "file": "counterbig_90.png",
+    "w": 162,
+    "h": 141,
+    "ox": 108,
+    "oy": 87,
+    "espelhado": true
+   }
+  },
+  "candelabra": {
+   "0": {
+    "file": "candelabra_0.png",
+    "w": 28,
+    "h": 62,
+    "ox": 14,
+    "oy": 55,
+    "chamas": [
+     [
+      0,
+      -54,
+      0.55
+     ],
+     [
+      -10,
+      -53,
+      0.5
+     ],
+     [
+      11,
+      -52,
+      0.5
+     ],
+     [
+      -10,
+      -42,
+      0.5
+     ],
+     [
+      11,
+      -42,
+      0.5
+     ]
+    ]
+   }
+  },
+  "lantern": {
+   "0": {
+    "file": "lantern_0.png",
+    "w": 32,
+    "h": 76,
+    "ox": 8,
+    "oy": 72,
+    "brilho": [
+     16,
+     -42
+    ]
+   }
+  },
+  "fireplace": {
+   "0": {
+    "file": "fireplace_0.png",
+    "w": 81,
+    "h": 131,
+    "ox": 40,
+    "oy": 111,
+    "chamas": [
+     [
+      -6,
+      -11,
+      1.1
+     ]
+    ]
+   },
+   "90": {
+    "file": "fireplace_90.png",
+    "w": 81,
+    "h": 131,
+    "ox": 40,
+    "oy": 111,
+    "espelhado": true,
+    "chamas": [
+     [
+      6,
+      -11,
+      1.1
+     ]
+    ]
+   }
+  },
+  "bookshelf": {
+   "90": {
+    "file": "bookshelf_90.png",
+    "w": 52,
+    "h": 98,
+    "ox": 45,
+    "oy": 94
+   },
+   "0": {
+    "file": "bookshelf_0.png",
+    "w": 52,
+    "h": 98,
+    "ox": 7,
+    "oy": 94,
+    "espelhado": true
+   },
+   "180": {
+    "file": "bookshelf_180.png",
+    "w": 68,
+    "h": 91,
+    "ox": 53,
+    "oy": 65
+   },
+   "270": {
+    "file": "bookshelf_270.png",
+    "w": 68,
+    "h": 91,
+    "ox": 15,
+    "oy": 65,
+    "espelhado": true
+   }
+  },
+  "winerack": {
+   "0": {
+    "file": "winerack_0.png",
+    "w": 68,
+    "h": 91,
+    "ox": 15,
+    "oy": 83
+   },
+   "90": {
+    "file": "winerack_90.png",
+    "w": 68,
+    "h": 91,
+    "ox": 53,
+    "oy": 83,
+    "espelhado": true
+   },
+   "180": {
+    "file": "winerack_180.png",
+    "w": 68,
+    "h": 91,
+    "ox": 53,
+    "oy": 65
+   },
+   "270": {
+    "file": "winerack_270.png",
+    "w": 68,
+    "h": 91,
+    "ox": 15,
+    "oy": 65,
+    "espelhado": true
+   }
   }
  }
 }
