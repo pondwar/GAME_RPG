@@ -186,10 +186,29 @@ def importar_mesa(path, spec):
 
 def limpar(im, spec):
     """retoques na imagem original: 'apagar' = retangulos [x0,y0,x1,y1] a apagar (sobras do gerador);
-    'so_maior' = fica so com a maior peca (some pedaco solto)"""
+    'so_maior' = fica so com a maior peca (some pedaco solto); 'tirar_madeira' = apaga fundo de tabuas marrons;
+    'manter' = apaga tudo fora das formas dadas (retangulos e elipses); 'so_marmore_em' = nessas areas, so marmore"""
     arr = np.array(im)
     for x0, y0, x1, y1 in spec.get('apagar', []):
         arr[y0:y1, x0:x1, 3] = 0
+    if spec.get('manter'):                             # so o que estiver dentro destas formas: ['r', x0,y0,x1,y1] ou ['e', cx,cy,rx,ry]
+        h, w = arr.shape[:2]; yy, xx = np.mgrid[0:h, 0:w]; keep = np.zeros((h, w), bool)
+        for f in spec['manter']:
+            if f[0] == 'r': keep |= (xx >= f[1]) & (xx < f[3]) & (yy >= f[2]) & (yy < f[4])
+            else: keep |= ((xx - f[1]) / f[3]) ** 2 + ((yy - f[2]) / f[4]) ** 2 <= 1
+        arr[~keep, 3] = 0
+    for x0, y0, x1, y1 in spec.get('so_marmore_em', []):    # nesta area fica so o que e claro e quase sem cor (marmore); some bronze/brasa
+        r, g, b = (arr[y0:y1, x0:x1, i].astype(int) for i in range(3))
+        mx = np.maximum(np.maximum(r, g), b); mn = np.minimum(np.minimum(r, g), b)
+        marble = (mx > 95) & ((mx - mn) < 0.22 * mx)
+        marble = marble | np.roll(marble, 1, 0) | np.roll(marble, -1, 0) | np.roll(marble, 1, 1) | np.roll(marble, -1, 1)   # leva junto o contorno
+        sub = arr[y0:y1, x0:x1, 3]; sub[~marble] = 0
+    if spec.get('tirar_madeira'):                      # fundo de tabuas que o gerador deixou: marrom saturado (o ouro e mais amarelo e claro)
+        r, g, b = (arr[..., i].astype(int) for i in range(3))
+        mx = np.maximum(np.maximum(r, g), b)
+        wood = (r > g) & (g > b) & (r - b > 35) & (g < r * 0.74) & (mx < 215)
+        pink = (r > g + 30) & (b > g + 25)              # magenta misturado no que sobrou
+        arr[wood | pink, 3] = 0
     if spec.get('so_maior'):
         a = arr[::4, ::4, 3] > 0                       # componentes numa copia 1/4 (rapido)
         lab = np.zeros(a.shape, int); best, n = (0, 0), 0

@@ -519,6 +519,58 @@
     "oy": 65,
     "espelhado": true
    }
+  },
+  "column": {
+   "0": {
+    "file": "column_0.png",
+    "w": 75,
+    "h": 185,
+    "ox": 37,
+    "oy": 166
+   }
+  },
+  "brazier": {
+   "0": {
+    "file": "brazier_0.png",
+    "w": 61,
+    "h": 74,
+    "ox": 30,
+    "oy": 64,
+    "chamas": [
+     [
+      0,
+      -46,
+      1.9
+     ],
+     [
+      -7,
+      -44,
+      1.1
+     ],
+     [
+      7,
+      -44,
+      1.2
+     ]
+    ]
+   }
+  },
+  "throne": {
+   "0": {
+    "file": "throne_0.png",
+    "w": 173,
+    "h": 209,
+    "ox": 89,
+    "oy": 184
+   },
+   "90": {
+    "file": "throne_90.png",
+    "w": 173,
+    "h": 209,
+    "ox": 84,
+    "oy": 184,
+    "espelhado": true
+   }
   }
  },
  "roofs": {

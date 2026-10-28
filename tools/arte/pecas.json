@@ -412,5 +412,92 @@
     "tipo": "piso_textura",
     "celulas": 2,
     "novo": "floor_dirt_01"
+  },
+  "coluna_marmore.png": {
+    "tipo": "movel",
+    "movel": "column",
+    "rot": 0,
+    "altura": 185,
+    "pe": 0.7,
+    "so_maior": true,
+    "manter": [
+      [
+        "r",
+        690,
+        30,
+        1392,
+        450
+      ],
+      [
+        "r",
+        820,
+        440,
+        1220,
+        530
+      ],
+      [
+        "r",
+        853,
+        520,
+        1202,
+        1450
+      ],
+      [
+        "e",
+        1022,
+        1548,
+        226,
+        124
+      ]
+    ]
+  },
+  "braseiro_ouro.png": {
+    "tipo": "movel",
+    "movel": "brazier",
+    "rot": 0,
+    "altura": 74,
+    "pe": 0.37,
+    "chamas": [
+      [
+        1024,
+        640,
+        1.9
+      ],
+      [
+        860,
+        690,
+        1.1
+      ],
+      [
+        1190,
+        690,
+        1.2
+      ]
+    ]
+  },
+  "trono_zeus.png": {
+    "tipo": "movel",
+    "movel": "throne",
+    "rot": 0,
+    "altura": 209,
+    "pe": 0.93,
+    "espelho": 90,
+    "apagar": [
+      [
+        0,
+        0,
+        905,
+        640
+      ]
+    ],
+    "so_marmore_em": [
+      [
+        0,
+        640,
+        905,
+        905
+      ]
+    ],
+    "so_maior": true
   }
 }
