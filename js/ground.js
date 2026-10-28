@@ -1,6 +1,6 @@
 // ground.js - Render do chao em blocos suaves (sem "chunks quadrados").
 // Cada bloco (256px de mundo no zoom normal) e calculado a partir do TerrainModel: campos de elevacao/umidade/temperatura
-// sao amostrados numa grade esparsa, interpolados por pixel, e viram textura de bioma (derivada das imagens grama/areia do jogo).
+// sao amostrados numa grade esparsa, interpolados por pixel, e viram textura de bioma (derivada das imagens grama/areia do jogo, ou a arte nova do bioma: assets/arte/chao_*.png).
 // Costa, praia, raso/fundo e espuma saem da "distancia estimada ate a costa" (e / |grad e|), por isso as margens sao retas e suaves.
 // A agua e animada por baixo (padrao agua_tile rolando); os blocos so pintam tinta semitransparente por cima dela.
 class GroundRenderer {
@@ -62,7 +62,15 @@ class GroundRenderer {
     t[B.CANYON] = mk(S, (r, g, b) => [r * 0.78, g * 0.5, b * 0.38]);
     t[B.MOUNTAIN] = mk(S, (r, g, b) => { const l = lum(r, g, b) * 0.6; return [l * 1.06, l, l * 0.94]; });
     t[B.SNOW] = mk(S, (r, g, b) => { const k = 0.9 + 0.1 * lum(r, g, b) / 195; return [236 * k, 242 * k, 250 * k]; });
+    // arte nova por bioma (assets/arte/chao_*.png, js/art_overrides.js): tile quadrado ja achatado 2:1, cor como veio
+    const A = window.SurittoArt;
+    if (A && A.groundTexture) for (const name in B) {
+      const art = A.groundTexture(name);
+      if (art && art.naturalWidth === art.naturalHeight && (art.naturalWidth & (art.naturalWidth - 1)) === 0) t[B[name]] = mk(read(art), (r, g, b) => [r, g, b]);
+    }
     this.tiles = t;
+    // cor media de cada bioma (blocos rapidos de baixa resolucao e zoom de longe) a partir do proprio tile
+    this.mean = t.map(tl => { const a = tl.lods[tl.lods.length - 1]; let r = 0, g = 0, b = 0; for (const p of a) { r += p & 255; g += (p >> 8) & 255; b += (p >> 16) & 255; } return [r / a.length, g / a.length, b / a.length]; });
     return true;
   }
 
@@ -102,7 +110,7 @@ class GroundRenderer {
     }
     const cv = document.createElement('canvas'); cv.width = size; cv.height = size;
     const cx = cv.getContext('2d'), img = cx.createImageData(size, size), u32 = new Uint32Array(img.data.buffer);
-    const tiles = (full && lod < 2) ? this.tiles : null, B = GroundRenderer.B, MEAN = GroundRenderer.MEAN, noise = this.noise;
+    const tiles = (full && lod < 2) ? this.tiles : null, B = GroundRenderer.B, MEAN = this.mean || GroundRenderer.MEAN, noise = this.noise;
     let wat = false;                                                // este bloco tem agua? (se nenhum visivel tiver, nao desenha a agua animada)
     const ppc = size / 16, wpp = WS / size;                          // pixels por celula, px de mundo por pixel
     const cl = (v) => v < 0 ? 0 : (v > 255 ? 255 : v);

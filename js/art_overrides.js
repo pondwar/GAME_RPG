@@ -7,6 +7,7 @@
     floors: {},       // nome do sprite do atlas -> { img, anchor }
     furniture: {},    // "tipo|rot" ou "tipo|m<mascara>" (mesa emendada com os vizinhos) -> { canvas: img, ox, oy, chamas?, brilho? }
                       // chamas: [[dx, dy, tamanho]] e brilho: [dx, dy], relativos a ancora (onde o jogo desenha fogo / halo)
+    ground: {},       // bioma do GroundRenderer (PLAINS, FOREST, ...) -> img (tile quadrado, ja achatado 2:1, js/ground.js)
     roofs: {},        // estilo do telhado (tile, thatch, wood, slate) ou 'empena' -> { img, linhas?, celulas? } (textura chapada, js/roofs.js)
     ready: false,
 
@@ -27,14 +28,20 @@
       for (const [name, e] of Object.entries(m.roofs || {})) {
         jobs.push(img(e.file).then(i => { if (i) this.roofs[name] = { img: i, linhas: e.linhas, celulas: e.celulas }; }));
       }
+      for (const [bio, e] of Object.entries(m.ground || {})) {
+        jobs.push(img(e.file).then(i => { if (i) this.ground[bio] = i; }));
+      }
       await Promise.all(jobs);
       this.ready = true;
       // os pisos do chao ficam em cache por bloco de tela: refaz para aparecer a arte nova
       const A = window.game && window.game.architect;
       if (A) { A._fc = null; A._ecVer = (A._ecVer || 0) + 1; A._roofCache = null; }
-      console.info(`[Arte] ${Object.keys(this.floors).length} piso(s) e ${Object.keys(this.furniture).length} movel(is)/rotacao importados, ${Object.keys(this.roofs).length} textura(s) de telhado.`);
+      const G = window.game && window.game.ground;          // chao ja pintado com a grama/areia antiga: refaz os blocos
+      if (G && Object.keys(this.ground).length) { G.tiles = null; G.cache.clear(); G.quick.clear(); G.job = null; }
+      console.info(`[Arte] ${Object.keys(this.floors).length} piso(s) e ${Object.keys(this.furniture).length} movel(is)/rotacao importados, ${Object.keys(this.roofs).length} textura(s) de telhado, ${Object.keys(this.ground).length} de terreno.`);
     },
     floor(name) { return this.floors[name] || null; },
+    groundTexture(bio) { return this.ground[bio] || null; },
     roofTexture(name) { return this.roofs[name] || null; },
     furnitureSprite(kind, rot, mask) { return this.furniture[kind + '|m' + (mask || 0)] || this.furniture[kind + '|' + (rot || 0)] || null; }
   };

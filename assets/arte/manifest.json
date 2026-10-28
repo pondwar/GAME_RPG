@@ -407,5 +407,6 @@
    "file": "telhado_empena.png",
    "celulas": 2
   }
- }
+ },
+ "ground": {}
 }

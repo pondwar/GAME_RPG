@@ -11,6 +11,9 @@ Para cada imagem listada em tools/arte/pecas.json:
            escala do jogo ('linhas' fileiras de telha = linhas * 18 px de altura; empena: 'celulas' de largura
            = celulas * 60 px) e emenda as bordas para repetir sem costura (js/roofs.js pinta e inclina);
            'recorte' [x0,y0,x1,y1] corta so fileiras e colunas inteiras, e 'emendar': false dispensa a emenda
+  textura_terreno -> chao de um bioma (vista de cima): emenda as bordas, reduz para 'largura_px' (potencia de 2,
+           padrao 256), achata pela metade na vertical (angulo da camera) e repete 2x na vertical: tile quadrado
+           que js/ground.js usa no lugar da grama/areia recolorida
 Grava os PNGs em assets/arte/ e o assets/arte/manifest.json que o jogo le (js/art_overrides.js).
 
 Uso: python tools/arte/importar_novas.py
@@ -308,10 +311,31 @@ def importar_textura_telhado(path, spec):
     return name, entry, f'{w}x{h} px'
 
 
+BIOMAS = ('PLAINS', 'FOREST', 'DENSE', 'HILLS', 'DESERT', 'SHORE', 'CANYON', 'MOUNTAIN', 'SNOW')     # GroundRenderer.B
+
+
+def importar_textura_terreno(path, spec):
+    bio = spec['bioma']
+    assert bio in BIOMAS, f'bioma desconhecido: {bio}'
+    im = Image.open(path).convert('RGB')
+    if spec.get('recorte'):
+        im = im.crop(tuple(spec['recorte']))
+    a = np.array(im)
+    if spec.get('emendar', True):
+        a = emendar(a, 0.08)
+    w = int(spec.get('largura_px', 256))
+    assert w & (w - 1) == 0, 'largura_px tem que ser potencia de 2'
+    half = np.array(Image.fromarray(a).resize((w, w // 2), Image.LANCZOS))   # achatado 2:1 (camera do jogo)
+    tile = np.concatenate([half, half], axis=0)
+    name = f'chao_{bio.lower()}.png'
+    Image.fromarray(tile, 'RGB').save(os.path.join(OUT, name))
+    return name, {'file': name}, f'{w}x{w} px (achatado 2:1)'
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     pecas = json.load(open(os.path.join(HERE, 'pecas.json'), encoding='utf-8'))
-    manifest = {'floors': {}, 'furniture': {}, 'roofs': {}}
+    manifest = {'floors': {}, 'furniture': {}, 'roofs': {}, 'ground': {}}
     for fname, spec in pecas.items():
         if fname.startswith('_'):
             continue
@@ -324,6 +348,9 @@ def main():
         elif spec['tipo'] == 'textura_telhado':
             name, entry, info = importar_textura_telhado(path, spec)
             manifest['roofs'][spec['estilo']] = entry
+        elif spec['tipo'] == 'textura_terreno':
+            name, entry, info = importar_textura_terreno(path, spec)
+            manifest['ground'][spec['bioma']] = entry
         elif spec['tipo'] == 'mesa':
             name, entries, info = importar_mesa(path, spec)
             manifest['furniture'].setdefault(spec['movel'], {}).update(entries)
