@@ -3200,9 +3200,11 @@ class Game {
 
     // Precision Hand Socket Lookup
     const socketTable = window.PLAYER_WEAPON_SOCKETS || {};
-    const socket = socketTable[frameKey] || 
-                   socketTable[`jump_${sideDir}_1`] || 
-                   socketTable[`idle_${dir}_0`] || 
+    // Sem encaixe medido para o quadro: usa o do boneco parado na mesma direcao. (Antes caia no do pulo
+    // com o punho erguido, e a espada ia parar na cabeca nos quadros que faltavam na tabela.)
+    const socket = socketTable[frameKey] ||
+                   socketTable[`idle_${dir}_0`] ||
+                   socketTable[`idle_${sideDir}_0`] ||
                    null;
 
     const drawBehind = socket ? socket.behind : (dir === 'up');

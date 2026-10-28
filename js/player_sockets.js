@@ -44,28 +44,56 @@ window.PLAYER_WEAPON_SOCKETS = {
   },
   "walk_down_0": {
     "x": 0.838,
-    "y": 0.542,
+    "y": 0.535,
     "angle": 0.42,
     "behind": false,
     "flip": false
   },
   "walk_down_1": {
-    "x": 0.834,
-    "y": 0.557,
+    "x": 0.836,
+    "y": 0.54,
     "angle": 0.42,
     "behind": false,
     "flip": false
   },
   "walk_up_0": {
-    "x": 0.878,
-    "y": 0.52,
+    "x": 0.877,
+    "y": 0.514,
     "angle": -0.3,
     "behind": true,
     "flip": false
   },
   "walk_up_1": {
-    "x": 0.877,
-    "y": 0.514,
+    "x": 0.878,
+    "y": 0.518,
+    "angle": -0.3,
+    "behind": true,
+    "flip": false
+  },
+  "walk_down_2": {
+    "x": 0.838,
+    "y": 0.548,
+    "angle": 0.42,
+    "behind": false,
+    "flip": false
+  },
+  "walk_down_3": {
+    "x": 0.838,
+    "y": 0.546,
+    "angle": 0.42,
+    "behind": false,
+    "flip": false
+  },
+  "walk_up_2": {
+    "x": 0.88,
+    "y": 0.526,
+    "angle": -0.3,
+    "behind": true,
+    "flip": false
+  },
+  "walk_up_3": {
+    "x": 0.878,
+    "y": 0.522,
     "angle": -0.3,
     "behind": true,
     "flip": false
@@ -127,22 +155,22 @@ window.PLAYER_WEAPON_SOCKETS = {
     "flip": true
   },
   "run_down_0": {
-    "x": 0.88,
-    "y": 0.553,
+    "x": 0.837,
+    "y": 0.529,
     "angle": 0.48,
     "behind": false,
     "flip": false
   },
   "run_down_1": {
-    "x": 0.86,
-    "y": 0.507,
+    "x": 0.838,
+    "y": 0.535,
     "angle": 0.48,
     "behind": false,
     "flip": false
   },
   "run_up_0": {
-    "x": 0.878,
-    "y": 0.52,
+    "x": 0.876,
+    "y": 0.51,
     "angle": -0.35,
     "behind": true,
     "flip": false
@@ -150,6 +178,34 @@ window.PLAYER_WEAPON_SOCKETS = {
   "run_up_1": {
     "x": 0.877,
     "y": 0.514,
+    "angle": -0.35,
+    "behind": true,
+    "flip": false
+  },
+  "run_down_2": {
+    "x": 0.838,
+    "y": 0.555,
+    "angle": 0.48,
+    "behind": false,
+    "flip": false
+  },
+  "run_down_3": {
+    "x": 0.838,
+    "y": 0.548,
+    "angle": 0.48,
+    "behind": false,
+    "flip": false
+  },
+  "run_up_2": {
+    "x": 0.881,
+    "y": 0.534,
+    "angle": -0.35,
+    "behind": true,
+    "flip": false
+  },
+  "run_up_3": {
+    "x": 0.88,
+    "y": 0.526,
     "angle": -0.35,
     "behind": true,
     "flip": false
