@@ -100,7 +100,7 @@
     halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Bronzeada', cabelo: 'Castanho cacheado', olhos: 'Avelã', rosto: 'Redondo e sorridente' },
     draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Clara rosada', cabelo: 'Branco espetado', olhos: 'Azuis', rosto: 'Nariz grande, bigode' },
-    meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Morena', cabelo: 'Preto ondulado', olhos: 'Avelã', rosto: 'Suave, orelhas meio pontudas' },
+    meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', cabelo: 'Preto ondulado', olhos: 'Avelã', rosto: 'Suave, orelhas meio pontudas' },
     meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde-acinzentada', cabelo: 'Preto preso', olhos: 'Castanhos', rosto: 'Presas inferiores' },
     tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelho-rubi', cabelo: 'Preto longo, chifres curvos', olhos: 'Dourados sem pupila', rosto: 'Anguloso, cauda' }
   };

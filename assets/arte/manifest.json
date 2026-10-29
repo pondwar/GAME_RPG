@@ -623,5 +623,47 @@
   "SNOW": {
    "file": "chao_snow.png"
   }
+ },
+ "portraits": {
+  "elfo": {
+   "file": "retrato_elfo.png",
+   "w": 301,
+   "h": 600
+  },
+  "anao": {
+   "file": "retrato_anao.png",
+   "w": 397,
+   "h": 600
+  },
+  "halfling": {
+   "file": "retrato_halfling.png",
+   "w": 393,
+   "h": 600
+  },
+  "draconato": {
+   "file": "retrato_draconato.png",
+   "w": 391,
+   "h": 600
+  },
+  "gnomo": {
+   "file": "retrato_gnomo.png",
+   "w": 394,
+   "h": 600
+  },
+  "meio_elfo": {
+   "file": "retrato_meio_elfo.png",
+   "w": 398,
+   "h": 600
+  },
+  "meio_orc": {
+   "file": "retrato_meio_orc.png",
+   "w": 407,
+   "h": 600
+  },
+  "tiferino": {
+   "file": "retrato_tiferino.png",
+   "w": 406,
+   "h": 600
+  }
  }
 }
