@@ -46,9 +46,9 @@ Suritto é um RPG medieval de fantasia em visão **isométrica 2:1**, no navegad
 
 Dizer na ficha a vista e o eixo ('\\' desce para a direita, '/' desce para a esquerda).
 
-**retrato (corpo de raça)**: corpo inteiro de frente, parado, braços relaxados um pouco afastados do corpo, mãos vazias e abertas, pés afastados. Cabeça perto da borda de cima e pés perto da borda de baixo. Roupa de baixo justa: túnica bege de linho sem manga, calça cinza-escura justa e botas marrons simples (salvo indicação da raça). O **corpo segue a raça** (elfo bem magro, anão largo e baixo, meio-orc muito musculoso, halfling pequeno e NÃO gordo). Arquivo: `retrato_<raca>.png`.
+**retrato (corpo de raça)**: ATENÇÃO: aqui "retrato" é só o nome do arquivo. NÃO é retrato de busto, NÃO tem moldura, NÃO tem cenário de fundo. É um **BONECO DE CORPO INTEIRO, da cabeça aos pés**, como um sprite de personagem de jogo: os pés e as botas têm que aparecer inteiros, com o corpo todo dentro da imagem. Formato vertical (mais alto que largo). De frente, parado, braços relaxados um pouco afastados do corpo, mãos vazias e abertas, pés afastados. Cabeça perto da borda de cima e pés perto da borda de baixo. Roupa de baixo justa: túnica bege de linho sem manga, calça cinza-escura justa e botas marrons simples (salvo indicação da raça). O **corpo segue a raça** (elfo bem magro, anão largo e baixo, meio-orc muito musculoso, halfling pequeno e NÃO gordo). Arquivo: `retrato_<raca>.png`.
 
-**retrato_classe (roupa)**: o David anexa o corpo da raça. **Editar** a imagem, mantendo exatamente o mesmo personagem (corpo, rosto, cabelo, pele, pose, tamanho, estilo, contorno e fundo) e trocando só a roupa pela roupa da classe. Mãos vazias: sem arma, escudo ou cajado (armas são itens à parte). Arquivo: `retrato_<raca>_<classe>.png`.
+**retrato_classe (roupa)**: o David anexa o boneco de corpo inteiro da raça. **Editar** a imagem (continua de corpo inteiro, da cabeça aos pés, fundo magenta, sem moldura), mantendo exatamente o mesmo personagem (corpo, rosto, cabelo, pele, pose, tamanho, estilo, contorno e fundo) e trocando só a roupa pela roupa da classe. Mãos vazias: sem arma, escudo ou cajado (armas são itens à parte). Arquivo: `retrato_<raca>_<classe>.png`.
 
 Códigos:
 - raças: humano, elfo, anao, halfling, draconato, gnomo, meio_elfo, meio_orc, tiferino;
