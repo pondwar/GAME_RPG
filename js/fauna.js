@@ -51,7 +51,7 @@
         terr: (r) => 1 + (r.pop.rabbit || 0) * 0.25, arrive: 0.00002, arriveIf: (r) => (r.pop.rabbit || 0) > 4, start: [0.25, 1, 1] }
     },
     bear: {
-      name: 'Urso', biomes: [B.D, B.H, B.F, B.M], walk: 45, run: 205, radius: 16, w: 84, h: 74, hp: 120, dmg: 16,
+      name: 'Urso', biomes: [B.D, B.H, B.F, B.M], walk: 45, run: 205, radius: 16, w: 84, h: 74, hp: 70, dmg: 16,      // ~6 golpes de espada (antes 120 = ~10)
       sight: 200, scent: 900, herd: [1, 1], fear: { town: 1.2, light: 0.3, fire: 0.6 }, fears: [], temper: 'territorial', territoryR: 150, tire: 5,
       hunger: 1 / 800, hunt: 0.7, chase: 3.0, pounce: 14, prey: { deer: 0.5, boar: 0.4 }, carrion: true, diet: { berries: 1, fruit: 1, mushrooms: 0.5 },
       reg: { density: 0.7, birth: 0.00012, starve: 0.0004, eat: { berries: 0.0003, mushrooms: 0.0001 }, kill: 0.00008, half: 2, start: [0.08, 1, 0] }

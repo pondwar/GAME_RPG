@@ -350,15 +350,20 @@ class Game {
   setupInputs() {
     window.addEventListener('keydown', (e) => {
       const key = e.key.toLowerCase();
+      // digitando num campo de texto: as teclas sao do texto, nao do jogo
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
       this.keys[key] = true;
+      // mapa-mundi aberto: as teclas sao do mapa (C centraliza, 0 mostra o mundo) e nao gastam lenha / slot da barra
+      if (this.minimap && this.minimap.isWorldMapOpen) return;
+      const building = this.architect && this.architect.isActive;
 
       // Interaction Key 'F'
       if (key === 'f') {
         this.handleInteraction();
       }
 
-      // Drop Fruit Bait Key 'G'
-      if (key === 'g') {
+      // Drop Fruit Bait Key 'G' (no construtor, G troca o andar)
+      if (key === 'g' && !building) {
         this.dropFruitBait();
       }
 
@@ -1294,13 +1299,8 @@ class Game {
         this.inventory.unequipItem('weapon');
       } else {
         const idx = this.inventory.slots.findIndex(s => s && s.id === 'axe');
-        if (idx !== -1) {
-          this.inventory.useItem(idx);
-        } else {
-          this.inventory.equipItemDirect('weapon', 'axe');
-          if (window.sounds) window.sounds.playRustle();
-          this.addLog(`🪓 Machado de Lenhador empunhado na mão direita!`, 'action');
-        }
+        if (idx !== -1) this.inventory.useItem(idx);
+        else this.addLog(`Você não tem um Machado de Lenhador na mochila.`, 'warning');
       }
     } else if (key === '5') {
       // Toggle Torch
@@ -1327,13 +1327,8 @@ class Game {
         this.inventory.unequipItem('weapon');
       } else {
         const idx = this.inventory.slots.findIndex(s => s && s.id === 'sword');
-        if (idx !== -1) {
-          this.inventory.useItem(idx);
-        } else {
-          this.inventory.equipItemDirect('weapon', 'sword');
-          if (window.sounds) window.sounds.playSwordSlash();
-          this.addLog(`🗡️ Espada de Aço empunhada na mão direita!`, 'action');
-        }
+        if (idx !== -1) this.inventory.useItem(idx);
+        else this.addLog(`Você não tem uma Espada de Aço na mochila.`, 'warning');
       }
     } else if (key === '8') {
       // Equip Fire Sword +16
@@ -1341,13 +1336,8 @@ class Game {
         this.inventory.unequipItem('weapon');
       } else {
         const idx = this.inventory.slots.findIndex(s => s && s.id === 'fire_sword');
-        if (idx !== -1) {
-          this.inventory.useItem(idx);
-        } else {
-          this.inventory.equipItemDirect('weapon', 'fire_sword');
-          if (window.sounds) window.sounds.playSwordSlash();
-          this.addLog(`⚔️ Lâmina Flamejante +16 empunhada! O fogo sagrado ilumina a escuridão.`, 'action');
-        }
+        if (idx !== -1) this.inventory.useItem(idx);
+        else this.addLog(`Você não tem a Lâmina Flamejante. Ela nasce de uma Espada de Aço com o Pergaminho de Encantamento [6].`, 'warning');
       }
     } else if (key === '9') {
       // Eat Fresh Meat
@@ -1680,9 +1670,12 @@ class Game {
         // Roll D20 Dex/Hunting check!
         const mod = window.diceSystem.stats.destreza; // +3
         window.diceSystem.rollD20('Tentativa de Caça (Destreza)', mod, 12, (res) => {
+          // a lista muda durante a rolagem (lobo abate, filhote nasce, cervo sai da area): procura o proprio cervo
+          const idx = this.deers.indexOf(d);
+          if (idx === -1) { this.addLog(`💨 O cervo já não estava mais ali quando você avançou.`, 'tip'); return; }
           if (res.isSuccess) {
             // Hunt success!
-            this.deers.splice(i, 1);
+            this.deers.splice(idx, 1);
             this.inventory.addItem('meat', 2);
             this.inventory.addItem('deer_hide', 1);
             this.player.hunger = Math.min(100, this.player.hunger + 40);
@@ -1691,7 +1684,7 @@ class Game {
             this.updateHUD();
           } else {
             // Deer panics and bolts away
-            d.state = 'fleeing';
+            d.state = 'fleeing'; d.act = 'flee'; d.threatSource = this.player;
             d.fleeTimer = 5.0;
             if (window.sounds) window.sounds.playRustle();
             this.addLog(`💨 O cervo percebeu o ataque, saltou sobre os arbustos e disparou em fuga!`, 'warning');

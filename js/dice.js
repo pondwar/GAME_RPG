@@ -21,7 +21,13 @@ class DiceSystem {
 
   // Roll D20 with animation and callbacks
   rollD20(reason = 'Teste de Sorte', mod = 0, dc = 10, callback = null) {
-    if (this.isRolling) return;
+    // ja rolando: entra na fila (antes a rolagem era descartada em silencio e a acao sumia);
+    // o mesmo teste repetido (tecla apertada duas vezes) nao empilha
+    if (this.isRolling) {
+      this.queue = this.queue || [];
+      if (this.queue.length < 3 && !this.queue.some(q => q[0] === reason) && this.reasonEl.innerText !== reason) this.queue.push([reason, mod, dc, callback]);
+      return;
+    }
     this.isRolling = true;
 
     if (window.sounds) window.sounds.playDiceRoll();
@@ -87,8 +93,11 @@ class DiceSystem {
     }
 
     if (callback) {
-      callback({ rawRoll, total, isSuccess, isCrit, isFumble, dc });
+      try { callback({ rawRoll, total, isSuccess, isCrit, isFumble, dc }); }
+      catch (e) { console.error('[Dados] erro na acao do teste:', e); }
     }
+    // proximo da fila (depois de um respiro para o jogador ler o resultado)
+    if (this.queue && this.queue.length) { const q = this.queue.shift(); setTimeout(() => this.rollD20(...q), 350); }
   }
 }
 

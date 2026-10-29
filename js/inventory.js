@@ -155,10 +155,21 @@ class InventorySystem {
         desc: 'Pergaminho místico arcano. Rola um teste D20 arriscado para imbuir a espada com chamas eternas (+16).',
         stats: 'Encantamento D20 • Risco Mágico',
         useEffect: (g) => {
+          // so encanta uma Espada de Aco que voce tenha (na mao ou na mochila)
+          const inv = g.inventory, inHand = inv.equipment.weapon === 'sword';
+          if (!inHand && inv.slots.findIndex(s => s && s.id === 'sword') === -1) {
+            g.addLog(`📜 O pergaminho precisa de uma Espada de Aço para encantar (na mão ou na mochila).`, 'warning');
+            return false;
+          }
           g.addLog(`📜 Você abriu o Pergaminho de Encantamento Ancestral...`, 'system');
           window.diceSystem.rollD20('Encantamento de Arma (Lineage 2)', 3, 12, (res) => {
             if (res.isSuccess) {
-              g.inventory.equipItemDirect('weapon', 'fire_sword');
+              if (inv.equipment.weapon === 'sword') inv.equipItemDirect('weapon', 'fire_sword', true);     // a espada vira a lamina
+              else {
+                const si = inv.slots.findIndex(s => s && s.id === 'sword');
+                if (si === -1) { g.addLog(`📜 A espada sumiu antes da magia terminar. O encantamento se perdeu.`, 'warning'); return; }
+                inv.removeItem(si, 1); inv.equipItemDirect('weapon', 'fire_sword');
+              }
               if (window.sounds) {
                 window.sounds.playCritSuccess();
                 window.sounds.playThunder();
@@ -610,9 +621,8 @@ class InventorySystem {
     } 
     // If it's consumable:
     else if (itemData.type === 'consumable') {
-      if (itemData.useEffect) {
-        itemData.useEffect(this.game);
-      }
+      // useEffect pode devolver false para nao gastar o item (ex.: pergaminho sem espada para encantar)
+      if (itemData.useEffect && itemData.useEffect(this.game) === false) { this.renderUI(); return; }
       this.removeItem(slotIdx, 1);
     }
 
@@ -620,7 +630,14 @@ class InventorySystem {
     this.renderUI();
   }
 
-  equipItemDirect(equipType, itemId) {
+  // Equipa sem passar pela mochila. A arma que estava na mao volta para a mochila (antes sumia),
+  // a menos que consumeOld (ex.: o encantamento transforma a espada na lamina flamejante).
+  equipItemDirect(equipType, itemId, consumeOld = false) {
+    const old = this.equipment[equipType];
+    if (old && old !== itemId && !consumeOld && this.itemDB[old] && !this.addItem(old, 1)) {
+      this.game.addLog(`Mochila cheia: não há espaço para guardar o item que estava na mão.`, 'warning');
+      return false;
+    }
     this.equipment[equipType] = itemId;
     if (equipType === 'weapon') {
       this.game.player.equippedWeapon = itemId;
