@@ -36,6 +36,7 @@ class Hotbar {
     if (!id) { g.addLog(`Atalho [${key}] vazio. Arraste um item da mochila [I] para cá.`, 'tip'); return; }
     if (id === 'dice') { window.diceSystem.rollD20('Iniciativa de Ação', 2, 12); return; }
     const item = inv.itemDB[id];
+    if (item.type === 'material') { g.addLog(`${item.icon} ${item.name} é material (não se usa). No atalho [${key}] ele só mostra quanto você tem: ${this.count(id)}.`, 'tip'); return; }
     // arma / tocha na mao: guarda
     if ((item.type === 'weapon' || item.type === 'offhand') && this.equipped(id)) { inv.unequipItem(item.equipType); this.render(); return; }
     const idx = inv.slots.findIndex(s => s && s.id === id);

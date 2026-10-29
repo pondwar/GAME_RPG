@@ -534,6 +534,7 @@ class InventorySystem {
     this.isOpen = true;
     const modal = document.getElementById('inventory-modal');
     if (modal) modal.style.display = 'flex';
+    document.body.classList.add('inv-open');          // a barra de atalhos fica por cima (sem desfoque) para receber os itens
     this.renderUI();
   }
 
@@ -541,6 +542,7 @@ class InventorySystem {
     this.isOpen = false;
     const modal = document.getElementById('inventory-modal');
     if (modal) modal.style.display = 'none';
+    document.body.classList.remove('inv-open');
     this.selectedSlot = null;
   }
 

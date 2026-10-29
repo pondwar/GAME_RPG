@@ -2917,3 +2917,7 @@ html, body {
 .inv-sort-btn:hover { background: #3a2f1e; }
 .inv-help { font-size: 10px; color: #868e96; margin: 2px 0 6px; }
 .preview-hotkey { font-size: 10px; color: #f0c05a; margin-left: 6px; }
+
+/* mochila aberta: a barra de atalhos sobe por cima do fundo escurecido, sem desfoque, para receber itens arrastados */
+body.inv-open .hud-bottom-center { z-index: 1001; }
+body.inv-open .hotbar { box-shadow: 0 0 0 2px rgba(240, 192, 90, 0.45), 0 6px 20px rgba(0, 0, 0, 0.85); }
