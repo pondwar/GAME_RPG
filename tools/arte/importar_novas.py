@@ -21,7 +21,8 @@ Para cada imagem listada em tools/arte/pecas.json:
            que js/ground.js usa no lugar da grama/areia recolorida
   retrato -> previa da tela de criacao de personagem (corpo inteiro, de frente, fundo magenta): tira o fundo,
            recorta e reduz para 'altura_px' (padrao 600). 'raca' (e 'classe', para a raca vestida com a roupa da
-           classe) vira a chave em manifest.json -> portraits (js/character_creation.js)
+           classe) vira a chave em manifest.json -> portraits (js/character_creation.js). Arquivos retrato_<raca>.png e
+           retrato_<raca>_<classe>.png em assets/_novas/ entram sozinhos (sem pecas.json)
 Grava os PNGs em assets/arte/ e o assets/arte/manifest.json que o jogo le (js/art_overrides.js).
 
 Uso: python tools/arte/importar_novas.py
@@ -413,7 +414,7 @@ def importar_retrato(path, spec):
     h = spec.get('altura_px', 600)
     w = max(1, round(im.width * h / im.height))
     im = im.resize((w, h), Image.LANCZOS)
-    key = spec['raca'] + ('_' + spec['classe'] if spec.get('classe') else '')
+    key = spec.get('chave') or spec['raca'] + ('_' + spec['classe'] if spec.get('classe') else '')
     name = f'retrato_{key}.png'
     im.save(os.path.join(OUT, name))
     return key, name, {'file': name, 'w': w, 'h': h}, f'{w}x{h} px'
@@ -423,6 +424,10 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     pecas = json.load(open(os.path.join(HERE, 'pecas.json'), encoding='utf-8'))
     manifest = {'floors': {}, 'furniture': {}, 'roofs': {}, 'ground': {}, 'portraits': {}}
+    # retratos (retrato_<raca>.png e retrato_<raca>_<classe>.png) entram sozinhos, sem precisar de pecas.json
+    for f in sorted(os.listdir(SRC)):
+        if f.startswith('retrato_') and f.endswith('.png') and f not in pecas:
+            pecas[f] = {'tipo': 'retrato', 'chave': f[len('retrato_'):-len('.png')]}
     for fname, spec in pecas.items():
         if fname.startswith('_'):
             continue

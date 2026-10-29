@@ -499,41 +499,5 @@
       ]
     ],
     "so_maior": true
-  },
-  "retrato_humano.png": {
-    "tipo": "retrato",
-    "raca": "humano"
-  },
-  "retrato_elfo.png": {
-    "tipo": "retrato",
-    "raca": "elfo"
-  },
-  "retrato_anao.png": {
-    "tipo": "retrato",
-    "raca": "anao"
-  },
-  "retrato_halfling.png": {
-    "tipo": "retrato",
-    "raca": "halfling"
-  },
-  "retrato_draconato.png": {
-    "tipo": "retrato",
-    "raca": "draconato"
-  },
-  "retrato_gnomo.png": {
-    "tipo": "retrato",
-    "raca": "gnomo"
-  },
-  "retrato_meio_elfo.png": {
-    "tipo": "retrato",
-    "raca": "meio_elfo"
-  },
-  "retrato_meio_orc.png": {
-    "tipo": "retrato",
-    "raca": "meio_orc"
-  },
-  "retrato_tiferino.png": {
-    "tipo": "retrato",
-    "raca": "tiferino"
   }
 }
