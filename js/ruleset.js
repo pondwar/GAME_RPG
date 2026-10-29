@@ -71,6 +71,40 @@
       desc: 'Estudioso das artes arcanas, com o maior repertório de magias.', role: 'Magia versátil' }
   };
 
+  // Classes que cada raca pode seguir. O D&D 5e nao restringe; isto e regra do Suritto, inspirada nas edicoes
+  // antigas (AD&D). Para mudar: edite a lista e rode tools/gerar_ruleset_sql.js (o servidor valida pela tabela).
+  const ALL = Object.keys(CLASSES);
+  const RACE_CLASSES = {
+    humano: ALL,
+    elfo: ['bardo', 'clerigo', 'druida', 'guerreiro', 'monge', 'patrulheiro', 'ladino', 'feiticeiro', 'mago'],
+    anao: ['barbaro', 'clerigo', 'guerreiro', 'paladino', 'ladino'],
+    halfling: ['bardo', 'clerigo', 'druida', 'guerreiro', 'monge', 'patrulheiro', 'ladino'],
+    draconato: ['barbaro', 'bardo', 'clerigo', 'guerreiro', 'paladino', 'feiticeiro', 'bruxo'],
+    gnomo: ['bardo', 'clerigo', 'druida', 'guerreiro', 'ladino', 'feiticeiro', 'mago'],
+    meio_elfo: ['bardo', 'clerigo', 'druida', 'guerreiro', 'paladino', 'patrulheiro', 'ladino', 'feiticeiro', 'bruxo', 'mago'],
+    meio_orc: ['barbaro', 'clerigo', 'guerreiro', 'patrulheiro', 'ladino', 'bruxo'],
+    tiferino: ['bardo', 'guerreiro', 'ladino', 'feiticeiro', 'bruxo', 'mago']
+  };
+  const allowed = (raceCode, classCode) => (RACE_CLASSES[raceCode] || ALL).includes(classCode);
+
+  // Aparencia (tela de criacao). Por enquanto 1 visual classico por raca (o retrato da previa); as outras opcoes
+  // de cada parte entram aqui depois. scale: altura na previa (raca pequena aparece menor).
+  const LOOK_PARTS = [
+    { code: 'corpo', name: 'Corpo' }, { code: 'pele', name: 'Pele' }, { code: 'cabelo', name: 'Cabelo' },
+    { code: 'olhos', name: 'Olhos' }, { code: 'rosto', name: 'Rosto' }
+  ];
+  const LOOKS = {
+    humano: { scale: 1, corpo: 'Masculino', pele: 'Morena clara', cabelo: 'Castanho curto', olhos: 'Castanhos', rosto: 'Queixo quadrado, barba por fazer' },
+    elfo: { scale: 1, corpo: 'Masculino', pele: 'Clara', cabelo: 'Longo loiro-prateado', olhos: 'Verdes', rosto: 'Fino, orelhas pontudas' },
+    anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', cabelo: 'Ruivo, barba trançada', olhos: 'Cinzentos', rosto: 'Largo, nariz grande' },
+    halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Bronzeada', cabelo: 'Castanho cacheado', olhos: 'Avelã', rosto: 'Redondo e sorridente' },
+    draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
+    gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Clara rosada', cabelo: 'Branco espetado', olhos: 'Azuis', rosto: 'Nariz grande, bigode' },
+    meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Morena', cabelo: 'Preto ondulado', olhos: 'Avelã', rosto: 'Suave, orelhas meio pontudas' },
+    meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde-acinzentada', cabelo: 'Preto preso', olhos: 'Castanhos', rosto: 'Presas inferiores' },
+    tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelho-rubi', cabelo: 'Preto longo, chifres curvos', olhos: 'Dourados sem pupila', rosto: 'Anguloso, cauda' }
+  };
+
   // ---------------- contas ----------------
   const POINT_COST = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };   // compra de pontos (27 pontos)
   const POINTS = 27;
@@ -100,5 +134,5 @@
   // Rolagem classica: 4d6, descarta o menor
   function roll4d6() { const d = [0, 0, 0, 0].map(() => 1 + Math.floor(Math.random() * 6)).sort((a, b) => a - b); return d[1] + d[2] + d[3]; }
 
-  window.SurittoRules = { ATTRS, RACES, CLASSES, POINT_COST, POINTS, HP_SCALE, mod, finalAttrs, sheet, roll4d6 };
+  window.SurittoRules = { ATTRS, RACES, CLASSES, RACE_CLASSES, LOOK_PARTS, LOOKS, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
 })();

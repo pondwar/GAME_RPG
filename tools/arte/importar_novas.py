@@ -19,6 +19,9 @@ Para cada imagem listada em tools/arte/pecas.json:
            fracao da largura do desfoque; 0 desliga), reduz para 'largura_px' (potencia de 2,
            padrao 256), achata pela metade na vertical (angulo da camera) e repete 2x na vertical: tile quadrado
            que js/ground.js usa no lugar da grama/areia recolorida
+  retrato -> previa da tela de criacao de personagem (corpo inteiro, de frente, fundo magenta): tira o fundo,
+           recorta e reduz para 'altura_px' (padrao 600). 'raca' (e 'classe', para a raca vestida com a roupa da
+           classe) vira a chave em manifest.json -> portraits (js/character_creation.js)
 Grava os PNGs em assets/arte/ e o assets/arte/manifest.json que o jogo le (js/art_overrides.js).
 
 Uso: python tools/arte/importar_novas.py
@@ -403,10 +406,23 @@ def importar_textura_terreno(path, spec):
     return name, {'file': name}, f'{w}x{w} px (achatado 2:1)'
 
 
+def importar_retrato(path, spec):
+    im = limpar(load_rgba(path), spec)
+    box = im.getbbox()
+    im = im.crop(box)
+    h = spec.get('altura_px', 600)
+    w = max(1, round(im.width * h / im.height))
+    im = im.resize((w, h), Image.LANCZOS)
+    key = spec['raca'] + ('_' + spec['classe'] if spec.get('classe') else '')
+    name = f'retrato_{key}.png'
+    im.save(os.path.join(OUT, name))
+    return key, name, {'file': name, 'w': w, 'h': h}, f'{w}x{h} px'
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     pecas = json.load(open(os.path.join(HERE, 'pecas.json'), encoding='utf-8'))
-    manifest = {'floors': {}, 'furniture': {}, 'roofs': {}, 'ground': {}}
+    manifest = {'floors': {}, 'furniture': {}, 'roofs': {}, 'ground': {}, 'portraits': {}}
     for fname, spec in pecas.items():
         if fname.startswith('_'):
             continue
@@ -426,6 +442,9 @@ def main():
         elif spec['tipo'] == 'textura_terreno':
             name, entry, info = importar_textura_terreno(path, spec)
             manifest['ground'][spec['bioma']] = entry
+        elif spec['tipo'] == 'retrato':
+            key, name, entry, info = importar_retrato(path, spec)
+            manifest['portraits'][key] = entry
         elif spec['tipo'] == 'mesa':
             name, entries, info = importar_mesa(path, spec)
             manifest['furniture'].setdefault(spec['movel'], {}).update(entries)

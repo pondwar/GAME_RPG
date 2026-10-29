@@ -56,6 +56,11 @@ export async function saveCharacter(realm, name, snap) {
   const n = (v, d = 0) => (typeof v === 'number' && isFinite(v) ? v : d);
   return tx(async c => {
     const acc = await devAccountId(c);
+    let race = (await codes(c, 'race')).has(c0.race) ? c0.race : null, cls = (await codes(c, 'character_class')).has(c0.class) ? c0.class : null;
+    if (race && cls && !(await c.query('SELECT 1 FROM ruleset.race_class WHERE race_code = $1 AND class_code = $2', [race, cls])).rowCount) {
+      console.warn(`[save] ${name}: ${race} nao pode ser ${cls}, ficha ignorada`);      // raca x classe proibida (ruleset.race_class)
+      race = cls = null;
+    }
     const { rows } = await c.query(
       `INSERT INTO player.game_character
          (account_id, realm_id, name, level, hp, max_hp, mana, max_mana, stamina, max_stamina, hunger, coins,
@@ -75,7 +80,7 @@ export async function saveCharacter(realm, name, snap) {
        Math.max(0, Math.round(n(c0.coins))), n(c0.posX), n(c0.posY), n(c0.posZ),
        ['down', 'up', 'left', 'right'].includes(c0.facing) ? c0.facing : 'down',
        Math.max(0, Math.round(n(c0.playTimeSeconds))), JSON.stringify(c0.state || {}),
-       (await codes(c, 'race')).has(c0.race) ? c0.race : null, (await codes(c, 'character_class')).has(c0.class) ? c0.class : null]);
+       race, cls]);
     const id = rows[0].id;
     // atributos da ficha (so quando vierem no snapshot: save de cliente antigo nao apaga)
     if (c0.attributes && typeof c0.attributes === 'object') {

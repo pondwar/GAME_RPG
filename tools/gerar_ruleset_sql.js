@@ -1,4 +1,4 @@
-// gerar_ruleset_sql.js - Gera server/db/migrations/005_racas_classes.sql a partir de js/ruleset.js
+// gerar_ruleset_sql.js - Gera server/db/migrations/005_racas_classes.sql e 006_raca_classe.sql a partir de js/ruleset.js
 // (racas e classes do D&D 5e SRD) e registra os itens do jogo que ainda nao existiam em ruleset.item
 // (sem eles o servidor descartava esses itens da mochila ao salvar).
 // Uso: node tools/gerar_ruleset_sql.js
@@ -38,3 +38,21 @@ sql += `INSERT INTO ruleset.item (code, name, item_type_code, rarity_code, equip
 
 fs.writeFileSync(path.join(root, 'server', 'db', 'migrations', '005_racas_classes.sql'), sql);
 console.log('gerado server/db/migrations/005_racas_classes.sql');
+
+// 006: classes que cada raca pode seguir (regra do Suritto, ver RACE_CLASSES em js/ruleset.js)
+let sql6 = `-- 006_raca_classe.sql - Classes que cada raca pode seguir (regra do Suritto inspirada no AD&D; o D&D 5e nao restringe)
+-- GERADO por tools/gerar_ruleset_sql.js a partir de js/ruleset.js (RACE_CLASSES). O servidor recusa ficha fora desta tabela.
+
+CREATE TABLE IF NOT EXISTS ruleset.race_class (
+  race_code  text NOT NULL REFERENCES ruleset.race (code) ON UPDATE CASCADE ON DELETE CASCADE,
+  class_code text NOT NULL REFERENCES ruleset.character_class (code) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (race_code, class_code)
+);
+
+DELETE FROM ruleset.race_class;
+`;
+const pairs = [];
+for (const [r, list] of Object.entries(R.RACE_CLASSES)) for (const c of list) pairs.push(`  (${q(r)}, ${q(c)})`);
+sql6 += `INSERT INTO ruleset.race_class (race_code, class_code) VALUES\n${pairs.join(',\n')};\n`;
+fs.writeFileSync(path.join(root, 'server', 'db', 'migrations', '006_raca_classe.sql'), sql6);
+console.log('gerado server/db/migrations/006_raca_classe.sql');
