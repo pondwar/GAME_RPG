@@ -91,6 +91,8 @@ class SaveSystem {
         posX: p.x, posY: p.y, posZ: p.z || 0,
         facing: p.direction,
         playTimeSeconds: Math.floor(this.playTimeSeconds),
+        race: p.race || null, class: p.cls || null,                    // ficha (js/ruleset.js)
+        attributes: p.attributes || null,
         state: {
           torchLit: !!p.torchLit,
           hotbar: g.hotbar ? g.hotbar.slots.slice() : undefined,      // barra de atalhos 1-0 (js/hotbar.js)
@@ -121,6 +123,9 @@ class SaveSystem {
     p.hunger = num(c.hunger, p.hunger);
     p.x = num(c.posX, p.x); p.y = num(c.posY, p.y); p.z = num(c.posZ, 0);
     if (c.facing) p.direction = c.facing;
+    if (c.race) p.race = c.race;
+    if (c.class) p.cls = c.class;
+    if (c.attributes) p.attributes = { ...c.attributes };
     this.playTimeSeconds = num(c.playTimeSeconds, 0);
     inv.coins = num(c.coins, inv.coins);
     if (c.state) {

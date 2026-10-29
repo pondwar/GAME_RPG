@@ -6,7 +6,8 @@
 //   POST /api/world/chunks/merge           (junta sem apagar: primeiro envio de um navegador / importacao)
 //   GET  /api/world/settlements            PUT /api/world/settlements/:code
 //   GET  /api/world/fauna                  PUT /api/world/fauna         { regions: { "rx,ry": { plants, pop, hunger } } }
-//   GET  /api/characters/:name             PUT /api/characters/:name    (snapshot de js/save_system.js)
+//   GET  /api/characters                   (lista para a tela de escolha)
+//   GET  /api/characters/:name             PUT /api/characters/:name    (snapshot de js/save_system.js, com raca/classe/atributos)
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -76,6 +77,7 @@ async function api(req, res, url) {
   }
   let mm = /^\/api\/world\/settlements\/([a-z0-9_]+)$/.exec(p);
   if (mm && m === 'PUT') { await world.saveSettlement(REALM, mm[1], await readJson(req)); return send(res, 200, { ok: true }); }
+  if (m === 'GET' && p === '/api/characters') return send(res, 200, await chars.listCharacters(REALM));
   mm = /^\/api\/characters\/([^/]{1,40})$/.exec(p);
   if (mm) {
     const name = decodeURIComponent(mm[1]);

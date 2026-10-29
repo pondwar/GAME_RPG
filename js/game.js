@@ -189,6 +189,10 @@ class Game {
     // Save: carrega o personagem antes de gerar o mundo (o mundo nasce em volta da posicao salva)
     this.saveSystem = new SaveSystem(this);
     const loaded = this.saveSystem.load();
+    // ficha (js/ruleset.js): recem-criada ou completada na tela de criacao (js/character_creation.js), ou a do save
+    const S = window.SurittoServer;
+    if (S && S.newSheet) { this.applySheet(S.newSheet, S.newSheet.isNew); this._saveSoon = true; S.newSheet = null; }
+    else if (this.player.race) this.applySheet({ race: this.player.race, class: this.player.cls, attributes: this.player.attributes }, false);
 
     this.loadAssets();
     this.setupInputs();
@@ -200,6 +204,7 @@ class Game {
 
     this.town.init();
     this.saveSystem.startAutosave();
+    if (this._saveSoon) { this._saveSoon = false; this.saveSystem.save(); }
     if (loaded) {
       this.updateHUD();
       this.addLog('💾 Progresso carregado: personagem, skills e mochila restaurados.', 'system');
@@ -1253,6 +1258,33 @@ class Game {
     ctx.fillText(`Fogueira (${Math.round(campfire.life)}s)`, fx + 1, fy - flameH - 9);
     ctx.fillStyle = '#ffd43b';
     ctx.fillText(`Fogueira (${Math.round(campfire.life)}s)`, fx, fy - flameH - 10);
+  }
+
+  // Ficha do personagem (js/ruleset.js): raca, classe e atributos -> PV, PM, Defesa, bonus de ataque e modificadores
+  // dos testes (diceSystem.stats). isNew: personagem recem-criado (vida cheia e nasce em Elmford).
+  applySheet(sh, isNew) {
+    const Rr = window.SurittoRules, p = this.player;
+    if (!Rr || !sh || !Rr.RACES[sh.race] || !Rr.CLASSES[sh.class] || !sh.attributes) return;
+    p.race = sh.race; p.cls = sh.class; p.attributes = { ...sh.attributes };
+    const s = Rr.sheet(p.attributes, p.race, p.cls);
+    const hpR = p.maxHp ? p.hp / p.maxHp : 1, mpR = p.maxMana ? p.mana / p.maxMana : 1;
+    p.maxHp = s.maxHp; p.maxMana = s.maxMana; p.defense = s.defense; p.attackBonus = s.attack; p.initiative = s.initiative;
+    p.hp = isNew ? s.maxHp : Math.max(1, Math.round(s.maxHp * hpR));
+    p.mana = isNew ? s.maxMana : Math.round(s.maxMana * mpR);
+    const ds = window.diceSystem && window.diceSystem.stats;
+    if (ds) for (const a of Rr.ATTRS) ds[a.code] = Rr.mod(p.attributes[a.code] || 10);
+    if (isNew) {
+      // nasce na rua principal de Elmford (vila inicial)
+      const t = window.SURITTO_TOWNS && window.SURITTO_TOWNS.vila_inicial;
+      if (t) { p.x = t.center.x + 54 * 12; p.y = t.center.y + 27 * 12; p.z = 0; }
+      p.hunger = 85;
+    }
+    const name = (window.SurittoServer && window.SurittoServer.charName) || p.name || 'Aventureiro';
+    p.name = name;
+    const nEl = document.querySelector('.player-name'), tEl = document.querySelector('.player-title');
+    if (nEl) nEl.textContent = name;
+    if (tEl) tEl.textContent = `${Rr.RACES[p.race].name} ${Rr.CLASSES[p.cls].name}`;
+    this.updateHUD();
   }
 
   // Barra de atalhos 1-0 (js/hotbar.js): cada slot guarda o item que o jogador arrastar para la
@@ -3311,5 +3343,6 @@ class Game {
 // Antes de criar o jogo, tenta o servidor local (js/net.js): com ele no ar, mundo e personagem vem do banco
 window.addEventListener('DOMContentLoaded', async () => {
   if (window.SurittoServer) await window.SurittoServer.connect();
+  if (window.CharacterScreen) await window.CharacterScreen.run();     // escolher / criar personagem (js/character_creation.js)
   window.game = new Game();
 });
