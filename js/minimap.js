@@ -660,6 +660,17 @@ class MinimapSystem {
       }
     }
 
+    if (this.game.critters) {
+      const COL = { rabbit: '#e9ecef', fox: '#ff922b', boar: '#a9744f', bear: '#9c36b5' };
+      for (const c of this.game.critters) {
+        if (!COL[c.kind]) continue;
+        const dx = this.game.world.wrapDelta(c.x - this.game.player.x), dy = c.y - this.game.player.y;
+        if (Math.hypot(dx, dy) >= viewRange) continue;
+        ctx.fillStyle = COL[c.kind]; ctx.beginPath();
+        ctx.arc(cx + (dx / viewRange) * (radius - 8), cy + (dy / viewRange) * (radius - 8), c.kind === 'bear' ? 3 : 1.6, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
     if (this.game.wolves) {
       ctx.fillStyle = '#ff6b6b';
       for (const w of this.game.wolves) {

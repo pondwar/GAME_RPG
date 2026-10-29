@@ -203,6 +203,78 @@ class InventorySystem {
         desc: 'Dente pontiagudo e afiado retirado de um lobo abatido.',
         stats: 'Material de Amuleto • Valor: 5 Moedas'
       },
+      berries: {
+        id: 'berries',
+        name: 'Frutinhas Silvestres',
+        type: 'consumable',
+        rarity: 'common',
+        icon: '🫐',
+        maxStack: 30,
+        desc: 'Amoras e mirtilos colhidos dos arbustos da mata. Os ursos e javalis disputam cada galho.',
+        stats: '+8 HP, +12% Nutrição',
+        useEffect: (g) => {
+          g.player.hp = Math.min(g.player.maxHp, g.player.hp + 8);
+          g.player.hunger = Math.min(100, g.player.hunger + 12);
+          if (window.sounds) window.sounds.playHarvest();
+          g.addLog(`🫐 Você comeu um punhado de Frutinhas Silvestres! (+8 HP, +12% Nutrição)`, 'action');
+        }
+      },
+      mushroom: {
+        id: 'mushroom',
+        name: 'Cogumelo da Mata',
+        type: 'consumable',
+        rarity: 'common',
+        icon: '🍄',
+        maxStack: 20,
+        desc: 'Cogumelo carnudo da mata fechada, a comida preferida dos javalis. Melhor assado.',
+        stats: '+5 HP, +15% Nutrição',
+        useEffect: (g) => {
+          g.player.hp = Math.min(g.player.maxHp, g.player.hp + 5);
+          g.player.hunger = Math.min(100, g.player.hunger + 15);
+          if (window.sounds) window.sounds.playHarvest();
+          g.addLog(`🍄 Você comeu um Cogumelo da Mata! (+5 HP, +15% Nutrição)`, 'action');
+        }
+      },
+      rabbit_fur: {
+        id: 'rabbit_fur',
+        name: 'Pelo de Coelho',
+        type: 'material',
+        rarity: 'common',
+        icon: '🐇',
+        maxStack: 20,
+        desc: 'Pelo macio e quente. Bom para forrar luvas e capuzes.',
+        stats: 'Material de Costura • Valor: 4 Moedas'
+      },
+      fox_pelt: {
+        id: 'fox_pelt',
+        name: 'Pele de Raposa',
+        type: 'material',
+        rarity: 'uncommon',
+        icon: '🦊',
+        maxStack: 10,
+        desc: 'Pele avermelhada de raposa, muito procurada pelos peleteiros das vilas.',
+        stats: 'Material de Costura • Valor: 18 Moedas'
+      },
+      boar_tusk: {
+        id: 'boar_tusk',
+        name: 'Presa de Javali',
+        type: 'material',
+        rarity: 'uncommon',
+        icon: '🐗',
+        maxStack: 20,
+        desc: 'Presa curva e afiada de um javali adulto. Usada em amuletos de caçador.',
+        stats: 'Material de Amuleto • Valor: 10 Moedas'
+      },
+      bear_pelt: {
+        id: 'bear_pelt',
+        name: 'Pele de Urso',
+        type: 'material',
+        rarity: 'rare',
+        icon: '🐻',
+        maxStack: 5,
+        desc: 'Pele pesada do senhor da mata. Prova de coragem e o melhor isolante contra o frio.',
+        stats: 'Material Épico • Valor: 80 Moedas'
+      },
       deer_hide: {
         id: 'deer_hide',
         name: 'Couro de Cervo Silvestre',

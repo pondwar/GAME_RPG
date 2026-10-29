@@ -96,3 +96,29 @@ export async function saveResourceNodes(client, rid, nodes) {
       [rid, String(n.nodeId), JSON.stringify(n.state)]);
   }
 }
+
+// Ecossistema por regiao (js/fauna.js): { "rx,ry": state }
+export async function listFauna(realm) {
+  const rid = await realmId(realm);
+  const { rows } = await pool.query('SELECT rx, ry, state FROM world.fauna_region WHERE realm_id = $1', [rid]);
+  const out = {};
+  for (const r of rows) out[`${r.rx},${r.ry}`] = r.state;
+  return out;
+}
+
+// Grava varias regioes de uma vez (upsert de todas num comando so)
+export async function saveFauna(realm, regions) {
+  const rid = await realmId(realm);
+  const clean = {};
+  for (const [id, state] of Object.entries(regions || {})) {
+    if (!/^-?\d+,-?\d+$/.test(id) || !state || typeof state !== 'object') continue;
+    clean[id] = state;
+  }
+  if (!Object.keys(clean).length) return { written: 0 };
+  const r = await pool.query(
+    `INSERT INTO world.fauna_region (realm_id, rx, ry, state)
+     SELECT $1, split_part(key, ',', 1)::int, split_part(key, ',', 2)::int, value FROM jsonb_each($2::jsonb)
+     ON CONFLICT (realm_id, rx, ry) DO UPDATE SET state = EXCLUDED.state`,
+    [rid, JSON.stringify(clean)]);
+  return { written: r.rowCount };
+}

@@ -5,6 +5,7 @@
 //   GET  /api/world/chunks                 PUT /api/world/chunks        { chunks: { "cx,cy": [[chave, bloco]...] } }
 //   POST /api/world/chunks/merge           (junta sem apagar: primeiro envio de um navegador / importacao)
 //   GET  /api/world/settlements            PUT /api/world/settlements/:code
+//   GET  /api/world/fauna                  PUT /api/world/fauna         { regions: { "rx,ry": { plants, pop, hunger } } }
 //   GET  /api/characters/:name             PUT /api/characters/:name    (snapshot de js/save_system.js)
 import http from 'node:http';
 import fs from 'node:fs';
@@ -69,6 +70,10 @@ async function api(req, res, url) {
     const b = await readJson(req); return send(res, 200, { ok: true, ...(await world.mergeChunks(REALM, b.chunks || {})) });
   }
   if (m === 'GET' && p === '/api/world/settlements') return send(res, 200, await world.listSettlements(REALM));
+  if (p === '/api/world/fauna') {                                   // ecossistema por regiao (js/fauna.js)
+    if (m === 'GET') return send(res, 200, { regions: await world.listFauna(REALM) });
+    if (m === 'PUT') { const b = await readJson(req); return send(res, 200, { ok: true, ...(await world.saveFauna(REALM, b.regions || {})) }); }
+  }
   let mm = /^\/api\/world\/settlements\/([a-z0-9_]+)$/.exec(p);
   if (mm && m === 'PUT') { await world.saveSettlement(REALM, mm[1], await readJson(req)); return send(res, 200, { ok: true }); }
   mm = /^\/api\/characters\/([^/]{1,40})$/.exec(p);

@@ -112,6 +112,7 @@ class Game {
     this.fruitsOnGround = [];
     this.deers = [];
     this.wolves = [];
+    this.critters = [];          // coelhos, raposas, javalis, ursos e corvos (js/fauna.js)
     this.carcasses = [];
     this.campfires = [];
     this.particles = [];
@@ -835,6 +836,45 @@ class Game {
         return;
       }
     }
+
+    // Bichos novos da fauna (coelho, raposa, javali, urso, corvo)
+    const LOOT = { rabbit: [['meat', 1], ['rabbit_fur', 1]], fox: [['fox_pelt', 1]], boar: [['meat', 3], ['boar_tusk', 2]], bear: [['meat', 4], ['bear_pelt', 1]], crow: [] };
+    const XP = { rabbit: 10, fox: 20, boar: 35, bear: 80, crow: 2 };
+    for (let i = this.critters.length - 1; i >= 0; i--) {
+      const c = this.critters[i];
+      const cdx = this.world ? this.world.wrapDelta(this.player.x - c.x) : (this.player.x - c.x);
+      if (Math.hypot(cdx, this.player.y - c.y + (c.z || 0)) > (c.kind === 'bear' ? 95 : 75)) continue;
+      const name = (window.CritterArt && window.CritterArt.names[c.kind]) || c.kind;
+      const d20 = Math.floor(Math.random() * 20) + 1, isCrit = d20 === 20;
+      const tough = { rabbit: 8, fox: 10, boar: 11, bear: 13, crow: 12 }[c.kind] || 10;
+      if (!(d20 + window.diceSystem.stats.forca + (isFiery ? 4 : 2) >= tough || isCrit)) {
+        this.spawnDamageText(c.x, c.y - 30, 'ESQUIVOU!', '#adb5bd', 13);
+        if (c.kind !== 'crow') { c.act = c.kind === 'bear' ? 'charge' : 'flee'; c.chargeT = 2.5; c.fleeTimer = 4; c.threatSource = this.player; }
+        return;
+      }
+      const dmg = isCrit ? Math.round(finalDamage * 1.5) : finalDamage;
+      c.hp -= dmg;
+      this.spawnDamageText(c.x, c.y - 35, `${isCrit ? '★ CRÍTICO! ' : ''}-${dmg}`, isCrit ? '#ffd43b' : '#ffffff', isCrit ? 20 : 15);
+      if (c.hp <= 0) {
+        this.critters.splice(i, 1);
+        if (c.kind !== 'crow') {
+          this.spawnCarcass(c.x, c.y);
+          const k = this.carcasses[this.carcasses.length - 1]; if (k) { k.kind = c.kind; k.scale = c.kind === 'rabbit' ? 0.4 : c.kind === 'fox' ? 0.55 : c.kind === 'bear' ? 1.35 : 0.85; }
+        }
+        for (const [id, n] of LOOT[c.kind] || []) this.inventory.addItem(id, n);
+        if (this.skills) { this.skills.addXP('hunter', XP[c.kind] || 10); this.skills.addXP('attack', Math.round((XP[c.kind] || 10) / 2)); }
+        if (window.sounds) window.sounds.playCritSuccess();
+        const got = (LOOT[c.kind] || []).map(([id, n]) => `+${n} ${this.inventory.itemDB[id] ? this.inventory.itemDB[id].name : id}`).join(', ');
+        this.addLog(`🏹 Você abateu: ${name}!${got ? ` (${got})` : ''}`, 'action');
+      } else {
+        // reacao: urso e javali revidam, os outros fogem
+        if (c.kind === 'bear' || c.kind === 'boar') { c.act = 'charge'; c.chargeT = 2.5; c.chargeCd = 0; c.threatSource = this.player; }
+        else { c.act = 'flee'; c.fleeTimer = 5; c.threatSource = this.player; if (c.kind === 'crow') c.mode = 'scared'; }
+        this.addLog(`⚔️ Golpe no ${name} (-${dmg})!${c.kind === 'bear' ? ' Ele está furioso!' : ''}`, 'action');
+      }
+      this.updateHUD();
+      return;
+    }
   }
 
   spawnDamageText(x, y, text, color = '#ff6b6b', size = 16) {
@@ -1466,6 +1506,15 @@ class Game {
       }
     }
 
+    // Bichos novos da fauna
+    if (!hovered) {
+      for (const c of this.critters) {
+        const dx = this.world ? this.world.wrapDelta(this.mouse.worldX - c.x) : (this.mouse.worldX - c.x);
+        const y0 = c.y - (c.z || 0);
+        if (Math.abs(dx) <= Math.max(16, c.width / 2) && this.mouse.worldY >= y0 - c.height && this.mouse.worldY <= y0 + 8) { hovered = { type: 'critter', entity: c }; break; }
+      }
+    }
+
     // Check Carcasses
     if (!hovered) {
       for (const carcass of this.carcasses) {
@@ -1528,6 +1577,15 @@ class Game {
 
       this.targetName.innerText = `Cervo Silvestre (Herbívaro)`;
       this.targetDesc.innerText = `Estado: ${estadoTxt}. Animal arisco e sensível ao som de passos.`;
+    } else if (hovered && hovered.type === 'critter') {
+      this.targetCard.style.display = 'block';
+      this.targetCard.style.left = `${this.mouse.x + 18}px`;
+      this.targetCard.style.top = `${this.mouse.y - 10}px`;
+      const c = hovered.entity, name = (window.CritterArt && window.CritterArt.names[c.kind]) || c.kind;
+      const acts = { flee: 'Fugindo!', charge: 'INVESTINDO!', hunt: 'Caçando!', stalk: 'Espreitando a presa', rest: 'Descansando, saciado', graze: 'Pastando', forage: 'Procurando comida', scavenge: 'Comendo uma carcaça', roam: 'Andando pela mata' };
+      const info = { rabbit: 'Presa rápida, foge de tudo. Comida das raposas.', fox: 'Caça coelhos e come carcaças. Foge de lobos, ursos e gente.', boar: 'Come cogumelos e frutinhas. Se acuado, INVESTE com as presas!', bear: 'O senhor da mata. Ataca quem invade o território. O fogo o mantém longe.', crow: 'Come carcaças e acelera a decomposição. Voa quando você chega perto.' };
+      this.targetName.innerText = `${name}${c.maxHp > 2 ? ` [HP: ${Math.max(0, Math.round(c.hp))}/${c.maxHp}]` : ''}`;
+      this.targetDesc.innerText = `${c.kind === 'crow' ? (c.z > 4 ? 'Voando' : 'Comendo a carcaça') : (acts[c.act] || 'Andando pela mata')}. ${info[c.kind] || ''}`;
     } else if (hovered && hovered.type === 'tree') {
       this.targetCard.style.display = 'block';
       this.targetCard.style.left = `${this.mouse.x + 18}px`;
@@ -1592,6 +1650,24 @@ class Game {
           this.addLog(`Apenas ossos secos calcinados. A terra já absorveu os nutrientes.`, 'tip');
           return;
         }
+      }
+    }
+
+    // 0. Arbusto de frutinhas / cogumelos (js/fauna.js): colhe se tiver
+    if (this.fauna) {
+      for (const p of this.fauna.plants) {
+        const pdx = this.world ? this.world.wrapDelta(this.player.x - p.x) : (this.player.x - p.x);
+        if (Math.hypot(pdx, this.player.y - p.y) > 65) continue;
+        const lvl = this.fauna.plantLevel(p);
+        if (lvl < 0.2) { this.addLog(p.kind === 'bush' ? '🌿 Este arbusto já foi colhido pelos bichos. As frutinhas voltam com o tempo.' : '🍂 Só restaram talos. Os cogumelos voltam a brotar depois.', 'tip'); return; }
+        const got = this.fauna.takePlant(p, 0.12);
+        const n = p.kind === 'bush' ? Math.max(1, Math.round(4 * got)) : Math.max(1, Math.round(3 * got));
+        this.inventory.addItem(p.kind === 'bush' ? 'berries' : 'mushroom', n);
+        if (this.skills) this.skills.addXP('hunter', 3);
+        if (window.sounds) window.sounds.playHarvest();
+        this.addLog(p.kind === 'bush' ? `🫐 Você colheu ${n} punhado(s) de frutinhas do arbusto.` : `🍄 Você colheu ${n} cogumelo(s).`, 'action');
+        this.updateHUD();
+        return;
       }
     }
 
@@ -2144,7 +2220,8 @@ class Game {
       c.timer += dt;
       if (c.stage === 0 && c.timer > 60) {
         c.stage = 1; // decay into exposed ribcage
-        this.addLog(`🦴 Uma carcaça na floresta começou a entrar em decomposição.`, 'tip');
+        const near = Math.hypot(this.world ? this.world.wrapDelta(c.x - this.player.x) : c.x - this.player.x, c.y - this.player.y) < 700;
+        if (near) this.addLog(`🦴 Uma carcaça na floresta começou a entrar em decomposição.`, 'tip');
       } else if (c.stage === 1 && c.timer > 150) {
         c.stage = 2; // dried skeleton bones
       } else if (c.stage === 2 && c.timer > 300) {
@@ -2195,6 +2272,14 @@ class Game {
           else text = 'Esqueleto de Ossos Secos';
           break;
         }
+      }
+    }
+
+    // Arbusto / cogumelos
+    if (!showPrompt && this.fauna) {
+      for (const p of this.fauna.plants) {
+        const pdx = this.world ? this.world.wrapDelta(this.player.x - p.x) : (this.player.x - p.x);
+        if (Math.hypot(pdx, this.player.y - p.y) < 65 && this.fauna.plantLevel(p) >= 0.2) { showPrompt = true; text = p.kind === 'bush' ? 'Colher Frutinhas' : 'Colher Cogumelos'; break; }
       }
     }
 
@@ -2389,6 +2474,18 @@ class Game {
         y: deer.y,
         draw: () => this.drawDeer(ctx, deer, screenCenterX, screenCenterY)
       });
+    }
+
+    // Bichos novos e plantas da fauna (js/fauna.js, desenho em js/critters_draw.js)
+    if (window.CritterArt) {
+      for (const c of this.critters) {
+        renderList.push({ type: 'critter', x: relX(c.x), y: c.y + (c.z > 4 ? 40 : 0), draw: () => window.CritterArt.draw(ctx, c, Math.round(relX(c.x) + screenCenterX), Math.round(c.y - this.camera.y + screenCenterY)) });
+      }
+      if (this.fauna) for (const p of this.fauna.plants) {
+        const px = relX(p.x);
+        if (Math.abs(px) > 900 || Math.abs(p.y - this.camera.y) > 700) continue;
+        renderList.push({ type: 'plant', x: px, y: p.y, draw: () => window.CritterArt.plant(ctx, p, Math.round(px + screenCenterX), Math.round(p.y - this.camera.y + screenCenterY), this.fauna.plantLevel(p)) });
+      }
     }
 
     // Wolves
@@ -3061,7 +3158,7 @@ class Game {
 
     const frame = this.images.carcass[carcass.stage];
     if (frame && frame.complete && frame.naturalWidth > 0) {
-      const targetH = 38;
+      const targetH = 38 * (carcass.scale || 1);
       const targetW = (frame.naturalWidth / frame.naturalHeight) * targetH;
       ctx.drawImage(frame, cx - targetW / 2, cy - targetH + 10, targetW, targetH);
     } else {

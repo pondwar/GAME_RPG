@@ -13,6 +13,7 @@
     chunks: [],                     // [{ id: "cx,cy", blocks: [[chave, bloco]...] }]
     settlements: {},                // code -> { name, signature, ... }
     character: null,                // snapshot do personagem (ou null se ainda nao existe no banco)
+    fauna: null,                    // { "rx,ry": { plants, pop, hunger } } do ecossistema (js/fauna.js); null = servidor sem a rota (antigo)
 
     // Chamado antes de criar o Game: descobre se o servidor esta no ar e ja traz o mundo e o personagem
     async connect() {
@@ -28,6 +29,8 @@
         this.chunks = w.chunks || [];
         for (const row of s) this.settlements[row.code] = row;
         this.character = c;
+        // ecossistema: servidor antigo (sem a rota) nao impede o jogo de abrir, a fauna fica no navegador
+        try { const f = await withTimeout(fetch('/api/world/fauna', { cache: 'no-store' }).then(json), TIMEOUT); this.fauna = f.regions || {}; } catch (e) { this.fauna = null; }
         this.online = true;
         console.info(`[Servidor] conectado (realm "${this.realm}"): ${this.chunks.length} chunks, ${s.length} vila(s), personagem ${c ? 'carregado' : 'novo'}.`);
       } catch (e) {
@@ -46,7 +49,9 @@
     saveChunks(chunks, keepalive) { return this._send('PUT', '/api/world/chunks', { chunks }, keepalive); },
     mergeChunks(chunks) { return this._send('POST', '/api/world/chunks/merge', { chunks }); },
     saveSettlement(code, data) { this.settlements[code] = { ...(this.settlements[code] || {}), ...data }; return this._send('PUT', '/api/world/settlements/' + code, data); },
-    saveCharacter(snapshot, keepalive) { return this._send('PUT', '/api/characters/' + encodeURIComponent(this.charName), snapshot, keepalive); }
+    saveCharacter(snapshot, keepalive) { return this._send('PUT', '/api/characters/' + encodeURIComponent(this.charName), snapshot, keepalive); },
+    // regions: { "rx,ry": { plants, pop, hunger } }
+    saveFauna(regions, keepalive) { return this._send('PUT', '/api/world/fauna', { regions }, keepalive); }
   };
 
   window.SurittoServer = SurittoServer;
