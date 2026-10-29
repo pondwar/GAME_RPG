@@ -93,6 +93,7 @@ class SaveSystem {
         playTimeSeconds: Math.floor(this.playTimeSeconds),
         state: {
           torchLit: !!p.torchLit,
+          hotbar: g.hotbar ? g.hotbar.slots.slice() : undefined,      // barra de atalhos 1-0 (js/hotbar.js)
           strengthBuffTimer: p.strengthBuffTimer || 0
         }
       },
@@ -125,6 +126,7 @@ class SaveSystem {
     if (c.state) {
       p.strengthBuffTimer = num(c.state.strengthBuffTimer, 0);
       p.torchLit = !!c.state.torchLit;
+      if (this.game.hotbar && c.state.hotbar) this.game.hotbar.load(c.state.hotbar);
     }
 
     for (const s of snap.skills || []) {

@@ -2894,3 +2894,26 @@ html, body {
 .arch-card-cost { display:block; font-size:10px; line-height:1.2; color:#ffe066; text-align:center; margin-top:1px; }
 .arch-item-card.arch-nomat { opacity:.55; }
 .arch-item-card.arch-nomat .arch-card-cost { color:#ff8787; }
+
+/* ========================================================
+   BARRA DE ATALHOS E MOCHILA: arrastar e soltar (js/hotbar.js, js/inventory.js)
+   ======================================================== */
+.slot.empty .slot-icon { opacity: 0; }
+.slot.empty { background: #101217; border-style: dashed; }
+.slot.dim .slot-icon { opacity: 0.32; filter: grayscale(0.8); }
+.slot.dim .slot-count { color: #ff8787; }
+.slot.equipped { border-color: #f0c05a; box-shadow: 0 0 6px rgba(240, 192, 90, 0.55), inset 0 0 8px rgba(240, 192, 90, 0.25); }
+.slot.drop-target, .inv-slot.drop-target, .equip-slot.drop-target { border-color: #74c0fc !important; box-shadow: 0 0 10px rgba(116, 192, 252, 0.7) !important; }
+.inv-slot.dragging { opacity: 0.4; }
+.slot-hotkey {
+  position: absolute; top: 2px; left: 3px; min-width: 12px; height: 12px; padding: 0 2px;
+  font-size: 9px; font-weight: 700; line-height: 12px; text-align: center;
+  color: #1a1206; background: #f0c05a; border-radius: 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+.inv-sort-btn {
+  background: #2a2216; color: #f0c05a; border: 1px solid #6b5426; border-radius: 4px;
+  font-size: 11px; padding: 2px 8px; cursor: pointer;
+}
+.inv-sort-btn:hover { background: #3a2f1e; }
+.inv-help { font-size: 10px; color: #868e96; margin: 2px 0 6px; }
+.preview-hotkey { font-size: 10px; color: #f0c05a; margin-left: 6px; }

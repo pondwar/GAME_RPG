@@ -163,6 +163,7 @@ class Game {
 
     // Inventory System (20 Fixed Grid Slots + Paperdoll Equipment)
     this.inventory = new InventorySystem(this);
+    this.hotbar = new Hotbar(this);           // antes do save: o save restaura os atalhos do personagem
 
     // Hybrid Skills & D20 Codex System (RuneScape 1-99 + Tormenta20 / D&D)
     this.skills = new SkillsSystem(this);
@@ -1254,105 +1255,14 @@ class Game {
     ctx.fillText(`Fogueira (${Math.round(campfire.life)}s)`, fx, fy - flameH - 10);
   }
 
+  // Barra de atalhos 1-0 (js/hotbar.js): cada slot guarda o item que o jogador arrastar para la
   setupHotbar() {
-    const slots = document.querySelectorAll('.hotbar .slot');
-    slots.forEach(slot => {
-      slot.addEventListener('click', () => {
-        const slotKey = slot.getAttribute('data-slot');
-        this.useHotbarSlot(slotKey);
-      });
-    });
+    if (!this.hotbar) this.hotbar = new Hotbar(this);
+    this.hotbar.render();
   }
 
   useHotbarSlot(key) {
-    document.querySelectorAll('.hotbar .slot').forEach(s => s.classList.remove('active'));
-    const activeSlot = document.querySelector(`.hotbar .slot[data-slot="${key}"]`);
-    if (activeSlot) activeSlot.classList.add('active');
-
-    if (key === '1') {
-      // Eat Fruit
-      const idx = this.inventory.slots.findIndex(s => s && s.id === 'fruit');
-      if (idx !== -1) {
-        this.inventory.useItem(idx);
-      } else {
-        this.addLog(`Você não tem Frutos Silvestres. Encontre uma árvore e aperte [F]!`, 'warning');
-      }
-    } else if (key === '2') {
-      // Minor Healing Potion
-      const idx = this.inventory.slots.findIndex(s => s && s.id === 'potion_heal');
-      if (idx !== -1) {
-        this.inventory.useItem(idx);
-      } else {
-        this.addLog(`Você não tem Poções de Cura Menor na mochila!`, 'warning');
-      }
-    } else if (key === '3') {
-      // Mana Potion
-      const idx = this.inventory.slots.findIndex(s => s && s.id === 'potion_mana');
-      if (idx !== -1) {
-        this.inventory.useItem(idx);
-      } else {
-        this.addLog(`Você não tem Elixir de Mana na mochila!`, 'warning');
-      }
-    } else if (key === '4') {
-      // Equip/Toggle Lumberjack Axe
-      if (this.inventory.equipment.weapon === 'axe') {
-        this.inventory.unequipItem('weapon');
-      } else {
-        const idx = this.inventory.slots.findIndex(s => s && s.id === 'axe');
-        if (idx !== -1) this.inventory.useItem(idx);
-        else this.addLog(`Você não tem um Machado de Lenhador na mochila.`, 'warning');
-      }
-    } else if (key === '5') {
-      // Toggle Torch
-      this.player.torchLit = !this.player.torchLit;
-      this.inventory.equipment.offhand = this.player.torchLit ? 'torch' : null;
-      this.inventory.renderUI();
-      if (this.player.torchLit) {
-        if (window.sounds) window.sounds.playRustle();
-        this.addLog(`🔥 Você acendeu a Tocha de Resina! A luz afasta o breu da noite.`, 'action');
-      } else {
-        this.addLog(`💨 Você apagou a tocha para se ocultar nas sombras.`, 'tip');
-      }
-    } else if (key === '6') {
-      // Lineage 2 Weapon Enchant Scroll (D20 Risk!)
-      const idx = this.inventory.slots.findIndex(s => s && s.id === 'scroll_enchant');
-      if (idx !== -1) {
-        this.inventory.useItem(idx);
-      } else {
-        this.addLog(`Você não possui Pergaminhos de Encantamento na mochila!`, 'warning');
-      }
-    } else if (key === '7') {
-      // Equip Steel Sword
-      if (this.inventory.equipment.weapon === 'sword') {
-        this.inventory.unequipItem('weapon');
-      } else {
-        const idx = this.inventory.slots.findIndex(s => s && s.id === 'sword');
-        if (idx !== -1) this.inventory.useItem(idx);
-        else this.addLog(`Você não tem uma Espada de Aço na mochila.`, 'warning');
-      }
-    } else if (key === '8') {
-      // Equip Fire Sword +16
-      if (this.inventory.equipment.weapon === 'fire_sword') {
-        this.inventory.unequipItem('weapon');
-      } else {
-        const idx = this.inventory.slots.findIndex(s => s && s.id === 'fire_sword');
-        if (idx !== -1) this.inventory.useItem(idx);
-        else this.addLog(`Você não tem a Lâmina Flamejante. Ela nasce de uma Espada de Aço com o Pergaminho de Encantamento [6].`, 'warning');
-      }
-    } else if (key === '9') {
-      // Eat Fresh Meat
-      const idx = this.inventory.slots.findIndex(s => s && s.id === 'meat');
-      if (idx !== -1) {
-        this.inventory.useItem(idx);
-      } else {
-        this.addLog(`Você não tem Carne de Caça na mochila. Abata um cervo ou esfolie uma carcaça!`, 'warning');
-      }
-    } else if (key === '0') {
-      // Roll D20
-      window.diceSystem.rollD20('Iniciativa de Ação', 2, 12);
-    } else {
-      this.addLog(`Slot [${key}] selecionado.`, 'tip');
-    }
+    if (this.hotbar) this.hotbar.use(key);
   }
 
   setupMobileControls() {
@@ -3308,11 +3218,7 @@ class Game {
       }
     }
 
-    const countSlot1 = document.getElementById('count-slot-1');
-    if (countSlot1) countSlot1.innerText = this.player.inventory.fruit;
-
-    const countMeat = document.getElementById('count-meat');
-    if (countMeat) countMeat.innerText = this.player.inventory.meat || 0;
+    if (this.hotbar) this.hotbar.render();
 
     // World Stats
     if (this.treeCountEl) {

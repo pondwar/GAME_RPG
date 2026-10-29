@@ -425,8 +425,9 @@ class InventorySystem {
           <div class="inv-grid-col">
             <div class="grid-header">
               <span>Compartimentos da Mochila (20 Slots)</span>
-              <span class="inv-shortcut-hint">Pressione [ I ] ou [ B ]</span>
+              <button class="inv-sort-btn" id="btn-inv-sort" title="Junta pilhas iguais e agrupa por tipo">⇅ Organizar</button>
             </div>
+            <div class="inv-help">Arraste para mover • Arraste para a barra 1–0 = atalho • Botão direito = usar/equipar • Shift+clique = dividir pilha</div>
             <div class="inv-grid" id="inv-grid">
               <!-- 20 slots dynamically injected -->
             </div>
@@ -502,12 +503,24 @@ class InventorySystem {
       });
     }
 
-    // Equipment slot clicks (unequip)
+    const sortBtn = document.getElementById('btn-inv-sort');
+    if (sortBtn) sortBtn.addEventListener('click', () => this.sortItems());
+
+    // Equipment slot clicks (unequip); arrastar da mochila equipa, arrastar para a mochila guarda
     const equipSlots = document.querySelectorAll('.equip-slot');
     equipSlots.forEach(el => {
-      el.addEventListener('click', () => {
-        const type = el.getAttribute('data-type');
-        this.unequipItem(type);
+      const type = el.getAttribute('data-type');
+      el.addEventListener('click', () => this.unequipItem(type));
+      el.draggable = true;
+      el.addEventListener('dragstart', (e) => { if (!this.equipment[type]) { e.preventDefault(); return; } e.dataTransfer.setData('text/suritto', JSON.stringify({ from: 'equip', type })); });
+      el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('drop-target'); });
+      el.addEventListener('dragleave', () => el.classList.remove('drop-target'));
+      el.addEventListener('drop', (e) => {
+        e.preventDefault(); el.classList.remove('drop-target');
+        const d = this._drag(e); if (!d || d.from !== 'bag') return;
+        const item = this.itemDB[this.slots[d.idx] && this.slots[d.idx].id];
+        if (!item || item.equipType !== type) { this.game.addLog(`Esse item não vai nesse lugar.`, 'warning'); return; }
+        this.useItem(d.idx);
       });
     });
   }
@@ -632,6 +645,48 @@ class InventorySystem {
 
   // Equipa sem passar pela mochila. A arma que estava na mao volta para a mochila (antes sumia),
   // a menos que consumeOld (ex.: o encantamento transforma a espada na lamina flamejante).
+  _drag(e) { try { return JSON.parse(e.dataTransfer.getData('text/suritto') || 'null'); } catch (err) { return null; } }
+
+  // Move um compartimento para outro: junta pilhas do mesmo item (ate o maximo), senao troca de lugar
+  moveSlot(from, to) {
+    if (from === to) return;
+    const a = this.slots[from], b = this.slots[to]; if (!a) return;
+    if (b && b.id === a.id) {
+      const max = this.itemDB[a.id].maxStack || 1, add = Math.min(max - b.count, a.count);
+      b.count += add; a.count -= add; if (a.count <= 0) this.slots[from] = null;
+    } else { this.slots[to] = a; this.slots[from] = b || null; }
+    if (this.selectedSlot === from) this.selectedSlot = to;
+    if (window.sounds) window.sounds.playUIClick?.();
+    this.syncGamePlayerInventory(); this.renderUI();
+  }
+
+  // Divide uma pilha ao meio num compartimento vazio
+  splitSlot(idx) {
+    const s = this.slots[idx]; if (!s || s.count < 2) return;
+    const empty = this.slots.findIndex(x => x === null);
+    if (empty === -1) { this.game.addLog(`Mochila cheia: não há compartimento livre para dividir a pilha.`, 'warning'); return; }
+    const half = Math.floor(s.count / 2); s.count -= half; this.slots[empty] = { id: s.id, count: half };
+    this.renderUI();
+  }
+
+  // Junta pilhas iguais e ordena: armas e luz, consumiveis, materiais (e por nome)
+  sortItems() {
+    const total = {};
+    for (const s of this.slots) if (s) total[s.id] = (total[s.id] || 0) + s.count;
+    const order = { weapon: 0, offhand: 1, consumable: 2, material: 3 };
+    const ids = Object.keys(total).sort((x, y) => {
+      const a = this.itemDB[x], b = this.itemDB[y];
+      return ((order[a.type] ?? 9) - (order[b.type] ?? 9)) || a.name.localeCompare(b.name, 'pt-BR');
+    });
+    const out = [];
+    for (const id of ids) { let n = total[id]; const max = this.itemDB[id].maxStack || 1; while (n > 0) { const c = Math.min(max, n); out.push({ id, count: c }); n -= c; } }
+    this.slots = new Array(this.maxSlots).fill(null).map((_, i) => out[i] || null);
+    this.selectedSlot = null;
+    if (window.sounds) window.sounds.playRustle();
+    this.game.addLog(`🎒 Mochila organizada.`, 'tip');
+    this.syncGamePlayerInventory(); this.renderUI();
+  }
+
   equipItemDirect(equipType, itemId, consumeOld = false) {
     const old = this.equipment[equipType];
     if (old && old !== itemId && !consumeOld && this.itemDB[old] && !this.addItem(old, 1)) {
@@ -727,10 +782,20 @@ class InventorySystem {
         const item = this.itemDB[slot.id];
         slotEl.classList.add(`rarity-${item.rarity}`);
 
+        const hk = this.game.hotbar && this.game.hotbar.keyOf(slot.id);
         slotEl.innerHTML = `
           <span class="slot-item-icon">${item.icon}</span>
           ${slot.count > 1 ? `<span class="slot-item-badge">x${slot.count}</span>` : ''}
+          ${hk ? `<span class="slot-hotkey" title="No atalho [${hk}]">${hk}</span>` : ''}
         `;
+        slotEl.draggable = true;
+        slotEl.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/suritto', JSON.stringify({ from: 'bag', idx: i, id: slot.id }));
+          e.dataTransfer.effectAllowed = 'move';
+          slotEl.classList.add('dragging');
+        });
+        slotEl.addEventListener('dragend', () => slotEl.classList.remove('dragging'));
+        slotEl.addEventListener('mouseenter', () => { if (this.selectedSlot === null) this.showPreview(i); });
       } else {
         slotEl.classList.add('empty');
       }
@@ -739,10 +804,22 @@ class InventorySystem {
         slotEl.classList.add('selected');
       }
 
-      // Slot Click
-      slotEl.addEventListener('click', () => {
+      // Slot Click (Shift+clique divide a pilha)
+      slotEl.addEventListener('click', (e) => {
+        if (e.shiftKey && slot) { this.splitSlot(i); return; }
         this.selectedSlot = i;
         this.renderUI();
+      });
+      // Botao direito: usa / equipa (como no WoW)
+      slotEl.addEventListener('contextmenu', (e) => { e.preventDefault(); if (slot) this.useItem(i); });
+      // Soltar aqui: item de outro compartimento, ou o item que estava equipado (guarda)
+      slotEl.addEventListener('dragover', (e) => { e.preventDefault(); slotEl.classList.add('drop-target'); });
+      slotEl.addEventListener('dragleave', () => slotEl.classList.remove('drop-target'));
+      slotEl.addEventListener('drop', (e) => {
+        e.preventDefault(); slotEl.classList.remove('drop-target');
+        const d = this._drag(e); if (!d) return;
+        if (d.from === 'bag') this.moveSlot(d.idx, i);
+        else if (d.from === 'equip') this.unequipItem(d.type);
       });
 
       // Double-click to quick use/equip
@@ -803,5 +880,16 @@ class InventorySystem {
       dropBtn.disabled = true;
       useBtn.innerText = '⚡ Usar / Equipar';
     }
+    if (this.game.hotbar) this.game.hotbar.render();
+  }
+
+  // Detalhe do item ao passar o mouse (sem selecionar)
+  showPreview(i) {
+    const s = this.slots[i]; if (!s) return;
+    const item = this.itemDB[s.id], hk = this.game.hotbar && this.game.hotbar.keyOf(s.id);
+    document.getElementById('preview-name').innerHTML = `<span class="rarity-badge ${item.rarity}">${item.rarity.toUpperCase()}</span> ${item.name}${hk ? ` <span class="preview-hotkey">atalho [${hk}]</span>` : ''}`;
+    document.getElementById('preview-stats').innerText = item.stats || 'Sem atributos especiais';
+    document.getElementById('preview-desc').innerText = item.desc;
+    const ic = document.getElementById('preview-icon'); ic.innerText = item.icon; ic.className = `preview-icon-box rarity-${item.rarity}`;
   }
 }
