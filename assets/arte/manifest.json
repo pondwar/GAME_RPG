@@ -650,6 +650,71 @@
    "w": 393,
    "h": 600
   },
+  "humano": {
+   "file": "retrato_humano.png",
+   "w": 272,
+   "h": 600
+  },
+  "humano_barbaro": {
+   "file": "retrato_humano_barbaro.png",
+   "w": 277,
+   "h": 600
+  },
+  "humano_bardo": {
+   "file": "retrato_humano_bardo.png",
+   "w": 291,
+   "h": 600
+  },
+  "humano_bruxo": {
+   "file": "retrato_humano_bruxo.png",
+   "w": 278,
+   "h": 600
+  },
+  "humano_clerigo": {
+   "file": "retrato_humano_clerigo.png",
+   "w": 277,
+   "h": 600
+  },
+  "humano_druida": {
+   "file": "retrato_humano_druida.png",
+   "w": 290,
+   "h": 600
+  },
+  "humano_feiticeiro": {
+   "file": "retrato_humano_feiticeiro.png",
+   "w": 294,
+   "h": 600
+  },
+  "humano_guerreiro": {
+   "file": "retrato_humano_guerreiro.png",
+   "w": 277,
+   "h": 600
+  },
+  "humano_ladino": {
+   "file": "retrato_humano_ladino.png",
+   "w": 273,
+   "h": 600
+  },
+  "humano_mago": {
+   "file": "retrato_humano_mago.png",
+   "w": 303,
+   "h": 600
+  },
+  "humano_monge": {
+   "file": "retrato_humano_monge.png",
+   "w": 271,
+   "h": 600
+  },
+  "humano_paladino": {
+   "file": "retrato_humano_paladino.png",
+   "w": 282,
+   "h": 600
+  },
+  "humano_patrulheiro": {
+   "file": "retrato_humano_patrulheiro.png",
+   "w": 296,
+   "h": 600
+  },
   "meio_elfo": {
    "file": "retrato_meio_elfo.png",
    "w": 398,
