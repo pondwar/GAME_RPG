@@ -58,7 +58,8 @@
     // ---------------- previa ----------------
     preview(raceCode, classCode) {
       const Rr = R(), race = Rr.RACES[raceCode], cls = Rr.CLASSES[classCode], look = Rr.LOOKS[raceCode] || {};
-      const P = this.portraits || {}, both = P[raceCode + '_' + classCode], only = P[raceCode], pic = both || only;
+      // sem retrato importado, o humano usa o proprio boneco do jogo (parado, de frente)
+      const P = this.portraits || {}, both = P[raceCode + '_' + classCode], only = P[raceCode] || (raceCode === 'humano' ? { file: '../player/v2/idle/down_0.png' } : null), pic = both || only;
       const h = Math.round(300 * (look.scale || 1));
       const fig = pic
         ? `<img class="cs-fig" src="assets/arte/${pic.file}" style="height:${h}px" alt="${race.name}">`
