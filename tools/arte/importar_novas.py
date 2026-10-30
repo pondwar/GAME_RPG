@@ -455,6 +455,7 @@ def mascara_cores(im, cfg, frame=None):
     h, s, v = hsv_arr(a); op = a[..., 3] > 128
     yy, xx = np.mgrid[0:H, 0:W]; yf, xf = (yy - fy) / fh, (xx - fx) / fw
     inr = lambda x, r: (x >= r[0]) & (x <= r[1])
+    inh = lambda x, r: inr(x, r) if r[0] <= r[1] else (x >= r[0]) | (x <= r[1])   # matiz: [350, 15] passa pelo 0
     parts, taken = {}, np.zeros((H, W), bool)
     for k in ('olhos', 'cabelo', 'pele'):          # olhos e cabelo primeiro: a pele nao rouba sobrancelha nem iris
         c = cfg.get(k)
@@ -464,7 +465,7 @@ def mascara_cores(im, cfg, frame=None):
         if 'y' in c: area &= inr(yf, c['y'])
         if 'caixa' in c:
             x0, y0, x1, y1 = c['caixa']; area &= (xf >= x0) & (xf <= x1) & (yf >= y0) & (yf <= y1)
-        cor = inr(h, c['h']) & inr(s, c['s'])
+        cor = inh(h, c['h']) & inr(s, c['s'])
         m = area & cor & inr(v, c['v'])
         if c.get('perto_do_branco'):              # iris: so colada no branco do olho (a sombra do chapeu nao conta)
             w = area & (v > 0.78) & (s < 0.25)
@@ -543,6 +544,32 @@ def _crescer(m, n):
     return m
 
 
+def _encolher(m, n):
+    return ~_crescer(~m, n)
+
+
+def _diferente(a, b):
+    """onde duas telas RGBA diferem de verdade (sem as linhas finas de um traco redesenhado 1-2 px ao lado)"""
+    d = (np.abs(a[..., :3].astype(int) - b[..., :3].astype(int)).sum(-1) > 90) | ((a[..., 3] > 128) != (b[..., 3] > 128))
+    return _crescer(_encolher(d, 2), 3)
+
+
+def _preencher(a, buraco):
+    """preenche o buraco com a cor dos vizinhos, de fora para dentro (camada por camada); devolve RGBA float"""
+    f = a.astype(float).copy(); f[..., :3] *= f[..., 3:] / 255         # pre-multiplicado: o fundo nao suja a cor
+    ok = ~buraco
+    while (~ok).any():
+        soma = np.zeros_like(f); n = np.zeros(ok.shape)
+        for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)):
+            okv = np.roll(ok, (dy, dx), (0, 1)); soma += np.roll(f, (dy, dx), (0, 1)) * okv[..., None]; n += okv
+        novo = ~ok & (n > 0)
+        if not novo.any():
+            break
+        f[novo] = soma[novo] / n[novo][:, None]; ok |= novo
+    f[..., :3] /= np.maximum(f[..., 3:], 1) / 255
+    return f
+
+
 def _camada(img_arr, alpha, name):
     """salva so o pedaco com alpha (RGBA) e devolve {file, x, y}"""
     ys, xs = np.where(alpha)
@@ -567,7 +594,7 @@ def importar_raca(race, cfg, arquivos, altura=600):
     for key, f in arquivos:
         path = os.path.join(SRC, f)
         im = base if key == race else load_rgba(path)
-        st = os.stat(path); ck = f'{f}|{st.st_size}|{int(st.st_mtime)}|{os.path.getsize(os.path.join(SRC, f"retrato_{race}.png"))}'
+        st = os.stat(path); ck = f'{f}|{st.st_size}|{int(st.st_mtime)}|{os.path.getsize(os.path.join(SRC, f"retrato_{race}.png"))}|{ob}'
         if key == race: T[key] = (1.0, 0.0, 0.0)
         elif ck in cache: T[key] = tuple(cache[ck])
         else:
@@ -599,17 +626,86 @@ def importar_raca(race, cfg, arquivos, altura=600):
     banda = (yy >= nariz - 2) & (yy < queixo + 2) & (xx >= rx0) & (xx < rx1)       # faixa da barba
     retratos, refs_base, infos = {}, None, []
     heads = {'cabelo': {}, 'barba': {}, 'apagar': {'barba': {}}, 'chapeu': cab.get('chapeu', [])}
+    # cabelo comprido que desce na frente (elfo): as mechas abaixo do nariz sao achadas comparando o boneco com um
+    # penteado sem mechas (sem_mechas). Para trocar o penteado, cada roupa ganha um remendo (apagar.mechas) que
+    # apaga as mechas dela e preenche com a roupa em volta (o pescoco e o ombro vem do penteado sem mechas)
+    sm = cab.get('sem_mechas')
+    if sm and f'cabelo:{sm}' not in imgs: sm = None
+    if sm:
+        abaixo = (yy >= nariz) & (yy < corpo[1] + cab['mechas_y'] * altura)
+        acima = (yy >= nariz - 0.05 * altura) & (yy < nariz)        # a mecha acima do nariz nao entra no preenchimento
+        t_sem = np.array(na_tela(f'cabelo:{sm}')); t_base = np.array(na_tela(race))
+        # nucleo (diferenca grossa) + os contornos finos ligados a ele (a ponta da mecha sobre a tunica da mesma cor
+        # so difere no contorno); depois fecha o miolo entre os contornos
+        bruto = _crescer((np.abs(t_base[..., :3].astype(int) - t_sem[..., :3].astype(int)).sum(-1) > 90)
+                         | ((t_base[..., 3] > 128) != (t_sem[..., 3] > 128)), 2) & (abaixo | acima)
+        mechas = _diferente(t_base, t_sem) & (abaixo | acima)
+        while True:
+            novo = _crescer(mechas, 1) & bruto
+            if (novo & ~mechas).sum() == 0: break
+            mechas |= novo
+        mechas = _encolher(_crescer(mechas, 3), 3) & (abaixo | acima) & (t_base[..., 3] > 8)
+        heads['apagar']['mechas'] = {}
+        # nas roupas a mecha esta no mesmo lugar, mas pode descer mais: faixa = mechas do boneco escorridas para baixo
+        faixa = mechas.copy()
+        for dy in range(2, int(0.16 * altura), 2): faixa |= np.roll(mechas, dy, 0)
+        faixa = _crescer(faixa, 6) & (abaixo | acima)
     roupas = [key for key, _ in arquivos if not key.startswith(('cabelo:', 'barba:'))]
     rosto = {}                                              # por roupa: onde a barba pode trocar (rosto e pescoco a mostra)
     for key in roupas:
         tela = na_tela(key)
         name = f'retrato_{key}.png'; tela.save(os.path.join(OUT, name))
         mask, refs, parts = mascara_cores(tela, cfg, corpo)
+        a = np.array(tela); op = a[..., 3] > 8
+        if sm:                                              # mechas desta roupa: cor de cabelo perto das mechas do boneco
+            c = cfg['cabelo']; hh, ss, vv = hsv_arr(a.astype(float))
+            fio = op & (hh >= c['h'][0]) & (hh <= c['h'][1]) & (ss >= c['s'][0]) & (ss <= c['s'][1]) & (vv >= c['v_sombra'])
+            if key == race:
+                m_k = mechas
+            else:                                           # cor de cabelo ligada as mechas do boneco, dentro da faixa
+                m_k = fio & mechas
+                solto = op & (hh >= c['h'][0] - 5) & (hh <= c['h'][1] + 10) & (ss >= 0.02) & (ss <= c['s'][1] + 0.1) & (vv >= 0.3)   # reflexo e sombra da mecha
+                while True:
+                    novo = _crescer(m_k, 1) & solto & faixa
+                    if (novo & ~m_k).sum() == 0: break
+                    m_k |= novo
+                m_k = _encolher(_crescer(m_k, 3), 3)                      # fecha o miolo
+                m_k = (m_k | (_crescer(m_k, 2) & (vv < 0.35))) & faixa & op  # + o contorno escuro da mecha
+                # do lado do rosto (ate o queixo) nao ha roupa: tudo que esta onde o boneco sem mechas tem fundo e mecha
+                m_k |= op & _crescer(mechas, 6) & (yy < queixo) & (t_sem[..., 3] < 128)
+            fio_m = m_k & fio & abaixo
+            parts['cabelo'] = parts.get('cabelo', np.zeros((H, W), bool)) | fio_m
+            mk = np.array(mask); mk[fio_m, 0] = 0; mk[fio_m, 1] = 255; mask = Image.fromarray(mk, 'RGB')
+            if parts['cabelo'].any(): refs['cabelo'] = '#%02x%02x%02x' % tuple(int(x) for x in a[parts['cabelo']][:, :3].mean(0))
+            buraco = _crescer(m_k, 2) & (abaixo | acima)
+            f = _preencher(a, buraco)
+            # onde a roupa em volta do buraco e igual ao boneco sem mechas (pescoco, ombro, fundo), usa os pixels
+            # dele (contorno nitido); onde a roupa e outra (capa, armadura), fica o preenchimento
+            g = _preencher(t_sem, buraco)
+            igual = buraco & (np.abs(f - g).sum(-1) < 80)
+            f[igual] = t_sem[igual]
+            # opaco onde o boneco sem mechas tem corpo, ou onde a roupa existe dos dois lados do buraco (capa,
+            # armadura); o resto (ao lado do rosto e do pescoco) e fundo
+            dentro = t_sem[..., 3] >= 128
+            for y in np.where(buraco.any(1))[0]:
+                xs = np.where(buraco[y])[0]
+                for run in np.split(xs, np.where(np.diff(xs) > 1)[0] + 1):
+                    x0, x1 = run[0] - 1, run[-1] + 1
+                    if x0 >= 0 and x1 < W and a[y, x0, 3] > 128 and a[y, x1, 3] > 128: dentro[y, run] = True
+            f[..., 3] = np.where(dentro, 255, 0) * ~igual + f[..., 3] * igual
+            buraco &= abaixo                                # o remendo so cobre abaixo do nariz (acima vem o penteado)
+            f = f.clip(0, 255).astype(np.uint8)
+            fmask, _, _ = mascara_cores(Image.fromarray(f, 'RGBA'), dict(cfg, cabelo=dict(cfg['cabelo'], y=[0, 0])), corpo)
+            z = np.zeros((H, W, 4), np.uint8); z[..., 3] = 255
+            ent = {'hole': _camada(z, buraco, f'cabeca_{race}_apagar_mechas__{key}.png'),
+                   'layer': _camada(f, buraco & (f[..., 3] > 0), f'cabeca_{race}_mechas__{key}.png')}
+            fm4 = np.dstack([np.array(fmask), np.full((H, W), 255, np.uint8)])
+            ent['layer']['mask'] = _camada(fm4, buraco & (f[..., 3] > 0), f'cabeca_{race}_mechas__{key}_mascara.png')['file']
+            heads['apagar']['mechas'][key] = ent
         if key == race: refs_base = refs
         mname = f'retrato_{key}_mascara.png'; mask.save(os.path.join(OUT, mname))
         retratos[key] = {'file': name, 'w': W, 'h': H, 'v': v, 'corpo': corpo, 'mask': mname, 'ref': refs_base or refs}
         infos.append(f'retrato_{key}')
-        a = np.array(tela); op = a[..., 3] > 8
         pele = np.zeros((H, W), bool)
         for m in parts.values(): pele |= m
         pele = _crescer(pele, 2) & op & banda
@@ -622,7 +718,7 @@ def importar_raca(race, cfg, arquivos, altura=600):
         heads['apagar']['barba'][key] = _camada(z, rosto[key], f'cabeca_{race}_apagar_barba__{key}.png')
         if key == race:                                     # penteado: apaga a cabeca do boneco acima do nariz
             heads['apagar']['cabelo'] = _camada(z, op & (yy < nariz), f'cabeca_{race}_apagar_cabelo.png')
-    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[0, cab['queixo'] + 0.02])  # na peca, a barba conta como cabelo
+    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[0, cab['mechas_y'] if sm else cab['queixo'] + 0.02])  # na peca, a barba conta como cabelo
     for key, _ in arquivos:
         if not key.startswith(('cabelo:', 'barba:')):
             continue
@@ -632,7 +728,17 @@ def importar_raca(race, cfg, arquivos, altura=600):
         m4 = np.dstack([np.array(mask), np.full((H, W), 255, np.uint8)])
         pelo = parts.get('cabelo', np.zeros((H, W), bool))
         if kind == 'cabelo':                                # acima do nariz (2 px a mais: sem fresta) + cabelo que desce
-            alpha = (op & (yy < nariz + 2)) | (_crescer(pelo, 1) & op & (yy < queixo))
+            if sm:                                          # abaixo do nariz: o que difere do penteado sem mechas (trancas, franja)
+                desce = _diferente(a, t_sem) & op & abaixo
+                ligado = desce & _crescer(op & (yy < nariz + 2), 1)    # so o que esta ligado a cabeca (sem sobra solta)
+                while True:
+                    novo = _crescer(ligado, 1) & desce
+                    if (novo & ~ligado).sum() == 0: break
+                    ligado |= novo
+                m4[ligado] = (0, 255, 0, 255)                       # abaixo do nariz a peca e so cabelo (a sombra nao e pele)
+                alpha = (op & (yy < nariz + 2)) | ligado
+            else:
+                alpha = (op & (yy < nariz + 2)) | (_crescer(pelo, 1) & op & (yy < queixo))
             ent = _camada(a, alpha, f'cabeca_{race}_cabelo_{estilo}.png')
             ent['mask'] = _camada(m4, alpha, f'cabeca_{race}_cabelo_{estilo}_mascara.png')['file']
             heads['cabelo'][estilo] = ent

@@ -1,5 +1,5 @@
 {
-  "_comentario": "Cores tingiveis dos retratos (tools/arte/importar_novas.py gera retrato_*_mascara.png: vermelho = pele, verde = cabelo, azul = olhos; js/character_creation.js pinta na previa). Para cada parte: faixa de matiz h (graus), saturacao s e brilho v (0-1) do nucleo; o nucleo cresce para as sombras vizinhas da mesma cor (v ate 'v_sombra'). y: faixa vertical (fracao da altura) onde a parte pode estar; caixa: [x0,y0,x1,y1] em fracao; perto_do_branco: px de distancia do branco do olho (iris). Vale para o boneco da raca e todas as roupas dela (mesma pose e mesmo enquadramento). cabeca (racas com penteados e barbas): olhos_busca = faixa dos olhos usada para encaixar as pecas no boneco; nariz e queixo = linhas (fracao da altura do corpo) que separam a peca do penteado (acima do nariz) da barba (entre nariz e queixo); rosto_x = largura do rosto (fracao); chapeu = classes cujo chapeu esconde o penteado.",
+  "_comentario": "Cores tingiveis dos retratos (tools/arte/importar_novas.py gera retrato_*_mascara.png: vermelho = pele, verde = cabelo, azul = olhos; js/character_creation.js pinta na previa). Para cada parte: faixa de matiz h (graus), saturacao s e brilho v (0-1) do nucleo; o nucleo cresce para as sombras vizinhas da mesma cor (v ate 'v_sombra'). y: faixa vertical (fracao da altura) onde a parte pode estar; caixa: [x0,y0,x1,y1] em fracao; perto_do_branco: px de distancia do branco do olho (iris). Vale para o boneco da raca e todas as roupas dela (mesma pose e mesmo enquadramento). cabeca (racas com penteados e barbas): olhos_busca = faixa dos olhos usada para encaixar as pecas no boneco; nariz e queixo = linhas (fracao da altura do corpo) que separam a peca do penteado (acima do nariz) da barba (entre nariz e queixo); rosto_x = largura do rosto (fracao); chapeu = classes cujo chapeu esconde o penteado. sem_mechas = penteado sem mechas na frente (cabelo comprido que desce ate mechas_y, fracao do corpo): comparando o boneco com ele o importador acha as mechas e faz o remendo de cada roupa.",
   "humano": {
     "pele": {
       "h": [
@@ -73,6 +73,83 @@
         "mago",
         "bardo"
       ]
+    }
+  },
+  "elfo": {
+    "pele": {
+      "h": [
+        340,
+        14
+      ],
+      "s": [
+        0.12,
+        0.5
+      ],
+      "v": [
+        0.6,
+        1.0
+      ],
+      "v_sombra": 0.35
+    },
+    "cabelo": {
+      "h": [
+        15,
+        40
+      ],
+      "s": [
+        0.06,
+        0.3
+      ],
+      "v": [
+        0.45,
+        0.95
+      ],
+      "v_sombra": 0.2,
+      "y": [
+        0,
+        0.185
+      ]
+    },
+    "olhos": {
+      "h": [
+        80,
+        170
+      ],
+      "s": [
+        0.25,
+        1
+      ],
+      "v": [
+        0.1,
+        0.85
+      ],
+      "caixa": [
+        0.38,
+        0.095,
+        0.64,
+        0.12
+      ],
+      "perto_do_branco": 2
+    },
+    "cabeca": {
+      "olhos_busca": [
+        0.36,
+        0.096,
+        0.66,
+        0.122
+      ],
+      "nariz": 0.142,
+      "queixo": 0.179,
+      "rosto_x": [
+        0.36,
+        0.64
+      ],
+      "chapeu": [
+        "mago",
+        "bardo"
+      ],
+      "sem_mechas": "coque",
+      "mechas_y": 0.34
     }
   }
 }

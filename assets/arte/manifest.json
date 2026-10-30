@@ -629,7 +629,7 @@
    "file": "retrato_humano.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -647,7 +647,7 @@
    "file": "retrato_humano_barbaro.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -665,7 +665,7 @@
    "file": "retrato_humano_bardo.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -683,7 +683,7 @@
    "file": "retrato_humano_bruxo.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -701,7 +701,7 @@
    "file": "retrato_humano_clerigo.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -719,7 +719,7 @@
    "file": "retrato_humano_druida.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -737,7 +737,7 @@
    "file": "retrato_humano_feiticeiro.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -755,7 +755,7 @@
    "file": "retrato_humano_guerreiro.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -773,7 +773,7 @@
    "file": "retrato_humano_ladino.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -791,7 +791,7 @@
    "file": "retrato_humano_mago.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -809,7 +809,7 @@
    "file": "retrato_humano_monge.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -827,7 +827,7 @@
    "file": "retrato_humano_paladino.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -845,7 +845,7 @@
    "file": "retrato_humano_patrulheiro.png",
    "w": 305,
    "h": 602,
-   "v": 1793320760,
+   "v": 1793368191,
    "corpo": [
     16,
     2,
@@ -859,53 +859,227 @@
     "olhos": "#432b23"
    }
   },
+  "elfo": {
+   "file": "retrato_elfo.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_bardo": {
+   "file": "retrato_elfo_bardo.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_bardo_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_clerigo": {
+   "file": "retrato_elfo_clerigo.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_clerigo_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_druida": {
+   "file": "retrato_elfo_druida.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_druida_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_feiticeiro": {
+   "file": "retrato_elfo_feiticeiro.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_feiticeiro_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_guerreiro": {
+   "file": "retrato_elfo_guerreiro.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_guerreiro_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_ladino": {
+   "file": "retrato_elfo_ladino.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_ladino_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_mago": {
+   "file": "retrato_elfo_mago.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_mago_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_monge": {
+   "file": "retrato_elfo_monge.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_monge_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
+  "elfo_patrulheiro": {
+   "file": "retrato_elfo_patrulheiro.png",
+   "w": 274,
+   "h": 605,
+   "v": 1793368200,
+   "corpo": [
+    36,
+    5,
+    202,
+    600
+   ],
+   "mask": "retrato_elfo_patrulheiro_mascara.png",
+   "ref": {
+    "pele": "#dca8a7",
+    "cabelo": "#c2b0a3",
+    "olhos": "#4e7c43"
+   }
+  },
   "anao": {
    "file": "retrato_anao.png",
    "w": 397,
    "h": 600,
-   "v": 1793320784
+   "v": 1793368232
   },
   "draconato": {
    "file": "retrato_draconato.png",
    "w": 391,
    "h": 600,
-   "v": 1793320784
-  },
-  "elfo": {
-   "file": "retrato_elfo.png",
-   "w": 301,
-   "h": 600,
-   "v": 1793320785
+   "v": 1793368232
   },
   "gnomo": {
    "file": "retrato_gnomo.png",
    "w": 394,
    "h": 600,
-   "v": 1793320785
+   "v": 1793368233
   },
   "halfling": {
    "file": "retrato_halfling.png",
    "w": 393,
    "h": 600,
-   "v": 1793320786
+   "v": 1793368233
   },
   "meio_elfo": {
    "file": "retrato_meio_elfo.png",
    "w": 398,
    "h": 600,
-   "v": 1793320786
+   "v": 1793368234
   },
   "meio_orc": {
    "file": "retrato_meio_orc.png",
    "w": 407,
    "h": 600,
-   "v": 1793320787
+   "v": 1793368234
   },
   "tiferino": {
    "file": "retrato_tiferino.png",
    "w": 406,
    "h": 600,
-   "v": 1793320788
+   "v": 1793368235
   }
  },
  "heads": {
@@ -1336,6 +1510,230 @@
      "file": "cabeca_humano_apagar_cabelo.png",
      "x": 101,
      "y": 2
+    }
+   },
+   "chapeu": [
+    "mago",
+    "bardo"
+   ]
+  },
+  "elfo": {
+   "cabelo": {
+    "coque": {
+     "file": "cabeca_elfo_cabelo_coque.png",
+     "x": 83,
+     "y": 1,
+     "mask": "cabeca_elfo_cabelo_coque_mascara.png"
+    },
+    "curto": {
+     "file": "cabeca_elfo_cabelo_curto.png",
+     "x": 83,
+     "y": 15,
+     "mask": "cabeca_elfo_cabelo_curto_mascara.png"
+    },
+    "raspado": {
+     "file": "cabeca_elfo_cabelo_raspado.png",
+     "x": 83,
+     "y": 12,
+     "mask": "cabeca_elfo_cabelo_raspado_mascara.png"
+    },
+    "trancas": {
+     "file": "cabeca_elfo_cabelo_trancas.png",
+     "x": 83,
+     "y": 14,
+     "mask": "cabeca_elfo_cabelo_trancas_mascara.png"
+    }
+   },
+   "barba": {},
+   "apagar": {
+    "barba": {
+     "elfo": {
+      "file": "cabeca_elfo_apagar_barba__elfo.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_bardo": {
+      "file": "cabeca_elfo_apagar_barba__elfo_bardo.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_clerigo": {
+      "file": "cabeca_elfo_apagar_barba__elfo_clerigo.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_druida": {
+      "file": "cabeca_elfo_apagar_barba__elfo_druida.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_feiticeiro": {
+      "file": "cabeca_elfo_apagar_barba__elfo_feiticeiro.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_guerreiro": {
+      "file": "cabeca_elfo_apagar_barba__elfo_guerreiro.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_ladino": {
+      "file": "cabeca_elfo_apagar_barba__elfo_ladino.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_mago": {
+      "file": "cabeca_elfo_apagar_barba__elfo_mago.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_monge": {
+      "file": "cabeca_elfo_apagar_barba__elfo_monge.png",
+      "x": 109,
+      "y": 89
+     },
+     "elfo_patrulheiro": {
+      "file": "cabeca_elfo_apagar_barba__elfo_patrulheiro.png",
+      "x": 109,
+      "y": 89
+     }
+    },
+    "mechas": {
+     "elfo": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo.png",
+       "x": 86,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo.png",
+       "x": 87,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_mascara.png"
+      }
+     },
+     "elfo_bardo": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_bardo.png",
+       "x": 92,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_bardo.png",
+       "x": 93,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_bardo_mascara.png"
+      }
+     },
+     "elfo_clerigo": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_clerigo.png",
+       "x": 92,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_clerigo.png",
+       "x": 94,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_clerigo_mascara.png"
+      }
+     },
+     "elfo_druida": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_druida.png",
+       "x": 96,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_druida.png",
+       "x": 98,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_druida_mascara.png"
+      }
+     },
+     "elfo_feiticeiro": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_feiticeiro.png",
+       "x": 93,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_feiticeiro.png",
+       "x": 94,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_feiticeiro_mascara.png"
+      }
+     },
+     "elfo_guerreiro": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_guerreiro.png",
+       "x": 93,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_guerreiro.png",
+       "x": 93,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_guerreiro_mascara.png"
+      }
+     },
+     "elfo_ladino": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_ladino.png",
+       "x": 90,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_ladino.png",
+       "x": 92,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_ladino_mascara.png"
+      }
+     },
+     "elfo_mago": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_mago.png",
+       "x": 92,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_mago.png",
+       "x": 93,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_mago_mascara.png"
+      }
+     },
+     "elfo_monge": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_monge.png",
+       "x": 92,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_monge.png",
+       "x": 93,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_monge_mascara.png"
+      }
+     },
+     "elfo_patrulheiro": {
+      "hole": {
+       "file": "cabeca_elfo_apagar_mechas__elfo_patrulheiro.png",
+       "x": 90,
+       "y": 91
+      },
+      "layer": {
+       "file": "cabeca_elfo_mechas__elfo_patrulheiro.png",
+       "x": 90,
+       "y": 91,
+       "mask": "cabeca_elfo_mechas__elfo_patrulheiro_mascara.png"
+      }
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_elfo_apagar_cabelo.png",
+     "x": 83,
+     "y": 5
     }
    },
    "chapeu": [

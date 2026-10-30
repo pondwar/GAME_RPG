@@ -141,6 +141,9 @@
       const hat = !!(hd && both && (hd.chapeu || []).includes(classCode));
       const style = (part) => { const o = this.options(raceCode, part); return o && o[sel[part] || 0] ? o[sel[part] || 0][1] : null; };
       const parts = [], pen = style('penteado'), bar = style('barba');
+      // cabelo comprido (elfo): antes do penteado, o remendo da roupa apaga as mechas que descem na frente
+      const mechas = hd && hd.apagar.mechas && hd.apagar.mechas[outfit];
+      if (pic && mechas && pen && !hat) parts.push(mechas);
       if (pic && hd && pen && !hat && hd.apagar.cabelo) parts.push({ hole: hd.apagar.cabelo, layer: hd.cabelo[pen] });
       if (pic && hd && bar && hd.apagar.barba[outfit] && hd.barba[bar][outfit]) parts.push({ hole: hd.apagar.barba[outfit], layer: hd.barba[bar][outfit] });
       let src = pic && 'assets/arte/' + pic.file + (pic.v ? '?v=' + pic.v : '');
