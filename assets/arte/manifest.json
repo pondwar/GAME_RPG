@@ -625,209 +625,723 @@
   }
  },
  "portraits": {
+  "humano": {
+   "file": "retrato_humano.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_barbaro": {
+   "file": "retrato_humano_barbaro.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_barbaro_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_bardo": {
+   "file": "retrato_humano_bardo.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_bardo_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_bruxo": {
+   "file": "retrato_humano_bruxo.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_bruxo_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_clerigo": {
+   "file": "retrato_humano_clerigo.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_clerigo_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_druida": {
+   "file": "retrato_humano_druida.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_druida_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_feiticeiro": {
+   "file": "retrato_humano_feiticeiro.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_feiticeiro_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_guerreiro": {
+   "file": "retrato_humano_guerreiro.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_guerreiro_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_ladino": {
+   "file": "retrato_humano_ladino.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_ladino_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_mago": {
+   "file": "retrato_humano_mago.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_mago_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_monge": {
+   "file": "retrato_humano_monge.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_monge_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_paladino": {
+   "file": "retrato_humano_paladino.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_paladino_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
+  "humano_patrulheiro": {
+   "file": "retrato_humano_patrulheiro.png",
+   "w": 305,
+   "h": 602,
+   "v": 1793320760,
+   "corpo": [
+    16,
+    2,
+    272,
+    600
+   ],
+   "mask": "retrato_humano_patrulheiro_mascara.png",
+   "ref": {
+    "pele": "#d79176",
+    "cabelo": "#5b3923",
+    "olhos": "#432b23"
+   }
+  },
   "anao": {
    "file": "retrato_anao.png",
    "w": 397,
    "h": 600,
-   "v": 1793318991
+   "v": 1793320784
   },
   "draconato": {
    "file": "retrato_draconato.png",
    "w": 391,
    "h": 600,
-   "v": 1793318992
+   "v": 1793320784
   },
   "elfo": {
    "file": "retrato_elfo.png",
    "w": 301,
    "h": 600,
-   "v": 1793318992
+   "v": 1793320785
   },
   "gnomo": {
    "file": "retrato_gnomo.png",
    "w": 394,
    "h": 600,
-   "v": 1793318993
+   "v": 1793320785
   },
   "halfling": {
    "file": "retrato_halfling.png",
    "w": 393,
    "h": 600,
-   "v": 1793318993
-  },
-  "humano": {
-   "file": "retrato_humano.png",
-   "w": 272,
-   "h": 600,
-   "v": 1793318994,
-   "mask": "retrato_humano_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_barbaro": {
-   "file": "retrato_humano_barbaro.png",
-   "w": 277,
-   "h": 600,
-   "v": 1793318994,
-   "mask": "retrato_humano_barbaro_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_bardo": {
-   "file": "retrato_humano_bardo.png",
-   "w": 291,
-   "h": 600,
-   "v": 1793318995,
-   "mask": "retrato_humano_bardo_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_bruxo": {
-   "file": "retrato_humano_bruxo.png",
-   "w": 278,
-   "h": 600,
-   "v": 1793318996,
-   "mask": "retrato_humano_bruxo_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_clerigo": {
-   "file": "retrato_humano_clerigo.png",
-   "w": 277,
-   "h": 600,
-   "v": 1793318996,
-   "mask": "retrato_humano_clerigo_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_druida": {
-   "file": "retrato_humano_druida.png",
-   "w": 290,
-   "h": 600,
-   "v": 1793318997,
-   "mask": "retrato_humano_druida_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_feiticeiro": {
-   "file": "retrato_humano_feiticeiro.png",
-   "w": 294,
-   "h": 600,
-   "v": 1793318997,
-   "mask": "retrato_humano_feiticeiro_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_guerreiro": {
-   "file": "retrato_humano_guerreiro.png",
-   "w": 277,
-   "h": 600,
-   "v": 1793318998,
-   "mask": "retrato_humano_guerreiro_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_ladino": {
-   "file": "retrato_humano_ladino.png",
-   "w": 273,
-   "h": 600,
-   "v": 1793318999,
-   "mask": "retrato_humano_ladino_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_mago": {
-   "file": "retrato_humano_mago.png",
-   "w": 303,
-   "h": 600,
-   "v": 1793318999,
-   "mask": "retrato_humano_mago_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_monge": {
-   "file": "retrato_humano_monge.png",
-   "w": 271,
-   "h": 600,
-   "v": 1793319000,
-   "mask": "retrato_humano_monge_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_paladino": {
-   "file": "retrato_humano_paladino.png",
-   "w": 282,
-   "h": 600,
-   "v": 1793319000,
-   "mask": "retrato_humano_paladino_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
-  },
-  "humano_patrulheiro": {
-   "file": "retrato_humano_patrulheiro.png",
-   "w": 296,
-   "h": 600,
-   "v": 1793319001,
-   "mask": "retrato_humano_patrulheiro_mascara.png",
-   "ref": {
-    "pele": "#d79176",
-    "cabelo": "#5b3923",
-    "olhos": "#432a22"
-   }
+   "v": 1793320786
   },
   "meio_elfo": {
    "file": "retrato_meio_elfo.png",
    "w": 398,
    "h": 600,
-   "v": 1793319001
+   "v": 1793320786
   },
   "meio_orc": {
    "file": "retrato_meio_orc.png",
    "w": 407,
    "h": 600,
-   "v": 1793319002
+   "v": 1793320787
   },
   "tiferino": {
    "file": "retrato_tiferino.png",
    "w": 406,
    "h": 600,
-   "v": 1793319003
+   "v": 1793320788
+  }
+ },
+ "heads": {
+  "humano": {
+   "cabelo": {
+    "coque": {
+     "file": "cabeca_humano_cabelo_coque.png",
+     "x": 100,
+     "y": 11,
+     "mask": "cabeca_humano_cabelo_coque_mascara.png"
+    },
+    "lado": {
+     "file": "cabeca_humano_cabelo_lado.png",
+     "x": 101,
+     "y": 20,
+     "mask": "cabeca_humano_cabelo_lado_mascara.png"
+    },
+    "moicano": {
+     "file": "cabeca_humano_cabelo_moicano.png",
+     "x": 101,
+     "y": 8,
+     "mask": "cabeca_humano_cabelo_moicano_mascara.png"
+    },
+    "ondulado": {
+     "file": "cabeca_humano_cabelo_ondulado.png",
+     "x": 83,
+     "y": 13,
+     "mask": "cabeca_humano_cabelo_ondulado_mascara.png"
+    },
+    "raspado": {
+     "file": "cabeca_humano_cabelo_raspado.png",
+     "x": 102,
+     "y": 23,
+     "mask": "cabeca_humano_cabelo_raspado_mascara.png"
+    }
+   },
+   "barba": {
+    "bigode": {
+     "humano": {
+      "file": "cabeca_humano_barba_bigode__humano.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_mascara.png"
+     },
+     "humano_barbaro": {
+      "file": "cabeca_humano_barba_bigode__humano_barbaro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_barbaro_mascara.png"
+     },
+     "humano_bardo": {
+      "file": "cabeca_humano_barba_bigode__humano_bardo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_bardo_mascara.png"
+     },
+     "humano_bruxo": {
+      "file": "cabeca_humano_barba_bigode__humano_bruxo.png",
+      "x": 118,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_bruxo_mascara.png"
+     },
+     "humano_clerigo": {
+      "file": "cabeca_humano_barba_bigode__humano_clerigo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_clerigo_mascara.png"
+     },
+     "humano_druida": {
+      "file": "cabeca_humano_barba_bigode__humano_druida.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_druida_mascara.png"
+     },
+     "humano_feiticeiro": {
+      "file": "cabeca_humano_barba_bigode__humano_feiticeiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_feiticeiro_mascara.png"
+     },
+     "humano_guerreiro": {
+      "file": "cabeca_humano_barba_bigode__humano_guerreiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_guerreiro_mascara.png"
+     },
+     "humano_ladino": {
+      "file": "cabeca_humano_barba_bigode__humano_ladino.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_ladino_mascara.png"
+     },
+     "humano_mago": {
+      "file": "cabeca_humano_barba_bigode__humano_mago.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_mago_mascara.png"
+     },
+     "humano_monge": {
+      "file": "cabeca_humano_barba_bigode__humano_monge.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_monge_mascara.png"
+     },
+     "humano_paladino": {
+      "file": "cabeca_humano_barba_bigode__humano_paladino.png",
+      "x": 117,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_paladino_mascara.png"
+     },
+     "humano_patrulheiro": {
+      "file": "cabeca_humano_barba_bigode__humano_patrulheiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_bigode__humano_patrulheiro_mascara.png"
+     }
+    },
+    "cavanhaque": {
+     "humano": {
+      "file": "cabeca_humano_barba_cavanhaque__humano.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_mascara.png"
+     },
+     "humano_barbaro": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_barbaro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_barbaro_mascara.png"
+     },
+     "humano_bardo": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_bardo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_bardo_mascara.png"
+     },
+     "humano_bruxo": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_bruxo.png",
+      "x": 118,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_bruxo_mascara.png"
+     },
+     "humano_clerigo": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_clerigo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_clerigo_mascara.png"
+     },
+     "humano_druida": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_druida.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_druida_mascara.png"
+     },
+     "humano_feiticeiro": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_feiticeiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_feiticeiro_mascara.png"
+     },
+     "humano_guerreiro": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_guerreiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_guerreiro_mascara.png"
+     },
+     "humano_ladino": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_ladino.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_ladino_mascara.png"
+     },
+     "humano_mago": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_mago.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_mago_mascara.png"
+     },
+     "humano_monge": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_monge.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_monge_mascara.png"
+     },
+     "humano_paladino": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_paladino.png",
+      "x": 117,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_paladino_mascara.png"
+     },
+     "humano_patrulheiro": {
+      "file": "cabeca_humano_barba_cavanhaque__humano_patrulheiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_patrulheiro_mascara.png"
+     }
+    },
+    "cheia": {
+     "humano": {
+      "file": "cabeca_humano_barba_cheia__humano.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_mascara.png"
+     },
+     "humano_barbaro": {
+      "file": "cabeca_humano_barba_cheia__humano_barbaro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_barbaro_mascara.png"
+     },
+     "humano_bardo": {
+      "file": "cabeca_humano_barba_cheia__humano_bardo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_bardo_mascara.png"
+     },
+     "humano_bruxo": {
+      "file": "cabeca_humano_barba_cheia__humano_bruxo.png",
+      "x": 116,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_bruxo_mascara.png"
+     },
+     "humano_clerigo": {
+      "file": "cabeca_humano_barba_cheia__humano_clerigo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_clerigo_mascara.png"
+     },
+     "humano_druida": {
+      "file": "cabeca_humano_barba_cheia__humano_druida.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_druida_mascara.png"
+     },
+     "humano_feiticeiro": {
+      "file": "cabeca_humano_barba_cheia__humano_feiticeiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_feiticeiro_mascara.png"
+     },
+     "humano_guerreiro": {
+      "file": "cabeca_humano_barba_cheia__humano_guerreiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_guerreiro_mascara.png"
+     },
+     "humano_ladino": {
+      "file": "cabeca_humano_barba_cheia__humano_ladino.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_ladino_mascara.png"
+     },
+     "humano_mago": {
+      "file": "cabeca_humano_barba_cheia__humano_mago.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_mago_mascara.png"
+     },
+     "humano_monge": {
+      "file": "cabeca_humano_barba_cheia__humano_monge.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_monge_mascara.png"
+     },
+     "humano_paladino": {
+      "file": "cabeca_humano_barba_cheia__humano_paladino.png",
+      "x": 116,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_paladino_mascara.png"
+     },
+     "humano_patrulheiro": {
+      "file": "cabeca_humano_barba_cheia__humano_patrulheiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_cheia__humano_patrulheiro_mascara.png"
+     }
+    },
+    "lisa": {
+     "humano": {
+      "file": "cabeca_humano_barba_lisa__humano.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_mascara.png"
+     },
+     "humano_barbaro": {
+      "file": "cabeca_humano_barba_lisa__humano_barbaro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_barbaro_mascara.png"
+     },
+     "humano_bardo": {
+      "file": "cabeca_humano_barba_lisa__humano_bardo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_bardo_mascara.png"
+     },
+     "humano_bruxo": {
+      "file": "cabeca_humano_barba_lisa__humano_bruxo.png",
+      "x": 118,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_bruxo_mascara.png"
+     },
+     "humano_clerigo": {
+      "file": "cabeca_humano_barba_lisa__humano_clerigo.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_clerigo_mascara.png"
+     },
+     "humano_druida": {
+      "file": "cabeca_humano_barba_lisa__humano_druida.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_druida_mascara.png"
+     },
+     "humano_feiticeiro": {
+      "file": "cabeca_humano_barba_lisa__humano_feiticeiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_feiticeiro_mascara.png"
+     },
+     "humano_guerreiro": {
+      "file": "cabeca_humano_barba_lisa__humano_guerreiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_guerreiro_mascara.png"
+     },
+     "humano_ladino": {
+      "file": "cabeca_humano_barba_lisa__humano_ladino.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_ladino_mascara.png"
+     },
+     "humano_mago": {
+      "file": "cabeca_humano_barba_lisa__humano_mago.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_mago_mascara.png"
+     },
+     "humano_monge": {
+      "file": "cabeca_humano_barba_lisa__humano_monge.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_monge_mascara.png"
+     },
+     "humano_paladino": {
+      "file": "cabeca_humano_barba_lisa__humano_paladino.png",
+      "x": 117,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_paladino_mascara.png"
+     },
+     "humano_patrulheiro": {
+      "file": "cabeca_humano_barba_lisa__humano_patrulheiro.png",
+      "x": 112,
+      "y": 119,
+      "mask": "cabeca_humano_barba_lisa__humano_patrulheiro_mascara.png"
+     }
+    }
+   },
+   "apagar": {
+    "barba": {
+     "humano": {
+      "file": "cabeca_humano_apagar_barba__humano.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_barbaro": {
+      "file": "cabeca_humano_apagar_barba__humano_barbaro.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_bardo": {
+      "file": "cabeca_humano_apagar_barba__humano_bardo.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_bruxo": {
+      "file": "cabeca_humano_apagar_barba__humano_bruxo.png",
+      "x": 119,
+      "y": 119
+     },
+     "humano_clerigo": {
+      "file": "cabeca_humano_apagar_barba__humano_clerigo.png",
+      "x": 113,
+      "y": 119
+     },
+     "humano_druida": {
+      "file": "cabeca_humano_apagar_barba__humano_druida.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_feiticeiro": {
+      "file": "cabeca_humano_apagar_barba__humano_feiticeiro.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_guerreiro": {
+      "file": "cabeca_humano_apagar_barba__humano_guerreiro.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_ladino": {
+      "file": "cabeca_humano_apagar_barba__humano_ladino.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_mago": {
+      "file": "cabeca_humano_apagar_barba__humano_mago.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_monge": {
+      "file": "cabeca_humano_apagar_barba__humano_monge.png",
+      "x": 112,
+      "y": 119
+     },
+     "humano_paladino": {
+      "file": "cabeca_humano_apagar_barba__humano_paladino.png",
+      "x": 118,
+      "y": 119
+     },
+     "humano_patrulheiro": {
+      "file": "cabeca_humano_apagar_barba__humano_patrulheiro.png",
+      "x": 112,
+      "y": 119
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_humano_apagar_cabelo.png",
+     "x": 101,
+     "y": 2
+    }
+   },
+   "chapeu": [
+    "mago",
+    "bardo"
+   ]
   }
  }
 }

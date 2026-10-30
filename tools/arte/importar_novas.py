@@ -408,6 +408,8 @@ def importar_textura_terreno(path, spec):
     return name, {'file': name}, f'{w}x{w} px (achatado 2:1)'
 
 
+CLASSES = {'barbaro', 'bardo', 'clerigo', 'druida', 'guerreiro', 'monge', 'paladino', 'patrulheiro', 'ladino',
+           'feiticeiro', 'bruxo', 'mago'}
 BASE_REFS = {}                                       # cor media de pele/cabelo/olhos do boneco de cada raca
 
 
@@ -425,7 +427,7 @@ def importar_retrato(path, spec):
     cores = json.load(open(os.path.join(HERE, 'cores_racas.json'), encoding='utf-8'))
     race = max((r for r in cores if not r.startswith('_') and (key == r or key.startswith(r + '_'))), key=len, default=None)
     if race:
-        mask, refs = mascara_cores(im, cores[race])
+        mask, refs, _ = mascara_cores(im, cores[race])
         # todas as roupas usam a cor de referencia do boneco da raca: o mesmo tom escolhido sai igual em qualquer roupa
         if key == race: BASE_REFS[race] = refs
         else: refs = {k: BASE_REFS.get(race, {}).get(k, v) for k, v in refs.items()}
@@ -443,13 +445,15 @@ def hsv_arr(a):
     return h, np.where(mx > 0, (mx - mn) / (mx + 1e-9), 0), mx
 
 
-def mascara_cores(im, cfg):
+def mascara_cores(im, cfg, frame=None):
     """pele / cabelo / olhos do retrato pela cor (cores_racas.json): nucleo pela faixa de cor, depois cresce 3 px
-    para as sombras da mesma cor. Devolve a mascara RGB (R pele, G cabelo, B olhos) e a cor media de cada parte"""
+    para as sombras da mesma cor. Devolve a mascara RGB (R pele, G cabelo, B olhos), a cor media de cada parte e as
+    partes (bool). frame = (x, y, w, h) do corpo na imagem: as fracoes y/caixa do cfg sao medidas nele"""
     a = np.array(im.convert('RGBA')).astype(float)
     H, W = a.shape[:2]
+    fx, fy, fw, fh = frame or (0, 0, W, H)
     h, s, v = hsv_arr(a); op = a[..., 3] > 128
-    yy, xx = np.mgrid[0:H, 0:W]; yf, xf = yy / H, xx / W
+    yy, xx = np.mgrid[0:H, 0:W]; yf, xf = (yy - fy) / fh, (xx - fx) / fw
     inr = lambda x, r: (x >= r[0]) & (x <= r[1])
     parts, taken = {}, np.zeros((H, W), bool)
     for k in ('olhos', 'cabelo', 'pele'):          # olhos e cabelo primeiro: a pele nao rouba sobrancelha nem iris
@@ -479,7 +483,169 @@ def mascara_cores(im, cfg):
         if k in parts and parts[k].any():
             out[parts[k], i] = 255
             refs[k] = '#%02x%02x%02x' % tuple(int(x) for x in a[parts[k]][:, :3].mean(0))
-    return Image.fromarray(out, 'RGB'), refs
+    return Image.fromarray(out, 'RGB'), refs, parts
+
+
+# ---------------- retratos de uma raca, alinhados (roupas, penteados e barbas) ----------------
+# Raca com 'cabeca' em cores_racas.json: o boneco (retrato_<raca>.png), as roupas (retrato_<raca>_<classe>.png), os
+# penteados (cabelo_<raca>_<estilo>.png) e as barbas (barba_<raca>_<estilo>.png) sao encaixados no boneco pelos olhos
+# (escala + posicao) e saem todos na MESMA tela, com o corpo no mesmo lugar. Assim o jogo (js/character_creation.js)
+# troca penteado e barba de qualquer roupa so apagando a regiao (apagar_*) e desenhando a peca por cima.
+ALINHAMENTO = os.path.join(HERE, 'alinhamento.json')     # cache: o encaixe leva alguns segundos por imagem
+
+
+def _cinza(im):
+    a = np.array(im.convert('RGBA')).astype(np.float32)
+    g = a[..., :3].mean(-1); g[a[..., 3] < 128] = 255
+    return g
+
+
+def _busca(base_g, piece, r, D, box, perto=None, raio=None):
+    from numpy.lib.stride_tricks import sliding_window_view as janelas
+    x0, y0, x1, y1 = box
+    T = base_g[D][y0 // D:y1 // D, x0 // D:x1 // D]; T = T - T.mean()
+    w, h = max(1, int(piece.width * r / D)), max(1, int(piece.height * r / D))
+    P = _cinza(piece.resize((w, h), Image.BILINEAR))
+    if perto is None:
+        oy, ox = 0, 0; P = P[: int(h * 0.35)]
+    else:
+        cx, cy = perto[0] // D, perto[1] // D
+        oy, ox = max(0, cy - raio), max(0, cx - raio)
+        P = P[oy: cy + raio + T.shape[0], ox: cx + raio + T.shape[1]]
+    if P.shape[0] < T.shape[0] or P.shape[1] < T.shape[1]:
+        return None
+    J = janelas(P, T.shape)
+    d = (((J - J.mean(axis=(2, 3), keepdims=True)) - T) ** 2).mean(axis=(2, 3))
+    iy, ix = np.unravel_index(d.argmin(), d.shape)
+    return d[iy, ix], ((ix + ox) * D, (iy + oy) * D)
+
+
+def encaixe(base, piece, box):
+    """(r, dx, dy): ponto da peca * r + (dx, dy) = ponto do boneco base. Compara a faixa dos olhos (box, no base):
+    primeiro grosso (1/8, escalas de 0.70 a 1.40), depois fino (1/2) perto do melhor"""
+    base_g = {D: _cinza(base.resize((base.width // D, base.height // D), Image.BILINEAR)) for D in (8, 2)}
+    best = None
+    for r in np.arange(0.70, 1.40, 0.02):
+        b = _busca(base_g, piece, r, 8, box)
+        if b and (best is None or b[0] < best[0]): best = (b[0], r, b[1])
+    _, r0, p0 = best
+    best = None
+    for r in np.arange(r0 - 0.02, r0 + 0.021, 0.004):
+        b = _busca(base_g, piece, r, 2, box, (int(p0[0] * r / r0), int(p0[1] * r / r0)), 10)
+        if b and (best is None or b[0] < best[0]): best = (b[0], r, b[1])
+    _, r, (px, py) = best
+    return float(r), float(box[0] - px), float(box[1] - py)
+
+
+def _crescer(m, n):
+    for _ in range(n):
+        m = m | np.roll(m, 1, 0) | np.roll(m, -1, 0) | np.roll(m, 1, 1) | np.roll(m, -1, 1)
+    return m
+
+
+def _camada(img_arr, alpha, name):
+    """salva so o pedaco com alpha (RGBA) e devolve {file, x, y}"""
+    ys, xs = np.where(alpha)
+    if not len(ys):
+        return None
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    a = img_arr[y0:y1, x0:x1].copy()
+    a[..., 3] = np.where(alpha[y0:y1, x0:x1], a[..., 3], 0)
+    Image.fromarray(a.astype(np.uint8), 'RGBA').save(os.path.join(OUT, name))
+    return {'file': name, 'x': int(x0), 'y': int(y0)}
+
+
+def importar_raca(race, cfg, arquivos, altura=600):
+    cab = cfg['cabeca']
+    cache = json.load(open(ALINHAMENTO, encoding='utf-8')) if os.path.exists(ALINHAMENTO) else {}
+    base = load_rgba(os.path.join(SRC, f'retrato_{race}.png'))
+    bb = base.getbbox(); bw, bh = bb[2] - bb[0], bb[3] - bb[1]
+    k = altura / bh
+    ob = cab['olhos_busca']
+    box = (bb[0] + int(ob[0] * bw), bb[1] + int(ob[1] * bh), bb[0] + int(ob[2] * bw), bb[1] + int(ob[3] * bh))
+    imgs, T = {}, {}
+    for key, f in arquivos:
+        path = os.path.join(SRC, f)
+        im = base if key == race else load_rgba(path)
+        st = os.stat(path); ck = f'{f}|{st.st_size}|{int(st.st_mtime)}|{os.path.getsize(os.path.join(SRC, f"retrato_{race}.png"))}'
+        if key == race: T[key] = (1.0, 0.0, 0.0)
+        elif ck in cache: T[key] = tuple(cache[ck])
+        else:
+            T[key] = encaixe(base, im, box); cache[ck] = list(T[key])
+        imgs[key] = im
+    json.dump(cache, open(ALINHAMENTO, 'w', encoding='utf-8'), indent=0)
+    # tela comum: uniao de tudo (no espaco do boneco base), simetrica em volta do centro do corpo
+    U = [1e9, 1e9, -1e9, -1e9]
+    for key, im in imgs.items():
+        r, dx, dy = T[key]; b = im.getbbox()
+        U = [min(U[0], b[0] * r + dx), min(U[1], b[1] * r + dy), max(U[2], b[2] * r + dx), max(U[3], b[3] * r + dy)]
+    U[3] = bb[3]                                           # embaixo: os pes do boneco (peca cortada embaixo nao estica a tela)
+    cx = bb[0] + bw / 2; half = max(cx - U[0], U[2] - cx)
+    X0, Y0 = cx - half, U[1]
+    W, H = int(round(2 * half * k)), int(round((U[3] - Y0) * k))
+    corpo = [round((bb[0] - X0) * k), round((bb[1] - Y0) * k), round(bw * k), altura]
+
+    def na_tela(key):
+        r, dx, dy = T[key]; im = imgs[key]
+        q = im.resize((max(1, round(im.width * r * k)), max(1, round(im.height * r * k))), Image.LANCZOS)
+        c = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+        c.paste(q, (round((dx - X0) * k), round((dy - Y0) * k)), q)
+        return c
+
+    nariz, queixo = corpo[1] + cab['nariz'] * altura, corpo[1] + cab['queixo'] * altura
+    rx0, rx1 = corpo[0] + cab['rosto_x'][0] * corpo[2], corpo[0] + cab['rosto_x'][1] * corpo[2]
+    yy, xx = np.mgrid[0:H, 0:W]
+    v = int(time.time())
+    banda = (yy >= nariz - 2) & (yy < queixo + 2) & (xx >= rx0) & (xx < rx1)       # faixa da barba
+    retratos, refs_base, infos = {}, None, []
+    heads = {'cabelo': {}, 'barba': {}, 'apagar': {'barba': {}}, 'chapeu': cab.get('chapeu', [])}
+    roupas = [key for key, _ in arquivos if not key.startswith(('cabelo:', 'barba:'))]
+    rosto = {}                                              # por roupa: onde a barba pode trocar (rosto e pescoco a mostra)
+    for key in roupas:
+        tela = na_tela(key)
+        name = f'retrato_{key}.png'; tela.save(os.path.join(OUT, name))
+        mask, refs, parts = mascara_cores(tela, cfg, corpo)
+        if key == race: refs_base = refs
+        mname = f'retrato_{key}_mascara.png'; mask.save(os.path.join(OUT, mname))
+        retratos[key] = {'file': name, 'w': W, 'h': H, 'v': v, 'corpo': corpo, 'mask': mname, 'ref': refs_base or refs}
+        infos.append(f'retrato_{key}')
+        a = np.array(tela); op = a[..., 3] > 8
+        pele = np.zeros((H, W), bool)
+        for m in parts.values(): pele |= m
+        pele = _crescer(pele, 2) & op & banda
+        # cada linha: do primeiro ao ultimo pixel de rosto (fecha boca, barba por fazer e contornos; a gola fica de fora)
+        R = np.zeros((H, W), bool)
+        for y in np.where(pele.any(1))[0]:
+            xs = np.where(pele[y])[0]; R[y, xs.min():xs.max() + 1] = True
+        rosto[key] = R & op
+        z = np.zeros((H, W, 4), np.uint8); z[..., 3] = 255
+        heads['apagar']['barba'][key] = _camada(z, rosto[key], f'cabeca_{race}_apagar_barba__{key}.png')
+        if key == race:                                     # penteado: apaga a cabeca do boneco acima do nariz
+            heads['apagar']['cabelo'] = _camada(z, op & (yy < nariz), f'cabeca_{race}_apagar_cabelo.png')
+    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[0, cab['queixo'] + 0.02])  # na peca, a barba conta como cabelo
+    for key, _ in arquivos:
+        if not key.startswith(('cabelo:', 'barba:')):
+            continue
+        kind, estilo = key.split(':')
+        tela = na_tela(key); a = np.array(tela); op = a[..., 3] > 8
+        mask, _, parts = mascara_cores(tela, pc, corpo)
+        m4 = np.dstack([np.array(mask), np.full((H, W), 255, np.uint8)])
+        pelo = parts.get('cabelo', np.zeros((H, W), bool))
+        if kind == 'cabelo':                                # acima do nariz (2 px a mais: sem fresta) + cabelo que desce
+            alpha = (op & (yy < nariz + 2)) | (_crescer(pelo, 1) & op & (yy < queixo))
+            ent = _camada(a, alpha, f'cabeca_{race}_cabelo_{estilo}.png')
+            ent['mask'] = _camada(m4, alpha, f'cabeca_{race}_cabelo_{estilo}_mascara.png')['file']
+            heads['cabelo'][estilo] = ent
+        else:                                               # barba: recortada para cada roupa (a gola fica na frente)
+            fios = _crescer(pelo & banda, 1)
+            heads['barba'][estilo] = {}
+            for r in roupas:
+                alpha = op & (_crescer(rosto[r], 1) | fios) & banda
+                ent = _camada(a, alpha, f'cabeca_{race}_barba_{estilo}__{r}.png')
+                ent['mask'] = _camada(m4, alpha, f'cabeca_{race}_barba_{estilo}__{r}_mascara.png')['file']
+                heads['barba'][estilo][r] = ent
+        infos.append(f'{kind}_{estilo}')
+    return retratos, heads, f'{len(infos)} pecas alinhadas numa tela {W}x{H}: ' + ', '.join(infos)
 
 
 def main():
@@ -490,6 +656,30 @@ def main():
     for f in sorted(os.listdir(SRC)):
         if f.startswith('retrato_') and f.endswith('.png') and f not in pecas:
             pecas[f] = {'tipo': 'retrato', 'chave': f[len('retrato_'):-len('.png')]}
+    # racas com cabeca configurada: tudo da raca entra alinhado de uma vez (importar_raca)
+    cores = json.load(open(os.path.join(HERE, 'cores_racas.json'), encoding='utf-8'))
+    manifest['heads'] = {}
+    for race, cfg in cores.items():
+        if race.startswith('_') or 'cabeca' not in cfg or not os.path.exists(os.path.join(SRC, f'retrato_{race}.png')):
+            continue
+        arquivos = []
+        for f in sorted(os.listdir(SRC)):
+            if not f.endswith('.png'):
+                continue
+            stem = f[:-4]
+            if stem == f'retrato_{race}':
+                arquivos.insert(0, (race, f))
+            elif stem.startswith(f'retrato_{race}_') and stem[len(f'retrato_{race}_'):] in CLASSES:
+                arquivos.append((stem[len('retrato_'):], f))
+            elif stem.startswith((f'cabelo_{race}_', f'barba_{race}_')):
+                kind, rest = stem.split('_', 1)
+                arquivos.append((f'{kind}:{rest[len(race) + 1:]}', f))
+            else:
+                continue
+            pecas.pop(f, None)
+        retratos, heads, info = importar_raca(race, cfg, arquivos)
+        manifest['portraits'].update(retratos); manifest['heads'][race] = heads
+        print(f'{race}: {info}')
     for fname, spec in pecas.items():
         if fname.startswith('_'):
             continue

@@ -30,20 +30,30 @@
   }
   const loadImg = (src) => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
   const clamp = (v) => Math.max(0, Math.min(1, v));
-  async function paint(pic, colors) {
-    const [img, mask] = await Promise.all([loadImg('assets/arte/' + pic.file + '?v=' + (pic.v || 0)), loadImg('assets/arte/' + pic.mask + '?v=' + (pic.v || 0))]);
+  // Monta o boneco: roupa; penteado (apaga a cabeca acima do nariz e desenha a peca); barba (apaga o rosto daquela
+  // roupa e desenha a peca recortada para ela). Tudo na mesma tela da raca (importar_raca). Depois pinta as cores.
+  async function paint(pic, colors, parts) {
+    const url = (f) => 'assets/arte/' + f + '?v=' + (pic.v || 0);
+    const [img, mask] = await Promise.all([loadImg(url(pic.file)), loadImg(url(pic.mask))]);
     const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
     const cx = cv.getContext('2d', { willReadFrequently: true });
-    cx.drawImage(mask, 0, 0); const m = cx.getImageData(0, 0, cv.width, cv.height).data;
-    cx.clearRect(0, 0, cv.width, cv.height); cx.drawImage(img, 0, 0);
+    const mc = document.createElement('canvas'); mc.width = img.width; mc.height = img.height;
+    const mx = mc.getContext('2d', { willReadFrequently: true });
+    cx.drawImage(img, 0, 0); mx.drawImage(mask, 0, 0);
+    for (const pr of parts) {
+      const [hole, layer, lmask] = await Promise.all([loadImg(url(pr.hole.file)), loadImg(url(pr.layer.file)), loadImg(url(pr.layer.mask))]);
+      for (const c of [cx, mx]) { c.globalCompositeOperation = 'destination-out'; c.drawImage(hole, pr.hole.x, pr.hole.y); c.globalCompositeOperation = 'source-over'; }
+      cx.drawImage(layer, pr.layer.x, pr.layer.y); mx.drawImage(lmask, pr.layer.x, pr.layer.y);
+    }
+    const m = mx.getImageData(0, 0, cv.width, cv.height).data;
     const id = cx.getImageData(0, 0, cv.width, cv.height), d = id.data;
-    const parts = ['pele', 'cabelo', 'olhos'].map((k, ch) => {
+    const tints = ['pele', 'cabelo', 'olhos'].map((k, ch) => {
       if (!colors[k] || !pic.ref || !pic.ref[k]) return null;
       const r = hexHsl(pic.ref[k]), t = hexHsl(colors[k]);
       return { ch, r, t };
     });
     for (let i = 0; i < d.length; i += 4) {
-      for (const p of parts) {
+      for (const p of tints) {
         if (!p || m[i + p.ch] < 128) continue;
         const [h, s, l] = rgbHsl(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255), { r, t } = p;
         let dh = h - r[0]; if (dh > 180) dh -= 360; if (dh < -180) dh += 360;
@@ -59,14 +69,14 @@
   }
 
   const CharacterScreen = {
-    painted: new Map(),          // file|pele|cabelo|olhos -> imagem pintada (dataURL)
+    painted: new Map(),          // file|cores|penteado|barba -> imagem montada e pintada (dataURL)
     async run() {
       const S = window.SurittoServer;
       if (!S || !S.online || !window.SurittoRules) return;                  // sem servidor: jogo abre como antes
       let list = [];
       try { list = await fetch('/api/characters', { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)); } catch (e) { return; }
       if (!Array.isArray(list)) return;                                     // servidor antigo (sem a rota): jogo abre como antes
-      try { this.portraits = ((await fetch('assets/arte/manifest.json', { cache: 'no-store' }).then(r => r.json())) || {}).portraits || {}; } catch (e) { this.portraits = {}; }
+      try { const m = (await fetch('assets/arte/manifest.json', { cache: 'no-store' }).then(r => r.json())) || {}; this.portraits = m.portraits || {}; this.heads = m.heads || {}; } catch (e) { this.portraits = {}; this.heads = {}; }
       this.root = document.createElement('div');
       this.root.id = 'char-screen';
       document.body.appendChild(this.root);
@@ -105,20 +115,39 @@
       this.root.querySelector('.cs-new').addEventListener('click', () => this.create(null, list));
     },
 
+    // opcoes de uma parte da aparencia: cores (COLORS) ou pecas da cabeca (STYLES, so as ja importadas)
+    options(raceCode, part) {
+      const Rr = R(), c = (Rr.COLORS[raceCode] || {})[part];
+      if (c) return c;
+      const s = (Rr.STYLES[raceCode] || {})[part], hd = (this.heads || {})[raceCode];
+      if (!s || !hd) return null;
+      const kind = part === 'penteado' ? 'cabelo' : 'barba';
+      const ok = s.filter(o => !o[1] || (hd[kind] && hd[kind][o[1]]));
+      return ok.length > 1 ? ok : null;
+    },
+
     // ---------------- previa ----------------
     preview(raceCode, classCode, sel = {}) {
       const Rr = R(), race = Rr.RACES[raceCode], cls = Rr.CLASSES[classCode], look = Rr.LOOKS[raceCode] || {};
       const pal = Rr.COLORS[raceCode] || {};
       // sem retrato importado, o humano usa o proprio boneco do jogo (parado, de frente)
       const P = this.portraits || {}, both = P[raceCode + '_' + classCode], only = P[raceCode] || (raceCode === 'humano' ? { file: '../player/v2/idle/down_0.png' } : null), pic = both || only;
-      const h = Math.round(300 * (look.scale || 1));
+      // tela da raca alinhada (importar_raca): a altura mostrada e a do corpo; o resto da tela e chapeu/manga
+      const h = Math.round(300 * (look.scale || 1) * (pic && pic.corpo ? pic.h / pic.corpo[3] : 1));
       // cores escolhidas: com mascara, pinta (na hora ou do cache); sem mascara, fica o desenho original
       const colors = {}; for (const k of Object.keys(pal)) { const o = pal[k][sel[k] || 0]; if (o && o[1]) colors[k] = o[1]; }
+      // penteado e barba: pecas da cabeca por cima da roupa (o chapeu de algumas classes esconde o penteado)
+      const outfit = both ? raceCode + '_' + classCode : raceCode, hd = (this.heads || {})[raceCode];
+      const hat = !!(hd && both && (hd.chapeu || []).includes(classCode));
+      const style = (part) => { const o = this.options(raceCode, part); return o && o[sel[part] || 0] ? o[sel[part] || 0][1] : null; };
+      const parts = [], pen = style('penteado'), bar = style('barba');
+      if (pic && hd && pen && !hat && hd.apagar.cabelo) parts.push({ hole: hd.apagar.cabelo, layer: hd.cabelo[pen] });
+      if (pic && hd && bar && hd.apagar.barba[outfit] && hd.barba[bar][outfit]) parts.push({ hole: hd.apagar.barba[outfit], layer: hd.barba[bar][outfit] });
       let src = pic && 'assets/arte/' + pic.file + (pic.v ? '?v=' + pic.v : '');
-      if (pic && pic.mask && Object.keys(colors).length) {
-        const key = [pic.file, colors.pele, colors.cabelo, colors.olhos].join('|');
+      if (pic && pic.mask && (Object.keys(colors).length || parts.length)) {
+        const key = [pic.file, colors.pele, colors.cabelo, colors.olhos, hat ? '' : pen, bar].join('|');
         if (this.painted.has(key)) src = this.painted.get(key);
-        else paint(pic, colors).then(url => {
+        else paint(pic, colors, parts).then(url => {
           this.painted.set(key, url);
           const el = this.root && this.root.querySelector('.cs-fig'); if (el && el.dataset.key === key) el.src = url;
         }).catch(() => { });
@@ -134,18 +163,18 @@
           ${both ? '' : `<div class="cs-stage-note">${pic ? `Roupa de ${cls.name}: em breve` : 'Retrato ainda não desenhado'}</div>`}
         </div>
         <div class="cs-look">${Rr.LOOK_PARTS.map(p => {
-          const opts = pic && pic.mask && pal[p.code];
+          const opts = pic && pic.mask && this.options(raceCode, p.code);
           if (!opts) return `
           <div class="cs-look-row"><span>${p.name}</span>
             <button class="cs-arrow" disabled>‹</button><b>${look[p.code] || 'Clássico'}</b><button class="cs-arrow" disabled>›</button></div>`;
-          const i = sel[p.code] || 0, o = opts[i];
+          const i = sel[p.code] || 0, o = opts[i], isColor = !!pal[p.code];
           return `
           <div class="cs-look-row"><span>${p.name}</span>
             <button class="cs-arrow on" data-look="${p.code}" data-d="-1">‹</button>
-            <b><i class="cs-dot" style="background:${o[1] || (pic.ref && pic.ref[p.code]) || '#888'}"></i>${o[0]}</b>
+            <b title="${p.code === 'penteado' && hat ? 'O chapéu desta classe esconde o penteado' : ''}">${isColor ? `<i class="cs-dot" style="background:${o[1] || (pic.ref && pic.ref[p.code]) || '#888'}"></i>` : ''}${o[0]}${p.code === 'penteado' && hat && i ? ' (sob o chapéu)' : ''}</b>
             <button class="cs-arrow on" data-look="${p.code}" data-d="1">›</button></div>`;
         }).join('')}
-          <small>${Object.keys(pal).length && pic && pic.mask ? 'Cores de pele, cabelo e olhos. Penteados e rostos em breve.' : 'Mais opções de aparência em breve.'}</small>
+          <small>${Object.keys(pal).length && pic && pic.mask ? 'Formato do rosto e corpo feminino em breve.' : 'Mais opções de aparência em breve.'}</small>
         </div>`;
     },
 
@@ -221,7 +250,7 @@
         const nameEl = $('.cs-name'); nameEl.addEventListener('input', () => { st.name = nameEl.value; });
         $$('[data-race]').forEach(b => b.addEventListener('click', () => { if (st.race !== b.dataset.race) st.look = {}; st.race = b.dataset.race; render(); }));
         $$('[data-look]').forEach(b => b.addEventListener('click', () => {
-          const k = b.dataset.look, n = Rr.COLORS[st.race][k].length;
+          const k = b.dataset.look, n = this.options(st.race, k).length;
           st.look[k] = ((st.look[k] || 0) + +b.dataset.d + n) % n; render();
         }));
         $$('[data-cls]').forEach(b => b.addEventListener('click', () => { st.cls = b.dataset.cls; render(); }));
@@ -258,8 +287,8 @@
           if (!Rr.allowed(st.race, st.cls)) return err(`${race.name} não pode ser ${cls.name}.`);
           const S = window.SurittoServer;
           if (!fixedName) { S.charName = name; S.character = null; try { localStorage.setItem('suritto_character_name', name); } catch (e) { } }
-          const pal = Rr.COLORS[st.race] || {}, appearance = {};
-          for (const k of Object.keys(pal)) appearance[k] = pal[k][st.look[k] || 0][1];       // null = cor original do desenho
+          const appearance = {};                       // cores (hex) e pecas da cabeca (codigo); null = a do desenho
+          for (const p of Rr.LOOK_PARTS) { const o = this.options(st.race, p.code); if (o) appearance[p.code] = o[st.look[p.code] || 0][1]; }
           S.newSheet = { race: st.race, class: st.cls, attributes: Rr.finalAttrs(st.base, st.race, st.chosen), appearance, isNew: !fixedName };
           this.done();
         });

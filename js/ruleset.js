@@ -90,11 +90,11 @@
   // Aparencia (tela de criacao). Por enquanto 1 visual classico por raca (o retrato da previa); as outras opcoes
   // de cada parte entram aqui depois. scale: altura na previa (raca pequena aparece menor).
   const LOOK_PARTS = [
-    { code: 'corpo', name: 'Corpo' }, { code: 'pele', name: 'Pele' }, { code: 'cabelo', name: 'Cabelo' },
-    { code: 'olhos', name: 'Olhos' }, { code: 'rosto', name: 'Rosto' }
+    { code: 'corpo', name: 'Corpo' }, { code: 'pele', name: 'Pele' }, { code: 'penteado', name: 'Penteado' },
+    { code: 'cabelo', name: 'Cor cabelo' }, { code: 'barba', name: 'Barba' }, { code: 'olhos', name: 'Olhos' }, { code: 'rosto', name: 'Rosto' }
   ];
   const LOOKS = {
-    humano: { scale: 1, corpo: 'Masculino', pele: 'Morena clara', cabelo: 'Castanho curto', olhos: 'Castanhos', rosto: 'Queixo quadrado, barba por fazer' },
+    humano: { scale: 1, corpo: 'Masculino', pele: 'Morena clara', penteado: 'Curto arrepiado', cabelo: 'Castanho', barba: 'Por fazer', olhos: 'Castanhos', rosto: 'Queixo quadrado' },
     elfo: { scale: 1, corpo: 'Masculino', pele: 'Clara', cabelo: 'Longo loiro-prateado', olhos: 'Verdes', rosto: 'Fino, orelhas pontudas' },
     anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', cabelo: 'Ruivo, barba trançada', olhos: 'Cinzentos', rosto: 'Largo, nariz grande' },
     halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Bronzeada', cabelo: 'Castanho cacheado', olhos: 'Avelã', rosto: 'Redondo e sorridente' },
@@ -112,6 +112,15 @@
       pele: [['Morena clara', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Negra', '#6b4535'], ['Retinta', '#45302a']],
       cabelo: [['Castanho', null], ['Preto', '#2b2420'], ['Loiro', '#d8b25c'], ['Ruivo', '#b4532b'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
       olhos: [['Castanhos', null], ['Azuis', '#3c7fd0'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
+    }
+  };
+
+  // Penteados e barbas (pecas da cabeca: tools/arte/importar_novas.py, cabelo_<raca>_<estilo>.png e barba_<raca>_<estilo>.png).
+  // A primeira opcao e a do desenho (null); as outras so aparecem se a peca ja foi importada.
+  const STYLES = {
+    humano: {
+      penteado: [['Curto arrepiado', null], ['Raspado', 'raspado'], ['Repartido', 'lado'], ['Ondulado', 'ondulado'], ['Moicano', 'moicano'], ['Coque', 'coque']],
+      barba: [['Por fazer', null], ['Sem barba', 'lisa'], ['Cavanhaque', 'cavanhaque'], ['Cheia', 'cheia'], ['Bigode', 'bigode']]
     }
   };
 
@@ -144,5 +153,5 @@
   // Rolagem classica: 4d6, descarta o menor
   function roll4d6() { const d = [0, 0, 0, 0].map(() => 1 + Math.floor(Math.random() * 6)).sort((a, b) => a - b); return d[1] + d[2] + d[3]; }
 
-  window.SurittoRules = { ATTRS, RACES, CLASSES, RACE_CLASSES, LOOK_PARTS, LOOKS, COLORS, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
+  window.SurittoRules = { ATTRS, RACES, CLASSES, RACE_CLASSES, LOOK_PARTS, LOOKS, COLORS, STYLES, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
 })();
