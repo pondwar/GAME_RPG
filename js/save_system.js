@@ -96,7 +96,8 @@ class SaveSystem {
         state: {
           torchLit: !!p.torchLit,
           hotbar: g.hotbar ? g.hotbar.slots.slice() : undefined,      // barra de atalhos 1-0 (js/hotbar.js)
-          strengthBuffTimer: p.strengthBuffTimer || 0
+          strengthBuffTimer: p.strengthBuffTimer || 0,
+          appearance: p.appearance || undefined                         // cores escolhidas na criacao (js/character_creation.js)
         }
       },
       skills: Object.values(sk.primarySkills).map(s => ({ code: s.id, level: s.level, xpProgress: s.xp, xpTotal: s.xpTotal || 0 })),
@@ -131,6 +132,7 @@ class SaveSystem {
     if (c.state) {
       p.strengthBuffTimer = num(c.state.strengthBuffTimer, 0);
       p.torchLit = !!c.state.torchLit;
+      if (c.state.appearance) p.appearance = { ...c.state.appearance };
       if (this.game.hotbar && c.state.hotbar) this.game.hotbar.load(c.state.hotbar);
     }
 

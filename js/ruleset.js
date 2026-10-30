@@ -105,6 +105,16 @@
     tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelho-rubi', cabelo: 'Preto longo, chifres curvos', olhos: 'Dourados sem pupila', rosto: 'Anguloso, cauda' }
   };
 
+  // Cores de pele, cabelo e olhos (previa pintada por codigo: mascara do retrato, tools/arte/cores_racas.json).
+  // A primeira opcao e a cor original do desenho (hex null = sem pintura).
+  const COLORS = {
+    humano: {
+      pele: [['Morena clara', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Negra', '#6b4535'], ['Retinta', '#45302a']],
+      cabelo: [['Castanho', null], ['Preto', '#2b2420'], ['Loiro', '#d8b25c'], ['Ruivo', '#b4532b'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
+      olhos: [['Castanhos', null], ['Azuis', '#3c7fd0'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
+    }
+  };
+
   // ---------------- contas ----------------
   const POINT_COST = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };   // compra de pontos (27 pontos)
   const POINTS = 27;
@@ -134,5 +144,5 @@
   // Rolagem classica: 4d6, descarta o menor
   function roll4d6() { const d = [0, 0, 0, 0].map(() => 1 + Math.floor(Math.random() * 6)).sort((a, b) => a - b); return d[1] + d[2] + d[3]; }
 
-  window.SurittoRules = { ATTRS, RACES, CLASSES, RACE_CLASSES, LOOK_PARTS, LOOKS, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
+  window.SurittoRules = { ATTRS, RACES, CLASSES, RACE_CLASSES, LOOK_PARTS, LOOKS, COLORS, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
 })();

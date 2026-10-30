@@ -1266,6 +1266,7 @@ class Game {
     const Rr = window.SurittoRules, p = this.player;
     if (!Rr || !sh || !Rr.RACES[sh.race] || !Rr.CLASSES[sh.class] || !sh.attributes) return;
     p.race = sh.race; p.cls = sh.class; p.attributes = { ...sh.attributes };
+    if (sh.appearance) p.appearance = { ...sh.appearance };           // cores de pele/cabelo/olhos (tela de criacao)
     const s = Rr.sheet(p.attributes, p.race, p.cls);
     const hpR = p.maxHp ? p.hp / p.maxHp : 1, mpR = p.maxMana ? p.mana / p.maxMana : 1;
     p.maxHp = s.maxHp; p.maxMana = s.maxMana; p.defense = s.defense; p.attackBonus = s.attack; p.initiative = s.initiative;

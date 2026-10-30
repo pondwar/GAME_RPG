@@ -29,6 +29,7 @@ Uso: python tools/arte/importar_novas.py
 """
 import json
 import os
+import time
 import numpy as np
 from PIL import Image
 
@@ -407,6 +408,9 @@ def importar_textura_terreno(path, spec):
     return name, {'file': name}, f'{w}x{w} px (achatado 2:1)'
 
 
+BASE_REFS = {}                                       # cor media de pele/cabelo/olhos do boneco de cada raca
+
+
 def importar_retrato(path, spec):
     im = limpar(load_rgba(path), spec)
     box = im.getbbox()
@@ -417,7 +421,65 @@ def importar_retrato(path, spec):
     key = spec.get('chave') or spec['raca'] + ('_' + spec['classe'] if spec.get('classe') else '')
     name = f'retrato_{key}.png'
     im.save(os.path.join(OUT, name))
-    return key, name, {'file': name, 'w': w, 'h': h}, f'{w}x{h} px'
+    entry, info = {'file': name, 'w': w, 'h': h, 'v': int(time.time())}, f'{w}x{h} px'   # v: o navegador nao usa a copia velha
+    cores = json.load(open(os.path.join(HERE, 'cores_racas.json'), encoding='utf-8'))
+    race = max((r for r in cores if not r.startswith('_') and (key == r or key.startswith(r + '_'))), key=len, default=None)
+    if race:
+        mask, refs = mascara_cores(im, cores[race])
+        # todas as roupas usam a cor de referencia do boneco da raca: o mesmo tom escolhido sai igual em qualquer roupa
+        if key == race: BASE_REFS[race] = refs
+        else: refs = {k: BASE_REFS.get(race, {}).get(k, v) for k, v in refs.items()}
+        mname = f'retrato_{key}_mascara.png'
+        mask.save(os.path.join(OUT, mname))
+        entry.update({'mask': mname, 'ref': refs})
+        info += '; mascara de cores: ' + ', '.join(refs)
+    return key, name, entry, info
+
+
+def hsv_arr(a):
+    r, g, b = a[..., 0] / 255, a[..., 1] / 255, a[..., 2] / 255
+    mx = np.maximum(np.maximum(r, g), b); mn = np.minimum(np.minimum(r, g), b); d = mx - mn + 1e-9
+    h = np.where(mx == r, ((g - b) / d) % 6, np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4)) * 60
+    return h, np.where(mx > 0, (mx - mn) / (mx + 1e-9), 0), mx
+
+
+def mascara_cores(im, cfg):
+    """pele / cabelo / olhos do retrato pela cor (cores_racas.json): nucleo pela faixa de cor, depois cresce 3 px
+    para as sombras da mesma cor. Devolve a mascara RGB (R pele, G cabelo, B olhos) e a cor media de cada parte"""
+    a = np.array(im.convert('RGBA')).astype(float)
+    H, W = a.shape[:2]
+    h, s, v = hsv_arr(a); op = a[..., 3] > 128
+    yy, xx = np.mgrid[0:H, 0:W]; yf, xf = yy / H, xx / W
+    inr = lambda x, r: (x >= r[0]) & (x <= r[1])
+    parts, taken = {}, np.zeros((H, W), bool)
+    for k in ('olhos', 'cabelo', 'pele'):          # olhos e cabelo primeiro: a pele nao rouba sobrancelha nem iris
+        c = cfg.get(k)
+        if not c:
+            continue
+        area = op & ~taken
+        if 'y' in c: area &= inr(yf, c['y'])
+        if 'caixa' in c:
+            x0, y0, x1, y1 = c['caixa']; area &= (xf >= x0) & (xf <= x1) & (yf >= y0) & (yf <= y1)
+        cor = inr(h, c['h']) & inr(s, c['s'])
+        m = area & cor & inr(v, c['v'])
+        if c.get('perto_do_branco'):              # iris: so colada no branco do olho (a sombra do chapeu nao conta)
+            w = area & (v > 0.78) & (s < 0.25)
+            for _ in range(c['perto_do_branco']):
+                w = w | np.roll(w, 1, 0) | np.roll(w, -1, 0) | np.roll(w, 1, 1) | np.roll(w, -1, 1)
+            m &= w
+        if c.get('v_sombra') is not None:          # cresce para as sombras vizinhas da mesma cor
+            cand = area & cor & (v >= c['v_sombra'])
+            for _ in range(3):
+                g = m | np.roll(m, 1, 0) | np.roll(m, -1, 0) | np.roll(m, 1, 1) | np.roll(m, -1, 1)
+                m = g & cand
+        parts[k] = m; taken |= m
+    out = np.zeros((H, W, 3), np.uint8)
+    refs = {}
+    for i, k in enumerate(('pele', 'cabelo', 'olhos')):
+        if k in parts and parts[k].any():
+            out[parts[k], i] = 255
+            refs[k] = '#%02x%02x%02x' % tuple(int(x) for x in a[parts[k]][:, :3].mean(0))
+    return Image.fromarray(out, 'RGB'), refs
 
 
 def main():
