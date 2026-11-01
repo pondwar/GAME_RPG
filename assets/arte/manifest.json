@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793499836,
+   "v": 1793500744,
    "corpo": [
     1,
     0,
@@ -647,11 +647,11 @@
   "humano": {
    "file": "retrato_humano.png",
    "w": 280,
-   "h": 600,
-   "v": 1793499838,
+   "h": 616,
+   "v": 1793500749,
    "corpo": [
     0,
-    0,
+    16,
     280,
     600
    ],
@@ -659,7 +659,7 @@
    "ref": {
     "pele": "#c77e6b",
     "cabelo": "#39bd19",
-    "olhos": "#5e3731"
+    "olhos": "#5c3630"
    },
    "chroma": true
   }
@@ -702,26 +702,83 @@
   },
   "humano": {
    "cabelo": {
+    "coque": {
+     "file": "cabeca_humano_cabelo_coque.png",
+     "x": 88,
+     "y": 9,
+     "mask": "cabeca_humano_cabelo_coque_mascara.png"
+    },
+    "lado": {
+     "file": "cabeca_humano_cabelo_lado.png",
+     "x": 88,
+     "y": 18,
+     "mask": "cabeca_humano_cabelo_lado_mascara.png"
+    },
+    "moicano": {
+     "file": "cabeca_humano_cabelo_moicano.png",
+     "x": 88,
+     "y": 0,
+     "mask": "cabeca_humano_cabelo_moicano_mascara.png"
+    },
+    "ondulado": {
+     "file": "cabeca_humano_cabelo_ondulado.png",
+     "x": 66,
+     "y": 15,
+     "mask": "cabeca_humano_cabelo_ondulado_mascara.png"
+    },
     "raspado": {
      "file": "cabeca_humano_cabelo_raspado.png",
-     "x": 87,
-     "y": 17,
+     "x": 88,
+     "y": 34,
      "mask": "cabeca_humano_cabelo_raspado_mascara.png"
     }
    },
-   "barba": {},
+   "barba": {
+    "bigode": {
+     "humano": {
+      "file": "cabeca_humano_barba_bigode__humano.png",
+      "x": 96,
+      "y": 118,
+      "mask": "cabeca_humano_barba_bigode__humano_mascara.png"
+     }
+    },
+    "cavanhaque": {
+     "humano": {
+      "file": "cabeca_humano_barba_cavanhaque__humano.png",
+      "x": 96,
+      "y": 118,
+      "mask": "cabeca_humano_barba_cavanhaque__humano_mascara.png"
+     }
+    },
+    "cheia": {
+     "humano": {
+      "file": "cabeca_humano_barba_cheia__humano.png",
+      "x": 96,
+      "y": 118,
+      "mask": "cabeca_humano_barba_cheia__humano_mascara.png"
+     }
+    },
+    "lisa": {
+     "humano": {
+      "file": "cabeca_humano_barba_lisa__humano.png",
+      "x": 96,
+      "y": 118,
+      "mask": "cabeca_humano_barba_lisa__humano_mascara.png"
+     }
+    }
+   },
    "apagar": {
     "barba": {
      "humano": {
       "file": "cabeca_humano_apagar_barba__humano.png",
       "x": 96,
-      "y": 102
+      "y": 118
      }
     },
     "cabelo": {
      "file": "cabeca_humano_apagar_cabelo.png",
      "x": 86,
-     "y": 0
+     "y": 16
     }
    },
    "chapeu": []

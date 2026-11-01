@@ -740,7 +740,8 @@ def importar_raca(race, cfg, arquivos, altura=600):
         heads['apagar']['barba'][key] = _camada(z, rosto[key], f'cabeca_{race}_apagar_barba__{key}.png')
         if key == race:                                     # penteado: apaga a cabeca do boneco acima do nariz
             heads['apagar']['cabelo'] = _camada(z, op & (yy < nariz), f'cabeca_{race}_apagar_cabelo.png')
-    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[0, cab['mechas_y'] if sm else cab['queixo'] + 0.02])  # na peca, a barba conta como cabelo
+    # na peca, a barba conta como cabelo; em cima vale acima do boneco (coque e moicano mais altos que a cabeca)
+    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[-0.5, cab['mechas_y'] if sm else cab['queixo'] + 0.02])
     for key, _ in arquivos:
         if not key.startswith(('cabelo:', 'barba:')):
             continue
