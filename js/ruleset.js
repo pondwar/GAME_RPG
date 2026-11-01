@@ -110,7 +110,7 @@
   const COLORS = {
     humano: {
       pele: [['Morena clara', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Negra', '#6b4535'], ['Retinta', '#45302a']],
-      cabelo: [['Castanho', null], ['Preto', '#2b2420'], ['Loiro', '#d8b25c'], ['Ruivo', '#b4532b'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
+      cabelo: [['Castanho', '#5e3f2a'], ['Preto', '#2a2422'], ['Loiro', '#d8b25c'], ['Ruivo', '#b4532b'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
       olhos: [['Castanhos', null], ['Azuis', '#3c7fd0'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
     },
     elfo: {

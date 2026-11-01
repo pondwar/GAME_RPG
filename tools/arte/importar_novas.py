@@ -475,8 +475,11 @@ def mascara_cores(im, cfg, frame=None):
             continue
         area = op & ~taken
         if 'y' in c: area &= inr(yf, c['y'])
-        if 'caixa' in c:
-            x0, y0, x1, y1 = c['caixa']; area &= (xf >= x0) & (xf <= x1) & (yf >= y0) & (yf <= y1)
+        if 'caixa' in c:                           # uma caixa [x0, y0, x1, y1] ou uma lista delas (um olho em cada)
+            cx = c['caixa'] if isinstance(c['caixa'][0], list) else [c['caixa']]
+            dentro = np.zeros((H, W), bool)
+            for x0, y0, x1, y1 in cx: dentro |= (xf >= x0) & (xf <= x1) & (yf >= y0) & (yf <= y1)
+            area &= dentro
         cor = inh(h, c['h']) & inr(s, c['s'])
         m = area & cor & inr(v, c['v'])
         if c.get('perto_do_branco'):              # iris: so colada no branco do olho (a sombra do chapeu nao conta)
