@@ -100,7 +100,7 @@
     halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Bronzeada', cabelo: 'Castanho cacheado', olhos: 'Avelã', rosto: 'Redondo e sorridente' },
     draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Clara rosada', cabelo: 'Branco espetado', olhos: 'Azuis', rosto: 'Nariz grande, bigode' },
-    meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', cabelo: 'Preto ondulado', olhos: 'Avelã', rosto: 'Suave, orelhas meio pontudas' },
+    meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
     meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde-acinzentada', cabelo: 'Preto preso', olhos: 'Castanhos', rosto: 'Presas inferiores' },
     tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelho-rubi', cabelo: 'Preto longo, chifres curvos', olhos: 'Dourados sem pupila', rosto: 'Anguloso, cauda' }
   };
@@ -118,6 +118,11 @@
       cabelo: [['Loiro-prateado', null], ['Dourado', '#e2c56a'], ['Branco', '#f0ece4'], ['Preto', '#1e1c22'], ['Ruivo', '#b8562e'], ['Castanho', '#6b4630']],
       olhos: [['Verdes', null], ['Azuis', '#3c8fe0'], ['Violeta', '#8a4fd0'], ['Âmbar', '#d39a2a'], ['Prateados', '#b8c0c8'], ['Dourados', '#d9b640']]
     },
+    meio_elfo: {                                // cabelo em verde-chroma: toda cor de cabelo tem hex (nao ha cor do desenho)
+      pele: [['Oliva', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Negra', '#6b4535'], ['Pálida', '#f3dcd2']],
+      cabelo: [['Preto', '#2a2422'], ['Castanho', '#6b4630'], ['Loiro', '#d8b25c'], ['Ruivo', '#b4532b'], ['Grisalho', '#9b968f'], ['Prateado', '#dfe2e6']],
+      olhos: [['Castanhos', null], ['Verdes', '#3f9a4a'], ['Azuis', '#3c7fd0'], ['Avelã', '#8a7a3a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a']]
+    },
     anao: {                                     // cabelo e barba mudam juntos (mesma mascara)
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Cinza-pedra', '#9a948c'], ['Escura', '#5e4234']],
       cabelo: [['Castanho-escuro', null], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
@@ -131,6 +136,10 @@
     humano: {
       penteado: [['Curto arrepiado', null], ['Raspado', 'raspado'], ['Repartido', 'lado'], ['Ondulado', 'ondulado'], ['Moicano', 'moicano'], ['Coque', 'coque']],
       barba: [['Por fazer', null], ['Sem barba', 'lisa'], ['Cavanhaque', 'cavanhaque'], ['Cheia', 'cheia'], ['Bigode', 'bigode']]
+    },
+    meio_elfo: {
+      penteado: [['Ondulado', null], ['Rabo', 'rabo']],
+      barba: [['Cheia curta', null], ['Cavanhaque', 'cavanhaque']]
     },
     elfo: {                                     // elfo nao tem barba
       penteado: [['Rabo com mechas', null], ['Coque', 'coque'], ['Curto', 'curto'], ['Tranças', 'trancas'], ['Raspado', 'raspado']]

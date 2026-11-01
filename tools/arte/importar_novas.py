@@ -457,9 +457,21 @@ def mascara_cores(im, cfg, frame=None):
     inr = lambda x, r: (x >= r[0]) & (x <= r[1])
     inh = lambda x, r: inr(x, r) if r[0] <= r[1] else (x >= r[0]) | (x <= r[1])   # matiz: [350, 15] passa pelo 0
     parts, taken = {}, np.zeros((H, W), bool)
+    # cabelo em verde-chroma (cfg cabelo.chroma): a cobertura de verde de cada pixel e a mascara (G = 0..255), inclusive
+    # na barba rala misturada com a pele; a pele e procurada na imagem sem o verde (despill)
+    ch = cfg.get('cabelo', {}).get('chroma')
+    if ch:
+        verde = a[..., 1] - np.maximum(a[..., 0], a[..., 2])
+        cobre = np.clip(verde / np.maximum(a[..., 1], 1) * 1.25, 0, 1) * op
+        if 'y' in cfg['cabelo']: cobre *= inr(yf, cfg['cabelo']['y'])
+        sem = a.copy(); sem[..., 1] = np.minimum(a[..., 1], np.maximum(a[..., 0], a[..., 2]))
+        h, s, v = hsv_arr(sem)
     for k in ('olhos', 'cabelo', 'pele'):          # olhos e cabelo primeiro: a pele nao rouba sobrancelha nem iris
         c = cfg.get(k)
         if not c:
+            continue
+        if k == 'cabelo' and ch:                   # nao toma o pixel: a pele por baixo da barba rala continua pele
+            parts[k] = cobre > 0.15
             continue
         area = op & ~taken
         if 'y' in c: area &= inr(yf, c['y'])
@@ -485,6 +497,9 @@ def mascara_cores(im, cfg, frame=None):
         if k in parts and parts[k].any():
             out[parts[k], i] = 255
             refs[k] = '#%02x%02x%02x' % tuple(int(x) for x in a[parts[k]][:, :3].mean(0))
+    if ch:
+        out[..., 1] = (cobre * 255).astype(np.uint8)
+        if (cobre > 0.8).any(): refs['cabelo'] = '#%02x%02x%02x' % tuple(int(x) for x in a[cobre > 0.8][:, :3].mean(0))
     return Image.fromarray(out, 'RGB'), refs, parts
 
 
@@ -706,6 +721,7 @@ def importar_raca(race, cfg, arquivos, altura=600):
         if key == race: refs_base = refs
         mname = f'retrato_{key}_mascara.png'; mask.save(os.path.join(OUT, mname))
         retratos[key] = {'file': name, 'w': W, 'h': H, 'v': v, 'corpo': corpo, 'mask': mname, 'ref': refs_base or refs}
+        if cfg['cabelo'].get('chroma'): retratos[key]['chroma'] = True     # cabelo verde: o jogo sempre pinta por cima
         infos.append(f'retrato_{key}')
         pele = np.zeros((H, W), bool)
         for m in parts.values(): pele |= m

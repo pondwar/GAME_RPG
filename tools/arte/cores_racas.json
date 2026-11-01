@@ -224,5 +224,70 @@
       ],
       "chapeu": []
     }
-  }
+  },
+  "meio_elfo": {
+    "pele": {
+      "h": [
+        0,
+        30
+      ],
+      "s": [
+        0.41,
+        0.62
+      ],
+      "v": [
+        0.6,
+        1.0
+      ],
+      "v_sombra": 0.4,
+      "y": [
+        0,
+        0.66
+      ]
+    },
+    "cabelo": {
+      "chroma": true,
+      "y": [
+        0,
+        0.3
+      ]
+    },
+    "olhos": {
+      "h": [
+        0,
+        40
+      ],
+      "s": [
+        0.3,
+        1
+      ],
+      "v": [
+        0.12,
+        0.6
+      ],
+      "caixa": [
+        0.4,
+        0.13,
+        0.6,
+        0.148
+      ],
+      "perto_do_branco": 2
+    },
+    "cabeca": {
+      "olhos_busca": [
+        0.38,
+        0.12,
+        0.62,
+        0.155
+      ],
+      "nariz": 0.172,
+      "queixo": 0.235,
+      "rosto_x": [
+        0.34,
+        0.66
+      ],
+      "chapeu": []
+    }
+  },
+  "_comentario_chroma": "cabelo.chroma: cabelo, sobrancelha e barba desenhados em verde #00FF00; a mascara e a cobertura de verde e o jogo pinta por mapa de luz (character_creation.js)"
 }

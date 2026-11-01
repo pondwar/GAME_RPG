@@ -52,9 +52,26 @@
       const r = hexHsl(pic.ref[k]), t = hexHsl(colors[k]);
       return { ch, r, t };
     });
+    // cabelo verde-chroma (pic.chroma): mapa de luz. O claro/escuro do verde vira o claro/escuro da cor escolhida;
+    // a mascara G e a cobertura (barba rala: mistura a pele sem o verde com o cabelo pintado)
+    // Na mistura (barba rala), a pele por baixo tem a cor da pele escolhida, com o claro/escuro tirado do vermelho
+    // (o verde quase nao tem vermelho)
+    const rgb = (h) => [1, 3, 5].map(j => parseInt(h.slice(j, j + 2), 16));
+    const ck = pic.chroma && colors.cabelo && pic.ref && pic.ref.cabelo
+      ? { t: hexHsl(colors.cabelo), g: parseInt(pic.ref.cabelo.slice(3, 5), 16) / 255,
+          sk: rgb(colors.pele || pic.ref.pele || '#c08060'), sr: rgb(pic.ref.pele || '#c08060')[0] || 1 } : null;
     for (let i = 0; i < d.length; i += 4) {
+      let k = 0, G = d[i + 1], gs = 0;
+      if (ck && m[i + 1] > 0) {
+        k = m[i + 1] / 255; gs = Math.min(G, Math.max(d[i], d[i + 2]));
+        if (k < 0.97) {
+          const f = Math.max(0, (d[i] - k * 0.12 * G) / (1 - k)) / ck.sr;
+          for (let j = 0; j < 3; j++) d[i + j] = Math.min(255, ck.sk[j] * f);
+        }
+      }
       for (const p of tints) {
-        if (!p || m[i + p.ch] < 128) continue;
+        if (!p || (ck && (p.ch === 1 || k))) continue;
+        if (m[i + p.ch] < 128) continue;
         const [h, s, l] = rgbHsl(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255), { r, t } = p;
         let dh = h - r[0]; if (dh > 180) dh -= 360; if (dh < -180) dh += 360;
         const nh = (t[0] + dh * 0.5 + 360) % 360;
@@ -62,6 +79,13 @@
         const nl = t[2] >= r[2] ? clamp(l + (1 - l) * (t[2] - r[2]) / (1 - r[2] + 1e-6)) : clamp(l * t[2] / (r[2] || 1));
         const [R, G, B] = hslRgb(nh, ns, nl); d[i] = R; d[i + 1] = G; d[i + 2] = B;
         break;
+      }
+      if (k) {
+        const gh = clamp((G / 255 - (1 - k) * gs / 255) / k), rel = gh / (ck.g || 1), t = ck.t;   // brilho do fio
+        // brilho proporcional a cor (preto fica preto); o neon do contorno da barba nao vira branco
+        const nl = t[2] * Math.min(rel, 1.2) + Math.max(0, Math.min(rel, 1.2) - 1) * 0.1;
+        const c = hslRgb(t[0], t[1], clamp(nl));
+        for (let j = 0; j < 3; j++) d[i + j] = Math.round(d[i + j] * (1 - k) + c[j] * k);
       }
     }
     cx.putImageData(id, 0, 0);
@@ -154,12 +178,12 @@
         if (this.painted.has(key)) src = this.painted.get(key);
         else paint(pic, colors, parts).then(url => {
           this.painted.set(key, url);
-          const el = this.root && this.root.querySelector('.cs-fig'); if (el && el.dataset.key === key) el.src = url;
+          const el = this.root && this.root.querySelector('.cs-fig'); if (el && el.dataset.key === key) { el.src = url; el.style.visibility = ''; }
         }).catch(() => { });
         this.paintKey = key;
       } else this.paintKey = '';
       const fig = pic
-        ? `<img class="cs-fig" src="${src}" data-key="${this.paintKey}" style="height:${h}px" alt="${race.name}">`
+        ? `<img class="cs-fig" src="${src}" data-key="${this.paintKey}" style="height:${h}px${pic.chroma && !src.startsWith('data:') ? ';visibility:hidden' : ''}" alt="${race.name}">`
         : `<div class="cs-fig cs-fig-none" style="font-size:${Math.round(150 * (look.scale || 1))}px">${race.icon}</div>`;
       return `
         <div class="cs-stage">
