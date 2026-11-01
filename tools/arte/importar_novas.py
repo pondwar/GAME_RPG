@@ -482,13 +482,15 @@ def mascara_cores(im, cfg, frame=None):
             area &= dentro
         cor = inh(h, c['h']) & inr(s, c['s'])
         m = area & cor & inr(v, c['v'])
+        if 'brilho' in c:                          # brilho da pele (testa careca): pouca saturacao, muito claro, so na cabeca
+            sb, vb, yb = c['brilho']; m |= area & inh(h, c['h']) & (s >= sb) & (v >= vb) & (yf <= yb)
         if c.get('perto_do_branco'):              # iris: so colada no branco do olho (a sombra do chapeu nao conta)
             w = area & (v > 0.78) & (s < 0.25)
             for _ in range(c['perto_do_branco']):
                 w = w | np.roll(w, 1, 0) | np.roll(w, -1, 0) | np.roll(w, 1, 1) | np.roll(w, -1, 1)
             m &= w
         if c.get('v_sombra') is not None:          # cresce para as sombras vizinhas da mesma cor
-            cand = area & cor & (v >= c['v_sombra'])
+            cand = (area & cor & (v >= c['v_sombra'])) | m      # o nucleo (com o brilho) nunca sai
             if 'v_teto' in c: cand &= v <= c['v_teto']    # cabelo do mesmo matiz da pele (anao): nao cresce para a pele clara
             for _ in range(3):
                 g = m | np.roll(m, 1, 0) | np.roll(m, -1, 0) | np.roll(m, 1, 1) | np.roll(m, -1, 1)

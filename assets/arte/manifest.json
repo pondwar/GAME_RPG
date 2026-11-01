@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793499463,
+   "v": 1793499836,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 600,
-   "v": 1793499464,
+   "v": 1793499838,
    "corpo": [
     0,
     0,
@@ -701,7 +701,14 @@
    "chapeu": []
   },
   "humano": {
-   "cabelo": {},
+   "cabelo": {
+    "raspado": {
+     "file": "cabeca_humano_cabelo_raspado.png",
+     "x": 87,
+     "y": 17,
+     "mask": "cabeca_humano_cabelo_raspado_mascara.png"
+    }
+   },
    "barba": {},
    "apagar": {
     "barba": {
