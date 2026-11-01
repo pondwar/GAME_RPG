@@ -130,8 +130,10 @@
     preview(raceCode, classCode, sel = {}) {
       const Rr = R(), race = Rr.RACES[raceCode], cls = Rr.CLASSES[classCode], look = Rr.LOOKS[raceCode] || {};
       const pal = Rr.COLORS[raceCode] || {};
+      // todo personagem comeca como aldeao: o boneco base da raca, em qualquer classe. As roupas de classe
+      // (retrato_<raca>_<classe>) ficam guardadas para virar itens de nivel alto; both segue no codigo para o dia do item.
       // sem retrato importado, o humano usa o proprio boneco do jogo (parado, de frente)
-      const P = this.portraits || {}, both = P[raceCode + '_' + classCode], only = P[raceCode] || (raceCode === 'humano' ? { file: '../player/v2/idle/down_0.png' } : null), pic = both || only;
+      const P = this.portraits || {}, both = null, only = P[raceCode] || (raceCode === 'humano' ? { file: '../player/v2/idle/down_0.png' } : null), pic = both || only;
       // tela da raca alinhada (importar_raca): a altura mostrada e a do corpo; o resto da tela e chapeu/manga
       const h = Math.round(300 * (look.scale || 1) * (pic && pic.corpo ? pic.h / pic.corpo[3] : 1));
       // cores escolhidas: com mascara, pinta (na hora ou do cache); sem mascara, fica o desenho original
@@ -163,7 +165,7 @@
         <div class="cs-stage">
           ${fig}
           <div class="cs-badge" title="${cls.name}">${cls.icon}</div>
-          ${both ? '' : `<div class="cs-stage-note">${pic ? `Roupa de ${cls.name}: em breve` : 'Retrato ainda não desenhado'}</div>`}
+          ${pic ? '' : `<div class="cs-stage-note">Retrato ainda não desenhado</div>`}
         </div>
         <div class="cs-look">${Rr.LOOK_PARTS.map(p => {
           const opts = pic && pic.mask && this.options(raceCode, p.code);
