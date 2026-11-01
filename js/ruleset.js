@@ -96,7 +96,7 @@
   const LOOKS = {
     humano: { scale: 1, corpo: 'Masculino', pele: 'Morena clara', penteado: 'Curto arrepiado', cabelo: 'Castanho', barba: 'Por fazer', olhos: 'Castanhos', rosto: 'Queixo quadrado' },
     elfo: { scale: 1.04, corpo: 'Masculino', pele: 'Clara rosada', penteado: 'Rabo com mechas', cabelo: 'Loiro-prateado', barba: 'Sem barba', olhos: 'Verdes', rosto: 'Fino, orelhas pontudas' },
-    anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', cabelo: 'Ruivo, barba trançada', olhos: 'Cinzentos', rosto: 'Largo, nariz grande' },
+    anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', penteado: 'Rabo curto', cabelo: 'Castanho-escuro', barba: 'Cheia curta', olhos: 'Azul-acinzentados', rosto: 'Largo, nariz grande' },
     halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Bronzeada', cabelo: 'Castanho cacheado', olhos: 'Avelã', rosto: 'Redondo e sorridente' },
     draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Clara rosada', cabelo: 'Branco espetado', olhos: 'Azuis', rosto: 'Nariz grande, bigode' },
@@ -117,6 +117,11 @@
       pele: [['Clara rosada', null], ['Pálida', '#f3dcd2'], ['Dourada', '#e0b68a'], ['Bronze', '#b07a55'], ['Lunar', '#c9c8dc'], ['Noturna', '#4b4a66']],
       cabelo: [['Loiro-prateado', null], ['Dourado', '#e2c56a'], ['Branco', '#f0ece4'], ['Preto', '#1e1c22'], ['Ruivo', '#b8562e'], ['Castanho', '#6b4630']],
       olhos: [['Verdes', null], ['Azuis', '#3c8fe0'], ['Violeta', '#8a4fd0'], ['Âmbar', '#d39a2a'], ['Prateados', '#b8c0c8'], ['Dourados', '#d9b640']]
+    },
+    anao: {                                     // cabelo e barba mudam juntos (mesma mascara)
+      pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Cinza-pedra', '#9a948c'], ['Escura', '#5e4234']],
+      cabelo: [['Castanho-escuro', null], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
+      olhos: [['Azul-acinzentados', null], ['Castanhos', '#6b4428'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
     }
   };
 

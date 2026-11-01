@@ -474,6 +474,7 @@ def mascara_cores(im, cfg, frame=None):
             m &= w
         if c.get('v_sombra') is not None:          # cresce para as sombras vizinhas da mesma cor
             cand = area & cor & (v >= c['v_sombra'])
+            if 'v_teto' in c: cand &= v <= c['v_teto']    # cabelo do mesmo matiz da pele (anao): nao cresce para a pele clara
             for _ in range(3):
                 g = m | np.roll(m, 1, 0) | np.roll(m, -1, 0) | np.roll(m, 1, 1) | np.roll(m, -1, 1)
                 m = g & cand

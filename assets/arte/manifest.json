@@ -629,7 +629,7 @@
    "file": "retrato_humano.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -647,7 +647,7 @@
    "file": "retrato_humano_barbaro.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -665,7 +665,7 @@
    "file": "retrato_humano_bardo.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -683,7 +683,7 @@
    "file": "retrato_humano_bruxo.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -701,7 +701,7 @@
    "file": "retrato_humano_clerigo.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -719,7 +719,7 @@
    "file": "retrato_humano_druida.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -737,7 +737,7 @@
    "file": "retrato_humano_feiticeiro.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -755,7 +755,7 @@
    "file": "retrato_humano_guerreiro.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -773,7 +773,7 @@
    "file": "retrato_humano_ladino.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -791,7 +791,7 @@
    "file": "retrato_humano_mago.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -809,7 +809,7 @@
    "file": "retrato_humano_monge.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -827,7 +827,7 @@
    "file": "retrato_humano_paladino.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -845,7 +845,7 @@
    "file": "retrato_humano_patrulheiro.png",
    "w": 305,
    "h": 602,
-   "v": 1793368191,
+   "v": 1793495288,
    "corpo": [
     16,
     2,
@@ -863,7 +863,7 @@
    "file": "retrato_elfo.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -881,7 +881,7 @@
    "file": "retrato_elfo_bardo.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -899,7 +899,7 @@
    "file": "retrato_elfo_clerigo.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -917,7 +917,7 @@
    "file": "retrato_elfo_druida.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -935,7 +935,7 @@
    "file": "retrato_elfo_feiticeiro.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -953,7 +953,7 @@
    "file": "retrato_elfo_guerreiro.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -971,7 +971,7 @@
    "file": "retrato_elfo_ladino.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -989,7 +989,7 @@
    "file": "retrato_elfo_mago.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -1007,7 +1007,7 @@
    "file": "retrato_elfo_monge.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -1025,7 +1025,7 @@
    "file": "retrato_elfo_patrulheiro.png",
    "w": 274,
    "h": 605,
-   "v": 1793368200,
+   "v": 1793495296,
    "corpo": [
     36,
     5,
@@ -1041,45 +1041,111 @@
   },
   "anao": {
    "file": "retrato_anao.png",
-   "w": 397,
+   "w": 368,
    "h": 600,
-   "v": 1793368232
+   "v": 1793495308,
+   "corpo": [
+    6,
+    0,
+    357,
+    600
+   ],
+   "mask": "retrato_anao_mascara.png",
+   "ref": {
+    "pele": "#dc9c8d",
+    "cabelo": "#4d3633",
+    "olhos": "#5c6b7d"
+   }
+  },
+  "anao_barbaro": {
+   "file": "retrato_anao_barbaro.png",
+   "w": 368,
+   "h": 600,
+   "v": 1793495308,
+   "corpo": [
+    6,
+    0,
+    357,
+    600
+   ],
+   "mask": "retrato_anao_barbaro_mascara.png",
+   "ref": {
+    "pele": "#dc9c8d",
+    "cabelo": "#4d3633",
+    "olhos": "#5c6b7d"
+   }
+  },
+  "anao_clerigo": {
+   "file": "retrato_anao_clerigo.png",
+   "w": 368,
+   "h": 600,
+   "v": 1793495308,
+   "corpo": [
+    6,
+    0,
+    357,
+    600
+   ],
+   "mask": "retrato_anao_clerigo_mascara.png",
+   "ref": {
+    "pele": "#dc9c8d",
+    "cabelo": "#4d3633",
+    "olhos": "#5c6b7d"
+   }
+  },
+  "anao_guerreiro": {
+   "file": "retrato_anao_guerreiro.png",
+   "w": 368,
+   "h": 600,
+   "v": 1793495308,
+   "corpo": [
+    6,
+    0,
+    357,
+    600
+   ],
+   "mask": "retrato_anao_guerreiro_mascara.png",
+   "ref": {
+    "pele": "#dc9c8d",
+    "cabelo": "#4d3633",
+    "olhos": "#5c6b7d"
+   }
   },
   "draconato": {
    "file": "retrato_draconato.png",
    "w": 391,
    "h": 600,
-   "v": 1793368232
+   "v": 1793495329
   },
   "gnomo": {
    "file": "retrato_gnomo.png",
    "w": 394,
    "h": 600,
-   "v": 1793368233
+   "v": 1793495330
   },
   "halfling": {
    "file": "retrato_halfling.png",
    "w": 393,
    "h": 600,
-   "v": 1793368233
+   "v": 1793495330
   },
   "meio_elfo": {
    "file": "retrato_meio_elfo.png",
    "w": 398,
    "h": 600,
-   "v": 1793368234
+   "v": 1793495331
   },
   "meio_orc": {
    "file": "retrato_meio_orc.png",
    "w": 407,
    "h": 600,
-   "v": 1793368234
+   "v": 1793495331
   },
   "tiferino": {
    "file": "retrato_tiferino.png",
    "w": 406,
    "h": 600,
-   "v": 1793368235
+   "v": 1793495332
   }
  },
  "heads": {
@@ -1740,6 +1806,40 @@
     "mago",
     "bardo"
    ]
+  },
+  "anao": {
+   "cabelo": {},
+   "barba": {},
+   "apagar": {
+    "barba": {
+     "anao": {
+      "file": "cabeca_anao_apagar_barba__anao.png",
+      "x": 135,
+      "y": 88
+     },
+     "anao_barbaro": {
+      "file": "cabeca_anao_apagar_barba__anao_barbaro.png",
+      "x": 135,
+      "y": 88
+     },
+     "anao_clerigo": {
+      "file": "cabeca_anao_apagar_barba__anao_clerigo.png",
+      "x": 135,
+      "y": 88
+     },
+     "anao_guerreiro": {
+      "file": "cabeca_anao_apagar_barba__anao_guerreiro.png",
+      "x": 135,
+      "y": 88
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_anao_apagar_cabelo.png",
+     "x": 125,
+     "y": 0
+    }
+   },
+   "chapeu": []
   }
  }
 }
