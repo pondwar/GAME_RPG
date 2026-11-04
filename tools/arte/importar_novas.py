@@ -479,6 +479,15 @@ def mascara_cores(im, cfg, frame=None):
     if ch:
         verde = a[..., 1] - np.maximum(a[..., 0], a[..., 2])
         cobre = np.clip(verde / np.maximum(a[..., 1], 1) * 1.25, 0, 1) * op
+        if 'couro' in cfg['cabelo']:               # couro cabeludo raspado: pele com um verde fraco por cima. O verde a
+            # mais do que a pele teria (G/R da pele) dividido pelo verde do cabelo da a cobertura
+            hh, ss, vv = hsv_arr(a)
+            pele = op & (cobre == 0) & (ss > 0.3) & (vv > 0.6) & (a[..., 0] > a[..., 1]) & (a[..., 1] > a[..., 2])
+            rho = np.median(a[pele][:, 1] / np.maximum(a[pele][:, 0], 1)) if pele.any() else 0.75
+            gref = np.median(a[cobre > 0.8][:, 1]) if (cobre > 0.8).any() else 180
+            b = (a[..., 1] - rho * a[..., 0]) / (1 - 0.15 * rho)
+            couro = np.clip(b / gref, 0, 1) * op * (yf <= cfg['cabelo']['couro'])
+            cobre = np.maximum(cobre, np.where(couro > 0.12, couro, 0))
         if 'y' in cfg['cabelo']: cobre *= inr(yf, cfg['cabelo']['y'])
         sem = a.copy(); sem[..., 1] = np.minimum(a[..., 1], np.maximum(a[..., 0], a[..., 2]))
         h, s, v = hsv_arr(sem)
@@ -757,7 +766,9 @@ def importar_raca(race, cfg, arquivos, altura=600):
         z = np.zeros((H, W, 4), np.uint8); z[..., 3] = 255
         heads['apagar']['barba'][key] = _camada(z, rosto[key], f'cabeca_{race}_apagar_barba__{key}.png')
         if key == race:                                     # penteado: apaga a cabeca do boneco acima do nariz
-            heads['apagar']['cabelo'] = _camada(z, op & (yy < nariz), f'cabeca_{race}_apagar_cabelo.png')
+            # e o cabelo do boneco que desce fora da barba (rabo de cavalo atras do pescoco)
+            rabo = _crescer(parts.get('cabelo', np.zeros((H, W), bool)) & (yy >= nariz) & ~banda, 2) & op
+            heads['apagar']['cabelo'] = _camada(z, op & ((yy < nariz) | rabo), f'cabeca_{race}_apagar_cabelo.png')
     # na peca, a barba conta como cabelo; em cima vale acima do boneco (coque e moicano mais altos que a cabeca)
     pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[-0.5, cab['mechas_y'] if sm else cab['queixo'] + 0.02])
     for key, _ in arquivos:
@@ -778,6 +789,8 @@ def importar_raca(race, cfg, arquivos, altura=600):
                     ligado |= novo
                 m4[ligado] = (0, 255, 0, 255)                       # abaixo do nariz a peca e so cabelo (a sombra nao e pele)
                 alpha = (op & (yy < nariz + 2)) | ligado
+            elif cfg['cabelo'].get('chroma'):               # verde exato: o cabelo que desce entra todo (trancas), e onde o
+                alpha = (op & ((yy < nariz + 2) | rabo)) | (_crescer(pelo & ((yy < queixo) | ~banda), 1) & op)   # rabo do boneco estava
             else:
                 alpha = (op & (yy < nariz + 2)) | (_crescer(pelo, 1) & op & (yy < queixo))
             ent = _camada(a, alpha, f'cabeca_{race}_cabelo_{estilo}.png')

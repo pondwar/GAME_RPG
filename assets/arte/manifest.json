@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793798509,
+   "v": 1793799661,
    "corpo": [
     1,
     0,
@@ -639,7 +639,7 @@
    "mask": "retrato_meio_elfo_mascara.png",
    "ref": {
     "pele": "#c67d66",
-    "cabelo": "#31b219",
+    "cabelo": "#32b419",
     "olhos": "#502f27"
    },
    "chroma": true
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793798514,
+   "v": 1793799666,
    "corpo": [
     0,
     16,
@@ -658,7 +658,7 @@
    "mask": "retrato_humano_mascara.png",
    "ref": {
     "pele": "#c87e6c",
-    "cabelo": "#39bd19",
+    "cabelo": "#3abe19",
     "olhos": "#5c3630"
    },
    "chroma": true
@@ -666,18 +666,18 @@
   "elfo": {
    "file": "retrato_elfo.png",
    "w": 253,
-   "h": 600,
-   "v": 1793798516,
+   "h": 611,
+   "v": 1793799670,
    "corpo": [
     0,
-    0,
+    11,
     253,
     600
    ],
    "mask": "retrato_elfo_mascara.png",
    "ref": {
     "pele": "#d28c7a",
-    "cabelo": "#3ccc14",
+    "cabelo": "#42d217",
     "olhos": "#2f497d"
    },
    "chroma": true
@@ -803,20 +803,45 @@
    "chapeu": []
   },
   "elfo": {
-   "cabelo": {},
+   "cabelo": {
+    "coque": {
+     "file": "cabeca_elfo_cabelo_coque.png",
+     "x": 58,
+     "y": 0,
+     "mask": "cabeca_elfo_cabelo_coque_mascara.png"
+    },
+    "curto": {
+     "file": "cabeca_elfo_cabelo_curto.png",
+     "x": 58,
+     "y": 10,
+     "mask": "cabeca_elfo_cabelo_curto_mascara.png"
+    },
+    "raspado": {
+     "file": "cabeca_elfo_cabelo_raspado.png",
+     "x": 58,
+     "y": 10,
+     "mask": "cabeca_elfo_cabelo_raspado_mascara.png"
+    },
+    "trancas": {
+     "file": "cabeca_elfo_cabelo_trancas.png",
+     "x": 58,
+     "y": 10,
+     "mask": "cabeca_elfo_cabelo_trancas_mascara.png"
+    }
+   },
    "barba": {},
    "apagar": {
     "barba": {
      "elfo": {
       "file": "cabeca_elfo_apagar_barba__elfo.png",
-      "x": 96,
-      "y": 96
+      "x": 102,
+      "y": 107
      }
     },
     "cabelo": {
      "file": "cabeca_elfo_apagar_cabelo.png",
      "x": 58,
-     "y": 0
+     "y": 10
     }
    },
    "chapeu": []
