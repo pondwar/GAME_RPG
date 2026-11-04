@@ -125,7 +125,7 @@
     },
     anao: {                                     // cabelo e barba mudam juntos (mesma mascara)
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Cinza-pedra', '#9a948c'], ['Escura', '#5e4234']],
-      cabelo: [['Castanho-escuro', null], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
+      cabelo: [['Castanho-escuro', '#4a3326'], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
       olhos: [['Azul-acinzentados', null], ['Castanhos', '#6b4428'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
     }
   };
@@ -140,6 +140,10 @@
     meio_elfo: {
       penteado: [['Ondulado', null], ['Rabo', 'rabo']],
       barba: [['Cheia curta', null], ['Cavanhaque', 'cavanhaque']]
+    },
+    anao: {
+      penteado: [['Rabo curto', null], ['Careca', 'careca'], ['Coque', 'coque'], ['Tranças', 'trancas'], ['Moicano', 'moicano']],
+      barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
     },
     elfo: {                                     // elfo nao tem barba
       penteado: [['Rabo de cavalo', null], ['Coque', 'coque'], ['Curto', 'curto'], ['Tranças', 'trancas'], ['Raspado', 'raspado']]

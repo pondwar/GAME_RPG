@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793799661,
+   "v": 1793810388,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793799666,
+   "v": 1793810395,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793799670,
+   "v": 1793810399,
    "corpo": [
     0,
     11,
@@ -679,6 +679,25 @@
     "pele": "#d28c7a",
     "cabelo": "#42d217",
     "olhos": "#2f497d"
+   },
+   "chroma": true
+  },
+  "anao": {
+   "file": "retrato_anao.png",
+   "w": 297,
+   "h": 600,
+   "v": 1793810400,
+   "corpo": [
+    0,
+    0,
+    297,
+    600
+   ],
+   "mask": "retrato_anao_mascara.png",
+   "ref": {
+    "pele": "#ce8677",
+    "cabelo": "#35ca0e",
+    "olhos": "#515163"
    },
    "chroma": true
   }
@@ -842,6 +861,25 @@
      "file": "cabeca_elfo_apagar_cabelo.png",
      "x": 58,
      "y": 10
+    }
+   },
+   "chapeu": []
+  },
+  "anao": {
+   "cabelo": {},
+   "barba": {},
+   "apagar": {
+    "barba": {
+     "anao": {
+      "file": "cabeca_anao_apagar_barba__anao.png",
+      "x": 93,
+      "y": 105
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_anao_apagar_cabelo.png",
+     "x": 82,
+     "y": 0
     }
    },
    "chapeu": []
