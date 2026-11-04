@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793500744,
+   "v": 1793798509,
    "corpo": [
     1,
     0,
@@ -638,7 +638,7 @@
    ],
    "mask": "retrato_meio_elfo_mascara.png",
    "ref": {
-    "pele": "#c57d66",
+    "pele": "#c67d66",
     "cabelo": "#31b219",
     "olhos": "#502f27"
    },
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793500749,
+   "v": 1793798514,
    "corpo": [
     0,
     16,
@@ -657,9 +657,28 @@
    ],
    "mask": "retrato_humano_mascara.png",
    "ref": {
-    "pele": "#c77e6b",
+    "pele": "#c87e6c",
     "cabelo": "#39bd19",
     "olhos": "#5c3630"
+   },
+   "chroma": true
+  },
+  "elfo": {
+   "file": "retrato_elfo.png",
+   "w": 253,
+   "h": 600,
+   "v": 1793798516,
+   "corpo": [
+    0,
+    0,
+    253,
+    600
+   ],
+   "mask": "retrato_elfo_mascara.png",
+   "ref": {
+    "pele": "#d28c7a",
+    "cabelo": "#3ccc14",
+    "olhos": "#2f497d"
    },
    "chroma": true
   }
@@ -779,6 +798,25 @@
      "file": "cabeca_humano_apagar_cabelo.png",
      "x": 86,
      "y": 16
+    }
+   },
+   "chapeu": []
+  },
+  "elfo": {
+   "cabelo": {},
+   "barba": {},
+   "apagar": {
+    "barba": {
+     "elfo": {
+      "file": "cabeca_elfo_apagar_barba__elfo.png",
+      "x": 96,
+      "y": 96
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_elfo_apagar_cabelo.png",
+     "x": 58,
+     "y": 0
     }
    },
    "chapeu": []

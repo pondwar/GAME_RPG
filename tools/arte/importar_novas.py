@@ -445,6 +445,22 @@ def hsv_arr(a):
     return h, np.where(mx > 0, (mx - mn) / (mx + 1e-9), 0), mx
 
 
+def _sem_pedacos(m, minimo):
+    """tira da mascara os pedacos soltos com menos de 'minimo' pixels (sombra da roupa com cor de pele)"""
+    m = m.copy(); H, W = m.shape; visto = np.zeros_like(m)
+    for y0, x0 in np.argwhere(m):
+        if visto[y0, x0]: continue
+        pilha, comp = [(y0, x0)], []; visto[y0, x0] = True
+        while pilha:
+            y, x = pilha.pop(); comp.append((y, x))
+            for yy, xx in ((y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)):
+                if 0 <= yy < H and 0 <= xx < W and m[yy, xx] and not visto[yy, xx]:
+                    visto[yy, xx] = True; pilha.append((yy, xx))
+        if len(comp) < minimo:
+            ys, xs = zip(*comp); m[list(ys), list(xs)] = False
+    return m
+
+
 def mascara_cores(im, cfg, frame=None):
     """pele / cabelo / olhos do retrato pela cor (cores_racas.json): nucleo pela faixa de cor, depois cresce 3 px
     para as sombras da mesma cor. Devolve a mascara RGB (R pele, G cabelo, B olhos), a cor media de cada parte e as
@@ -495,6 +511,8 @@ def mascara_cores(im, cfg, frame=None):
             for _ in range(3):
                 g = m | np.roll(m, 1, 0) | np.roll(m, -1, 0) | np.roll(m, 1, 1) | np.roll(m, -1, 1)
                 m = g & cand
+        if c.get('minimo'):                        # [pixels, y]: so abaixo de y (a orelha solta continua pele)
+            n, ym = c['minimo']; m = np.where(yf > ym, _sem_pedacos(m, n), m)
         parts[k] = m; taken |= m
     out = np.zeros((H, W, 3), np.uint8)
     refs = {}
