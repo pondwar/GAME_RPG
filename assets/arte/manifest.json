@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793810388,
+   "v": 1793814080,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793810395,
+   "v": 1793814086,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793810399,
+   "v": 1793814090,
    "corpo": [
     0,
     11,
@@ -684,12 +684,12 @@
   },
   "anao": {
    "file": "retrato_anao.png",
-   "w": 297,
-   "h": 600,
-   "v": 1793810400,
+   "w": 298,
+   "h": 628,
+   "v": 1793814096,
    "corpo": [
     0,
-    0,
+    28,
     297,
     600
    ],
@@ -791,7 +791,7 @@
     "cheia": {
      "humano": {
       "file": "cabeca_humano_barba_cheia__humano.png",
-      "x": 96,
+      "x": 36,
       "y": 118,
       "mask": "cabeca_humano_barba_cheia__humano_mascara.png"
      }
@@ -866,20 +866,78 @@
    "chapeu": []
   },
   "anao": {
-   "cabelo": {},
-   "barba": {},
+   "cabelo": {
+    "careca": {
+     "file": "cabeca_anao_cabelo_careca.png",
+     "x": 83,
+     "y": 28,
+     "mask": "cabeca_anao_cabelo_careca_mascara.png"
+    },
+    "coque": {
+     "file": "cabeca_anao_cabelo_coque.png",
+     "x": 83,
+     "y": 1,
+     "mask": "cabeca_anao_cabelo_coque_mascara.png"
+    },
+    "moicano": {
+     "file": "cabeca_anao_cabelo_moicano.png",
+     "x": 83,
+     "y": 0,
+     "mask": "cabeca_anao_cabelo_moicano_mascara.png"
+    },
+    "trancas": {
+     "file": "cabeca_anao_cabelo_trancas.png",
+     "x": 77,
+     "y": 28,
+     "mask": "cabeca_anao_cabelo_trancas_mascara.png"
+    }
+   },
+   "barba": {
+    "bifurcada": {
+     "anao": {
+      "file": "cabeca_anao_barba_bifurcada__anao.png",
+      "x": 89,
+      "y": 133,
+      "mask": "cabeca_anao_barba_bifurcada__anao_mascara.png"
+     }
+    },
+    "bigodao": {
+     "anao": {
+      "file": "cabeca_anao_barba_bigodao__anao.png",
+      "x": 86,
+      "y": 133,
+      "mask": "cabeca_anao_barba_bigodao__anao_mascara.png"
+     }
+    },
+    "longa": {
+     "anao": {
+      "file": "cabeca_anao_barba_longa__anao.png",
+      "x": 80,
+      "y": 133,
+      "mask": "cabeca_anao_barba_longa__anao_mascara.png"
+     }
+    },
+    "trancada": {
+     "anao": {
+      "file": "cabeca_anao_barba_trancada__anao.png",
+      "x": 93,
+      "y": 133,
+      "mask": "cabeca_anao_barba_trancada__anao_mascara.png"
+     }
+    }
+   },
    "apagar": {
     "barba": {
      "anao": {
       "file": "cabeca_anao_apagar_barba__anao.png",
       "x": 93,
-      "y": 105
+      "y": 133
      }
     },
     "cabelo": {
      "file": "cabeca_anao_apagar_cabelo.png",
-     "x": 82,
-     "y": 0
+     "x": 83,
+     "y": 28
     }
    },
    "chapeu": []

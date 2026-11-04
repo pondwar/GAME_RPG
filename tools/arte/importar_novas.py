@@ -596,6 +596,16 @@ def _encolher(m, n):
     return ~_crescer(~m, n)
 
 
+def _fechar_vertical(m, n):
+    """preenche, em cada coluna, os buracos de ate n px entre dois pixels da mascara (anel de metal na tranca)"""
+    m = m.copy()
+    for x in np.where(m.any(0))[0]:
+        ys = np.where(m[:, x])[0]
+        for y0, y1 in zip(ys[:-1], ys[1:]):
+            if 1 < y1 - y0 <= n: m[y0:y1, x] = True
+    return m
+
+
 def _diferente(a, b):
     """onde duas telas RGBA diferem de verdade (sem as linhas finas de um traco redesenhado 1-2 px ao lado)"""
     d = (np.abs(a[..., :3].astype(int) - b[..., :3].astype(int)).sum(-1) > 90) | ((a[..., 3] > 128) != (b[..., 3] > 128))
@@ -770,7 +780,8 @@ def importar_raca(race, cfg, arquivos, altura=600):
             rabo = _crescer(parts.get('cabelo', np.zeros((H, W), bool)) & (yy >= nariz) & ~banda, 2) & op
             heads['apagar']['cabelo'] = _camada(z, op & ((yy < nariz) | rabo), f'cabeca_{race}_apagar_cabelo.png')
     # na peca, a barba conta como cabelo; em cima vale acima do boneco (coque e moicano mais altos que a cabeca)
-    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[-0.5, cab['mechas_y'] if sm else cab['queixo'] + 0.02])
+    ch = cfg['cabelo'].get('chroma')                       # verde exato: a peca vale ate os pes (barba longa, trancas)
+    pc = dict(cfg); pc['cabelo'] = dict(cfg['cabelo'], y=[-0.5, 1.0 if ch else cab['mechas_y'] if sm else cab['queixo'] + 0.02])
     for key, _ in arquivos:
         if not key.startswith(('cabelo:', 'barba:')):
             continue
@@ -789,8 +800,8 @@ def importar_raca(race, cfg, arquivos, altura=600):
                     ligado |= novo
                 m4[ligado] = (0, 255, 0, 255)                       # abaixo do nariz a peca e so cabelo (a sombra nao e pele)
                 alpha = (op & (yy < nariz + 2)) | ligado
-            elif cfg['cabelo'].get('chroma'):               # verde exato: o cabelo que desce entra todo (trancas), e onde o
-                alpha = (op & ((yy < nariz + 2) | rabo)) | (_crescer(pelo & ((yy < queixo) | ~banda), 1) & op)   # rabo do boneco estava
+            elif ch:               # verde exato: o cabelo que desce entra todo (trancas), e onde o
+                alpha = (op & ((yy < nariz + 2) | rabo)) | (_crescer(_fechar_vertical(pelo & ((yy < queixo) | ~banda), 24), 1) & op)   # rabo do boneco estava
             else:
                 alpha = (op & (yy < nariz + 2)) | (_crescer(pelo, 1) & op & (yy < queixo))
             ent = _camada(a, alpha, f'cabeca_{race}_cabelo_{estilo}.png')
@@ -798,9 +809,12 @@ def importar_raca(race, cfg, arquivos, altura=600):
             heads['cabelo'][estilo] = ent
         else:                                               # barba: recortada para cada roupa (a gola fica na frente)
             fios = _crescer(pelo & banda, 1)
+            if ch:                                          # barba longa: os fios que descem pelo peito (sem o rabo do boneco)
+                fios_peito = _crescer(_fechar_vertical(pelo & (yy >= nariz) & ~rabo, 24), 1) & op   # fecha os aneis da tranca
             heads['barba'][estilo] = {}
             for r in roupas:
                 alpha = op & (_crescer(rosto[r], 1) | fios) & banda
+                if ch: alpha |= fios_peito
                 ent = _camada(a, alpha, f'cabeca_{race}_barba_{estilo}__{r}.png')
                 ent['mask'] = _camada(m4, alpha, f'cabeca_{race}_barba_{estilo}__{r}_mascara.png')['file']
                 heads['barba'][estilo][r] = ent
