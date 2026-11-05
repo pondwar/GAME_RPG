@@ -98,7 +98,8 @@
     elfo: { scale: 1.04, corpo: 'Masculino', pele: 'Clara', penteado: 'Rabo de cavalo', cabelo: 'Loiro-prateado', barba: 'Sem barba', olhos: 'Azuis', rosto: 'Fino, orelhas pontudas' },
     anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', penteado: 'Rabo curto', cabelo: 'Castanho-escuro', barba: 'Cheia curta', olhos: 'Azul-acinzentados', rosto: 'Largo, nariz grande' },
     halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Rosada', penteado: 'Cacheado', cabelo: 'Castanho', barba: 'Sem barba', olhos: 'Castanhos', rosto: 'Redondo, pés peludos' },
-    draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
+    draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Vermelhas', penteado: 'Chifres curvos', cabelo: 'Marfim', barba: 'Sem barba', olhos: 'Âmbar', rosto: 'Focinho de dragão',
+      nomes: { pele: 'Escamas', penteado: 'Chifres', cabelo: 'Cor chifres' } },
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Rosada', penteado: 'Espetado', cabelo: 'Branco', barba: 'Bigode e cavanhaque', olhos: 'Azuis', rosto: 'Nariz grande, orelhas pontudas' },
     meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
     meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde', penteado: 'Rabo e laterais raspadas', cabelo: 'Preto', barba: 'Curta', olhos: 'Castanhos', rosto: 'Presas inferiores' },
@@ -127,6 +128,11 @@
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Cinza-pedra', '#9a948c'], ['Escura', '#5e4234']],
       cabelo: [['Castanho-escuro', '#4a3326'], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
       olhos: [['Azul-acinzentados', null], ['Castanhos', '#6b4428'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
+    },
+    draconato: {                                // escamas desenhadas cinza-azuladas; chifres e crista em verde-chroma
+      pele: [['Vermelhas', '#8c3a2c'], ['Douradas', '#c9a040'], ['Bronze', '#9a6a3a'], ['Azuis', '#46679f'], ['Pretas', '#3a3640'], ['Brancas', '#dcdce2'], ['Verdes', '#4a7c46'], ['Ardósia', null]],
+      cabelo: [['Marfim', '#e6dcc0'], ['Pretos', '#2a2422'], ['Dourados', '#d0a840'], ['Bronze', '#9a6a3a'], ['Osso', '#a8a294'], ['Vermelhos', '#a8402a']],
+      olhos: [['Âmbar', '#d0902a'], ['Dourados', '#e0c040'], ['Vermelhos', '#c8302a'], ['Azuis', '#3c8ad8'], ['Verdes', '#3fa04a'], ['Violeta', '#9a5ad8']]
     },
     gnomo: {
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Terrosa', '#7a5a44'], ['Pálida', '#f3dcd2']],
@@ -159,6 +165,9 @@
     anao: {
       penteado: [['Rabo curto', null], ['Careca', 'careca'], ['Coque', 'coque'], ['Tranças', 'trancas'], ['Moicano', 'moicano']],
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
+    },
+    draconato: {                                // o penteado do draconato sao os chifres (sem barba)
+      penteado: [['Chifres curvos', null]]
     },
     meio_orc: {
       penteado: [['Rabo e laterais raspadas', null], ['Moicano', 'moicano'], ['Careca', 'careca'], ['Tranças', 'trancas'], ['Solto', 'solto']],

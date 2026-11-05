@@ -194,11 +194,11 @@
         <div class="cs-look">${Rr.LOOK_PARTS.map(p => {
           const opts = pic && pic.mask && this.options(raceCode, p.code);
           if (!opts) return `
-          <div class="cs-look-row"><span>${p.name}</span>
+          <div class="cs-look-row"><span>${(look.nomes || {})[p.code] || p.name}</span>
             <button class="cs-arrow" disabled>‹</button><b>${look[p.code] || 'Clássico'}</b><button class="cs-arrow" disabled>›</button></div>`;
           const i = sel[p.code] || 0, o = opts[i], isColor = !!pal[p.code];
           return `
-          <div class="cs-look-row"><span>${p.name}</span>
+          <div class="cs-look-row"><span>${(look.nomes || {})[p.code] || p.name}</span>
             <button class="cs-arrow on" data-look="${p.code}" data-d="-1">‹</button>
             <b title="${p.code === 'penteado' && hat ? 'O chapéu desta classe esconde o penteado' : ''}">${isColor ? `<i class="cs-dot" style="background:${o[1] || (pic.ref && pic.ref[p.code]) || '#888'}"></i>` : ''}${o[0]}${p.code === 'penteado' && hat && i ? ' (sob o chapéu)' : ''}</b>
             <button class="cs-arrow on" data-look="${p.code}" data-d="1">›</button></div>`;
