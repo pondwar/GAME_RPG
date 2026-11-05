@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793918504,
+   "v": 1793919376,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793918509,
+   "v": 1793919382,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793918514,
+   "v": 1793919386,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793918519,
+   "v": 1793919391,
    "corpo": [
     0,
     28,
@@ -705,7 +705,7 @@
    "file": "retrato_halfling.png",
    "w": 319,
    "h": 600,
-   "v": 1793918527,
+   "v": 1793919396,
    "corpo": [
     0,
     0,
@@ -724,7 +724,7 @@
    "file": "retrato_gnomo.png",
    "w": 311,
    "h": 621,
-   "v": 1793918533,
+   "v": 1793919402,
    "corpo": [
     0,
     21,
@@ -741,12 +741,12 @@
   },
   "meio_orc": {
    "file": "retrato_meio_orc.png",
-   "w": 297,
-   "h": 600,
-   "v": 1793918536,
+   "w": 298,
+   "h": 608,
+   "v": 1793919438,
    "corpo": [
     0,
-    0,
+    8,
     297,
     600
    ],
@@ -1146,20 +1146,78 @@
    "chapeu": []
   },
   "meio_orc": {
-   "cabelo": {},
-   "barba": {},
+   "cabelo": {
+    "careca": {
+     "file": "cabeca_meio_orc_cabelo_careca.png",
+     "x": 89,
+     "y": 32,
+     "mask": "cabeca_meio_orc_cabelo_careca_mascara.png"
+    },
+    "moicano": {
+     "file": "cabeca_meio_orc_cabelo_moicano.png",
+     "x": 89,
+     "y": 0,
+     "mask": "cabeca_meio_orc_cabelo_moicano_mascara.png"
+    },
+    "solto": {
+     "file": "cabeca_meio_orc_cabelo_solto.png",
+     "x": 54,
+     "y": 21,
+     "mask": "cabeca_meio_orc_cabelo_solto_mascara.png"
+    },
+    "trancas": {
+     "file": "cabeca_meio_orc_cabelo_trancas.png",
+     "x": 82,
+     "y": 11,
+     "mask": "cabeca_meio_orc_cabelo_trancas_mascara.png"
+    }
+   },
+   "barba": {
+    "cavanhaque": {
+     "meio_orc": {
+      "file": "cabeca_meio_orc_barba_cavanhaque__meio_orc.png",
+      "x": 110,
+      "y": 114,
+      "mask": "cabeca_meio_orc_barba_cavanhaque__meio_orc_mascara.png"
+     }
+    },
+    "cheia": {
+     "meio_orc": {
+      "file": "cabeca_meio_orc_barba_cheia__meio_orc.png",
+      "x": 101,
+      "y": 114,
+      "mask": "cabeca_meio_orc_barba_cheia__meio_orc_mascara.png"
+     }
+    },
+    "lisa": {
+     "meio_orc": {
+      "file": "cabeca_meio_orc_barba_lisa__meio_orc.png",
+      "x": 110,
+      "y": 114,
+      "mask": "cabeca_meio_orc_barba_lisa__meio_orc_mascara.png"
+     }
+    },
+    "trancada": {
+     "meio_orc": {
+      "file": "cabeca_meio_orc_barba_trancada__meio_orc.png",
+      "x": 110,
+      "y": 114,
+      "mask": "cabeca_meio_orc_barba_trancada__meio_orc_mascara.png"
+     }
+    }
+   },
    "apagar": {
     "barba": {
      "meio_orc": {
       "file": "cabeca_meio_orc_apagar_barba__meio_orc.png",
       "x": 110,
-      "y": 106
+      "y": 114
      }
     },
     "cabelo": {
      "file": "cabeca_meio_orc_apagar_cabelo.png",
-     "x": 75,
-     "y": 0
+     "x": 76,
+     "y": 8
     }
    },
    "chapeu": []

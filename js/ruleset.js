@@ -136,7 +136,7 @@
     meio_orc: {                                 // pele desenhada cinza-azulada (sem verde: o verde e do cabelo); o verde vem por codigo
       pele: [['Verde', '#6f8c4a'], ['Verde-acinzentada', '#7f8c68'], ['Verde-oliva', '#7a8540'], ['Verde-escura', '#4c6236'], ['Cinza-azulada', null], ['Cinza-pedra', '#85817a'], ['Bronze', '#93684a']],
       cabelo: [['Preto', '#2a2422'], ['Castanho-escuro', '#4a3326'], ['Ruivo', '#a8482a'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc'], ['Castanho', '#6b4630']],
-      olhos: [['Castanhos', null], ['Vermelhos', '#c0302a'], ['Amarelos', '#d8c040'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17'], ['Verdes', '#3f9a4a']]
+      olhos: [['Castanhos', '#7a4a26'], ['Vermelhos', '#c0302a'], ['Amarelos', '#d8c040'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17'], ['Cinzentos', null]]
     },
     halfling: {                                 // o pelo dos pes muda junto com o cabelo
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Negra', '#6b4535'], ['Pálida', '#f3dcd2']],
@@ -161,8 +161,8 @@
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
     },
     meio_orc: {
-      penteado: [['Rabo e laterais raspadas', null]],
-      barba: [['Curta', null]]
+      penteado: [['Rabo e laterais raspadas', null], ['Moicano', 'moicano'], ['Careca', 'careca'], ['Tranças', 'trancas'], ['Solto', 'solto']],
+      barba: [['Curta', null], ['Sem barba', 'lisa'], ['Cheia', 'cheia'], ['Trançada', 'trancada'], ['Cavanhaque', 'cavanhaque']]
     },
     gnomo: {
       penteado: [['Espetado', null], ['Careca', 'careca'], ['Topete', 'topete'], ['Rabinho', 'rabinho'], ['Cacheado', 'cacheado']],
