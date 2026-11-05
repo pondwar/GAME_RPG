@@ -101,7 +101,7 @@
     draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Rosada', penteado: 'Espetado', cabelo: 'Branco', barba: 'Bigode e cavanhaque', olhos: 'Azuis', rosto: 'Nariz grande, orelhas pontudas' },
     meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
-    meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Cinza-pedra', penteado: 'Rabo e laterais raspadas', cabelo: 'Preto', barba: 'Curta', olhos: 'Castanhos', rosto: 'Presas inferiores' },
+    meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde', penteado: 'Rabo e laterais raspadas', cabelo: 'Preto', barba: 'Curta', olhos: 'Castanhos', rosto: 'Presas inferiores' },
     tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelho-rubi', cabelo: 'Preto longo, chifres curvos', olhos: 'Dourados sem pupila', rosto: 'Anguloso, cauda' }
   };
 
@@ -133,8 +133,8 @@
       cabelo: [['Branco', '#ebe6dc'], ['Ruivo', '#c8582a'], ['Laranja', '#e08a2a'], ['Castanho', '#6b4630'], ['Loiro', '#d8b25c'], ['Grisalho', '#9b968f'], ['Rosa', '#d87aa8'], ['Azul', '#5a86d0']],
       olhos: [['Azuis', null], ['Verdes', '#3f9a4a'], ['Castanhos', '#6b4428'], ['Violeta', '#8a4fd0'], ['Âmbar', '#d0902a'], ['Cinzentos', '#8a96a2']]
     },
-    meio_orc: {                                 // pele desenhada cinza (sem verde: o verde e do cabelo); o verde vem por codigo
-      pele: [['Cinza-pedra', null], ['Verde-acinzentada', '#7f8c68'], ['Verde-oliva', '#71803f'], ['Verde-escura', '#4c6236'], ['Cinza-azulada', '#7a8494'], ['Bronze', '#93684a']],
+    meio_orc: {                                 // pele desenhada cinza-azulada (sem verde: o verde e do cabelo); o verde vem por codigo
+      pele: [['Verde', '#6f8c4a'], ['Verde-acinzentada', '#7f8c68'], ['Verde-oliva', '#7a8540'], ['Verde-escura', '#4c6236'], ['Cinza-azulada', null], ['Cinza-pedra', '#85817a'], ['Bronze', '#93684a']],
       cabelo: [['Preto', '#2a2422'], ['Castanho-escuro', '#4a3326'], ['Ruivo', '#a8482a'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc'], ['Castanho', '#6b4630']],
       olhos: [['Castanhos', null], ['Vermelhos', '#c0302a'], ['Amarelos', '#d8c040'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17'], ['Verdes', '#3f9a4a']]
     },

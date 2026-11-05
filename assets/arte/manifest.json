@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793917537,
+   "v": 1793918504,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793917543,
+   "v": 1793918509,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793917546,
+   "v": 1793918514,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793917552,
+   "v": 1793918519,
    "corpo": [
     0,
     28,
@@ -705,7 +705,7 @@
    "file": "retrato_halfling.png",
    "w": 319,
    "h": 600,
-   "v": 1793917558,
+   "v": 1793918527,
    "corpo": [
     0,
     0,
@@ -724,7 +724,7 @@
    "file": "retrato_gnomo.png",
    "w": 311,
    "h": 621,
-   "v": 1793917564,
+   "v": 1793918533,
    "corpo": [
     0,
     21,
@@ -741,20 +741,20 @@
   },
   "meio_orc": {
    "file": "retrato_meio_orc.png",
-   "w": 296,
+   "w": 297,
    "h": 600,
-   "v": 1793917566,
+   "v": 1793918536,
    "corpo": [
     0,
     0,
-    296,
+    297,
     600
    ],
    "mask": "retrato_meio_orc_mascara.png",
    "ref": {
-    "pele": "#948177",
-    "cabelo": "#23bc0d",
-    "olhos": "#7d5a53"
+    "pele": "#6b718a",
+    "cabelo": "#26b61b",
+    "olhos": "#3e3543"
    },
    "chroma": true
   }
@@ -1158,7 +1158,7 @@
     },
     "cabelo": {
      "file": "cabeca_meio_orc_apagar_cabelo.png",
-     "x": 74,
+     "x": 75,
      "y": 0
     }
    },

@@ -503,6 +503,9 @@ def mascara_cores(im, cfg, frame=None):
             # mais do que a pele teria (G/R da pele) dividido pelo verde do cabelo da a cobertura
             hh, ss, vv = hsv_arr(a)
             pele = op & (cobre == 0) & (ss > 0.3) & (vv > 0.6) & (a[..., 0] > a[..., 1]) & (a[..., 1] > a[..., 2])
+            if pele.sum() < 50 and 'pele' in cfg:  # pele fria (meio-orc azulado): acha a pele pela faixa de cor dela
+                cp = cfg['pele']
+                pele = op & (cobre == 0) & inh(hh, cp['h']) & inr(ss, cp['s']) & inr(vv, cp['v']) & (yf > cfg['cabelo']['couro'])
             rho = np.median(a[pele][:, 1] / np.maximum(a[pele][:, 0], 1)) if pele.any() else 0.75
             gref = np.median(a[cobre > 0.8][:, 1]) if (cobre > 0.8).any() else 180
             b = (a[..., 1] - rho * a[..., 0]) / (1 - 0.15 * rho)
