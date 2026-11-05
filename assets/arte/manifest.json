@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793919842,
+   "v": 1793920450,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793919847,
+   "v": 1793920455,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793919851,
+   "v": 1793920459,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793919856,
+   "v": 1793920464,
    "corpo": [
     0,
     28,
@@ -705,7 +705,7 @@
    "file": "retrato_halfling.png",
    "w": 319,
    "h": 600,
-   "v": 1793919862,
+   "v": 1793920469,
    "corpo": [
     0,
     0,
@@ -724,7 +724,7 @@
    "file": "retrato_gnomo.png",
    "w": 311,
    "h": 621,
-   "v": 1793919868,
+   "v": 1793920475,
    "corpo": [
     0,
     21,
@@ -743,7 +743,7 @@
    "file": "retrato_meio_orc.png",
    "w": 298,
    "h": 608,
-   "v": 1793919874,
+   "v": 1793920481,
    "corpo": [
     0,
     8,
@@ -760,12 +760,12 @@
   },
   "draconato": {
    "file": "retrato_draconato.png",
-   "w": 297,
-   "h": 600,
-   "v": 1793919876,
+   "w": 299,
+   "h": 603,
+   "v": 1793920498,
    "corpo": [
-    0,
-    0,
+    1,
+    3,
     297,
     600
    ],
@@ -1242,20 +1242,45 @@
    "chapeu": []
   },
   "draconato": {
-   "cabelo": {},
+   "cabelo": {
+    "carneiro": {
+     "file": "cabeca_draconato_cabelo_carneiro.png",
+     "x": 54,
+     "y": 28,
+     "mask": "cabeca_draconato_cabelo_carneiro_mascara.png"
+    },
+    "coroa": {
+     "file": "cabeca_draconato_cabelo_coroa.png",
+     "x": 87,
+     "y": 3,
+     "mask": "cabeca_draconato_cabelo_coroa_mascara.png"
+    },
+    "crista": {
+     "file": "cabeca_draconato_cabelo_crista.png",
+     "x": 93,
+     "y": 0,
+     "mask": "cabeca_draconato_cabelo_crista_mascara.png"
+    },
+    "retos": {
+     "file": "cabeca_draconato_cabelo_retos.png",
+     "x": 92,
+     "y": 2,
+     "mask": "cabeca_draconato_cabelo_retos_mascara.png"
+    }
+   },
    "barba": {},
    "apagar": {
     "barba": {
      "draconato": {
       "file": "cabeca_draconato_apagar_barba__draconato.png",
-      "x": 92,
-      "y": 94
+      "x": 93,
+      "y": 97
      }
     },
     "cabelo": {
      "file": "cabeca_draconato_apagar_cabelo.png",
-     "x": 92,
-     "y": 0
+     "x": 93,
+     "y": 3
     }
    },
    "chapeu": []

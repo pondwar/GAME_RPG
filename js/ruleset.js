@@ -167,7 +167,7 @@
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
     },
     draconato: {                                // o penteado do draconato sao os chifres (sem barba)
-      penteado: [['Chifres curvos', null]]
+      penteado: [['Chifres curvos', null], ['Carneiro', 'carneiro'], ['Retos', 'retos'], ['Coroa', 'coroa'], ['Crista', 'crista']]
     },
     meio_orc: {
       penteado: [['Rabo e laterais raspadas', null], ['Moicano', 'moicano'], ['Careca', 'careca'], ['Tranças', 'trancas'], ['Solto', 'solto']],
