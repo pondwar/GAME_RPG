@@ -103,7 +103,7 @@
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Rosada', penteado: 'Espetado', cabelo: 'Branco', barba: 'Bigode e cavanhaque', olhos: 'Azuis', rosto: 'Nariz grande, orelhas pontudas' },
     meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
     meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde', penteado: 'Rabo e laterais raspadas', cabelo: 'Preto', barba: 'Curta', olhos: 'Castanhos', rosto: 'Presas inferiores' },
-    tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelho-rubi', cabelo: 'Preto longo, chifres curvos', olhos: 'Dourados sem pupila', rosto: 'Anguloso, cauda' }
+    tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelha', penteado: 'Longo liso', cabelo: 'Preto', barba: 'Sem barba', olhos: 'Dourados', rosto: 'Anguloso, chifres de carneiro' },
   };
 
   // Cores de pele, cabelo e olhos (previa pintada por codigo: mascara do retrato, tools/arte/cores_racas.json).
@@ -128,6 +128,11 @@
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Cinza-pedra', '#9a948c'], ['Escura', '#5e4234']],
       cabelo: [['Castanho-escuro', '#4a3326'], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
       olhos: [['Azul-acinzentados', null], ['Castanhos', '#6b4428'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
+    },
+    tiferino: {                                 // pele desenhada cinza-azulada; os chifres ficam fora da pintura
+      pele: [['Vermelha', '#a8443a'], ['Rubi', '#8c2a34'], ['Roxa', '#6e4c8e'], ['Azul', '#4c5e9e'], ['Rosada', '#c87e8c'], ['Clara', '#e0b8a8'], ['Ardósia', null]],
+      cabelo: [['Preto', '#24212a'], ['Vermelho', '#8a2a2a'], ['Roxo', '#5a3a7a'], ['Branco', '#e6e2ea'], ['Azul-escuro', '#2a3a6a'], ['Castanho', '#5a3a2a']],
+      olhos: [['Dourados', null], ['Vermelhos', '#d0302a'], ['Brancos', '#eceef4'], ['Violeta', '#9a5ad8'], ['Verdes', '#3fb04a'], ['Azuis', '#3c8ad8']]
     },
     draconato: {                                // escamas desenhadas cinza-azuladas; chifres e crista em verde-chroma
       pele: [['Vermelhas', '#8c3a2c'], ['Douradas', '#c9a040'], ['Bronze', '#9a6a3a'], ['Azuis', '#46679f'], ['Pretas', '#3a3640'], ['Brancas', '#dcdce2'], ['Verdes', '#4a7c46'], ['Ardósia', null]],
@@ -165,6 +170,9 @@
     anao: {
       penteado: [['Rabo curto', null], ['Careca', 'careca'], ['Coque', 'coque'], ['Tranças', 'trancas'], ['Moicano', 'moicano']],
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
+    },
+    tiferino: {
+      penteado: [['Longo liso', null]]
     },
     draconato: {                                // o penteado do draconato sao os chifres (sem barba)
       penteado: [['Chifres curvos', null], ['Carneiro', 'carneiro'], ['Retos', 'retos'], ['Coroa', 'coroa'], ['Crista', 'crista']]

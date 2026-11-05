@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793920450,
+   "v": 1793920973,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793920455,
+   "v": 1793920979,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793920459,
+   "v": 1793920983,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793920464,
+   "v": 1793920988,
    "corpo": [
     0,
     28,
@@ -705,7 +705,7 @@
    "file": "retrato_halfling.png",
    "w": 319,
    "h": 600,
-   "v": 1793920469,
+   "v": 1793920993,
    "corpo": [
     0,
     0,
@@ -724,7 +724,7 @@
    "file": "retrato_gnomo.png",
    "w": 311,
    "h": 621,
-   "v": 1793920475,
+   "v": 1793920999,
    "corpo": [
     0,
     21,
@@ -743,7 +743,7 @@
    "file": "retrato_meio_orc.png",
    "w": 298,
    "h": 608,
-   "v": 1793920481,
+   "v": 1793921005,
    "corpo": [
     0,
     8,
@@ -762,7 +762,7 @@
    "file": "retrato_draconato.png",
    "w": 299,
    "h": 603,
-   "v": 1793920498,
+   "v": 1793921009,
    "corpo": [
     1,
     3,
@@ -774,6 +774,25 @@
     "pele": "#747b96",
     "cabelo": "#2ec91e",
     "olhos": "#a7a6b9"
+   },
+   "chroma": true
+  },
+  "tiferino": {
+   "file": "retrato_tiferino.png",
+   "w": 276,
+   "h": 600,
+   "v": 1793921010,
+   "corpo": [
+    0,
+    0,
+    276,
+    600
+   ],
+   "mask": "retrato_tiferino_mascara.png",
+   "ref": {
+    "pele": "#6a6e88",
+    "cabelo": "#259512",
+    "olhos": "#dda535"
    },
    "chroma": true
   }
@@ -1281,6 +1300,25 @@
      "file": "cabeca_draconato_apagar_cabelo.png",
      "x": 93,
      "y": 3
+    }
+   },
+   "chapeu": []
+  },
+  "tiferino": {
+   "cabelo": {},
+   "barba": {},
+   "apagar": {
+    "barba": {
+     "tiferino": {
+      "file": "cabeca_tiferino_apagar_barba__tiferino.png",
+      "x": 105,
+      "y": 101
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_tiferino_apagar_cabelo.png",
+     "x": 70,
+     "y": 0
     }
    },
    "chapeu": []
