@@ -172,7 +172,7 @@
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
     },
     tiferino: {
-      penteado: [['Longo liso', null]]
+      penteado: [['Longo liso', null], ['Curto', 'curto'], ['Rabo de cavalo', 'rabo'], ['Raspado', 'raspado'], ['Ondulado', 'ondulado']]
     },
     draconato: {                                // o penteado do draconato sao os chifres (sem barba)
       penteado: [['Chifres curvos', null], ['Carneiro', 'carneiro'], ['Retos', 'retos'], ['Coroa', 'coroa'], ['Crista', 'crista']]

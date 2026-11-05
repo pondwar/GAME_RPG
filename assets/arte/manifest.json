@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793920973,
+   "v": 1793922062,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793920979,
+   "v": 1793922067,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793920983,
+   "v": 1793922071,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793920988,
+   "v": 1793922076,
    "corpo": [
     0,
     28,
@@ -705,7 +705,7 @@
    "file": "retrato_halfling.png",
    "w": 319,
    "h": 600,
-   "v": 1793920993,
+   "v": 1793922081,
    "corpo": [
     0,
     0,
@@ -724,7 +724,7 @@
    "file": "retrato_gnomo.png",
    "w": 311,
    "h": 621,
-   "v": 1793920999,
+   "v": 1793922087,
    "corpo": [
     0,
     21,
@@ -743,7 +743,7 @@
    "file": "retrato_meio_orc.png",
    "w": 298,
    "h": 608,
-   "v": 1793921005,
+   "v": 1793922093,
    "corpo": [
     0,
     8,
@@ -762,7 +762,7 @@
    "file": "retrato_draconato.png",
    "w": 299,
    "h": 603,
-   "v": 1793921009,
+   "v": 1793922097,
    "corpo": [
     1,
     3,
@@ -779,12 +779,12 @@
   },
   "tiferino": {
    "file": "retrato_tiferino.png",
-   "w": 276,
-   "h": 600,
-   "v": 1793921010,
+   "w": 288,
+   "h": 603,
+   "v": 1793922100,
    "corpo": [
-    0,
-    0,
+    6,
+    3,
     276,
     600
    ],
@@ -1084,7 +1084,7 @@
     "costeletas": {
      "halfling": {
       "file": "cabeca_halfling_barba_costeletas__halfling.png",
-      "x": 80,
+      "x": 82,
       "y": 124,
       "mask": "cabeca_halfling_barba_costeletas__halfling_mascara.png"
      }
@@ -1187,13 +1187,13 @@
    "cabelo": {
     "careca": {
      "file": "cabeca_meio_orc_cabelo_careca.png",
-     "x": 89,
+     "x": 81,
      "y": 32,
      "mask": "cabeca_meio_orc_cabelo_careca_mascara.png"
     },
     "moicano": {
      "file": "cabeca_meio_orc_cabelo_moicano.png",
-     "x": 89,
+     "x": 81,
      "y": 0,
      "mask": "cabeca_meio_orc_cabelo_moicano_mascara.png"
     },
@@ -1205,7 +1205,7 @@
     },
     "trancas": {
      "file": "cabeca_meio_orc_cabelo_trancas.png",
-     "x": 82,
+     "x": 81,
      "y": 11,
      "mask": "cabeca_meio_orc_cabelo_trancas_mascara.png"
     }
@@ -1222,7 +1222,7 @@
     "cheia": {
      "meio_orc": {
       "file": "cabeca_meio_orc_barba_cheia__meio_orc.png",
-      "x": 101,
+      "x": 104,
       "y": 114,
       "mask": "cabeca_meio_orc_barba_cheia__meio_orc_mascara.png"
      }
@@ -1305,20 +1305,45 @@
    "chapeu": []
   },
   "tiferino": {
-   "cabelo": {},
+   "cabelo": {
+    "curto": {
+     "file": "cabeca_tiferino_cabelo_curto.png",
+     "x": 74,
+     "y": 0,
+     "mask": "cabeca_tiferino_cabelo_curto_mascara.png"
+    },
+    "ondulado": {
+     "file": "cabeca_tiferino_cabelo_ondulado.png",
+     "x": 76,
+     "y": 3,
+     "mask": "cabeca_tiferino_cabelo_ondulado_mascara.png"
+    },
+    "rabo": {
+     "file": "cabeca_tiferino_cabelo_rabo.png",
+     "x": 76,
+     "y": 3,
+     "mask": "cabeca_tiferino_cabelo_rabo_mascara.png"
+    },
+    "raspado": {
+     "file": "cabeca_tiferino_cabelo_raspado.png",
+     "x": 76,
+     "y": 3,
+     "mask": "cabeca_tiferino_cabelo_raspado_mascara.png"
+    }
+   },
    "barba": {},
    "apagar": {
     "barba": {
      "tiferino": {
       "file": "cabeca_tiferino_apagar_barba__tiferino.png",
-      "x": 105,
-      "y": 101
+      "x": 111,
+      "y": 104
      }
     },
     "cabelo": {
      "file": "cabeca_tiferino_apagar_cabelo.png",
-     "x": 70,
-     "y": 0
+     "x": 76,
+     "y": 3
     }
    },
    "chapeu": []

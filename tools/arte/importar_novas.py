@@ -809,7 +809,10 @@ def importar_raca(race, cfg, arquivos, altura=600):
         heads['apagar']['barba'][key] = _camada(z, rosto[key], f'cabeca_{race}_apagar_barba__{key}.png')
         if key == race:                                     # penteado: apaga a cabeca do boneco acima do nariz
             # e o cabelo do boneco que desce fora da barba (rabo de cavalo atras do pescoco)
-            rabo = _crescer(parts.get('cabelo', np.zeros((H, W), bool)) & (yy >= nariz) & ~banda & ate, 2) & op
+            fio = parts.get('cabelo', np.zeros((H, W), bool)) & (yy >= nariz) & ~banda & ate
+            desce = fio.copy()                              # as pontas das mechas tem um bico escuro abaixo do verde
+            for d in range(1, 15): desce |= np.roll(fio, d, 0)
+            rabo = _crescer(desce, 5) & op
             heads['apagar']['cabelo'] = _camada(z, op & ((yy < nariz) | rabo), f'cabeca_{race}_apagar_cabelo.png')
     # na peca, a barba conta como cabelo; em cima vale acima do boneco (coque e moicano mais altos que a cabeca)
     ch = cfg['cabelo'].get('chroma')                       # verde exato: a peca vale ate os pes (barba longa, trancas)
