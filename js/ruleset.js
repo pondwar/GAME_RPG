@@ -151,7 +151,8 @@
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
     },
     halfling: {
-      penteado: [['Cacheado', null]]
+      penteado: [['Cacheado', null], ['Tigela', 'tigela'], ['Rabinho', 'rabinho'], ['Cachos longos', 'longo'], ['Raspado', 'raspado']],
+      barba: [['Sem barba', null], ['Costeletas', 'costeletas'], ['Bigode', 'bigode'], ['Cavanhaque', 'cavanhaque']]
     },
     elfo: {                                     // elfo nao tem barba
       penteado: [['Rabo de cavalo', null], ['Coque', 'coque'], ['Curto', 'curto'], ['Tranças', 'trancas'], ['Raspado', 'raspado']]

@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793886335,
+   "v": 1793912135,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793886340,
+   "v": 1793912141,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793886344,
+   "v": 1793912145,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793886349,
+   "v": 1793912152,
    "corpo": [
     0,
     28,
@@ -703,9 +703,9 @@
   },
   "halfling": {
    "file": "retrato_halfling.png",
-   "w": 318,
+   "w": 319,
    "h": 600,
-   "v": 1793886351,
+   "v": 1793912158,
    "corpo": [
     0,
     0,
@@ -962,8 +962,58 @@
    "chapeu": []
   },
   "halfling": {
-   "cabelo": {},
-   "barba": {},
+   "cabelo": {
+    "longo": {
+     "file": "cabeca_halfling_cabelo_longo.png",
+     "x": 13,
+     "y": 0,
+     "mask": "cabeca_halfling_cabelo_longo_mascara.png"
+    },
+    "rabinho": {
+     "file": "cabeca_halfling_cabelo_rabinho.png",
+     "x": 55,
+     "y": 0,
+     "mask": "cabeca_halfling_cabelo_rabinho_mascara.png"
+    },
+    "raspado": {
+     "file": "cabeca_halfling_cabelo_raspado.png",
+     "x": 64,
+     "y": 1,
+     "mask": "cabeca_halfling_cabelo_raspado_mascara.png"
+    },
+    "tigela": {
+     "file": "cabeca_halfling_cabelo_tigela.png",
+     "x": 64,
+     "y": 1,
+     "mask": "cabeca_halfling_cabelo_tigela_mascara.png"
+    }
+   },
+   "barba": {
+    "bigode": {
+     "halfling": {
+      "file": "cabeca_halfling_barba_bigode__halfling.png",
+      "x": 105,
+      "y": 124,
+      "mask": "cabeca_halfling_barba_bigode__halfling_mascara.png"
+     }
+    },
+    "cavanhaque": {
+     "halfling": {
+      "file": "cabeca_halfling_barba_cavanhaque__halfling.png",
+      "x": 105,
+      "y": 124,
+      "mask": "cabeca_halfling_barba_cavanhaque__halfling_mascara.png"
+     }
+    },
+    "costeletas": {
+     "halfling": {
+      "file": "cabeca_halfling_barba_costeletas__halfling.png",
+      "x": 80,
+      "y": 124,
+      "mask": "cabeca_halfling_barba_costeletas__halfling_mascara.png"
+     }
+    }
+   },
    "apagar": {
     "barba": {
      "halfling": {
