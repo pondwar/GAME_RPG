@@ -445,6 +445,26 @@ def hsv_arr(a):
     return h, np.where(mx > 0, (mx - mn) / (mx + 1e-9), 0), mx
 
 
+def _igualar_pele(tela, pele, ref_area):
+    """a pele fora de ref_area (bracos bege do meio-orc) ganha a saturacao e o matiz da pele em ref_area (rosto cinza):
+    assim a pintura por codigo deixa o corpo todo do mesmo tom"""
+    a = np.array(tela).astype(float); rgb = a[..., :3] / 255
+    mx = rgb.max(-1); mn = rgb.min(-1)
+    h, s, _ = hsv_arr(a)
+    ref = pele & ref_area; fora = pele & ~ref_area
+    if not ref.any() or not fora.any(): return tela
+    ks = np.median(s[ref]) / max(np.median(s[fora]), 1e-6)
+    dh = ((np.median(h[ref]) - np.median(h[fora]) + 180) % 360) - 180
+    kv = np.median(mx[ref]) / max(np.median(mx[fora]), 1e-6)
+    ns = np.clip(s * ks, 0, 1); nh = (h + dh) % 360
+    v = np.where(fora, np.clip(mx * kv, 0, 1), mx); c = v * ns; x = c * (1 - np.abs((nh / 60) % 2 - 1)); m = v - c
+    i = (nh // 60).astype(int) % 6
+    r = np.choose(i, [c, x, 0 * c, 0 * c, x, c]); g = np.choose(i, [x, c, c, x, 0 * c, 0 * c]); b = np.choose(i, [0 * c, 0 * c, x, c, c, x])
+    novo = np.dstack([r + m, g + m, b + m]) * 255
+    a[fora, :3] = novo[fora]
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8), 'RGBA')
+
+
 def _sem_pedacos(m, minimo):
     """tira da mascara os pedacos soltos com menos de 'minimo' pixels (sombra da roupa com cor de pele)"""
     m = m.copy(); H, W = m.shape; visto = np.zeros_like(m)
@@ -717,6 +737,12 @@ def importar_raca(race, cfg, arquivos, altura=600):
         tela = na_tela(key)
         name = f'retrato_{key}.png'; tela.save(os.path.join(OUT, name))
         mask, refs, parts = mascara_cores(tela, cfg, corpo)
+        ig = cfg['pele'].get('igualar_y')                   # pele do corpo com o tom do rosto (acima de igualar_y)
+        if ig and parts.get('pele') is not None:
+            yy_, _ = np.mgrid[0:H, 0:W]
+            tela = _igualar_pele(tela, parts['pele'], yy_ < corpo[1] + ig * altura)
+            tela.save(os.path.join(OUT, name))
+            mask, refs, parts = mascara_cores(tela, cfg, corpo)
         a = np.array(tela); op = a[..., 3] > 8
         if sm:                                              # mechas desta roupa: cor de cabelo perto das mechas do boneco
             c = cfg['cabelo']; hh, ss, vv = hsv_arr(a.astype(float))
