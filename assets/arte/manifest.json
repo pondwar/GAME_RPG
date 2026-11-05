@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793915751,
+   "v": 1793916629,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793915756,
+   "v": 1793916634,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793915760,
+   "v": 1793916638,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793915765,
+   "v": 1793916643,
    "corpo": [
     0,
     28,
@@ -705,7 +705,7 @@
    "file": "retrato_halfling.png",
    "w": 319,
    "h": 600,
-   "v": 1793915771,
+   "v": 1793916649,
    "corpo": [
     0,
     0,
@@ -722,12 +722,12 @@
   },
   "gnomo": {
    "file": "retrato_gnomo.png",
-   "w": 310,
-   "h": 600,
-   "v": 1793915773,
+   "w": 311,
+   "h": 621,
+   "v": 1793916689,
    "corpo": [
     0,
-    0,
+    21,
     310,
     600
    ],
@@ -1050,20 +1050,78 @@
    "chapeu": []
   },
   "gnomo": {
-   "cabelo": {},
-   "barba": {},
+   "cabelo": {
+    "cacheado": {
+     "file": "cabeca_gnomo_cabelo_cacheado.png",
+     "x": 23,
+     "y": 24,
+     "mask": "cabeca_gnomo_cabelo_cacheado_mascara.png"
+    },
+    "careca": {
+     "file": "cabeca_gnomo_cabelo_careca.png",
+     "x": 36,
+     "y": 51,
+     "mask": "cabeca_gnomo_cabelo_careca_mascara.png"
+    },
+    "rabinho": {
+     "file": "cabeca_gnomo_cabelo_rabinho.png",
+     "x": 36,
+     "y": 0,
+     "mask": "cabeca_gnomo_cabelo_rabinho_mascara.png"
+    },
+    "topete": {
+     "file": "cabeca_gnomo_cabelo_topete.png",
+     "x": 36,
+     "y": 17,
+     "mask": "cabeca_gnomo_cabelo_topete_mascara.png"
+    }
+   },
+   "barba": {
+    "bigodao": {
+     "gnomo": {
+      "file": "cabeca_gnomo_barba_bigodao__gnomo.png",
+      "x": 53,
+      "y": 181,
+      "mask": "cabeca_gnomo_barba_bigodao__gnomo_mascara.png"
+     }
+    },
+    "cheia": {
+     "gnomo": {
+      "file": "cabeca_gnomo_barba_cheia__gnomo.png",
+      "x": 90,
+      "y": 181,
+      "mask": "cabeca_gnomo_barba_cheia__gnomo_mascara.png"
+     }
+    },
+    "jardim": {
+     "gnomo": {
+      "file": "cabeca_gnomo_barba_jardim__gnomo.png",
+      "x": 82,
+      "y": 181,
+      "mask": "cabeca_gnomo_barba_jardim__gnomo_mascara.png"
+     }
+    },
+    "lisa": {
+     "gnomo": {
+      "file": "cabeca_gnomo_barba_lisa__gnomo.png",
+      "x": 100,
+      "y": 181,
+      "mask": "cabeca_gnomo_barba_lisa__gnomo_mascara.png"
+     }
+    }
+   },
    "apagar": {
     "barba": {
      "gnomo": {
       "file": "cabeca_gnomo_apagar_barba__gnomo.png",
       "x": 100,
-      "y": 160
+      "y": 181
      }
     },
     "cabelo": {
      "file": "cabeca_gnomo_apagar_cabelo.png",
      "x": 35,
-     "y": 0
+     "y": 20
     }
    },
    "chapeu": []

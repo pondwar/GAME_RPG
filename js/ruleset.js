@@ -156,8 +156,8 @@
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
     },
     gnomo: {
-      penteado: [['Espetado', null]],
-      barba: [['Bigode e cavanhaque', null]]
+      penteado: [['Espetado', null], ['Careca', 'careca'], ['Topete', 'topete'], ['Rabinho', 'rabinho'], ['Cacheado', 'cacheado']],
+      barba: [['Bigode e cavanhaque', null], ['Sem barba', 'lisa'], ['Gnomo de jardim', 'jardim'], ['Bigodão', 'bigodao'], ['Cheia curta', 'cheia']]
     },
     halfling: {
       penteado: [['Cacheado', null], ['Tigela', 'tigela'], ['Rabinho', 'rabinho'], ['Cachos longos', 'longo'], ['Raspado', 'raspado']],
