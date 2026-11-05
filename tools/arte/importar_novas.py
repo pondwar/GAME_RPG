@@ -488,7 +488,9 @@ def mascara_cores(im, cfg, frame=None):
             b = (a[..., 1] - rho * a[..., 0]) / (1 - 0.15 * rho)
             couro = np.clip(b / gref, 0, 1) * op * (yf <= cfg['cabelo']['couro'])
             cobre = np.maximum(cobre, np.where(couro > 0.12, couro, 0))
-        if 'y' in cfg['cabelo']: cobre *= inr(yf, cfg['cabelo']['y'])
+        if 'y' in cfg['cabelo']:                   # uma faixa [y0, y1] ou uma lista delas (cabeca + pelo dos pes do halfling)
+            fx_ = cfg['cabelo']['y'] if isinstance(cfg['cabelo']['y'][0], list) else [cfg['cabelo']['y']]
+            cobre *= np.any([inr(yf, r) for r in fx_], 0)
         sem = a.copy(); sem[..., 1] = np.minimum(a[..., 1], np.maximum(a[..., 0], a[..., 2]))
         h, s, v = hsv_arr(sem)
     for k in ('olhos', 'cabelo', 'pele'):          # olhos e cabelo primeiro: a pele nao rouba sobrancelha nem iris
@@ -681,6 +683,7 @@ def importar_raca(race, cfg, arquivos, altura=600):
     rx0, rx1 = corpo[0] + cab['rosto_x'][0] * corpo[2], corpo[0] + cab['rosto_x'][1] * corpo[2]
     yy, xx = np.mgrid[0:H, 0:W]
     v = int(time.time())
+    ate = yy < corpo[1] + cab.get('pelo_ate', 2) * altura    # pelo abaixo disso (pes do halfling) e do corpo, nao do penteado
     banda = (yy >= nariz - 2) & (yy < queixo + 2) & (xx >= rx0) & (xx < rx1)       # faixa da barba
     retratos, refs_base, infos = {}, None, []
     heads = {'cabelo': {}, 'barba': {}, 'apagar': {'barba': {}}, 'chapeu': cab.get('chapeu', [])}
@@ -777,7 +780,7 @@ def importar_raca(race, cfg, arquivos, altura=600):
         heads['apagar']['barba'][key] = _camada(z, rosto[key], f'cabeca_{race}_apagar_barba__{key}.png')
         if key == race:                                     # penteado: apaga a cabeca do boneco acima do nariz
             # e o cabelo do boneco que desce fora da barba (rabo de cavalo atras do pescoco)
-            rabo = _crescer(parts.get('cabelo', np.zeros((H, W), bool)) & (yy >= nariz) & ~banda, 2) & op
+            rabo = _crescer(parts.get('cabelo', np.zeros((H, W), bool)) & (yy >= nariz) & ~banda & ate, 2) & op
             heads['apagar']['cabelo'] = _camada(z, op & ((yy < nariz) | rabo), f'cabeca_{race}_apagar_cabelo.png')
     # na peca, a barba conta como cabelo; em cima vale acima do boneco (coque e moicano mais altos que a cabeca)
     ch = cfg['cabelo'].get('chroma')                       # verde exato: a peca vale ate os pes (barba longa, trancas)
@@ -789,7 +792,7 @@ def importar_raca(race, cfg, arquivos, altura=600):
         tela = na_tela(key); a = np.array(tela); op = a[..., 3] > 8
         mask, _, parts = mascara_cores(tela, pc, corpo)
         m4 = np.dstack([np.array(mask), np.full((H, W), 255, np.uint8)])
-        pelo = parts.get('cabelo', np.zeros((H, W), bool))
+        pelo = parts.get('cabelo', np.zeros((H, W), bool)) & ate
         if kind == 'cabelo':                                # acima do nariz (2 px a mais: sem fresta) + cabelo que desce
             if sm:                                          # abaixo do nariz: o que difere do penteado sem mechas (trancas, franja)
                 desce = _diferente(a, t_sem) & op & abaixo

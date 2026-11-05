@@ -629,7 +629,7 @@
    "file": "retrato_meio_elfo.png",
    "w": 281,
    "h": 600,
-   "v": 1793814080,
+   "v": 1793886335,
    "corpo": [
     1,
     0,
@@ -648,7 +648,7 @@
    "file": "retrato_humano.png",
    "w": 280,
    "h": 616,
-   "v": 1793814086,
+   "v": 1793886340,
    "corpo": [
     0,
     16,
@@ -667,7 +667,7 @@
    "file": "retrato_elfo.png",
    "w": 253,
    "h": 611,
-   "v": 1793814090,
+   "v": 1793886344,
    "corpo": [
     0,
     11,
@@ -686,7 +686,7 @@
    "file": "retrato_anao.png",
    "w": 298,
    "h": 628,
-   "v": 1793814096,
+   "v": 1793886349,
    "corpo": [
     0,
     28,
@@ -698,6 +698,25 @@
     "pele": "#ce8677",
     "cabelo": "#35ca0e",
     "olhos": "#515163"
+   },
+   "chroma": true
+  },
+  "halfling": {
+   "file": "retrato_halfling.png",
+   "w": 318,
+   "h": 600,
+   "v": 1793886351,
+   "corpo": [
+    0,
+    0,
+    318,
+    600
+   ],
+   "mask": "retrato_halfling_mascara.png",
+   "ref": {
+    "pele": "#d0867b",
+    "cabelo": "#36cf19",
+    "olhos": "#734548"
    },
    "chroma": true
   }
@@ -938,6 +957,25 @@
      "file": "cabeca_anao_apagar_cabelo.png",
      "x": 83,
      "y": 28
+    }
+   },
+   "chapeu": []
+  },
+  "halfling": {
+   "cabelo": {},
+   "barba": {},
+   "apagar": {
+    "barba": {
+     "halfling": {
+      "file": "cabeca_halfling_apagar_barba__halfling.png",
+      "x": 105,
+      "y": 124
+     }
+    },
+    "cabelo": {
+     "file": "cabeca_halfling_apagar_cabelo.png",
+     "x": 64,
+     "y": 0
     }
    },
    "chapeu": []

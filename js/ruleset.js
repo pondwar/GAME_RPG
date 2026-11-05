@@ -97,7 +97,7 @@
     humano: { scale: 1, corpo: 'Masculino', pele: 'Morena clara', penteado: 'Curto arrepiado', cabelo: 'Castanho', barba: 'Por fazer', olhos: 'Castanhos', rosto: 'Queixo quadrado' },
     elfo: { scale: 1.04, corpo: 'Masculino', pele: 'Clara', penteado: 'Rabo de cavalo', cabelo: 'Loiro-prateado', barba: 'Sem barba', olhos: 'Azuis', rosto: 'Fino, orelhas pontudas' },
     anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', penteado: 'Rabo curto', cabelo: 'Castanho-escuro', barba: 'Cheia curta', olhos: 'Azul-acinzentados', rosto: 'Largo, nariz grande' },
-    halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Bronzeada', cabelo: 'Castanho cacheado', olhos: 'Avelã', rosto: 'Redondo e sorridente' },
+    halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Rosada', penteado: 'Cacheado', cabelo: 'Castanho', barba: 'Sem barba', olhos: 'Castanhos', rosto: 'Redondo, pés peludos' },
     draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Escamas vermelhas', cabelo: 'Chifres e cristas', olhos: 'Âmbar', rosto: 'Focinho de dragão' },
     gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Clara rosada', cabelo: 'Branco espetado', olhos: 'Azuis', rosto: 'Nariz grande, bigode' },
     meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
@@ -127,6 +127,11 @@
       pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Cinza-pedra', '#9a948c'], ['Escura', '#5e4234']],
       cabelo: [['Castanho-escuro', '#4a3326'], ['Ruivo', '#b4532b'], ['Preto', '#231e1c'], ['Loiro', '#c9a24e'], ['Grisalho', '#9b968f'], ['Branco', '#ebe6dc']],
       olhos: [['Azul-acinzentados', null], ['Castanhos', '#6b4428'], ['Verdes', '#3f9a4a'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a'], ['Pretos', '#201a17']]
+    },
+    halfling: {                                 // o pelo dos pes muda junto com o cabelo
+      pele: [['Rosada', null], ['Clara', '#f0c8b0'], ['Bronzeada', '#c68e6c'], ['Morena', '#9a6a50'], ['Negra', '#6b4535'], ['Pálida', '#f3dcd2']],
+      cabelo: [['Castanho', '#6b4630'], ['Castanho-claro', '#9a6a3e'], ['Loiro', '#d8b25c'], ['Ruivo', '#b4532b'], ['Preto', '#2a2422'], ['Grisalho', '#9b968f']],
+      olhos: [['Castanhos', null], ['Avelã', '#8a7a3a'], ['Verdes', '#3f9a4a'], ['Azuis', '#3c7fd0'], ['Cinzentos', '#8a96a2'], ['Âmbar', '#d0902a']]
     }
   };
 
@@ -144,6 +149,9 @@
     anao: {
       penteado: [['Rabo curto', null], ['Careca', 'careca'], ['Coque', 'coque'], ['Tranças', 'trancas'], ['Moicano', 'moicano']],
       barba: [['Cheia curta', null], ['Longa', 'longa'], ['Trançada', 'trancada'], ['Bifurcada', 'bifurcada'], ['Bigodão', 'bigodao']]
+    },
+    halfling: {
+      penteado: [['Cacheado', null]]
     },
     elfo: {                                     // elfo nao tem barba
       penteado: [['Rabo de cavalo', null], ['Coque', 'coque'], ['Curto', 'curto'], ['Tranças', 'trancas'], ['Raspado', 'raspado']]
