@@ -14,5 +14,25 @@
    "down_left": "espelhar",
    "up_left": "ignorar"
   }
+ },
+ "meio_orc": {
+  "andar_diagonal": {
+   "up_left": "espelhar"
+  }
+ },
+ "draconato": {
+  "andar_diagonal": {
+   "up_left": "espelhar"
+  }
+ },
+ "tiferino": {
+  "andar_diagonal": {
+   "up_left": "espelhar"
+  }
+ },
+ "meio_elfo": {
+  "andar_diagonal": {
+   "up_left": "espelhar"
+  }
  }
 }

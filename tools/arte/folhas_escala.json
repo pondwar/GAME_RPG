@@ -1,0 +1,13 @@
+{
+ "_comentario": "ajuste fino do tamanho de cada folha de acao, conferido no olho (a cabeca da acao igual a do boneco andando). O importador ja iguala pela area ao padrao humano; isto multiplica por cima. '_todas' vale para todas as racas (o pulo do humano, que e o padrao, saiu pequeno)",
+ "_todas": {"pular": 1.15},
+ "humano": {},
+ "elfo": {"pular": 0.95, "abaixar": 0.87, "chute": 0.87},
+ "anao": {"pular": 1.13, "espada": 1.08, "machado": 1.08},
+ "halfling": {},
+ "gnomo": {"pular": 1.05, "chute": 0.82},
+ "meio_elfo": {"pular": 1.05, "espada": 1.05, "machado": 1.08},
+ "meio_orc": {"pular": 1.05, "espada": 1.12, "machado": 1.12},
+ "draconato": {"pular": 1.05, "espada": 1.12, "machado": 1.08},
+ "tiferino": {"espada": 1.12, "machado": 1.05}
+}

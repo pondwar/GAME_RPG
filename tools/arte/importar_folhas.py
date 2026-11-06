@@ -38,7 +38,17 @@ ACOES = {'parado': ('idle', [['down', 'up', 'left']]),
          'soco': ('punch', [['left'] * 5]), 'machado': ('attack_2h', [['left'] * 5]), 'chute': ('kick', [['left'] * 4])}
 REGUA = {'pular', 'sentar', 'abaixar', 'espada', 'soco', 'machado', 'chute'}
 TELA = 1.3                         # a tela tem 30% a mais que a altura de pe (braco erguido, pulo); o jogo sabe (corpo)
+PADRAO = {}                        # (acao, dir) -> altura mediana do humano (preenchido ao importar o humano)
 ESPELHO = {'left': 'right', 'down_left': 'down_right', 'up_left': 'up_right'}
+
+
+def salvar(img, path):
+    """o Windows as vezes recusa gravar (arquivo aberto pelo servidor/antivirus): tenta de novo"""
+    for t in range(8):
+        try: return img.save(path)
+        except OSError:
+            if t == 7: raise
+            time.sleep(0.3)
 
 
 def _faixas(v, minimo):
@@ -207,6 +217,36 @@ def importar(race, cfg, ref):
             for (n, d), qs in list(quadros.items()):
                 if n == nome:
                     quadros[(n, d)] = [q.resize((round(q.width * k), round(q.height * k)), Image.LANCZOS) for q in qs]
+    # padrao humano: cada acao de cada raca fica do mesmo tamanho, relativo ao boneco de pe, que a mesma acao do humano.
+    # O Gemini desenha cada folha num tamanho (o anao sentado saia da altura dele em pe, o chute do gnomo 20% maior) e a
+    # regua da folha nem sempre e confiavel. Medida: a AREA do boneco (raiz), que quase nao muda com a pose; a altura
+    # enganava (um agachado mais fundo virava gigante). Comparada com o andar da mesma direcao da propria raca, o corpo
+    # mais largo (anao) nao conta. O tamanho da RACA (anao menor, draconato maior) nao entra aqui: e o 'scale' de
+    # js/ruleset.js (LOOKS), aplicado pelo jogo
+    def area(q): return float((np.array(q)[..., 3] > 128).sum())
+    def base(d):
+        qs = quadros.get(('walk', d)) or quadros.get(('idle', d))   # o andar: 4 quadros, mais firme
+        return float(np.median([area(q) for q in qs])) if qs else None
+    # QUADRO A QUADRO: dentro da mesma folha o Gemini desenha cada boneco num tamanho (no pulo do anao um quadro saia
+    # com metade do tamanho). Cada quadro vai para a area alvo = area do andar x proporcao da acao no humano (mediana)
+    alvo = {}
+    for k, qs in quadros.items():
+        b = base(k[1])
+        if b and k[0] not in ('idle', 'walk'): alvo[k] = (b, [area(q) / b for q in qs])
+    if race == 'humano': PADRAO.update({k: float(np.median(rs)) for k, (b, rs) in alvo.items()})
+    # ajuste fino no olho (tools/arte/folhas_escala.json), por folha: multiplica por cima
+    epath = os.path.join(HERE, 'folhas_escala.json')
+    esc = json.load(open(epath, encoding='utf-8')) if os.path.exists(epath) else {}
+    acao_de = {nome: acao for acao, (nome, g) in ACOES.items() if 'diagonal' not in acao}
+    def extra(nome):
+        a = acao_de.get(nome)
+        return esc.get('_todas', {}).get(a, 1.0) * esc.get(race, {}).get(a, 1.0)
+    for k, (b, rs) in alvo.items():
+        if k not in PADRAO: continue
+        fs = [min(max((PADRAO[k] / r) ** 0.5, 0.7), 1.5) * extra(k[0]) for r in rs]
+        if max(abs(f - 1) for f in fs) < 0.03: continue
+        print(f'  {k[0]} {k[1]}: ' + ' '.join(f'{f:.2f}' for f in fs))
+        quadros[k] = [q.resize((max(1, round(q.width * f)), max(1, round(q.height * f))), Image.LANCZOS) for q, f in zip(quadros[k], fs)]
     alturas = [q.height for qs in quadros.values() for q in qs]
     H = max(int(ALTURA * TELA), max(alturas) + 2)
     # largura comum: metade maior de um lado e do outro do centro do corpo
@@ -224,9 +264,9 @@ def importar(race, cfg, ref):
                 tela = Image.new('RGBA', (W, H), (0, 0, 0, 0))
                 tela.paste(img, (round(W / 2 - centro_corpo(img)), H - img.height - 1), img)
                 pasta = os.path.join(OUT, race, nome); os.makedirs(pasta, exist_ok=True)
-                tela.save(os.path.join(pasta, f'{dd}_{i}.png'))
+                salvar(tela, os.path.join(pasta, f'{dd}_{i}.png'))
                 mask, _, _ = mascara_cores(tela, pc)
-                mask.save(os.path.join(pasta, f'{dd}_{i}_mascara.png'))
+                salvar(mask, os.path.join(pasta, f'{dd}_{i}_mascara.png'))
                 ent['acoes'].setdefault(nome, {}).setdefault(dd, []).append(f'{race}/{nome}/{dd}_{i}')
     for nome in ent['acoes']:
         for dd in ent['acoes'][nome]: ent['acoes'][nome][dd].sort()
@@ -239,7 +279,8 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     mpath = os.path.join(OUT, 'manifest.json')
     manifest = json.load(open(mpath, encoding='utf-8')) if os.path.exists(mpath) else {}
-    for race, cfg in cores.items():
+    # o humano primeiro: as outras racas seguem o tamanho das acoes dele (PADRAO)
+    for race, cfg in sorted(cores.items(), key=lambda rc: rc[0] != 'humano'):
         if race.startswith('_'): continue
         ref = (arte.get('portraits', {}).get(race) or {}).get('ref', {})
         ent = importar(race, cfg, ref)

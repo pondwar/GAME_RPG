@@ -88,22 +88,25 @@
   const allowed = (raceCode, classCode) => (RACE_CLASSES[raceCode] || ALL).includes(classCode);
 
   // Aparencia (tela de criacao). Por enquanto 1 visual classico por raca (o retrato da previa); as outras opcoes
-  // de cada parte entram aqui depois. scale: altura na previa (raca pequena aparece menor).
+  // de cada parte entram aqui depois. scale: altura da raca relativa ao humano, na previa e no mapa (os bonecos das
+  // folhas sao todos desenhados na altura do humano; o jogo estica/encolhe por aqui). Altura media da tabela do Livro
+  // do Jogador do D&D 5e (base + dados): humano 1,70 m (4'8"+2d10 = 67"), elfo 65", anao 51" (colina 49", montanha 53"),
+  // halfling 36", gnomo 40", meio-elfo 66", meio-orc 69", draconato 75", tiferino 66".
   const LOOK_PARTS = [
     { code: 'corpo', name: 'Corpo' }, { code: 'pele', name: 'Pele' }, { code: 'penteado', name: 'Penteado' },
     { code: 'cabelo', name: 'Cor cabelo' }, { code: 'barba', name: 'Barba' }, { code: 'olhos', name: 'Olhos' }, { code: 'rosto', name: 'Rosto' }
   ];
   const LOOKS = {
     humano: { scale: 1, corpo: 'Masculino', pele: 'Morena clara', penteado: 'Curto arrepiado', cabelo: 'Castanho', barba: 'Por fazer', olhos: 'Castanhos', rosto: 'Queixo quadrado' },
-    elfo: { scale: 1.04, corpo: 'Masculino', pele: 'Clara', penteado: 'Rabo de cavalo', cabelo: 'Loiro-prateado', barba: 'Sem barba', olhos: 'Azuis', rosto: 'Fino, orelhas pontudas' },
-    anao: { scale: 0.78, corpo: 'Masculino', pele: 'Rosada', penteado: 'Rabo curto', cabelo: 'Castanho-escuro', barba: 'Cheia curta', olhos: 'Azul-acinzentados', rosto: 'Largo, nariz grande' },
-    halfling: { scale: 0.62, corpo: 'Masculino', pele: 'Rosada', penteado: 'Cacheado', cabelo: 'Castanho', barba: 'Sem barba', olhos: 'Castanhos', rosto: 'Redondo, pés peludos' },
-    draconato: { scale: 1.06, corpo: 'Masculino', pele: 'Vermelhas', penteado: 'Chifres curvos', cabelo: 'Marfim', barba: 'Sem barba', olhos: 'Âmbar', rosto: 'Focinho de dragão',
+    elfo: { scale: 0.97, corpo: 'Masculino', pele: 'Clara', penteado: 'Rabo de cavalo', cabelo: 'Loiro-prateado', barba: 'Sem barba', olhos: 'Azuis', rosto: 'Fino, orelhas pontudas' },
+    anao: { scale: 0.76, corpo: 'Masculino', pele: 'Rosada', penteado: 'Rabo curto', cabelo: 'Castanho-escuro', barba: 'Cheia curta', olhos: 'Azul-acinzentados', rosto: 'Largo, nariz grande' },
+    halfling: { scale: 0.54, corpo: 'Masculino', pele: 'Rosada', penteado: 'Cacheado', cabelo: 'Castanho', barba: 'Sem barba', olhos: 'Castanhos', rosto: 'Redondo, pés peludos' },
+    draconato: { scale: 1.12, corpo: 'Masculino', pele: 'Vermelhas', penteado: 'Chifres curvos', cabelo: 'Marfim', barba: 'Sem barba', olhos: 'Âmbar', rosto: 'Focinho de dragão',
       nomes: { pele: 'Escamas', penteado: 'Chifres', cabelo: 'Cor chifres' } },
-    gnomo: { scale: 0.58, corpo: 'Masculino', pele: 'Rosada', penteado: 'Espetado', cabelo: 'Branco', barba: 'Bigode e cavanhaque', olhos: 'Azuis', rosto: 'Nariz grande, orelhas pontudas' },
-    meio_elfo: { scale: 1, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
-    meio_orc: { scale: 1.04, corpo: 'Masculino', pele: 'Verde', penteado: 'Rabo e laterais raspadas', cabelo: 'Preto', barba: 'Curta', olhos: 'Castanhos', rosto: 'Presas inferiores' },
-    tiferino: { scale: 1, corpo: 'Masculino', pele: 'Vermelha', penteado: 'Longo liso', cabelo: 'Preto', barba: 'Sem barba', olhos: 'Dourados', rosto: 'Anguloso, chifres de carneiro' },
+    gnomo: { scale: 0.6, corpo: 'Masculino', pele: 'Rosada', penteado: 'Espetado', cabelo: 'Branco', barba: 'Bigode e cavanhaque', olhos: 'Azuis', rosto: 'Nariz grande, orelhas pontudas' },
+    meio_elfo: { scale: 0.985, corpo: 'Masculino', pele: 'Oliva', penteado: 'Ondulado', cabelo: 'Preto', barba: 'Cheia curta', olhos: 'Castanhos', rosto: 'Suave, orelhas meio pontudas' },
+    meio_orc: { scale: 1.03, corpo: 'Masculino', pele: 'Verde', penteado: 'Rabo e laterais raspadas', cabelo: 'Preto', barba: 'Curta', olhos: 'Castanhos', rosto: 'Presas inferiores' },
+    tiferino: { scale: 0.985, corpo: 'Masculino', pele: 'Vermelha', penteado: 'Longo liso', cabelo: 'Preto', barba: 'Sem barba', olhos: 'Dourados', rosto: 'Anguloso, chifres de carneiro' },
   };
 
   // Cores de pele, cabelo e olhos (previa pintada por codigo: mascara do retrato, tools/arte/cores_racas.json).
