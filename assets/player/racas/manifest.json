@@ -1,9 +1,9 @@
 {
  "humano": {
-  "w": 410,
+  "w": 328,
   "h": 520,
   "corpo": 400,
-  "v": 1793931360,
+  "v": 1793933390,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -135,14 +135,16 @@
      "humano/attack_1h/left_1",
      "humano/attack_1h/left_2",
      "humano/attack_1h/left_3",
-     "humano/attack_1h/left_4"
+     "humano/attack_1h/left_4",
+     "humano/attack_1h/left_5"
     ],
     "right": [
      "humano/attack_1h/right_0",
      "humano/attack_1h/right_1",
      "humano/attack_1h/right_2",
      "humano/attack_1h/right_3",
-     "humano/attack_1h/right_4"
+     "humano/attack_1h/right_4",
+     "humano/attack_1h/right_5"
     ]
    },
    "punch": {
@@ -188,15 +190,13 @@
      "humano/kick/left_0",
      "humano/kick/left_1",
      "humano/kick/left_2",
-     "humano/kick/left_3",
-     "humano/kick/left_4"
+     "humano/kick/left_3"
     ],
     "right": [
      "humano/kick/right_0",
      "humano/kick/right_1",
      "humano/kick/right_2",
-     "humano/kick/right_3",
-     "humano/kick/right_4"
+     "humano/kick/right_3"
     ]
    }
   }
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793931370,
+  "v": 1793933398,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
