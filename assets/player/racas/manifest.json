@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793969590,
+  "v": 1793970434,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793969598,
+  "v": 1793970443,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -277,7 +277,7 @@
   "w": 346,
   "h": 520,
   "corpo": 400,
-  "v": 1793969600,
+  "v": 1793970445,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -457,7 +457,7 @@
   "w": 425,
   "h": 520,
   "corpo": 400,
-  "v": 1793969607,
+  "v": 1793970452,
   "ref": {
    "pele": "#d0867b",
    "cabelo": "#36cf19",
@@ -633,7 +633,7 @@
   "w": 341,
   "h": 520,
   "corpo": 400,
-  "v": 1793969615,
+  "v": 1793970459,
   "ref": {
    "pele": "#d68a84",
    "cabelo": "#32c517",
@@ -793,7 +793,7 @@
   "w": 347,
   "h": 520,
   "corpo": 400,
-  "v": 1793969580,
+  "v": 1793970425,
   "ref": {
    "pele": "#c67d66",
    "cabelo": "#32b419",
@@ -971,7 +971,7 @@
   "w": 354,
   "h": 520,
   "corpo": 400,
-  "v": 1793969621,
+  "v": 1793970465,
   "ref": {
    "pele": "#6b718a",
    "cabelo": "#26b61b",
@@ -1143,6 +1143,184 @@
      "meio_orc/kick/right_1",
      "meio_orc/kick/right_2",
      "meio_orc/kick/right_3"
+    ]
+   }
+  }
+ },
+ "draconato": {
+  "w": 350,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793970472,
+  "ref": {
+   "pele": "#747b96",
+   "cabelo": "#2ec91e",
+   "olhos": "#a7a6b9"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "draconato/idle/down_0"
+    ],
+    "up": [
+     "draconato/idle/up_0"
+    ],
+    "left": [
+     "draconato/idle/left_0"
+    ],
+    "right": [
+     "draconato/idle/right_0"
+    ],
+    "down_left": [
+     "draconato/idle/down_left_0"
+    ],
+    "down_right": [
+     "draconato/idle/down_right_0"
+    ],
+    "up_left": [
+     "draconato/idle/up_left_0"
+    ],
+    "up_right": [
+     "draconato/idle/up_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "draconato/walk/down_0",
+     "draconato/walk/down_1",
+     "draconato/walk/down_2",
+     "draconato/walk/down_3"
+    ],
+    "up": [
+     "draconato/walk/up_0",
+     "draconato/walk/up_1",
+     "draconato/walk/up_2",
+     "draconato/walk/up_3"
+    ],
+    "left": [
+     "draconato/walk/left_0",
+     "draconato/walk/left_1",
+     "draconato/walk/left_2",
+     "draconato/walk/left_3"
+    ],
+    "right": [
+     "draconato/walk/right_0",
+     "draconato/walk/right_1",
+     "draconato/walk/right_2",
+     "draconato/walk/right_3"
+    ],
+    "down_left": [
+     "draconato/walk/down_left_0",
+     "draconato/walk/down_left_1",
+     "draconato/walk/down_left_2",
+     "draconato/walk/down_left_3"
+    ],
+    "down_right": [
+     "draconato/walk/down_right_0",
+     "draconato/walk/down_right_1",
+     "draconato/walk/down_right_2",
+     "draconato/walk/down_right_3"
+    ],
+    "up_left": [
+     "draconato/walk/up_left_0",
+     "draconato/walk/up_left_1",
+     "draconato/walk/up_left_2",
+     "draconato/walk/up_left_3"
+    ],
+    "up_right": [
+     "draconato/walk/up_right_0",
+     "draconato/walk/up_right_1",
+     "draconato/walk/up_right_2",
+     "draconato/walk/up_right_3"
+    ]
+   },
+   "jump": {
+    "left": [
+     "draconato/jump/left_0",
+     "draconato/jump/left_1",
+     "draconato/jump/left_2",
+     "draconato/jump/left_3"
+    ],
+    "right": [
+     "draconato/jump/right_0",
+     "draconato/jump/right_1",
+     "draconato/jump/right_2",
+     "draconato/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "draconato/sit/down_0"
+    ],
+    "up": [
+     "draconato/sit/up_0"
+    ],
+    "left": [
+     "draconato/sit/left_0"
+    ],
+    "right": [
+     "draconato/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "draconato/gather/left_0",
+     "draconato/gather/left_1",
+     "draconato/gather/left_2",
+     "draconato/gather/left_3"
+    ],
+    "right": [
+     "draconato/gather/right_0",
+     "draconato/gather/right_1",
+     "draconato/gather/right_2",
+     "draconato/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "draconato/attack_1h/left_0",
+     "draconato/attack_1h/left_1",
+     "draconato/attack_1h/left_2",
+     "draconato/attack_1h/left_3",
+     "draconato/attack_1h/left_4"
+    ],
+    "right": [
+     "draconato/attack_1h/right_0",
+     "draconato/attack_1h/right_1",
+     "draconato/attack_1h/right_2",
+     "draconato/attack_1h/right_3",
+     "draconato/attack_1h/right_4"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "draconato/attack_2h/left_0",
+     "draconato/attack_2h/left_1",
+     "draconato/attack_2h/left_2",
+     "draconato/attack_2h/left_3",
+     "draconato/attack_2h/left_4"
+    ],
+    "right": [
+     "draconato/attack_2h/right_0",
+     "draconato/attack_2h/right_1",
+     "draconato/attack_2h/right_2",
+     "draconato/attack_2h/right_3",
+     "draconato/attack_2h/right_4"
+    ]
+   },
+   "kick": {
+    "left": [
+     "draconato/kick/left_0",
+     "draconato/kick/left_1",
+     "draconato/kick/left_2",
+     "draconato/kick/left_3"
+    ],
+    "right": [
+     "draconato/kick/right_0",
+     "draconato/kick/right_1",
+     "draconato/kick/right_2",
+     "draconato/kick/right_3"
     ]
    }
   }
