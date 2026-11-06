@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793968628,
+  "v": 1793969590,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793968636,
+  "v": 1793969598,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -277,7 +277,7 @@
   "w": 346,
   "h": 520,
   "corpo": 400,
-  "v": 1793968638,
+  "v": 1793969600,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -457,7 +457,7 @@
   "w": 425,
   "h": 520,
   "corpo": 400,
-  "v": 1793968645,
+  "v": 1793969607,
   "ref": {
    "pele": "#d0867b",
    "cabelo": "#36cf19",
@@ -633,7 +633,7 @@
   "w": 341,
   "h": 520,
   "corpo": 400,
-  "v": 1793968653,
+  "v": 1793969615,
   "ref": {
    "pele": "#d68a84",
    "cabelo": "#32c517",
@@ -793,7 +793,7 @@
   "w": 347,
   "h": 520,
   "corpo": 400,
-  "v": 1793968617,
+  "v": 1793969580,
   "ref": {
    "pele": "#c67d66",
    "cabelo": "#32b419",
@@ -963,6 +963,186 @@
      "meio_elfo/kick/right_2",
      "meio_elfo/kick/right_3",
      "meio_elfo/kick/right_4"
+    ]
+   }
+  }
+ },
+ "meio_orc": {
+  "w": 354,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793969621,
+  "ref": {
+   "pele": "#6b718a",
+   "cabelo": "#26b61b",
+   "olhos": "#3e3543"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "meio_orc/idle/down_0"
+    ],
+    "up": [
+     "meio_orc/idle/up_0"
+    ],
+    "left": [
+     "meio_orc/idle/left_0"
+    ],
+    "right": [
+     "meio_orc/idle/right_0"
+    ],
+    "down_left": [
+     "meio_orc/idle/down_left_0"
+    ],
+    "down_right": [
+     "meio_orc/idle/down_right_0"
+    ],
+    "up_left": [
+     "meio_orc/idle/up_left_0"
+    ],
+    "up_right": [
+     "meio_orc/idle/up_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "meio_orc/walk/down_0",
+     "meio_orc/walk/down_1",
+     "meio_orc/walk/down_2",
+     "meio_orc/walk/down_3"
+    ],
+    "up": [
+     "meio_orc/walk/up_0",
+     "meio_orc/walk/up_1",
+     "meio_orc/walk/up_2",
+     "meio_orc/walk/up_3"
+    ],
+    "left": [
+     "meio_orc/walk/left_0",
+     "meio_orc/walk/left_1",
+     "meio_orc/walk/left_2",
+     "meio_orc/walk/left_3"
+    ],
+    "right": [
+     "meio_orc/walk/right_0",
+     "meio_orc/walk/right_1",
+     "meio_orc/walk/right_2",
+     "meio_orc/walk/right_3"
+    ],
+    "down_left": [
+     "meio_orc/walk/down_left_0",
+     "meio_orc/walk/down_left_1",
+     "meio_orc/walk/down_left_2",
+     "meio_orc/walk/down_left_3"
+    ],
+    "down_right": [
+     "meio_orc/walk/down_right_0",
+     "meio_orc/walk/down_right_1",
+     "meio_orc/walk/down_right_2",
+     "meio_orc/walk/down_right_3"
+    ],
+    "up_left": [
+     "meio_orc/walk/up_left_0",
+     "meio_orc/walk/up_left_1",
+     "meio_orc/walk/up_left_2",
+     "meio_orc/walk/up_left_3"
+    ],
+    "up_right": [
+     "meio_orc/walk/up_right_0",
+     "meio_orc/walk/up_right_1",
+     "meio_orc/walk/up_right_2",
+     "meio_orc/walk/up_right_3"
+    ]
+   },
+   "jump": {
+    "left": [
+     "meio_orc/jump/left_0",
+     "meio_orc/jump/left_1",
+     "meio_orc/jump/left_2",
+     "meio_orc/jump/left_3"
+    ],
+    "right": [
+     "meio_orc/jump/right_0",
+     "meio_orc/jump/right_1",
+     "meio_orc/jump/right_2",
+     "meio_orc/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "meio_orc/sit/down_0"
+    ],
+    "up": [
+     "meio_orc/sit/up_0"
+    ],
+    "left": [
+     "meio_orc/sit/left_0"
+    ],
+    "right": [
+     "meio_orc/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "meio_orc/gather/left_0",
+     "meio_orc/gather/left_1",
+     "meio_orc/gather/left_2",
+     "meio_orc/gather/left_3"
+    ],
+    "right": [
+     "meio_orc/gather/right_0",
+     "meio_orc/gather/right_1",
+     "meio_orc/gather/right_2",
+     "meio_orc/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "meio_orc/attack_1h/left_0",
+     "meio_orc/attack_1h/left_1",
+     "meio_orc/attack_1h/left_2",
+     "meio_orc/attack_1h/left_3"
+    ],
+    "right": [
+     "meio_orc/attack_1h/right_0",
+     "meio_orc/attack_1h/right_1",
+     "meio_orc/attack_1h/right_2",
+     "meio_orc/attack_1h/right_3"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "meio_orc/attack_2h/left_0",
+     "meio_orc/attack_2h/left_1",
+     "meio_orc/attack_2h/left_2",
+     "meio_orc/attack_2h/left_3",
+     "meio_orc/attack_2h/left_4",
+     "meio_orc/attack_2h/left_5",
+     "meio_orc/attack_2h/left_6"
+    ],
+    "right": [
+     "meio_orc/attack_2h/right_0",
+     "meio_orc/attack_2h/right_1",
+     "meio_orc/attack_2h/right_2",
+     "meio_orc/attack_2h/right_3",
+     "meio_orc/attack_2h/right_4",
+     "meio_orc/attack_2h/right_5",
+     "meio_orc/attack_2h/right_6"
+    ]
+   },
+   "kick": {
+    "left": [
+     "meio_orc/kick/left_0",
+     "meio_orc/kick/left_1",
+     "meio_orc/kick/left_2",
+     "meio_orc/kick/left_3"
+    ],
+    "right": [
+     "meio_orc/kick/right_0",
+     "meio_orc/kick/right_1",
+     "meio_orc/kick/right_2",
+     "meio_orc/kick/right_3"
     ]
    }
   }

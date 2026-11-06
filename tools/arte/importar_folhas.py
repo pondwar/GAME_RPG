@@ -69,7 +69,9 @@ def recortar(path):
                 cortes = []
                 for i in range(1, n):
                     c = int((x1 - x0) * i / n); r = int((x1 - x0) / n * 0.35)
-                    cortes.append(c - r + int(np.argmin(perfil[c - r:c + r])))
+                    k = c - r + int(np.argmin(perfil[c - r:c + r]))
+                    # so corta onde quase nao ha boneco (um chute largo nao e dois bonecos: o corte passaria na perna)
+                    if perfil[k] <= 0.1 * (y1 - y0): cortes.append(k)
                 bordas = [0] + cortes + [x1 - x0]
                 partes += [(x0 + a, x0 + b) for a, b in zip(bordas, bordas[1:])]
             else:
