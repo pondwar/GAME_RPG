@@ -71,6 +71,13 @@
       desc: 'Estudioso das artes arcanas, com o maior repertório de magias.', role: 'Magia versátil' }
   };
 
+  // Aldeao: todo personagem comeca assim, sem classe (regra do Suritto: mundo livre, da para viver a vida toda sem
+  // classe, so com as pericias de oficio). A classe vem depois, numa guilda da cidade grande, que confere RACE_CLASSES.
+  // Baseado no Plebeu (Commoner) do D&D 5e: d8 de vida, sem magia, ataque com o melhor de Forca e Destreza
+  const ALDEAO = { name: 'Aldeão', icon: '🧑‍🌾', hitDie: 8, key: ['forca', 'destreza'], saves: [], caster: 0,
+    desc: 'Gente simples do povo. Sem classe: corta lenha, planta, constrói e vive como quiser. A classe vem depois, numa guilda da cidade.',
+    role: 'Livre' };
+
   // Classes que cada raca pode seguir. O D&D 5e nao restringe; isto e regra do Suritto, inspirada nas edicoes
   // antigas (AD&D). Para mudar: edite a lista e rode tools/gerar_ruleset_sql.js (o servidor valida pela tabela).
   const ALL = Object.keys(CLASSES);
@@ -208,9 +215,9 @@
     for (const a of ATTRS) out[a.code] = (base[a.code] || 10) + ((r.bonus || {})[a.code] || 0) + (chosen.includes(a.code) ? 1 : 0);
     return out;
   }
-  // Ficha calculada (nivel 1): PV, PM, Defesa, bonus de ataque
+  // Ficha calculada (nivel 1): PV, PM, Defesa, bonus de ataque. Sem classe (null) = aldeao
   function sheet(attrs, raceCode, classCode) {
-    const c = CLASSES[classCode] || CLASSES.guerreiro, m = (k) => mod(attrs[k] || 10);
+    const c = CLASSES[classCode] || ALDEAO, m = (k) => mod(attrs[k] || 10);
     const dwarf = raceCode === 'anao' ? 1 : 0;
     const keyMod = Math.max(...c.key.map(m));
     const castMod = c.caster ? Math.max(m('inteligencia'), m('sabedoria'), m('carisma')) : 0;
@@ -226,5 +233,5 @@
   // Rolagem classica: 4d6, descarta o menor
   function roll4d6() { const d = [0, 0, 0, 0].map(() => 1 + Math.floor(Math.random() * 6)).sort((a, b) => a - b); return d[1] + d[2] + d[3]; }
 
-  window.SurittoRules = { ATTRS, RACES, CLASSES, RACE_CLASSES, LOOK_PARTS, LOOKS, COLORS, STYLES, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
+  window.SurittoRules = { ATTRS, RACES, CLASSES, ALDEAO, RACE_CLASSES, LOOK_PARTS, LOOKS, COLORS, STYLES, POINT_COST, POINTS, HP_SCALE, allowed, mod, finalAttrs, sheet, roll4d6 };
 })();

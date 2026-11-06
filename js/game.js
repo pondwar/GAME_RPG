@@ -1314,8 +1314,9 @@ class Game {
   // dos testes (diceSystem.stats). isNew: personagem recem-criado (vida cheia e nasce em Elmford).
   applySheet(sh, isNew) {
     const Rr = window.SurittoRules, p = this.player;
-    if (!Rr || !sh || !Rr.RACES[sh.race] || !Rr.CLASSES[sh.class] || !sh.attributes) return;
-    p.race = sh.race; p.cls = sh.class; p.attributes = { ...sh.attributes };
+    // sem classe (null) = aldeao: todo mundo comeca assim; a classe vem depois, numa guilda
+    if (!Rr || !sh || !Rr.RACES[sh.race] || (sh.class && !Rr.CLASSES[sh.class]) || !sh.attributes) return;
+    p.race = sh.race; p.cls = sh.class || null; p.attributes = { ...sh.attributes };
     if (sh.appearance) p.appearance = { ...sh.appearance };           // cores de pele/cabelo/olhos (tela de criacao)
     const s = Rr.sheet(p.attributes, p.race, p.cls);
     const hpR = p.maxHp ? p.hp / p.maxHp : 1, mpR = p.maxMana ? p.mana / p.maxMana : 1;
@@ -1334,7 +1335,7 @@ class Game {
     p.name = name;
     const nEl = document.querySelector('.player-name'), tEl = document.querySelector('.player-title');
     if (nEl) nEl.textContent = name;
-    if (tEl) tEl.textContent = `${Rr.RACES[p.race].name} ${Rr.CLASSES[p.cls].name}`;
+    if (tEl) tEl.textContent = `${Rr.RACES[p.race].name} ${(Rr.CLASSES[p.cls] || Rr.ALDEAO).name}`;
     this.updateHUD();
   }
 

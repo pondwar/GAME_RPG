@@ -1,4 +1,5 @@
-// character_creation.js - Telas antes do jogo: escolher personagem e criar personagem (raca, classe, atributos).
+// character_creation.js - Telas antes do jogo: escolher personagem e criar personagem (nome, raca e aparencia).
+// Todo mundo nasce aldeao, sem classe: a classe (e o que vem com ela) se escolhe depois, numa guilda da cidade grande.
 // Regras em js/ruleset.js (D&D 5e SRD). Com o servidor no ar (js/net.js) os personagens vem do banco; sem servidor
 // o jogo abre direto como antes. O resultado vai para SurittoServer: charName, character (save) e newSheet
 // (ficha nova ou ficha que um personagem antigo, sem raca/classe, acabou de completar). O jogo aplica em Game.applySheet.
@@ -123,12 +124,12 @@
           <div class="cs-title">Escolha seu personagem</div>
           <div class="cs-sub">Reinos de Suritto</div>
           <div class="cs-list">${list.map((c, i) => {
-            const race = Rr.RACES[c.race], cls = Rr.CLASSES[c.class];
+            const race = Rr.RACES[c.race], cls = Rr.CLASSES[c.class] || Rr.ALDEAO;
             return `<button class="cs-char" data-i="${i}">
               <span class="cs-char-icon">${race ? race.icon : '❔'}</span>
               <span class="cs-char-info"><b>${esc(c.name)}</b>
-                <small>${race ? race.name : 'Sem raça'} · ${cls ? cls.icon + ' ' + cls.name : 'Sem classe'} · Nível ${c.level}</small>
-                ${!race || !cls ? '<em>Ficha incompleta: escolha raça e classe ao entrar</em>' : ''}</span>
+                <small>${race ? race.name : 'Sem raça'} · ${cls.icon} ${cls.name} · Nível ${c.level}</small>
+                ${!race ? '<em>Ficha incompleta: escolha a raça ao entrar</em>' : ''}</span>
             </button>`;
           }).join('')}</div>
           <button class="cs-btn cs-new">＋ Criar novo personagem</button>
@@ -140,7 +141,7 @@
         const S = window.SurittoServer;
         S.charName = c.name; S.character = snap;
         try { localStorage.setItem('suritto_character_name', c.name); } catch (e) { }
-        if (!c.race || !c.class) this.create(c.name, list);                 // personagem antigo: completa a ficha
+        if (!c.race) this.create(c.name, list);                             // personagem antigo sem raca: completa a ficha
         else this.done();
       }));
       this.root.querySelector('.cs-new').addEventListener('click', () => this.create(null, list));
@@ -159,7 +160,7 @@
 
     // ---------------- previa ----------------
     preview(raceCode, classCode, sel = {}) {
-      const Rr = R(), race = Rr.RACES[raceCode], cls = Rr.CLASSES[classCode], look = Rr.LOOKS[raceCode] || {};
+      const Rr = R(), race = Rr.RACES[raceCode], cls = Rr.CLASSES[classCode] || Rr.ALDEAO, look = Rr.LOOKS[raceCode] || {};
       const pal = Rr.COLORS[raceCode] || {};
       // todo personagem comeca como aldeao: o boneco base da raca, em qualquer classe. As roupas de classe
       // (retrato_<raca>_<classe>) ficam guardadas para virar itens de nivel alto; both segue no codigo para o dia do item.
@@ -217,22 +218,18 @@
     // ---------------- criar ----------------
     create(fixedName, list) {
       const Rr = R();
-      const st = { name: fixedName || '', race: 'humano', cls: 'guerreiro', method: 'points', chosen: [], look: {},
-        base: { forca: 8, destreza: 8, constituicao: 8, inteligencia: 8, sabedoria: 8, carisma: 8 } };
-      // ponto de partida razoavel para o guerreiro (27 pontos gastos)
-      Object.assign(st.base, { forca: 15, destreza: 13, constituicao: 14, inteligencia: 8, sabedoria: 12, carisma: 10 });
-      const spent = () => Rr.ATTRS.reduce((s, a) => s + (st.method === 'points' ? Rr.POINT_COST[st.base[a.code]] : 0), 0);
+      // atributos do aldeao: 10 em tudo (o Plebeu do D&D) + o bonus da raca. Escolher/rolar atributos e os bonus de
+      // classe ficam para quando entrar numa guilda
+      const st = { name: fixedName || '', race: 'humano', chosen: [], look: {},
+        base: { forca: 10, destreza: 10, constituicao: 10, inteligencia: 10, sabedoria: 10, carisma: 10 } };
       const render = () => {
-        const race = Rr.RACES[st.race];
-        if (!Rr.allowed(st.race, st.cls)) st.cls = Rr.RACE_CLASSES[st.race][0];   // trocou para uma raca que nao segue essa classe
-        const cls = Rr.CLASSES[st.cls];
+        const race = Rr.RACES[st.race], cls = Rr.ALDEAO;
         if (!race.choose) st.chosen = [];
-        const fin = Rr.finalAttrs(st.base, st.race, st.chosen), sh = Rr.sheet(fin, st.race, st.cls);
-        const left = Rr.POINTS - spent();
+        const fin = Rr.finalAttrs(st.base, st.race, st.chosen), sh = Rr.sheet(fin, st.race, null);
         this.root.innerHTML = `
           <div class="cs-window cs-create">
             <div class="cs-title">${fixedName ? 'Complete a ficha de ' + esc(fixedName) : 'Criar personagem'}</div>
-            <div class="cs-sub">${fixedName ? 'Seu progresso, mochila e posição continuam os mesmos.' : 'Raças e classes clássicas (D&D 5e SRD)'}</div>
+            <div class="cs-sub">${fixedName ? 'Seu progresso, mochila e posição continuam os mesmos.' : 'Todo mundo começa como aldeão. A classe você escolhe depois, numa guilda da cidade.'}</div>
             <div class="cs-cols">
               <div class="cs-col">
                 <label class="cs-label">Nome</label>
@@ -240,33 +237,25 @@
                 <label class="cs-label">Raça</label>
                 <div class="cs-grid">${Object.entries(Rr.RACES).map(([k, r]) => `<button class="cs-pick ${k === st.race ? 'on' : ''}" data-race="${k}"><span>${r.icon}</span>${r.name}</button>`).join('')}</div>
                 <div class="cs-desc"><b>${race.name}</b> — ${race.desc}<br><small>${Object.entries(race.bonus).map(([a, v]) => Rr.ATTRS.find(x => x.code === a).abbr + ' ' + sign(v)).join(', ')}${race.choose ? ` + ${race.choose}× +1 à escolha` : ''} · Deslocamento ${race.speed} · ${race.traits.join(' · ')}</small></div>
-                <label class="cs-label">Classe</label>
-                <div class="cs-grid">${Object.entries(Rr.CLASSES).map(([k, c]) => Rr.allowed(st.race, k)
-                  ? `<button class="cs-pick ${k === st.cls ? 'on' : ''}" data-cls="${k}"><span>${c.icon}</span>${c.name}</button>`
-                  : `<button class="cs-pick off" disabled title="${race.name} não pode ser ${c.name}"><span>${c.icon}</span>${c.name}</button>`).join('')}</div>
-                <div class="cs-desc"><b>${cls.name}</b> — ${cls.desc}<br><small>${cls.role} · Dado de vida d${cls.hitDie} · Atributo principal: ${cls.key.map(a => Rr.ATTRS.find(x => x.code === a).name).join(' ou ')}${cls.caster ? ' · Conjurador' : ''}</small></div>
+                <label class="cs-label">Começo</label>
+                <div class="cs-desc"><b>${cls.icon} ${cls.name}</b> — ${cls.desc}<br><small>Nas guildas do centro da cidade grande você pode virar guerreiro, mago, ladino... (cada guilda diz se aceita a sua raça). Ou continuar aldeão para sempre.</small></div>
               </div>
               <div class="cs-col cs-col-preview">
                 <label class="cs-label">Aparência</label>
-                ${this.preview(st.race, st.cls, st.look)}
+                ${this.preview(st.race, null, st.look)}
               </div>
               <div class="cs-col">
-                <label class="cs-label">Atributos
-                  <span class="cs-methods">
-                    <button class="cs-tab ${st.method === 'points' ? 'on' : ''}" data-m="points">Compra de pontos</button>
-                    <button class="cs-tab ${st.method === 'roll' ? 'on' : ''}" data-m="roll">🎲 Rolar 4d6</button>
-                  </span></label>
-                <div class="cs-hint">${st.method === 'points' ? `Pontos restantes: <b class="${left < 0 ? 'bad' : ''}">${left}</b> de ${Rr.POINTS} (valores de 8 a 15)` : 'Cada atributo: 4d6, descarta o menor. Pode rolar de novo.'}</div>
+                <label class="cs-label">Atributos</label>
+                <div class="cs-hint">Aldeão: 10 em tudo, mais o bônus da raça.${race.choose ? ` Escolha ${race.choose} atributos para o +1.` : ''}</div>
                 <table class="cs-attrs">${Rr.ATTRS.map(a => {
                   const v = fin[a.code], bonus = v - st.base[a.code];
                   return `<tr title="${a.hint}">
                     <td class="cs-an">${a.abbr}<small>${a.name}</small></td>
-                    <td>${st.method === 'points' ? `<button class="cs-pm" data-a="${a.code}" data-d="-1">−</button>` : ''}<b class="cs-base">${st.base[a.code]}</b>${st.method === 'points' ? `<button class="cs-pm" data-a="${a.code}" data-d="1">＋</button>` : ''}</td>
+                    <td><b class="cs-base">${st.base[a.code]}</b></td>
                     <td class="cs-race">${bonus ? sign(bonus) : ''}${race.choose ? ` <label class="cs-chk"><input type="checkbox" data-c="${a.code}" ${st.chosen.includes(a.code) ? 'checked' : ''}> +1</label>` : ''}</td>
                     <td class="cs-final">${v}<small>${sign(Rr.mod(v))}</small></td>
                   </tr>`;
                 }).join('')}</table>
-                ${st.method === 'roll' ? '<button class="cs-btn cs-reroll">🎲 Rolar de novo</button>' : ''}
                 <div class="cs-sheet">
                   <div><span>❤️ Vida (PV)</span><b>${sh.maxHp}</b></div>
                   <div><span>💧 Mana (PM)</span><b>${sh.maxMana}</b></div>
@@ -289,27 +278,12 @@
           const k = b.dataset.look, n = this.options(st.race, k).length;
           st.look[k] = ((st.look[k] || 0) + +b.dataset.d + n) % n; render();
         }));
-        $$('[data-cls]').forEach(b => b.addEventListener('click', () => { st.cls = b.dataset.cls; render(); }));
-        $$('[data-m]').forEach(b => b.addEventListener('click', () => {
-          st.method = b.dataset.m;
-          if (st.method === 'roll') for (const a of Rr.ATTRS) st.base[a.code] = Rr.roll4d6();
-          else Object.assign(st.base, { forca: 15, destreza: 13, constituicao: 14, inteligencia: 8, sabedoria: 12, carisma: 10 });
-          render();
-        }));
-        $$('.cs-pm').forEach(b => b.addEventListener('click', () => {
-          const a = b.dataset.a, v = st.base[a] + +b.dataset.d;
-          if (v < 8 || v > 15) return;
-          const old = st.base[a]; st.base[a] = v;
-          if (spent() > Rr.POINTS) st.base[a] = old;
-          render();
-        }));
         $$('[data-c]').forEach(c => c.addEventListener('change', () => {
           const a = c.dataset.c;
           if (c.checked && st.chosen.length < race.choose && !(race.bonus[a])) st.chosen.push(a);
           else st.chosen = st.chosen.filter(x => x !== a);
           render();
         }));
-        const rr = $('.cs-reroll'); if (rr) rr.addEventListener('click', () => { for (const a of Rr.ATTRS) st.base[a.code] = Rr.roll4d6(); render(); });
         const back = $('.cs-back'); if (back) back.addEventListener('click', () => this.select(list));
         $('.cs-go').addEventListener('click', async () => {
           const err = (m) => { $('.cs-err').textContent = m; };
@@ -318,14 +292,13 @@
             if (!/^[\p{L}][\p{L} '-]{1,19}$/u.test(name)) return err('Nome: de 2 a 20 letras (pode ter espaço, hífen e apóstrofo).');
             if (list.some(c => c.name.toLowerCase() === name.toLowerCase())) return err('Já existe um personagem com esse nome.');
           }
-          if (st.method === 'points' && spent() > Rr.POINTS) return err('Você gastou mais pontos do que tem.');
           if (race.choose && st.chosen.length !== race.choose) return err(`${race.name}: escolha ${race.choose} atributos para o +1.`);
-          if (!Rr.allowed(st.race, st.cls)) return err(`${race.name} não pode ser ${cls.name}.`);
           const S = window.SurittoServer;
           if (!fixedName) { S.charName = name; S.character = null; try { localStorage.setItem('suritto_character_name', name); } catch (e) { } }
           const appearance = {};                       // cores (hex) e pecas da cabeca (codigo); null = a do desenho
           for (const p of Rr.LOOK_PARTS) { const o = this.options(st.race, p.code); if (o) appearance[p.code] = o[st.look[p.code] || 0][1]; }
-          S.newSheet = { race: st.race, class: st.cls, attributes: Rr.finalAttrs(st.base, st.race, st.chosen), appearance, isNew: !fixedName };
+          // sem classe: aldeao (a classe vem depois, numa guilda)
+          S.newSheet = { race: st.race, class: null, attributes: Rr.finalAttrs(st.base, st.race, st.chosen), appearance, isNew: !fixedName };
           this.done();
         });
       };
