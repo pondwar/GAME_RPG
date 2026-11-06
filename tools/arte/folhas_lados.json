@@ -3,6 +3,9 @@
  "humano": {
   "andar_diagonal": {
    "down_left": "espelhar"
+  },
+  "sentar": {
+   "left": "espelhar"
   }
  },
  "elfo": {

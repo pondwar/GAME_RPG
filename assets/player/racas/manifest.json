@@ -1,9 +1,9 @@
 {
  "humano": {
-  "w": 251,
+  "w": 410,
   "h": 520,
   "corpo": 400,
-  "v": 1793929806,
+  "v": 1793931360,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -86,6 +86,118 @@
      "humano/walk/up_right_2",
      "humano/walk/up_right_3"
     ]
+   },
+   "jump": {
+    "left": [
+     "humano/jump/left_0",
+     "humano/jump/left_1",
+     "humano/jump/left_2",
+     "humano/jump/left_3"
+    ],
+    "right": [
+     "humano/jump/right_0",
+     "humano/jump/right_1",
+     "humano/jump/right_2",
+     "humano/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "humano/sit/down_0"
+    ],
+    "up": [
+     "humano/sit/up_0"
+    ],
+    "left": [
+     "humano/sit/left_0"
+    ],
+    "right": [
+     "humano/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "humano/gather/left_0",
+     "humano/gather/left_1",
+     "humano/gather/left_2",
+     "humano/gather/left_3"
+    ],
+    "right": [
+     "humano/gather/right_0",
+     "humano/gather/right_1",
+     "humano/gather/right_2",
+     "humano/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "humano/attack_1h/left_0",
+     "humano/attack_1h/left_1",
+     "humano/attack_1h/left_2",
+     "humano/attack_1h/left_3",
+     "humano/attack_1h/left_4"
+    ],
+    "right": [
+     "humano/attack_1h/right_0",
+     "humano/attack_1h/right_1",
+     "humano/attack_1h/right_2",
+     "humano/attack_1h/right_3",
+     "humano/attack_1h/right_4"
+    ]
+   },
+   "punch": {
+    "left": [
+     "humano/punch/left_0",
+     "humano/punch/left_1",
+     "humano/punch/left_2",
+     "humano/punch/left_3",
+     "humano/punch/left_4",
+     "humano/punch/left_5"
+    ],
+    "right": [
+     "humano/punch/right_0",
+     "humano/punch/right_1",
+     "humano/punch/right_2",
+     "humano/punch/right_3",
+     "humano/punch/right_4",
+     "humano/punch/right_5"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "humano/attack_2h/left_0",
+     "humano/attack_2h/left_1",
+     "humano/attack_2h/left_2",
+     "humano/attack_2h/left_3",
+     "humano/attack_2h/left_4",
+     "humano/attack_2h/left_5",
+     "humano/attack_2h/left_6"
+    ],
+    "right": [
+     "humano/attack_2h/right_0",
+     "humano/attack_2h/right_1",
+     "humano/attack_2h/right_2",
+     "humano/attack_2h/right_3",
+     "humano/attack_2h/right_4",
+     "humano/attack_2h/right_5",
+     "humano/attack_2h/right_6"
+    ]
+   },
+   "kick": {
+    "left": [
+     "humano/kick/left_0",
+     "humano/kick/left_1",
+     "humano/kick/left_2",
+     "humano/kick/left_3",
+     "humano/kick/left_4"
+    ],
+    "right": [
+     "humano/kick/right_0",
+     "humano/kick/right_1",
+     "humano/kick/right_2",
+     "humano/kick/right_3",
+     "humano/kick/right_4"
+    ]
    }
   }
  },
@@ -93,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793929810,
+  "v": 1793931370,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",

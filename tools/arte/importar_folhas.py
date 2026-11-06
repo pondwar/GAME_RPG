@@ -58,9 +58,29 @@ def recortar(path):
     linhas = []
     for y0, y1 in _faixas(op.sum(1) > 3, 60):
         linha = []
-        for x0, x1 in _faixas(op[y0:y1].sum(0) > 2, 30):
+        cols = _faixas(op[y0:y1].sum(0) > 2, 30)
+        # bonecos encostados (punho de um no outro) viram uma faixa larga: corta na coluna mais vazia entre eles
+        larg = np.median([b - a for a, b in cols]) if cols else 0
+        partes = []
+        for x0, x1 in cols:
+            n = int(round((x1 - x0) / larg)) if larg and (x1 - x0) >= 1.7 * larg else 1
+            if n >= 2:
+                perfil = op[y0:y1, x0:x1].sum(0)
+                cortes = []
+                for i in range(1, n):
+                    c = int((x1 - x0) * i / n); r = int((x1 - x0) / n * 0.35)
+                    cortes.append(c - r + int(np.argmin(perfil[c - r:c + r])))
+                bordas = [0] + cortes + [x1 - x0]
+                partes += [(x0 + a, x0 + b) for a, b in zip(bordas, bordas[1:])]
+            else:
+                partes.append((x0, x1))
+        for x0, x1 in partes:
             sub = op[y0:y1, x0:x1]; ys, xs = np.where(sub)
+            if len(ys) == 0: continue
             linha.append(im.crop((x0 + xs.min(), y0 + ys.min(), x0 + xs.max() + 1, y0 + ys.max() + 1)))
+        if linha:                                       # pedaco solto (respingo, mecha separada): menos de 45% da altura
+            hm = np.median([q.height for q in linha])
+            linha = [q for q in linha if q.height >= 0.45 * hm]
         linhas.append(linha)
     return linhas
 
@@ -119,7 +139,11 @@ def importar(race, cfg, ref):
         nome, grade = ACOES[acao]
         linhas = recortar(path)
         regua = None
-        if acao in REGUA and linhas and len(linhas[0]) == len(grade[0]) + 1:
+        if acao in REGUA and len(linhas) == 1 and len(set(grade[0])) == 1 and len(linhas[0]) >= 3:
+            # acao de perfil: o Gemini as vezes desenha um quadro a mais ou a menos; vale quantos vierem (a animacao
+            # usa o tamanho da lista). O primeiro e a regua.
+            regua = linhas[0][0]; linhas[0] = linhas[0][1:]; grade = [[grade[0][0]] * len(linhas[0])]
+        elif acao in REGUA and linhas and len(linhas[0]) == len(grade[0]) + 1:
             regua = linhas[0][0]; linhas[0] = linhas[0][1:]
         if [len(l) for l in linhas] != [len(l) for l in grade]:
             print(f'  {os.path.basename(path)}: esperava {[len(l) for l in grade]} bonecos por linha, achei {[len(l) for l in linhas]}')
@@ -147,6 +171,10 @@ def importar(race, cfg, ref):
                 fila = quadros[(nome, 'left')]
                 if sum(olha_para_direita(q) for q in fila) > 0:
                     quadros[(nome, 'left')] = [q.transpose(Image.FLIP_LEFT_RIGHT) for q in fila]
+            # anotacao de folhas_lados.json valendo para qualquer linha (ex.: o perfil sentado veio virado para a direita)
+            for d in set(dirs) - {'down_left', 'up_left'}:
+                if lados.get(acao, {}).get(d) == 'espelhar' and (nome, d) in quadros:
+                    quadros[(nome, d)] = [q.transpose(Image.FLIP_LEFT_RIGHT) for q in quadros[(nome, d)]]
     if not quadros: return None
     if lados.get('parado_do_andar'):                     # folha parada desenhada com outro corpo (elfo magrinho): usa o andar
         for d in ('down', 'up'):                     # de lado o passo sempre tem as pernas abertas: fica o perfil parado
