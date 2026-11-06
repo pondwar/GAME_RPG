@@ -117,6 +117,14 @@ def lado_da_pele(q):
     return np.where(pele)[1].mean() - (xs.min() + xs.max()) / 2
 
 
+def cabeca(q):
+    """largura do cabelo/barba verde: medida do tamanho da cabeca"""
+    a = np.array(q).astype(int); op = a[..., 3] > 128
+    g = op & (a[..., 1] > a[..., 0] + 40) & (a[..., 1] > a[..., 2] + 40)
+    xs = np.where(g.any(0))[0]
+    return (xs.max() - xs.min()) if g.sum() > 200 else None
+
+
 def passo_fechado(qs):
     """quadro de andar com os pes mais juntos (serve de boneco parado quando a folha parada nao existe)"""
     def abertura(q):
@@ -182,27 +190,22 @@ def importar(race, cfg, ref):
     for d in ('down_left', 'up_left'):                  # sem folha parada diagonal: o passo mais fechado do andar
         if ('walk', d) in quadros and ('idle', d) not in quadros:
             quadros[('idle', d)] = [passo_fechado(quadros[('walk', d)])]
-    # mesma cabeca em todas as acoes: o Gemini desenha os bonecos da acao menores que a regua (pulo saia 20% menor,
-    # um anao no ar). A largura do cabelo verde do perfil parado e a medida; cada acao de perfil e ajustada a ela
-    def cabeca(q):
-        a = np.array(q).astype(int); op = a[..., 3] > 128
-        g = op & (a[..., 1] > a[..., 0] + 40) & (a[..., 1] > a[..., 2] + 40)
-        xs = np.where(g.any(0))[0]
-        return (xs.max() - xs.min()) if g.sum() > 200 else None
-    base = [c for n in ('idle', 'walk') for q in quadros.get((n, 'left'), []) for c in [cabeca(q)] if c]
-    parado = [c for q in quadros.get(('idle', 'left'), []) for c in [cabeca(q)] if c]
-    base = parado or base                           # o parado e a referencia; o cabelo balanca no andar
-    if base:
-        ref_c = float(np.median(base))
-        for (nome, d), qs in list(quadros.items()):
-            if nome in ('idle', 'walk') or d != 'left': continue
-            cs = [c for c in map(cabeca, qs) if c]
+    # mesma cabeca em todas as acoes: o Gemini as vezes desenha a folha de acao com cabeca menor (o pulo do humano
+    # saia ~17% menor, um anao no ar). Referencia: a menor cabeca de perfil entre o parado e o andar (o rabo de
+    # cavalo do anao parado aumenta a medida). So AUMENTA: cabeca maior na acao e cabelo solto, nao tamanho
+    refs = [float(np.median(cs)) for n in ('idle', 'walk') for cs in [[c for c in map(cabeca, quadros.get((n, 'left'), [])) if c]] if cs]
+    if refs:
+        ref_c = min(refs)
+        for nome in {n for (n, d) in quadros} - {'idle', 'walk'}:
+            cs = [c for c in map(cabeca, quadros.get((nome, 'left'), [])) if c]
             if not cs: continue
-            k = ref_c / float(np.median(cs))
-            if abs(k - 1) < 0.05 or not 0.7 < k < 1.4: continue
+            k = ref_c / float(max(cs))                  # o maior: quadro encolhido/de lado mostra menos cabelo
+            if not 1.05 <= k < 1.4: continue
             print(f'  {nome}: cabeca {k:.2f}x')
-            quadros[(nome, d)] = [q.resize((round(q.width * k), round(q.height * k)), Image.LANCZOS) for q in qs]
-        alturas = [q.height for qs in quadros.values() for q in qs]
+            for (n, d), qs in list(quadros.items()):
+                if n == nome:
+                    quadros[(n, d)] = [q.resize((round(q.width * k), round(q.height * k)), Image.LANCZOS) for q in qs]
+    alturas = [q.height for qs in quadros.values() for q in qs]
     H = max(int(ALTURA * TELA), max(alturas) + 2)
     # largura comum: metade maior de um lado e do outro do centro do corpo
     meia = max(max(centro_corpo(q), q.width - centro_corpo(q)) for qs in quadros.values() for q in qs)

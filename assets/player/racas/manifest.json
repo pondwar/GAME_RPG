@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793964868,
+  "v": 1793966282,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793964877,
+  "v": 1793966290,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -269,6 +269,186 @@
      "elfo/walk/down_right_1",
      "elfo/walk/down_right_2",
      "elfo/walk/down_right_3"
+    ]
+   }
+  }
+ },
+ "anao": {
+  "w": 346,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793966292,
+  "ref": {
+   "pele": "#ce8677",
+   "cabelo": "#35ca0e",
+   "olhos": "#515163"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "anao/idle/down_0"
+    ],
+    "up": [
+     "anao/idle/up_0"
+    ],
+    "left": [
+     "anao/idle/left_0"
+    ],
+    "right": [
+     "anao/idle/right_0"
+    ],
+    "down_left": [
+     "anao/idle/down_left_0"
+    ],
+    "down_right": [
+     "anao/idle/down_right_0"
+    ],
+    "up_left": [
+     "anao/idle/up_left_0"
+    ],
+    "up_right": [
+     "anao/idle/up_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "anao/walk/down_0",
+     "anao/walk/down_1",
+     "anao/walk/down_2",
+     "anao/walk/down_3"
+    ],
+    "up": [
+     "anao/walk/up_0",
+     "anao/walk/up_1",
+     "anao/walk/up_2",
+     "anao/walk/up_3"
+    ],
+    "left": [
+     "anao/walk/left_0",
+     "anao/walk/left_1",
+     "anao/walk/left_2",
+     "anao/walk/left_3"
+    ],
+    "right": [
+     "anao/walk/right_0",
+     "anao/walk/right_1",
+     "anao/walk/right_2",
+     "anao/walk/right_3"
+    ],
+    "down_left": [
+     "anao/walk/down_left_0",
+     "anao/walk/down_left_1",
+     "anao/walk/down_left_2",
+     "anao/walk/down_left_3"
+    ],
+    "down_right": [
+     "anao/walk/down_right_0",
+     "anao/walk/down_right_1",
+     "anao/walk/down_right_2",
+     "anao/walk/down_right_3"
+    ],
+    "up_left": [
+     "anao/walk/up_left_0",
+     "anao/walk/up_left_1",
+     "anao/walk/up_left_2",
+     "anao/walk/up_left_3"
+    ],
+    "up_right": [
+     "anao/walk/up_right_0",
+     "anao/walk/up_right_1",
+     "anao/walk/up_right_2",
+     "anao/walk/up_right_3"
+    ]
+   },
+   "jump": {
+    "left": [
+     "anao/jump/left_0",
+     "anao/jump/left_1",
+     "anao/jump/left_2",
+     "anao/jump/left_3"
+    ],
+    "right": [
+     "anao/jump/right_0",
+     "anao/jump/right_1",
+     "anao/jump/right_2",
+     "anao/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "anao/sit/down_0"
+    ],
+    "up": [
+     "anao/sit/up_0"
+    ],
+    "left": [
+     "anao/sit/left_0"
+    ],
+    "right": [
+     "anao/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "anao/gather/left_0",
+     "anao/gather/left_1",
+     "anao/gather/left_2",
+     "anao/gather/left_3"
+    ],
+    "right": [
+     "anao/gather/right_0",
+     "anao/gather/right_1",
+     "anao/gather/right_2",
+     "anao/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "anao/attack_1h/left_0",
+     "anao/attack_1h/left_1",
+     "anao/attack_1h/left_2",
+     "anao/attack_1h/left_3",
+     "anao/attack_1h/left_4"
+    ],
+    "right": [
+     "anao/attack_1h/right_0",
+     "anao/attack_1h/right_1",
+     "anao/attack_1h/right_2",
+     "anao/attack_1h/right_3",
+     "anao/attack_1h/right_4"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "anao/attack_2h/left_0",
+     "anao/attack_2h/left_1",
+     "anao/attack_2h/left_2",
+     "anao/attack_2h/left_3",
+     "anao/attack_2h/left_4"
+    ],
+    "right": [
+     "anao/attack_2h/right_0",
+     "anao/attack_2h/right_1",
+     "anao/attack_2h/right_2",
+     "anao/attack_2h/right_3",
+     "anao/attack_2h/right_4"
+    ]
+   },
+   "kick": {
+    "left": [
+     "anao/kick/left_0",
+     "anao/kick/left_1",
+     "anao/kick/left_2",
+     "anao/kick/left_3",
+     "anao/kick/left_4"
+    ],
+    "right": [
+     "anao/kick/right_0",
+     "anao/kick/right_1",
+     "anao/kick/right_2",
+     "anao/kick/right_3",
+     "anao/kick/right_4"
     ]
    }
   }
