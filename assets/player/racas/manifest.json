@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793971208,
+  "v": 1793971718,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -202,10 +202,10 @@
   }
  },
  "elfo": {
-  "w": 232,
+  "w": 246,
   "h": 520,
   "corpo": 400,
-  "v": 1793971217,
+  "v": 1793971727,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -270,6 +270,96 @@
      "elfo/walk/down_right_2",
      "elfo/walk/down_right_3"
     ]
+   },
+   "jump": {
+    "left": [
+     "elfo/jump/left_0",
+     "elfo/jump/left_1",
+     "elfo/jump/left_2",
+     "elfo/jump/left_3"
+    ],
+    "right": [
+     "elfo/jump/right_0",
+     "elfo/jump/right_1",
+     "elfo/jump/right_2",
+     "elfo/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "elfo/sit/down_0"
+    ],
+    "up": [
+     "elfo/sit/up_0"
+    ],
+    "left": [
+     "elfo/sit/left_0"
+    ],
+    "right": [
+     "elfo/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "elfo/gather/left_0",
+     "elfo/gather/left_1",
+     "elfo/gather/left_2",
+     "elfo/gather/left_3",
+     "elfo/gather/left_4",
+     "elfo/gather/left_5"
+    ],
+    "right": [
+     "elfo/gather/right_0",
+     "elfo/gather/right_1",
+     "elfo/gather/right_2",
+     "elfo/gather/right_3",
+     "elfo/gather/right_4",
+     "elfo/gather/right_5"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "elfo/attack_1h/left_0",
+     "elfo/attack_1h/left_1",
+     "elfo/attack_1h/left_2",
+     "elfo/attack_1h/left_3"
+    ],
+    "right": [
+     "elfo/attack_1h/right_0",
+     "elfo/attack_1h/right_1",
+     "elfo/attack_1h/right_2",
+     "elfo/attack_1h/right_3"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "elfo/attack_2h/left_0",
+     "elfo/attack_2h/left_1",
+     "elfo/attack_2h/left_2",
+     "elfo/attack_2h/left_3",
+     "elfo/attack_2h/left_4"
+    ],
+    "right": [
+     "elfo/attack_2h/right_0",
+     "elfo/attack_2h/right_1",
+     "elfo/attack_2h/right_2",
+     "elfo/attack_2h/right_3",
+     "elfo/attack_2h/right_4"
+    ]
+   },
+   "kick": {
+    "left": [
+     "elfo/kick/left_0",
+     "elfo/kick/left_1",
+     "elfo/kick/left_2",
+     "elfo/kick/left_3"
+    ],
+    "right": [
+     "elfo/kick/right_0",
+     "elfo/kick/right_1",
+     "elfo/kick/right_2",
+     "elfo/kick/right_3"
+    ]
    }
   }
  },
@@ -277,7 +367,7 @@
   "w": 346,
   "h": 520,
   "corpo": 400,
-  "v": 1793971219,
+  "v": 1793971731,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -457,7 +547,7 @@
   "w": 425,
   "h": 520,
   "corpo": 400,
-  "v": 1793971225,
+  "v": 1793971738,
   "ref": {
    "pele": "#d0867b",
    "cabelo": "#36cf19",
@@ -633,7 +723,7 @@
   "w": 341,
   "h": 520,
   "corpo": 400,
-  "v": 1793971233,
+  "v": 1793971746,
   "ref": {
    "pele": "#d68a84",
    "cabelo": "#32c517",
@@ -793,7 +883,7 @@
   "w": 347,
   "h": 520,
   "corpo": 400,
-  "v": 1793971198,
+  "v": 1793971709,
   "ref": {
    "pele": "#c67d66",
    "cabelo": "#32b419",
@@ -971,7 +1061,7 @@
   "w": 354,
   "h": 520,
   "corpo": 400,
-  "v": 1793971239,
+  "v": 1793971752,
   "ref": {
    "pele": "#6b718a",
    "cabelo": "#26b61b",
@@ -1151,7 +1241,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793971245,
+  "v": 1793971758,
   "ref": {
    "pele": "#747b96",
    "cabelo": "#2ec91e",
@@ -1329,7 +1419,7 @@
   "w": 364,
   "h": 520,
   "corpo": 400,
-  "v": 1793971252,
+  "v": 1793971764,
   "ref": {
    "pele": "#6a6e88",
    "cabelo": "#259512",
