@@ -1,12 +1,14 @@
 {
- "_comentario": "por raca e folha: 'espelhar' (a linha veio virada para a direita, o pedido era esquerda) ou 'ignorar' (a linha veio errada; o jogo usa as 4 direcoes ate refazer)",
+ "_comentario": "por raca e folha: 'espelhar' (a linha veio virada para a direita, o pedido era esquerda) ou 'ignorar' (a linha veio errada; o jogo usa as 4 direcoes ate refazer). 'parado_do_andar': true usa o passo mais fechado do andar como boneco parado (quando a folha parada vem com outro corpo)",
  "humano": {
   "andar_diagonal": {
    "down_left": "espelhar"
   }
  },
  "elfo": {
+  "parado_do_andar": true,
   "andar_diagonal": {
+   "down_left": "espelhar",
    "up_left": "ignorar"
   }
  }

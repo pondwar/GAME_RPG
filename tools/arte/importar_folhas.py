@@ -148,6 +148,9 @@ def importar(race, cfg, ref):
                 if sum(olha_para_direita(q) for q in fila) > 0:
                     quadros[(nome, 'left')] = [q.transpose(Image.FLIP_LEFT_RIGHT) for q in fila]
     if not quadros: return None
+    if lados.get('parado_do_andar'):                     # folha parada desenhada com outro corpo (elfo magrinho): usa o andar
+        for d in ('down', 'up'):                     # de lado o passo sempre tem as pernas abertas: fica o perfil parado
+            if ('walk', d) in quadros: quadros[('idle', d)] = [passo_fechado(quadros[('walk', d)])]
     for d in ('down_left', 'up_left'):                  # sem folha parada diagonal: o passo mais fechado do andar
         if ('walk', d) in quadros and ('idle', d) not in quadros:
             quadros[('idle', d)] = [passo_fechado(quadros[('walk', d)])]
