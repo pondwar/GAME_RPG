@@ -49,7 +49,13 @@ class LocalStorageAdapter {
 // usada so quando o jogo abrir sem servidor. Personagem que ainda nao existe no banco sobe a partir da copia local.
 class ServerAdapter {
   constructor(server, local) { this.server = server; this.local = local; }
-  load() { return this.server.character || this.local.load(); }
+  // a copia local guarda o ULTIMO personagem jogado: so vale se for o mesmo nome (senao o personagem novo herdava a
+  // mochila, a arma e a posicao do anterior)
+  load() {
+    if (this.server.character) return this.server.character;
+    const l = this.local.load(), nome = (this.server.charName || '').toLowerCase();
+    return l && l.character && String(l.character.name || '').toLowerCase() === nome ? l : null;
+  }
   save(snapshot) {
     try { this.local.save(snapshot); } catch (e) { }
     this.server.saveCharacter(snapshot, document.visibilityState === 'hidden').catch(() => { });
