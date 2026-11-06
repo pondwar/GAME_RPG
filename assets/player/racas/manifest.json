@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793970434,
+  "v": 1793971208,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793970443,
+  "v": 1793971217,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -277,7 +277,7 @@
   "w": 346,
   "h": 520,
   "corpo": 400,
-  "v": 1793970445,
+  "v": 1793971219,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -457,7 +457,7 @@
   "w": 425,
   "h": 520,
   "corpo": 400,
-  "v": 1793970452,
+  "v": 1793971225,
   "ref": {
    "pele": "#d0867b",
    "cabelo": "#36cf19",
@@ -633,7 +633,7 @@
   "w": 341,
   "h": 520,
   "corpo": 400,
-  "v": 1793970459,
+  "v": 1793971233,
   "ref": {
    "pele": "#d68a84",
    "cabelo": "#32c517",
@@ -793,7 +793,7 @@
   "w": 347,
   "h": 520,
   "corpo": 400,
-  "v": 1793970425,
+  "v": 1793971198,
   "ref": {
    "pele": "#c67d66",
    "cabelo": "#32b419",
@@ -971,7 +971,7 @@
   "w": 354,
   "h": 520,
   "corpo": 400,
-  "v": 1793970465,
+  "v": 1793971239,
   "ref": {
    "pele": "#6b718a",
    "cabelo": "#26b61b",
@@ -1151,7 +1151,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793970472,
+  "v": 1793971245,
   "ref": {
    "pele": "#747b96",
    "cabelo": "#2ec91e",
@@ -1321,6 +1321,186 @@
      "draconato/kick/right_1",
      "draconato/kick/right_2",
      "draconato/kick/right_3"
+    ]
+   }
+  }
+ },
+ "tiferino": {
+  "w": 364,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793971252,
+  "ref": {
+   "pele": "#6a6e88",
+   "cabelo": "#259512",
+   "olhos": "#dda535"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "tiferino/idle/down_0"
+    ],
+    "up": [
+     "tiferino/idle/up_0"
+    ],
+    "left": [
+     "tiferino/idle/left_0"
+    ],
+    "right": [
+     "tiferino/idle/right_0"
+    ],
+    "down_left": [
+     "tiferino/idle/down_left_0"
+    ],
+    "down_right": [
+     "tiferino/idle/down_right_0"
+    ],
+    "up_left": [
+     "tiferino/idle/up_left_0"
+    ],
+    "up_right": [
+     "tiferino/idle/up_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "tiferino/walk/down_0",
+     "tiferino/walk/down_1",
+     "tiferino/walk/down_2",
+     "tiferino/walk/down_3"
+    ],
+    "up": [
+     "tiferino/walk/up_0",
+     "tiferino/walk/up_1",
+     "tiferino/walk/up_2",
+     "tiferino/walk/up_3"
+    ],
+    "left": [
+     "tiferino/walk/left_0",
+     "tiferino/walk/left_1",
+     "tiferino/walk/left_2",
+     "tiferino/walk/left_3"
+    ],
+    "right": [
+     "tiferino/walk/right_0",
+     "tiferino/walk/right_1",
+     "tiferino/walk/right_2",
+     "tiferino/walk/right_3"
+    ],
+    "down_left": [
+     "tiferino/walk/down_left_0",
+     "tiferino/walk/down_left_1",
+     "tiferino/walk/down_left_2",
+     "tiferino/walk/down_left_3"
+    ],
+    "down_right": [
+     "tiferino/walk/down_right_0",
+     "tiferino/walk/down_right_1",
+     "tiferino/walk/down_right_2",
+     "tiferino/walk/down_right_3"
+    ],
+    "up_left": [
+     "tiferino/walk/up_left_0",
+     "tiferino/walk/up_left_1",
+     "tiferino/walk/up_left_2",
+     "tiferino/walk/up_left_3"
+    ],
+    "up_right": [
+     "tiferino/walk/up_right_0",
+     "tiferino/walk/up_right_1",
+     "tiferino/walk/up_right_2",
+     "tiferino/walk/up_right_3"
+    ]
+   },
+   "jump": {
+    "left": [
+     "tiferino/jump/left_0",
+     "tiferino/jump/left_1",
+     "tiferino/jump/left_2",
+     "tiferino/jump/left_3"
+    ],
+    "right": [
+     "tiferino/jump/right_0",
+     "tiferino/jump/right_1",
+     "tiferino/jump/right_2",
+     "tiferino/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "tiferino/sit/down_0"
+    ],
+    "up": [
+     "tiferino/sit/up_0"
+    ],
+    "left": [
+     "tiferino/sit/left_0"
+    ],
+    "right": [
+     "tiferino/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "tiferino/gather/left_0",
+     "tiferino/gather/left_1",
+     "tiferino/gather/left_2",
+     "tiferino/gather/left_3"
+    ],
+    "right": [
+     "tiferino/gather/right_0",
+     "tiferino/gather/right_1",
+     "tiferino/gather/right_2",
+     "tiferino/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "tiferino/attack_1h/left_0",
+     "tiferino/attack_1h/left_1",
+     "tiferino/attack_1h/left_2",
+     "tiferino/attack_1h/left_3",
+     "tiferino/attack_1h/left_4"
+    ],
+    "right": [
+     "tiferino/attack_1h/right_0",
+     "tiferino/attack_1h/right_1",
+     "tiferino/attack_1h/right_2",
+     "tiferino/attack_1h/right_3",
+     "tiferino/attack_1h/right_4"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "tiferino/attack_2h/left_0",
+     "tiferino/attack_2h/left_1",
+     "tiferino/attack_2h/left_2",
+     "tiferino/attack_2h/left_3",
+     "tiferino/attack_2h/left_4",
+     "tiferino/attack_2h/left_5"
+    ],
+    "right": [
+     "tiferino/attack_2h/right_0",
+     "tiferino/attack_2h/right_1",
+     "tiferino/attack_2h/right_2",
+     "tiferino/attack_2h/right_3",
+     "tiferino/attack_2h/right_4",
+     "tiferino/attack_2h/right_5"
+    ]
+   },
+   "kick": {
+    "left": [
+     "tiferino/kick/left_0",
+     "tiferino/kick/left_1",
+     "tiferino/kick/left_2",
+     "tiferino/kick/left_3"
+    ],
+    "right": [
+     "tiferino/kick/right_0",
+     "tiferino/kick/right_1",
+     "tiferino/kick/right_2",
+     "tiferino/kick/right_3"
     ]
    }
   }
