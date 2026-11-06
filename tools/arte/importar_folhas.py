@@ -100,6 +100,9 @@ def passo_fechado(qs):
 
 
 def importar(race, cfg, ref):
+    # anotacao feita olhando a folha: linhas que o Gemini desenhou viradas para o lado contrario
+    lpath = os.path.join(HERE, 'folhas_lados.json')
+    lados = (json.load(open(lpath, encoding='utf-8')) if os.path.exists(lpath) else {}).get(race, {})
     folhas = {acao: os.path.join(SRC, f'folha_{race}_{acao}.png') for acao in ACOES}
     folhas = {k: v for k, v in folhas.items() if os.path.exists(v)}
     if not folhas: return None
@@ -121,10 +124,11 @@ def importar(race, cfg, ref):
                 alturas.append(q.height)
             if dirs[0] in ('down_left', 'up_left'):    # diagonal: cada quadro virado para a direita (pele bem do lado direito) vira
                 fila = quadros[(nome, dirs[0])]
-                # de costas aparece a orelha/bochecha do lado para onde ele olha (pele a direita = virado para a direita);
-                # de 3/4 de frente e o contrario: o lado do rosto que mais aparece e o de tras (pele a esquerda = virado para a direita)
-                if dirs[0] == 'up_left': errado = lambda q: lado_da_pele(q) * (q.height / ALTURA) > 25
-                else: errado = lambda q: lado_da_pele(q) * (q.height / ALTURA) < -8
+                # de costas: a orelha/bochecha aparece do lado para onde ele olha; cada quadro com pele bem a direita vira.
+                # de 3/4 de frente nao da para saber pela pele (a barba muda o meio): vale a anotacao de folhas_lados.json
+                if dirs[0] == 'up_left': errado = lambda q: lado_da_pele(q) > 15
+                else: errado = lambda q: False
+                if lados.get(acao, {}).get(dirs[0]) == 'espelhar': errado = lambda q: True
                 quadros[(nome, dirs[0])] = [q.transpose(Image.FLIP_LEFT_RIGHT) if errado(q) else q for q in fila]
             if dirs[0] == 'left':                       # a linha toda de perfil vira para o mesmo lado (voto dos quadros)
                 fila = quadros[(nome, 'left')]

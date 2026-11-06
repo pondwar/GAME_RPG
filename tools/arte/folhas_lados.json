@@ -1,0 +1,8 @@
+{
+ "_comentario": "linhas de folha_<raca>_<acao>.png que vieram viradas para a direita (o pedido era esquerda): o importador espelha a linha toda",
+ "humano": {
+  "andar_diagonal": {
+   "down_left": "espelhar"
+  }
+ }
+}
