@@ -79,6 +79,26 @@ def olha_para_direita(q):
     return (voto > 0) - (voto < 0)
 
 
+def lado_da_pele(q):
+    """diagonal: de que lado da cabeca aparece pele (rosto de 3/4, ou orelha e bochecha de costas). Devolve o
+    deslocamento em px do meio da pele em relacao ao meio da cabeca (negativo = virado para a esquerda)"""
+    a = np.array(q).astype(int); top = a[: int(a.shape[0] * 0.18)]
+    op = top[..., 3] > 128; R, G, B = top[..., 0], top[..., 1], top[..., 2]
+    verde = op & (G > R + 40) & (G > B + 40); pele = op & (R > G + 15) & (R > B + 15) & ~verde
+    if pele.sum() < 50: return 0
+    xs = np.where(op)[1]
+    return np.where(pele)[1].mean() - (xs.min() + xs.max()) / 2
+
+
+def passo_fechado(qs):
+    """quadro de andar com os pes mais juntos (serve de boneco parado quando a folha parada nao existe)"""
+    def abertura(q):
+        op = np.array(q)[..., 3] > 128; pes = op[int(op.shape[0] * 0.85):]
+        xs = np.where(pes.any(0))[0]
+        return (xs.max() - xs.min()) / q.height if len(xs) else 9
+    return min(qs, key=abertura)
+
+
 def importar(race, cfg, ref):
     folhas = {acao: os.path.join(SRC, f'folha_{race}_{acao}.png') for acao in ACOES}
     folhas = {k: v for k, v in folhas.items() if os.path.exists(v)}
@@ -99,11 +119,17 @@ def importar(race, cfg, ref):
                 q = q.resize((max(1, round(q.width * k)), max(1, round(q.height * k))), Image.LANCZOS)
                 quadros.setdefault((nome, d), []).append(q)
                 alturas.append(q.height)
+            if dirs[0] in ('down_left', 'up_left'):    # diagonal: cada quadro virado para a direita (pele bem do lado direito) vira
+                fila = quadros[(nome, dirs[0])]
+                quadros[(nome, dirs[0])] = [q.transpose(Image.FLIP_LEFT_RIGHT) if lado_da_pele(q) * (q.height / ALTURA) > (8 if dirs[0] == 'down_left' else 25) else q for q in fila]   # de frente o rosto desloca pouco
             if dirs[0] == 'left':                       # a linha toda de perfil vira para o mesmo lado (voto dos quadros)
                 fila = quadros[(nome, 'left')]
                 if sum(olha_para_direita(q) for q in fila) > 0:
                     quadros[(nome, 'left')] = [q.transpose(Image.FLIP_LEFT_RIGHT) for q in fila]
     if not quadros: return None
+    for d in ('down_left', 'up_left'):                  # sem folha parada diagonal: o passo mais fechado do andar
+        if ('walk', d) in quadros and ('idle', d) not in quadros:
+            quadros[('idle', d)] = [passo_fechado(quadros[('walk', d)])]
     H = max(ALTURA, max(alturas) + 2)
     # largura comum: metade maior de um lado e do outro do centro do corpo
     meia = max(max(centro_corpo(q), q.width - centro_corpo(q)) for qs in quadros.values() for q in qs)

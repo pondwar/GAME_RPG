@@ -1,8 +1,8 @@
 {
  "humano": {
-  "w": 227,
+  "w": 252,
   "h": 400,
-  "v": 1793924356,
+  "v": 1793924665,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -22,6 +22,18 @@
     ],
     "right": [
      "humano/idle/right_0"
+    ],
+    "down_left": [
+     "humano/idle/down_left_0"
+    ],
+    "down_right": [
+     "humano/idle/down_right_0"
+    ],
+    "up_left": [
+     "humano/idle/up_left_0"
+    ],
+    "up_right": [
+     "humano/idle/up_right_0"
     ]
    },
    "walk": {
@@ -48,6 +60,30 @@
      "humano/walk/right_1",
      "humano/walk/right_2",
      "humano/walk/right_3"
+    ],
+    "down_left": [
+     "humano/walk/down_left_0",
+     "humano/walk/down_left_1",
+     "humano/walk/down_left_2",
+     "humano/walk/down_left_3"
+    ],
+    "down_right": [
+     "humano/walk/down_right_0",
+     "humano/walk/down_right_1",
+     "humano/walk/down_right_2",
+     "humano/walk/down_right_3"
+    ],
+    "up_left": [
+     "humano/walk/up_left_0",
+     "humano/walk/up_left_1",
+     "humano/walk/up_left_2",
+     "humano/walk/up_left_3"
+    ],
+    "up_right": [
+     "humano/walk/up_right_0",
+     "humano/walk/up_right_1",
+     "humano/walk/up_right_2",
+     "humano/walk/up_right_3"
     ]
    }
   }
