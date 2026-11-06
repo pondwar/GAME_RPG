@@ -2947,7 +2947,7 @@ class Game {
     // com o punho erguido, e a espada ia parar na cabeca nos quadros que faltavam na tabela.)
     // boneco da raca: a mao medida no proprio quadro ([x, y, angulo, atras, espelhar] em fracao da tela)
     const mao = rs && rs.idle && frame && frame.mao;
-    const socket = mao ? { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4] } :
+    const socket = mao ? { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4], len: mao[6] || 1 } :
                    (socketTable[frameKey] ||
                    socketTable[`idle_${dir}_0`] ||
                    socketTable[`idle_${sideDir}_0`] ||
@@ -3073,6 +3073,10 @@ class Game {
     const wSize = wa[0] * rsc;
     const gripX = wSize * wa[1];
     const gripY = wSize * wa[2];
+    // diagonal: a arma aponta para dentro da tela (ou para quem olha) e encurta so no comprimento (perspectiva).
+    // A imagem da arma e diagonal (ponta para cima a direita): gira o eixo para x, encolhe, desgira
+    const ln = (socket && socket.len) || 1;
+    if (ln !== 1) { ctx.rotate(-Math.PI / 4); ctx.scale(ln, 1); ctx.rotate(Math.PI / 4); }
     ctx.drawImage(weaponImg, -gripX, -gripY, wSize, wSize);
 
     ctx.restore();

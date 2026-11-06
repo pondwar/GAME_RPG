@@ -11,6 +11,8 @@ de frente, de costas e na diagonal o lado da imagem em LADO_MAO. A mao e o ponto
 A arma sai do punho girada em relacao ao ANTEBRACO (o cabo atravessa a mao fechada), para o lado do polegar: braco
 caido -> lamina para a frente e para baixo; esticado -> para cima; erguido -> para tras. Assim ela acompanha o braco
 em todos os quadros. O 6o numero e o raio do punho: o jogo redesenha esse pedaco de pele POR CIMA da arma (game.js).
+Na diagonal a parte "para a frente" da arma vai para dentro da tela (costas) ou para quem olha (frente) e encurta,
+como em 3D: o 7o numero e quanto a arma encolhe no comprimento (1 = inteira).
 
 Uso: python tools/arte/medir_maos.py   (precisa de numpy, pillow e opencv-python-headless)
 """
@@ -26,6 +28,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'assets', 'player', 'racas')
 GOLPES = {'attack_1h', 'attack_2h', 'punch', 'kick'}
 FRENTE = ('down', 'up')
+DIAG = ('down_right', 'down_left', 'up_right', 'up_left')
+# "para a frente" de um boneco na diagonal, na tela (x para o lado dele, y para baixo/cima): ~30 graus, encurtado
+FRENTE_DIAG = (0.69, 0.40)
 # lado da imagem da mao direita do personagem (-1 esquerda, 1 direita); de lado (left/right): o braco de perto
 LADO_MAO = {'down': -1, 'up': 1, 'down_right': -1, 'down_left': 1, 'up_right': 1, 'up_left': -1}
 
@@ -94,6 +99,16 @@ def medir(f, corpo, acao, d):
         f = 1 if 'right' in d else -1; phi = math.radians(60)
     a = -f * phi
     dx, dy = vx * math.cos(a) - vy * math.sin(a), vx * math.sin(a) + vy * math.cos(a)
+    # diagonal: o giro acima e o de um boneco de perfil (frente = lado da tela). Na diagonal a frente do corpo
+    # aponta para dentro da tela (costas) ou para quem olha (frente): a parte "para a frente" da arma vai para essa
+    # direcao e encurta (perspectiva); a parte de cima/baixo fica igual. len = quanto a arma encolhe no comprimento
+    ln = 1.0
+    if d in DIAG:
+        h = dx * f                                          # quanto aponta para a frente do corpo
+        s = 1 if d.startswith('down') else -1
+        dx, dy = FRENTE_DIAG[0] * f * h, FRENTE_DIAG[1] * s * h + dy
+        ln = math.hypot(dx, dy) or 1
+        dx, dy = dx / ln, dy / ln
     th, esp = angulo(dx, dy)
     atras = d.startswith('up')
     # raio do punho (redesenhado por cima do cabo): ate encostar em outra pele
@@ -102,7 +117,7 @@ def medir(f, corpo, acao, d):
     if outros.any():
         oy, ox = np.where(outros)
         rf = min(rf, 0.9 * math.sqrt(float(((ox - px) ** 2 + (oy - py) ** 2).min())))
-    return [round(px / W, 4), round(py / H, 4), th, int(atras), int(esp), round(rf / W, 4)]
+    return [round(px / W, 4), round(py / H, 4), th, int(atras), int(esp), round(rf / W, 4), round(ln, 3)]
 
 
 def main():
