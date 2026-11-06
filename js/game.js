@@ -3065,12 +3065,14 @@ class Game {
 
     // tamanho (px para um boneco de 76 px) e pega (onde a mao segura, fracao da imagem) de cada arma.
     // Raca pequena segura a mesma arma: a arma acompanha o tamanho do boneco (rs.scale)
-    const W_ARMA = { sword: [34, 0.23, 0.77], axe: [36, 0.23, 0.77], fire_sword: [34, 0.23, 0.77],
-      adaga: [22, 0.25, 0.75], espada_curta: [30, 0.219, 0.781], clava: [30, 0.219, 0.781], machadinha: [30, 0.219, 0.781], lanca: [56, 0.292, 0.708] };
+    // valores impressos por tools/arte/gerar_armas.py (lado da imagem quadrada no jogo, pega x, pega y)
+    const W_ARMA = { adaga: [15.8, 0.29, 0.713], espada_curta: [22.8, 0.214, 0.787], sword: [31.5, 0.174, 0.826],
+      fire_sword: [31.5, 0.175, 0.825], clava: [27.2, 0.182, 0.821], machadinha: [24.8, 0.173, 0.73], axe: [35.8, 0.135, 0.79],
+      lanca: [59.0, 0.417, 0.584] };
     const wa = W_ARMA[this.player.equippedWeapon] || W_ARMA.sword, rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
-    const wSize = Math.round(wa[0] * rsc);
-    const gripX = Math.round(wSize * wa[1]);
-    const gripY = Math.round(wSize * wa[2]);
+    const wSize = wa[0] * rsc;
+    const gripX = wSize * wa[1];
+    const gripY = wSize * wa[2];
     ctx.drawImage(weaponImg, -gripX, -gripY, wSize, wSize);
 
     ctx.restore();
