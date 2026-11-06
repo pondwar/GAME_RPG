@@ -133,6 +133,22 @@ class InventorySystem {
         equipType: 'weapon',
         equipId: 'fire_sword'
       },
+      // armas basicas do aldeao (D&D 5e; regras de quem usa em js/armas.js, desenho em tools/arte/gerar_armas.py)
+      adaga: { id: 'adaga', name: 'Adaga de Ferro', type: 'weapon', rarity: 'common', icon: '🔪', maxStack: 1,
+        desc: 'Lâmina curta de ferro. Leve, rápida e pode ser arremessada.', stats: 'Dano 1d4 perfuração • Leve • Acuidade • Arremesso',
+        equipType: 'weapon', equipId: 'adaga' },
+      espada_curta: { id: 'espada_curta', name: 'Espada Curta de Ferro', type: 'weapon', rarity: 'common', icon: '🗡️', maxStack: 1,
+        desc: 'Espada curta e leve, de ferro simples. Arma de guerra (os elfos aprendem desde cedo).', stats: 'Dano 1d6 perfuração • Leve • Acuidade',
+        equipType: 'weapon', equipId: 'espada_curta' },
+      clava: { id: 'clava', name: 'Clava de Madeira', type: 'weapon', rarity: 'common', icon: '🏏', maxStack: 1,
+        desc: 'Um bom pedaço de madeira dura. A arma mais simples que existe.', stats: 'Dano 1d4 impacto • Leve',
+        equipType: 'weapon', equipId: 'clava' },
+      machadinha: { id: 'machadinha', name: 'Machadinha de Ferro', type: 'weapon', rarity: 'common', icon: '🪓', maxStack: 1,
+        desc: 'Machado pequeno de uma mão, de ferro. Corta lenha e pode ser arremessado (os anões aprendem desde cedo).', stats: 'Dano 1d6 corte • Leve • Arremesso',
+        equipType: 'weapon', equipId: 'machadinha' },
+      lanca: { id: 'lanca', name: 'Lança de Ferro', type: 'weapon', rarity: 'common', icon: '🔱', maxStack: 1,
+        desc: 'Haste de madeira com ponta de ferro. Uma ou duas mãos, ou arremessada.', stats: 'Dano 1d6 perfuração (1d8 com duas mãos) • Arremesso • Versátil',
+        equipType: 'weapon', equipId: 'lanca' },
       torch: {
         id: 'torch',
         name: 'Tocha de Resina',

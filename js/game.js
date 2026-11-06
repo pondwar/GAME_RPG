@@ -102,7 +102,9 @@ class Game {
       weapons: {
         sword: new Image(),
         axe: new Image(),
-        fire_sword: new Image()
+        fire_sword: new Image(),
+        // armas basicas do aldeao (tools/arte/gerar_armas.py; regras em js/armas.js)
+        adaga: new Image(), espada_curta: new Image(), clava: new Image(), machadinha: new Image(), lanca: new Image()
       },
       carcass: [new Image(), new Image(), new Image()]
     };
@@ -346,6 +348,7 @@ class Game {
     this.images.weapons.sword.src = `assets/weapons/items/sword.png?v=${v}`;
     this.images.weapons.axe.src = `assets/weapons/items/axe.png?v=${v}`;
     this.images.weapons.fire_sword.src = `assets/weapons/items/fire_sword.png?v=${v}`;
+    for (const k of ['adaga', 'espada_curta', 'clava', 'machadinha', 'lanca']) this.images.weapons[k].src = `assets/weapons/items/${k}.png?v=${v}`;
 
     // Load Carcasses (3 stages)
     for (let i = 0; i < 3; i++) {
@@ -758,11 +761,14 @@ class Game {
     if (this.player.equippedWeapon === 'sword') baseDmg = 16;
     else if (this.player.equippedWeapon === 'axe') baseDmg = 22;
     else if (this.player.equippedWeapon === 'fire_sword') baseDmg = 32;
+    // armas do aldeao: proporcional ao dado do D&D (espada 1d8 = 16): 1d4 = 9, 1d6 = 12
+    else if ({ adaga: 1, clava: 1 }[this.player.equippedWeapon]) baseDmg = 9;
+    else if ({ machadinha: 1, espada_curta: 1, lanca: 1 }[this.player.equippedWeapon]) baseDmg = 12;
 
     const finalDamage = Math.round(baseDmg * comboMultiplier);
 
     // Check if chopping tree with Axe
-    if (this.player.equippedWeapon === 'axe') {
+    if (this.player.equippedWeapon === 'axe' || this.player.equippedWeapon === 'machadinha') {
       for (const tree of this.trees) {
         const trunkX = tree.x + tree.trunkOffset.x;
         const trunkY = tree.y + tree.trunkOffset.y;
@@ -1303,6 +1309,7 @@ class Game {
             window.SurittoPaint.paintData(id.data, mx.getImageData(0, 0, cv.width, cv.height).data, pic, colors);
             cx.putImageData(id, 0, 0);
             cv.complete = true; cv.naturalWidth = cv.width; cv.naturalHeight = cv.height;   // o desenho trata como imagem
+            cv.mao = (ent.maos || {})[f] || null;          // onde a mao segura a arma neste quadro (medir_maos.py)
             return cv;
           }));
       })); }));
@@ -1330,6 +1337,9 @@ class Game {
       const t = window.SURITTO_TOWNS && window.SURITTO_TOWNS.vila_inicial;
       if (t) { p.x = t.center.x + 54 * 12; p.y = t.center.y + 27 * 12; p.z = 0; }
       p.hunger = 85;
+      // arma inicial da raca (js/armas.js): vai para a mao; a espada e o machado de lenhador ficam na mochila
+      const Ar = window.SurittoArmas, ini = Ar && Ar.ARMA_INICIAL[p.race], inv = this.inventory;
+      if (ini && inv && inv.itemDB[ini] && inv.equipItemDirect) inv.equipItemDirect('weapon', ini);   // a da mao vai para a mochila
     }
     const name = (window.SurittoServer && window.SurittoServer.charName) || p.name || 'Aventureiro';
     p.name = name;
@@ -1732,7 +1742,7 @@ class Game {
       }
 
       // If Axe is equipped: CHOP WOOD!
-      if (this.player.equippedWeapon === 'axe') {
+      if (this.player.equippedWeapon === 'axe' || this.player.equippedWeapon === 'machadinha') {
         this.chopTreeForWood(nearestTree);
         return;
       }
@@ -2308,7 +2318,7 @@ class Game {
             } else {
               text = 'Toco de Carvalho (Lenho Esgotado)';
             }
-          } else if (this.player.equippedWeapon === 'axe') {
+          } else if (this.player.equippedWeapon === 'axe' || this.player.equippedWeapon === 'machadinha') {
             const wCount = (typeof tree.wood !== 'undefined') ? tree.wood : 5;
             const wMax = tree.maxWood || 6;
             text = `Cortar Lenha [${wCount}/${wMax}] [F / Clique]`;
@@ -2831,7 +2841,7 @@ class Game {
     else if (this.player.isAttacking) {
       const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
       const atkIdx = Math.min(4, Math.floor(prog * 5));
-      if (this.player.equippedWeapon === 'axe') {
+      if (this.player.equippedWeapon === 'axe' || this.player.equippedWeapon === 'machadinha') {
         frame = pImgs.attack_2h[sideDir][atkIdx] || pImgs.attack_2h.right[0];
         frameKey = `chop_${sideDir}_${atkIdx}`;
       } else {
@@ -2886,7 +2896,9 @@ class Game {
         set = set || parado;
       } else if (this.player.isAttacking) {
         const w = this.player.equippedWeapon;
-        set = (w === 'axe' && lado('attack_2h')) || (!w && lado('punch')) || lado('attack_1h');
+        const Ar = window.SurittoArmas, arma = Ar && w && Ar.ARMAS[Ar.DO_JOGO[w] || w];
+        const duas = w === 'axe' || (arma && arma.props.duas_maos);   // arma de duas maos: golpe de cima (folha do machado)
+        set = (duas && lado('attack_2h')) || (!w && lado('punch')) || lado('attack_1h');
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
         idx = set ? Math.min(set.length - 1, Math.floor(prog * set.length)) : 0;
         set = set || parado;
@@ -2916,10 +2928,13 @@ class Game {
     const socketTable = window.PLAYER_WEAPON_SOCKETS || {};
     // Sem encaixe medido para o quadro: usa o do boneco parado na mesma direcao. (Antes caia no do pulo
     // com o punho erguido, e a espada ia parar na cabeca nos quadros que faltavam na tabela.)
-    const socket = socketTable[frameKey] ||
+    // boneco da raca: a mao medida no proprio quadro ([x, y, angulo, atras, espelhar] em fracao da tela)
+    const mao = rs && rs.idle && frame && frame.mao;
+    const socket = mao ? { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4] } :
+                   (socketTable[frameKey] ||
                    socketTable[`idle_${dir}_0`] ||
                    socketTable[`idle_${sideDir}_0`] ||
-                   null;
+                   null);
 
     const drawBehind = socket ? socket.behind : (dir === 'up');
 
@@ -3022,10 +3037,14 @@ class Game {
     ctx.scale(scaleX, 1);
     ctx.rotate(angle);
 
-    // Anchor weapon sprite by grip handle (23% from left, 77% from top)
-    const wSize = (this.player.equippedWeapon === 'axe') ? 36 : 34;
-    const gripX = Math.round(wSize * 0.23);
-    const gripY = Math.round(wSize * 0.77);
+    // tamanho (px para um boneco de 76 px) e pega (onde a mao segura, fracao da imagem) de cada arma.
+    // Raca pequena segura a mesma arma: a arma acompanha o tamanho do boneco (rs.scale)
+    const W_ARMA = { sword: [34, 0.23, 0.77], axe: [36, 0.23, 0.77], fire_sword: [34, 0.23, 0.77],
+      adaga: [22, 0.25, 0.75], espada_curta: [30, 0.219, 0.781], clava: [30, 0.219, 0.781], machadinha: [30, 0.219, 0.781], lanca: [56, 0.292, 0.708] };
+    const wa = W_ARMA[this.player.equippedWeapon] || W_ARMA.sword, rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
+    const wSize = Math.round(wa[0] * rsc);
+    const gripX = Math.round(wSize * wa[1]);
+    const gripY = Math.round(wSize * wa[2]);
     ctx.drawImage(weaponImg, -gripX, -gripY, wSize, wSize);
 
     ctx.restore();

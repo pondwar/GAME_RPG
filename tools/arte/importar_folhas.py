@@ -288,6 +288,9 @@ def main():
             manifest[race] = ent
             print(f'{race}: tela {ent["w"]}x{ent["h"]}, ' + ', '.join(f'{a} {sum(len(v) for v in d.values())}' for a, d in ent['acoes'].items()))
     json.dump(manifest, open(mpath, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # onde a mao segura a arma em cada quadro (tools/arte/medir_maos.py): os quadros mudaram, mede de novo
+    import medir_maos
+    medir_maos.main()
 
 
 if __name__ == '__main__':
