@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793991461,
+  "v": 1794001184,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -921,7 +921,7 @@
   "w": 256,
   "h": 520,
   "corpo": 400,
-  "v": 1793991476,
+  "v": 1794001199,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -1617,7 +1617,7 @@
   "w": 323,
   "h": 520,
   "corpo": 400,
-  "v": 1793991481,
+  "v": 1794001204,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -1808,14 +1808,14 @@
     0
    ],
    "anao/idle/left_0": [
-    0.5572,
+    0.4428,
     0.7809,
     -0.283,
     0,
     1
    ],
    "anao/idle/right_0": [
-    0.4428,
+    0.5572,
     0.7809,
     -0.283,
     0,
@@ -2401,7 +2401,7 @@
   "w": 412,
   "h": 520,
   "corpo": 400,
-  "v": 1793991488,
+  "v": 1794001211,
   "ref": {
    "pele": "#d0867b",
    "cabelo": "#36cf19",
@@ -3153,7 +3153,7 @@
   "w": 247,
   "h": 520,
   "corpo": 400,
-  "v": 1793991495,
+  "v": 1794001218,
   "ref": {
    "pele": "#d68a84",
    "cabelo": "#32c517",
@@ -3819,7 +3819,7 @@
   "w": 317,
   "h": 520,
   "corpo": 400,
-  "v": 1793991469,
+  "v": 1794001192,
   "ref": {
    "pele": "#c67d66",
    "cabelo": "#32b419",
@@ -4587,7 +4587,7 @@
   "w": 355,
   "h": 520,
   "corpo": 400,
-  "v": 1793991499,
+  "v": 1794001222,
   "ref": {
    "pele": "#6b718a",
    "cabelo": "#26b61b",
@@ -5371,7 +5371,7 @@
   "w": 313,
   "h": 520,
   "corpo": 400,
-  "v": 1793991506,
+  "v": 1794001229,
   "ref": {
    "pele": "#747b96",
    "cabelo": "#2ec91e",
@@ -5658,56 +5658,56 @@
     0
    ],
    "draconato/walk/left_0": [
-    0.4643,
+    0.5357,
     0.7077,
     -0.283,
     0,
     1
    ],
    "draconato/walk/left_1": [
-    0.5113,
+    0.4887,
     0.7078,
     -0.283,
     0,
     1
    ],
    "draconato/walk/left_2": [
-    0.4705,
+    0.5327,
     0.7077,
     -0.283,
     0,
     1
    ],
    "draconato/walk/left_3": [
-    0.5113,
+    0.4887,
     0.7078,
     -0.283,
     0,
     1
    ],
    "draconato/walk/right_0": [
-    0.5357,
+    0.4643,
     0.7077,
     -0.283,
     0,
     0
    ],
    "draconato/walk/right_1": [
-    0.4887,
+    0.5113,
     0.7078,
     -0.283,
     0,
     0
    ],
    "draconato/walk/right_2": [
-    0.5327,
+    0.4705,
     0.7077,
     -0.283,
     0,
     0
    ],
    "draconato/walk/right_3": [
-    0.4887,
+    0.5113,
     0.7078,
     -0.283,
     0,
@@ -5882,256 +5882,256 @@
     0
    ],
    "draconato/gather/left_0": [
-    0.4904,
+    0.5096,
     0.7545,
     -0.283,
     0,
     1
    ],
    "draconato/gather/left_1": [
-    0.5896,
+    0.4104,
     0.8252,
     -0.283,
     0,
     1
    ],
    "draconato/gather/left_2": [
-    0.5845,
+    0.4155,
     0.8259,
     -0.283,
     0,
     1
    ],
    "draconato/gather/left_3": [
-    0.7165,
+    0.2835,
     0.7984,
     -0.283,
     0,
     1
    ],
    "draconato/gather/right_0": [
-    0.5096,
+    0.4904,
     0.7545,
     -0.283,
     0,
     0
    ],
    "draconato/gather/right_1": [
-    0.4104,
+    0.5896,
     0.8252,
     -0.283,
     0,
     0
    ],
    "draconato/gather/right_2": [
-    0.4155,
+    0.5845,
     0.8259,
     -0.283,
     0,
     0
    ],
    "draconato/gather/right_3": [
-    0.2835,
+    0.7165,
     0.7984,
     -0.283,
     0,
     0
    ],
    "draconato/attack_1h/left_0": [
-    0.2316,
-    0.6046,
-    1.51,
-    0,
-    1
-   ],
-   "draconato/attack_1h/left_1": [
-    0.3225,
-    0.4482,
-    0.679,
-    0,
-    1
-   ],
-   "draconato/attack_1h/left_2": [
-    0.4369,
-    0.2358,
-    -0.507,
-    0,
-    1
-   ],
-   "draconato/attack_1h/left_3": [
-    0.7967,
-    0.6476,
-    1.758,
-    0,
-    0
-   ],
-   "draconato/attack_1h/left_4": [
-    0.2908,
-    0.6174,
-    1.425,
-    0,
-    1
-   ],
-   "draconato/attack_1h/right_0": [
     0.7684,
     0.6046,
     1.51,
     0,
     0
    ],
-   "draconato/attack_1h/right_1": [
+   "draconato/attack_1h/left_1": [
     0.6775,
     0.4482,
     0.679,
     0,
     0
    ],
-   "draconato/attack_1h/right_2": [
+   "draconato/attack_1h/left_2": [
     0.5631,
     0.2358,
     -0.507,
     0,
     0
    ],
-   "draconato/attack_1h/right_3": [
+   "draconato/attack_1h/left_3": [
     0.2033,
     0.6476,
     1.758,
     0,
     1
    ],
-   "draconato/attack_1h/right_4": [
+   "draconato/attack_1h/left_4": [
     0.7092,
     0.6174,
     1.425,
     0,
     0
    ],
+   "draconato/attack_1h/right_0": [
+    0.2316,
+    0.6046,
+    1.51,
+    0,
+    1
+   ],
+   "draconato/attack_1h/right_1": [
+    0.3225,
+    0.4482,
+    0.679,
+    0,
+    1
+   ],
+   "draconato/attack_1h/right_2": [
+    0.4369,
+    0.2358,
+    -0.507,
+    0,
+    1
+   ],
+   "draconato/attack_1h/right_3": [
+    0.7967,
+    0.6476,
+    1.758,
+    0,
+    0
+   ],
+   "draconato/attack_1h/right_4": [
+    0.2908,
+    0.6174,
+    1.425,
+    0,
+    1
+   ],
    "draconato/attack_2h/left_0": [
-    0.5937,
-    0.2838,
-    -0.243,
-    0,
-    0
-   ],
-   "draconato/attack_2h/left_1": [
-    0.5447,
-    0.296,
-    -0.319,
-    0,
-    0
-   ],
-   "draconato/attack_2h/left_2": [
-    0.7351,
-    0.6903,
-    1.724,
-    0,
-    0
-   ],
-   "draconato/attack_2h/left_3": [
-    0.5937,
-    0.8253,
-    2.172,
-    0,
-    1
-   ],
-   "draconato/attack_2h/left_4": [
-    0.3129,
-    0.6133,
-    1.44,
-    0,
-    1
-   ],
-   "draconato/attack_2h/right_0": [
     0.4063,
     0.2838,
     -0.243,
     0,
     1
    ],
-   "draconato/attack_2h/right_1": [
+   "draconato/attack_2h/left_1": [
     0.4553,
     0.296,
     -0.319,
     0,
     1
    ],
-   "draconato/attack_2h/right_2": [
+   "draconato/attack_2h/left_2": [
     0.2649,
     0.6903,
     1.724,
     0,
     1
    ],
-   "draconato/attack_2h/right_3": [
+   "draconato/attack_2h/left_3": [
     0.4063,
     0.8253,
     2.172,
     0,
     0
    ],
-   "draconato/attack_2h/right_4": [
+   "draconato/attack_2h/left_4": [
     0.6839,
     0.6133,
     1.44,
     0,
     0
    ],
+   "draconato/attack_2h/right_0": [
+    0.5937,
+    0.2838,
+    -0.243,
+    0,
+    0
+   ],
+   "draconato/attack_2h/right_1": [
+    0.5447,
+    0.296,
+    -0.319,
+    0,
+    0
+   ],
+   "draconato/attack_2h/right_2": [
+    0.7351,
+    0.6903,
+    1.724,
+    0,
+    0
+   ],
+   "draconato/attack_2h/right_3": [
+    0.5937,
+    0.8253,
+    2.172,
+    0,
+    1
+   ],
+   "draconato/attack_2h/right_4": [
+    0.3129,
+    0.6133,
+    1.44,
+    0,
+    1
+   ],
    "draconato/kick/left_0": [
-    0.6105,
-    0.6734,
-    2.165,
-    0,
-    0
-   ],
-   "draconato/kick/left_1": [
-    0.6934,
-    0.434,
-    0.719,
-    0,
-    0
-   ],
-   "draconato/kick/left_2": [
-    0.6711,
-    0.4095,
-    0.69,
-    0,
-    0
-   ],
-   "draconato/kick/left_3": [
-    0.5529,
-    0.4999,
-    0.893,
-    0,
-    0
-   ],
-   "draconato/kick/right_0": [
     0.3895,
     0.6734,
     2.165,
     0,
     1
    ],
-   "draconato/kick/right_1": [
+   "draconato/kick/left_1": [
     0.3066,
     0.434,
     0.719,
     0,
     1
    ],
-   "draconato/kick/right_2": [
+   "draconato/kick/left_2": [
     0.3321,
     0.4095,
     0.69,
     0,
     1
    ],
-   "draconato/kick/right_3": [
+   "draconato/kick/left_3": [
     0.4471,
     0.4999,
     0.893,
     0,
     1
+   ],
+   "draconato/kick/right_0": [
+    0.6105,
+    0.6734,
+    2.165,
+    0,
+    0
+   ],
+   "draconato/kick/right_1": [
+    0.6934,
+    0.434,
+    0.719,
+    0,
+    0
+   ],
+   "draconato/kick/right_2": [
+    0.6711,
+    0.4095,
+    0.69,
+    0,
+    0
+   ],
+   "draconato/kick/right_3": [
+    0.5529,
+    0.4999,
+    0.893,
+    0,
+    0
    ]
   }
  },
@@ -6139,7 +6139,7 @@
   "w": 341,
   "h": 520,
   "corpo": 400,
-  "v": 1793991512,
+  "v": 1794001235,
   "ref": {
    "pele": "#6a6e88",
    "cabelo": "#259512",

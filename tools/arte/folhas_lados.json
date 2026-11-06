@@ -82,22 +82,22 @@
    "up_left": "espelhar"
   },
   "andar": {
-   "left": "fonte_direita"
+   "left": "fonte_esquerda"
   },
   "pular": {
    "left": "fonte_direita"
   },
   "abaixar": {
-   "left": "fonte_esquerda"
+   "left": "fonte_direita"
   },
   "espada": {
-   "left": "fonte_esquerda"
+   "left": "fonte_direita"
   },
   "machado": {
-   "left": "fonte_esquerda"
+   "left": "fonte_direita"
   },
   "chute": {
-   "left": "fonte_esquerda"
+   "left": "fonte_direita"
   }
  },
  "tiferino": {
@@ -187,6 +187,9 @@
   },
   "chute": {
    "left": "fonte_direita"
+  },
+  "parado": {
+   "left": "espelhar"
   }
  },
  "halfling": {
