@@ -1269,8 +1269,8 @@ class Game {
   }
 
   // Boneco do mapa da raca (tools/arte/importar_folhas.py -> assets/player/racas): quadros de parado e andar, pintados
-  // com as cores da criacao (SurittoPaint, o mesmo da previa). Enquanto nao fica pronto (ou a raca nao tem folha),
-  // continua o boneco antigo. A chave muda quando muda a raca ou a aparencia, e ai pinta de novo.
+  // com as cores da criacao (SurittoPaint, o mesmo da previa). Enquanto nao fica pronto o player nao aparece; so a raca
+  // sem folha usa o boneco antigo. A chave muda quando muda a raca ou a aparencia, e ai pinta de novo.
   async ensureRaceSprite() {
     const p = this.player, Rr = window.SurittoRules;
     if (!p.race || !window.SurittoPaint) return;
@@ -1281,7 +1281,8 @@ class Game {
       if (!this._raceManifest) this._raceManifest = await fetch('assets/player/racas/manifest.json', { cache: 'no-store' }).then(r => r.json());
     } catch (e) { this._raceManifest = {}; }
     const ent = this._raceManifest[p.race];
-    if (!ent) { this.images.raca = null; return; }
+    if (!ent) { this.images.raca = null; this._racaSemFolha = true; return; }
+    this._racaSemFolha = false;
     const ap = p.appearance || {}, colors = {};
     for (const k of ['pele', 'cabelo', 'olhos']) if (ap[k]) colors[k] = ap[k];
     // cabelo verde sem cor escolhida (personagem antigo): usa a primeira cor da raca, nunca o verde
@@ -1290,9 +1291,8 @@ class Game {
     const load = (src) => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
     const v = ent.v || 0, out = { scale: ((Rr && Rr.LOOKS[p.race]) || {}).scale || 1, corpo: ent.corpo || ent.h };
     try {
-      for (const [acao, dirs] of Object.entries(ent.acoes)) {
-        out[acao] = {};
-        for (const [dir, files] of Object.entries(dirs)) {
+      // tudo em paralelo (~300 imagens): um por um demorava e o boneco antigo aparecia no comeco
+      await Promise.all(Object.entries(ent.acoes).map(([acao, dirs]) => { out[acao] = {}; return Promise.all(Object.entries(dirs).map(async ([dir, files]) => {
           out[acao][dir] = await Promise.all(files.map(async (f) => {
             const [img, mask] = await Promise.all([load(`assets/player/racas/${f}.png?v=${v}`), load(`assets/player/racas/${f}_mascara.png?v=${v}`)]);
             const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
@@ -1305,9 +1305,8 @@ class Game {
             cv.complete = true; cv.naturalWidth = cv.width; cv.naturalHeight = cv.height;   // o desenho trata como imagem
             return cv;
           }));
-        }
-      }
-    } catch (e) { console.warn('boneco da raca', e); return; }
+      })); }));
+    } catch (e) { console.warn('boneco da raca', e); this._racaSemFolha = true; return; }   // falhou: volta o boneco antigo (melhor que sumir)
     if (this._raceKey === key) this.images.raca = out;
   }
 
@@ -2774,6 +2773,8 @@ class Game {
 
   drawPlayer(ctx, screenCenterX, screenCenterY) {
     if (this.player.race) this.ensureRaceSprite();         // monta (uma vez por raca/aparencia) o boneco aldeao da raca
+    // enquanto o boneco da raca ainda esta sendo montado, nao desenha nada (antes aparecia o humano antigo de armadura)
+    if (this.player.race && !(this.images.raca && this.images.raca.idle) && !this._racaSemFolha) return;
     const pdx = this.world ? this.world.wrapDelta(this.player.x - this.camera.x) : (this.player.x - this.camera.x);
     const px = Math.round(pdx + screenCenterX);
     const py = Math.round(this.player.y - this.getLift() - this.camera.y + screenCenterY);
@@ -2947,16 +2948,17 @@ class Game {
     }
 
     // 5. Dynamic Player Status Tag (Sitting, Exhausted, Running, Normal)
-    let tag = 'Aventureiro';
+    const nome = (window.SurittoServer && window.SurittoServer.charName) || this.player.name || 'Aventureiro';
+    let tag = nome;
     let tagColor = '#69db7c';
     if (isSit) {
-      tag = 'Aventureiro [Descansando 💤]';
+      tag = nome + ' [Descansando 💤]';
       tagColor = '#74c0fc';
     } else if (this.player.isExhausted) {
-      tag = 'Aventureiro [Exausto 💧]';
+      tag = nome + ' [Exausto 💧]';
       tagColor = '#ff8787';
     } else if (this.player.isRunning) {
-      tag = 'Aventureiro [Correndo ⚡]';
+      tag = nome + ' [Correndo ⚡]';
       tagColor = '#ffd43b';
     }
 
