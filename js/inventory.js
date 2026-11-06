@@ -614,6 +614,10 @@ class InventorySystem {
     if (itemData.type === 'weapon' || itemData.type === 'offhand') {
       const targetType = itemData.equipType; // 'weapon' or 'offhand'
       const oldEquipId = this.equipment[targetType];
+      // regras da arma (js/armas.js): grande demais para a raca nao equipa; duas maos e sem proficiencia so avisam
+      const Ar = window.SurittoArmas, P = this.game.player;
+      const av = Ar && targetType === 'weapon' && P.race ? Ar.avaliar(P.race, P.cls, Ar.DO_JOGO[itemData.equipId] || itemData.equipId) : null;
+      if (av && !av.pode) { this.game.addLog(`🚫 ${av.motivo}`, 'warning'); return; }
 
       // Equip new item
       this.equipment[targetType] = itemData.equipId;
@@ -633,6 +637,8 @@ class InventorySystem {
 
       if (window.sounds) window.sounds.playSwordSlash();
       this.game.addLog(`⚔️ Você equipou: <b>${itemData.name}</b>!`, 'action');
+      if (av && av.motivo) this.game.addLog(`✋ ${av.motivo}`, 'info');
+      if (av && !av.proficiente) this.game.addLog(`⚠️ Você não sabe usar bem esta arma: ${av.ataque} no ataque. Uma guilda pode te ensinar.`, 'warning');
     } 
     // If it's consumable:
     else if (itemData.type === 'consumable') {
