@@ -38,6 +38,7 @@ ACOES = {'parado': ('idle', [['down', 'up', 'left']]),
          'soco': ('punch', [['left'] * 5]), 'machado': ('attack_2h', [['left'] * 5]), 'chute': ('kick', [['left'] * 4])}
 REGUA = {'pular', 'sentar', 'abaixar', 'espada', 'soco', 'machado', 'chute'}
 TELA = 1.3                         # a tela tem 30% a mais que a altura de pe (braco erguido, pulo); o jogo sabe (corpo)
+NOVOS_LADOS = {}                   # lado das folhas de perfil decidido pelo voto nesta importacao (gravado no fim)
 PADRAO = {}                        # (acao, dir) -> altura mediana do humano (preenchido ao importar o humano)
 ESPELHO = {'left': 'right', 'down_left': 'down_right', 'up_left': 'up_right'}
 
@@ -187,13 +188,21 @@ def importar(race, cfg, ref):
                 if lados.get(acao, {}).get(dirs[0]) == 'ignorar':   # linha desenhada errada: o jogo usa as 4 direcoes
                     del quadros[(nome, dirs[0])]; continue
                 quadros[(nome, dirs[0])] = [q.transpose(Image.FLIP_LEFT_RIGHT) if errado(q) else q for q in fila]
-            if dirs[0] == 'left':                       # a linha toda de perfil vira para o mesmo lado (voto dos quadros)
+            if dirs[0] == 'left':
+                # linha toda de perfil: para que lado a FOLHA ORIGINAL foi desenhada. Anotado em folhas_lados.json
+                # ('fonte_direita' vira, 'fonte_esquerda' fica). Sem anotacao, vota pelos quadros (nariz x cabelo) e
+                # GRAVA o resultado: o voto mudava de uma importacao para outra (o gnomo de sobrancelha verde andava de
+                # costas) e uma anotacao 'espelhar' relativa ao voto deixava de valer
                 fila = quadros[(nome, 'left')]
-                if sum(olha_para_direita(q) for q in fila) > 0:
+                fonte = lados.get(acao, {}).get('left')
+                if fonte not in ('fonte_direita', 'fonte_esquerda'):
+                    fonte = 'fonte_direita' if sum(olha_para_direita(q) for q in fila) > 0 else 'fonte_esquerda'
+                    NOVOS_LADOS.setdefault(race, {}).setdefault(acao, {})['left'] = fonte
+                if fonte == 'fonte_direita':
                     quadros[(nome, 'left')] = [q.transpose(Image.FLIP_LEFT_RIGHT) for q in fila]
-            # anotacao de folhas_lados.json valendo para qualquer linha (ex.: o perfil sentado veio virado para a direita)
-            for d in set(dirs) - {'down_left', 'up_left'}:
-                if lados.get(acao, {}).get(d) == 'espelhar' and (nome, d) in quadros:
+            # anotacao de folhas_lados.json valendo para as outras linhas (ex.: o perfil sentado veio virado para a direita)
+            for d in set(dirs) - {'down_left', 'up_left'} - ({'left'} if dirs[0] == 'left' else set()):
+                if lados.get(acao, {}).get(d) in ('espelhar', 'fonte_direita') and (nome, d) in quadros:
                     quadros[(nome, d)] = [q.transpose(Image.FLIP_LEFT_RIGHT) for q in quadros[(nome, d)]]
     if not quadros: return None
     if lados.get('parado_do_andar'):                     # folha parada desenhada com outro corpo (elfo magrinho): usa o andar
@@ -288,6 +297,14 @@ def main():
             manifest[race] = ent
             print(f'{race}: tela {ent["w"]}x{ent["h"]}, ' + ', '.join(f'{a} {sum(len(v) for v in d.values())}' for a, d in ent['acoes'].items()))
     json.dump(manifest, open(mpath, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # congela o lado das folhas de perfil que ainda nao tinham anotacao
+    if NOVOS_LADOS:
+        lpath = os.path.join(HERE, 'folhas_lados.json')
+        lados = json.load(open(lpath, encoding='utf-8')) if os.path.exists(lpath) else {}
+        for race, acoes in NOVOS_LADOS.items():
+            for acao, dd in acoes.items(): lados.setdefault(race, {}).setdefault(acao, {}).update(dd)
+        json.dump(lados, open(lpath, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        print('lado das folhas de perfil gravado em folhas_lados.json:', sum(len(a) for a in NOVOS_LADOS.values()))
     # onde a mao segura a arma em cada quadro (tools/arte/medir_maos.py): os quadros mudaram, mede de novo
     import medir_maos
     medir_maos.main()

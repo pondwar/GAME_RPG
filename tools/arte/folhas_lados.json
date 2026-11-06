@@ -1,11 +1,32 @@
 {
- "_comentario": "por raca e folha: 'espelhar' (a linha veio virada para a direita, o pedido era esquerda) ou 'ignorar' (a linha veio errada; o jogo usa as 4 direcoes ate refazer). 'parado_do_andar': true usa o passo mais fechado do andar como boneco parado (quando a folha parada vem com outro corpo)",
+ "_comentario": "por raca e folha. Perfil ('left'): 'fonte_direita' (a folha original foi desenhada virada para a direita: o importador espelha) ou 'fonte_esquerda' (fica); sem anotacao o importador vota e grava aqui. Outras linhas: 'espelhar'. Diagonais: 'espelhar' ou 'ignorar' (a linha veio errada; o jogo usa as 4 direcoes). 'parado_do_andar': true usa o passo mais fechado do andar como boneco parado (quando a folha parada vem com outro corpo)",
  "humano": {
   "andar_diagonal": {
    "down_left": "espelhar"
   },
   "sentar": {
-   "left": "espelhar"
+   "left": "fonte_direita"
+  },
+  "andar": {
+   "left": "fonte_esquerda"
+  },
+  "pular": {
+   "left": "fonte_esquerda"
+  },
+  "abaixar": {
+   "left": "fonte_direita"
+  },
+  "espada": {
+   "left": "fonte_esquerda"
+  },
+  "soco": {
+   "left": "fonte_direita"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_direita"
   }
  },
  "elfo": {
@@ -13,43 +34,179 @@
   "andar_diagonal": {
    "down_left": "espelhar",
    "up_left": "ignorar"
+  },
+  "andar": {
+   "left": "fonte_esquerda"
+  },
+  "pular": {
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_esquerda"
+  },
+  "espada": {
+   "left": "fonte_direita"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_esquerda"
   }
  },
  "meio_orc": {
   "andar_diagonal": {
    "up_left": "espelhar"
+  },
+  "andar": {
+   "left": "fonte_esquerda"
+  },
+  "pular": {
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_esquerda"
+  },
+  "espada": {
+   "left": "fonte_direita"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_direita"
   }
  },
  "draconato": {
   "andar_diagonal": {
    "up_left": "espelhar"
+  },
+  "andar": {
+   "left": "fonte_direita"
+  },
+  "pular": {
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_esquerda"
+  },
+  "espada": {
+   "left": "fonte_esquerda"
+  },
+  "machado": {
+   "left": "fonte_esquerda"
+  },
+  "chute": {
+   "left": "fonte_esquerda"
   }
  },
  "tiferino": {
   "andar_diagonal": {
    "up_left": "espelhar"
+  },
+  "andar": {
+   "left": "fonte_esquerda"
+  },
+  "pular": {
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_direita"
+  },
+  "espada": {
+   "left": "fonte_direita"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_direita"
   }
  },
  "meio_elfo": {
   "andar_diagonal": {
    "up_left": "espelhar"
   },
+  "andar": {
+   "left": "fonte_esquerda"
+  },
   "pular": {
-   "left": "espelhar"
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_direita"
+  },
+  "espada": {
+   "left": "fonte_esquerda"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_direita"
   }
  },
  "gnomo": {
   "andar": {
-   "left": "espelhar"
+   "left": "fonte_direita"
   },
   "pular": {
-   "left": "espelhar"
+   "left": "fonte_direita"
   },
   "espada": {
-   "left": "espelhar"
+   "left": "fonte_direita"
   },
   "chute": {
-   "left": "espelhar"
+   "left": "fonte_direita"
+  },
+  "sentar": {
+   "left": "fonte_esquerda"
+  },
+  "abaixar": {
+   "left": "fonte_direita"
+  },
+  "parado": {
+   "left": "fonte_esquerda"
+  }
+ },
+ "anao": {
+  "andar": {
+   "left": "fonte_esquerda"
+  },
+  "pular": {
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_direita"
+  },
+  "espada": {
+   "left": "fonte_direita"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_direita"
+  }
+ },
+ "halfling": {
+  "andar": {
+   "left": "fonte_esquerda"
+  },
+  "pular": {
+   "left": "fonte_direita"
+  },
+  "abaixar": {
+   "left": "fonte_esquerda"
+  },
+  "espada": {
+   "left": "fonte_esquerda"
+  },
+  "machado": {
+   "left": "fonte_direita"
+  },
+  "chute": {
+   "left": "fonte_direita"
   }
  }
 }
