@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793966282,
+  "v": 1793967164,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793966290,
+  "v": 1793967172,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -277,7 +277,7 @@
   "w": 346,
   "h": 520,
   "corpo": 400,
-  "v": 1793966292,
+  "v": 1793967174,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -449,6 +449,182 @@
      "anao/kick/right_2",
      "anao/kick/right_3",
      "anao/kick/right_4"
+    ]
+   }
+  }
+ },
+ "halfling": {
+  "w": 425,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793967181,
+  "ref": {
+   "pele": "#d0867b",
+   "cabelo": "#36cf19",
+   "olhos": "#734548"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "halfling/idle/down_0"
+    ],
+    "up": [
+     "halfling/idle/up_0"
+    ],
+    "left": [
+     "halfling/idle/left_0"
+    ],
+    "right": [
+     "halfling/idle/right_0"
+    ],
+    "down_left": [
+     "halfling/idle/down_left_0"
+    ],
+    "down_right": [
+     "halfling/idle/down_right_0"
+    ],
+    "up_left": [
+     "halfling/idle/up_left_0"
+    ],
+    "up_right": [
+     "halfling/idle/up_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "halfling/walk/down_0",
+     "halfling/walk/down_1",
+     "halfling/walk/down_2",
+     "halfling/walk/down_3"
+    ],
+    "up": [
+     "halfling/walk/up_0",
+     "halfling/walk/up_1",
+     "halfling/walk/up_2",
+     "halfling/walk/up_3"
+    ],
+    "left": [
+     "halfling/walk/left_0",
+     "halfling/walk/left_1",
+     "halfling/walk/left_2",
+     "halfling/walk/left_3"
+    ],
+    "right": [
+     "halfling/walk/right_0",
+     "halfling/walk/right_1",
+     "halfling/walk/right_2",
+     "halfling/walk/right_3"
+    ],
+    "down_left": [
+     "halfling/walk/down_left_0",
+     "halfling/walk/down_left_1",
+     "halfling/walk/down_left_2",
+     "halfling/walk/down_left_3"
+    ],
+    "down_right": [
+     "halfling/walk/down_right_0",
+     "halfling/walk/down_right_1",
+     "halfling/walk/down_right_2",
+     "halfling/walk/down_right_3"
+    ],
+    "up_left": [
+     "halfling/walk/up_left_0",
+     "halfling/walk/up_left_1",
+     "halfling/walk/up_left_2",
+     "halfling/walk/up_left_3"
+    ],
+    "up_right": [
+     "halfling/walk/up_right_0",
+     "halfling/walk/up_right_1",
+     "halfling/walk/up_right_2",
+     "halfling/walk/up_right_3"
+    ]
+   },
+   "jump": {
+    "left": [
+     "halfling/jump/left_0",
+     "halfling/jump/left_1",
+     "halfling/jump/left_2"
+    ],
+    "right": [
+     "halfling/jump/right_0",
+     "halfling/jump/right_1",
+     "halfling/jump/right_2"
+    ]
+   },
+   "sit": {
+    "down": [
+     "halfling/sit/down_0"
+    ],
+    "up": [
+     "halfling/sit/up_0"
+    ],
+    "left": [
+     "halfling/sit/left_0"
+    ],
+    "right": [
+     "halfling/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "halfling/gather/left_0",
+     "halfling/gather/left_1",
+     "halfling/gather/left_2",
+     "halfling/gather/left_3"
+    ],
+    "right": [
+     "halfling/gather/right_0",
+     "halfling/gather/right_1",
+     "halfling/gather/right_2",
+     "halfling/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "halfling/attack_1h/left_0",
+     "halfling/attack_1h/left_1",
+     "halfling/attack_1h/left_2",
+     "halfling/attack_1h/left_3",
+     "halfling/attack_1h/left_4"
+    ],
+    "right": [
+     "halfling/attack_1h/right_0",
+     "halfling/attack_1h/right_1",
+     "halfling/attack_1h/right_2",
+     "halfling/attack_1h/right_3",
+     "halfling/attack_1h/right_4"
+    ]
+   },
+   "attack_2h": {
+    "left": [
+     "halfling/attack_2h/left_0",
+     "halfling/attack_2h/left_1",
+     "halfling/attack_2h/left_2",
+     "halfling/attack_2h/left_3"
+    ],
+    "right": [
+     "halfling/attack_2h/right_0",
+     "halfling/attack_2h/right_1",
+     "halfling/attack_2h/right_2",
+     "halfling/attack_2h/right_3"
+    ]
+   },
+   "kick": {
+    "left": [
+     "halfling/kick/left_0",
+     "halfling/kick/left_1",
+     "halfling/kick/left_2",
+     "halfling/kick/left_3",
+     "halfling/kick/left_4"
+    ],
+    "right": [
+     "halfling/kick/right_0",
+     "halfling/kick/right_1",
+     "halfling/kick/right_2",
+     "halfling/kick/right_3",
+     "halfling/kick/right_4"
     ]
    }
   }
