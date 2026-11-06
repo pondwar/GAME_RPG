@@ -33,6 +33,23 @@
  "meio_elfo": {
   "andar_diagonal": {
    "up_left": "espelhar"
+  },
+  "pular": {
+   "left": "espelhar"
+  }
+ },
+ "gnomo": {
+  "andar": {
+   "left": "espelhar"
+  },
+  "pular": {
+   "left": "espelhar"
+  },
+  "espada": {
+   "left": "espelhar"
+  },
+  "chute": {
+   "left": "espelhar"
   }
  }
 }
