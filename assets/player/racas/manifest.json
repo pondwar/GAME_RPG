@@ -1,8 +1,9 @@
 {
  "humano": {
   "w": 251,
-  "h": 400,
-  "v": 1793927646,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793929400,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -84,6 +85,78 @@
      "humano/walk/up_right_1",
      "humano/walk/up_right_2",
      "humano/walk/up_right_3"
+    ]
+   }
+  }
+ },
+ "elfo": {
+  "w": 232,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793929404,
+  "ref": {
+   "pele": "#d28c7a",
+   "cabelo": "#42d217",
+   "olhos": "#2f497d"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "elfo/idle/down_0"
+    ],
+    "up": [
+     "elfo/idle/up_0"
+    ],
+    "left": [
+     "elfo/idle/left_0"
+    ],
+    "right": [
+     "elfo/idle/right_0"
+    ],
+    "down_left": [
+     "elfo/idle/down_left_0"
+    ],
+    "down_right": [
+     "elfo/idle/down_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "elfo/walk/down_0",
+     "elfo/walk/down_1",
+     "elfo/walk/down_2",
+     "elfo/walk/down_3"
+    ],
+    "up": [
+     "elfo/walk/up_0",
+     "elfo/walk/up_1",
+     "elfo/walk/up_2",
+     "elfo/walk/up_3"
+    ],
+    "left": [
+     "elfo/walk/left_0",
+     "elfo/walk/left_1",
+     "elfo/walk/left_2",
+     "elfo/walk/left_3"
+    ],
+    "right": [
+     "elfo/walk/right_0",
+     "elfo/walk/right_1",
+     "elfo/walk/right_2",
+     "elfo/walk/right_3"
+    ],
+    "down_left": [
+     "elfo/walk/down_left_0",
+     "elfo/walk/down_left_1",
+     "elfo/walk/down_left_2",
+     "elfo/walk/down_left_3"
+    ],
+    "down_right": [
+     "elfo/walk/down_right_0",
+     "elfo/walk/down_right_1",
+     "elfo/walk/down_right_2",
+     "elfo/walk/down_right_3"
     ]
    }
   }

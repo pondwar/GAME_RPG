@@ -1288,7 +1288,7 @@ class Game {
     if (ent.chroma && !colors.cabelo) { const c = ((Rr && Rr.COLORS[p.race]) || {}).cabelo; if (c && c[0][1]) colors.cabelo = c[0][1]; }
     const pic = { ref: ent.ref || {}, chroma: ent.chroma };
     const load = (src) => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
-    const v = ent.v || 0, out = { scale: ((Rr && Rr.LOOKS[p.race]) || {}).scale || 1 };
+    const v = ent.v || 0, out = { scale: ((Rr && Rr.LOOKS[p.race]) || {}).scale || 1, corpo: ent.corpo || ent.h };
     try {
       for (const [acao, dirs] of Object.entries(ent.acoes)) {
         out[acao] = {};
@@ -2865,17 +2865,30 @@ class Game {
       frameKey = `idle_${dir}_${idx}`;
     }
 
-    // Boneco da raca (aldeao, com as cores da criacao): por enquanto so tem parado e andar; correr usa o andar e as
-    // outras acoes usam o parado da mesma direcao
+    // Boneco da raca (aldeao, com as cores da criacao, tools/arte/importar_folhas.py). Cada acao usa a folha dela
+    // quando a raca ja tem; sem a folha, usa o parado da mesma direcao. Correr usa o andar.
     const rs = this.images.raca;
     if (rs && rs.idle) {
       const d8 = this.player.dir8;                   // diagonal, quando a raca ja tem a folha dela
       const pick = (acao, d) => (rs[acao] && ((d === dir && d8 && rs[acao][d8]) || rs[acao][d] || rs[acao].down)) || null;
-      const set = (this.player.isMoving && !isSit && !(jumpOff > 0)) ? pick('walk', dir) : (isSit || this.player.isAttacking || jumpOff > 0 ? pick('idle', (isSit || dir === 'up' || dir === 'down') ? dir : sideDir) : pick('idle', dir));
-      if (set && set.length) {
-        const idx = this.player.isMoving ? this.player.frameIndex % set.length : 0;
-        frame = set[idx];
-      }
+      const lado = (acao) => (rs[acao] && rs[acao][sideDir]) || null;
+      const parado = pick('idle', (dir === 'up' || dir === 'down') ? dir : sideDir);
+      let set = null, idx = 0;
+      if (isSit) { set = (rs.sit && (rs.sit[dir] || rs.sit[sideDir] || rs.sit.down)) || parado; }
+      else if (jumpOff > 0 || this.player.isJumping) {
+        set = lado('jump');
+        const prog = this.player.jumpProgress || 0;
+        idx = set ? Math.min(set.length - 1, Math.floor(prog * set.length)) : 0;
+        set = set || parado;
+      } else if (this.player.isAttacking) {
+        const w = this.player.equippedWeapon;
+        set = (w === 'axe' && lado('attack_2h')) || (!w && lado('punch')) || lado('attack_1h');
+        const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
+        idx = set ? Math.min(set.length - 1, Math.floor(prog * set.length)) : 0;
+        set = set || parado;
+      } else if (this.player.isMoving) { set = pick('walk', dir); idx = this.player.frameIndex % (set ? set.length : 1); }
+      else set = pick('idle', dir);
+      if (set && set.length) frame = set[Math.max(0, idx) % set.length];
     }
 
     // Fallback to legacy frames if v2 frame not yet loaded
@@ -2885,7 +2898,9 @@ class Game {
     }
 
     // 3. Render Sprite with correct aspect ratio and foot anchor
-    const targetH = Math.round((isSit && !(rs && rs.idle) ? 54 : 76) * (rs && rs.idle ? (rs.scale || 1) : 1));
+    // boneco da raca: a tela tem folga em cima (braco erguido, pulo); a altura de pe (corpo) e que vira 76 px
+    const targetH = (rs && rs.idle && frame && frame.height) ? Math.round(76 * (rs.scale || 1) * frame.height / (rs.corpo || frame.height))
+      : (isSit ? 54 : 76);
     let targetW = 48;
     if (frame && frame.naturalHeight > 0) {
       targetW = Math.round((frame.naturalWidth / frame.naturalHeight) * targetH);

@@ -1,8 +1,13 @@
 {
- "_comentario": "linhas de folha_<raca>_<acao>.png que vieram viradas para a direita (o pedido era esquerda): o importador espelha a linha toda",
+ "_comentario": "por raca e folha: 'espelhar' (a linha veio virada para a direita, o pedido era esquerda) ou 'ignorar' (a linha veio errada; o jogo usa as 4 direcoes ate refazer)",
  "humano": {
   "andar_diagonal": {
    "down_left": "espelhar"
+  }
+ },
+ "elfo": {
+  "andar_diagonal": {
+   "up_left": "ignorar"
   }
  }
 }

@@ -30,7 +30,14 @@ ACOES = {'parado': ('idle', [['down', 'up', 'left']]),
          'andar': ('walk', [['down'] * 4, ['up'] * 4, ['left'] * 4]),
          # diagonais (opcionais): 3/4 de frente e 3/4 de costas, viradas para a esquerda; a direita sai espelhada
          'parado_diagonal': ('idle', [['down_left', 'up_left']]),
-         'andar_diagonal': ('walk', [['down_left'] * 4, ['up_left'] * 4])}
+         'andar_diagonal': ('walk', [['down_left'] * 4, ['up_left'] * 4]),
+         # acoes: 1 linha de perfil para a esquerda (sentar: frente, costas e perfil). O PRIMEIRO boneco de cada folha
+         # de acao e um boneco de pe que serve de regua (agachado, sentado ou pulando a altura engana) e e descartado
+         'pular': ('jump', [['left'] * 4]), 'sentar': ('sit', [['down', 'up', 'left']]),
+         'abaixar': ('gather', [['left'] * 4]), 'espada': ('attack_1h', [['left'] * 5]),
+         'soco': ('punch', [['left'] * 5]), 'machado': ('attack_2h', [['left'] * 5]), 'chute': ('kick', [['left'] * 4])}
+REGUA = {'pular', 'sentar', 'abaixar', 'espada', 'soco', 'machado', 'chute'}
+TELA = 1.3                         # a tela tem 30% a mais que a altura de pe (braco erguido, pulo); o jogo sabe (corpo)
 ESPELHO = {'left': 'right', 'down_left': 'down_right', 'up_left': 'up_right'}
 
 
@@ -111,6 +118,9 @@ def importar(race, cfg, ref):
     for acao, path in folhas.items():
         nome, grade = ACOES[acao]
         linhas = recortar(path)
+        regua = None
+        if acao in REGUA and linhas and len(linhas[0]) == len(grade[0]) + 1:
+            regua = linhas[0][0]; linhas[0] = linhas[0][1:]
         if [len(l) for l in linhas] != [len(l) for l in grade]:
             print(f'  {os.path.basename(path)}: esperava {[len(l) for l in grade]} bonecos por linha, achei {[len(l) for l in linhas]}')
             continue
@@ -118,7 +128,7 @@ def importar(race, cfg, ref):
         # escala por LINHA: o Gemini desenha cada linha num tamanho um pouco diferente (o perfil e as costas saiam
         # 3-4% menores que a frente); a altura mediana de cada linha vira ALTURA * 0.97
         for linha, dirs in zip(linhas, grade):
-            k = ALTURA * 0.97 / np.median([q.height for q in linha])
+            k = ALTURA * 0.97 / (regua.height if regua is not None else np.median([q.height for q in linha]))
             for q, d in zip(linha, dirs):
                 q = q.resize((max(1, round(q.width * k)), max(1, round(q.height * k))), Image.LANCZOS)
                 quadros.setdefault((nome, d), []).append(q)
@@ -130,6 +140,8 @@ def importar(race, cfg, ref):
                 if dirs[0] == 'up_left': errado = lambda q: lado_da_pele(q) > 15
                 else: errado = lambda q: False
                 if lados.get(acao, {}).get(dirs[0]) == 'espelhar': errado = lambda q: True
+                if lados.get(acao, {}).get(dirs[0]) == 'ignorar':   # linha desenhada errada: o jogo usa as 4 direcoes
+                    del quadros[(nome, dirs[0])]; continue
                 quadros[(nome, dirs[0])] = [q.transpose(Image.FLIP_LEFT_RIGHT) if errado(q) else q for q in fila]
             if dirs[0] == 'left':                       # a linha toda de perfil vira para o mesmo lado (voto dos quadros)
                 fila = quadros[(nome, 'left')]
@@ -139,11 +151,11 @@ def importar(race, cfg, ref):
     for d in ('down_left', 'up_left'):                  # sem folha parada diagonal: o passo mais fechado do andar
         if ('walk', d) in quadros and ('idle', d) not in quadros:
             quadros[('idle', d)] = [passo_fechado(quadros[('walk', d)])]
-    H = max(ALTURA, max(alturas) + 2)
+    H = max(int(ALTURA * TELA), max(alturas) + 2)
     # largura comum: metade maior de um lado e do outro do centro do corpo
     meia = max(max(centro_corpo(q), q.width - centro_corpo(q)) for qs in quadros.values() for q in qs)
     W = int(2 * meia + 4)
-    ent = {'w': W, 'h': H, 'v': int(time.time()), 'ref': ref, 'chroma': bool(cfg['cabelo'].get('chroma')), 'acoes': {}}
+    ent = {'w': W, 'h': H, 'corpo': ALTURA, 'v': int(time.time()), 'ref': ref, 'chroma': bool(cfg['cabelo'].get('chroma')), 'acoes': {}}
     pc = dict(cfg); pc.pop('olhos', None)
     pc['cabelo'] = dict(cfg['cabelo'], y=[-0.5, 1.0]); pc['cabelo'].pop('couro', None)
     pc['pele'] = {k: v for k, v in cfg['pele'].items() if k not in ('caixa', 'igualar_y')}
