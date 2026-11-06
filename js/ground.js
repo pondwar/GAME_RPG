@@ -265,14 +265,21 @@ class GroundRenderer {
     }
     this._frames++;
     ctx.imageSmoothingEnabled = true;
+    // os cantos de cada bloco vao para o PIXEL DA TELA (ja com o zoom) arredondado. Antes arredondava em unidades do
+    // mundo e o zoom (1.6x etc.) deixava a borda no meio de um pixel: os dois blocos cobriam meio pixel cada e a
+    // emenda aparecia como uma linha escura. Desenhado sem a escala do contexto, cada bloco termina onde o vizinho comeca
+    const m = ctx.getTransform();
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+    const tx = (x) => Math.round(m.a * x + m.e), ty = (y) => Math.round(m.d * y + m.f);
     for (const b of list) {
       let cv = this.cache.get(b.key);
       if (cv) { this.cache.delete(b.key); this.cache.set(b.key, cv); }        // LRU
       else cv = this._get(this.quick, b.key, () => this._render(lod, b.wbx, b.by, 32, false), this.maxQuick);
-      const x0 = Math.round(b.bx * WS - cam.x + scx), y0 = Math.round(b.by * WS - cam.y + scy);
-      const x1 = Math.round((b.bx + 1) * WS - cam.x + scx), y1 = Math.round((b.by + 1) * WS - cam.y + scy);
+      const x0 = tx(b.bx * WS - cam.x + scx), y0 = ty(b.by * WS - cam.y + scy);
+      const x1 = tx((b.bx + 1) * WS - cam.x + scx), y1 = ty((b.by + 1) * WS - cam.y + scy);
       ctx.drawImage(cv, x0, y0, x1 - x0, y1 - y0);
     }
+    ctx.restore();
   }
 }
 window.GroundRenderer = GroundRenderer;
