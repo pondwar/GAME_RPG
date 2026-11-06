@@ -27,7 +27,11 @@ from importar_novas import load_rgba, mascara_cores  # noqa: E402
 
 ALTURA = 400                       # altura da tela de cada quadro (o jogo desenha a tela inteira com 76 px de altura)
 ACOES = {'parado': ('idle', [['down', 'up', 'left']]),
-         'andar': ('walk', [['down'] * 4, ['up'] * 4, ['left'] * 4])}
+         'andar': ('walk', [['down'] * 4, ['up'] * 4, ['left'] * 4]),
+         # diagonais (opcionais): 3/4 de frente e 3/4 de costas, viradas para a esquerda; a direita sai espelhada
+         'parado_diagonal': ('idle', [['down_left', 'up_left']]),
+         'andar_diagonal': ('walk', [['down_left'] * 4, ['up_left'] * 4])}
+ESPELHO = {'left': 'right', 'down_left': 'down_right', 'up_left': 'up_right'}
 
 
 def _faixas(v, minimo):
@@ -111,7 +115,7 @@ def importar(race, cfg, ref):
     pc['pele']['y'] = [0, 1.0]
     for (nome, d), qs in quadros.items():
         for i, q in enumerate(qs):
-            pares = [(d, q)] + ([('right', q.transpose(Image.FLIP_LEFT_RIGHT))] if d == 'left' else [])
+            pares = [(d, q)] + ([(ESPELHO[d], q.transpose(Image.FLIP_LEFT_RIGHT))] if d in ESPELHO else [])
             for dd, img in pares:
                 tela = Image.new('RGBA', (W, H), (0, 0, 0, 0))
                 tela.paste(img, (round(W / 2 - centro_corpo(img)), H - img.height - 1), img)

@@ -657,6 +657,14 @@ class Game {
       else if (deg < -135 || deg > 135) this.player.direction = 'left';
       else this.player.direction = 'up';
     }
+    // 8 direcoes so para o desenho do boneco da raca (as diagonais); o resto do jogo continua com as 4 de cima
+    const D8 = ['right', 'down_right', 'down', 'down_left', 'left', 'up_left', 'up', 'up_right'];
+    const cur8 = D8.indexOf(this.player.dir8);
+    if (cur8 < 0) this.player.dir8 = D8[((Math.round(deg / 45) % 8) + 8) % 8];
+    else {
+      let dd = deg - cur8 * 45; dd = ((dd + 540) % 360) - 180;   // distancia ate o centro do setor atual
+      if (Math.abs(dd) > 22.5 + 8) this.player.dir8 = D8[((Math.round(deg / 45) % 8) + 8) % 8];
+    }
   }
 
   performAttack() {
@@ -2861,7 +2869,8 @@ class Game {
     // outras acoes usam o parado da mesma direcao
     const rs = this.images.raca;
     if (rs && rs.idle) {
-      const pick = (acao, d) => (rs[acao] && (rs[acao][d] || rs[acao].down)) || null;
+      const d8 = this.player.dir8;                   // diagonal, quando a raca ja tem a folha dela
+      const pick = (acao, d) => (rs[acao] && ((d === dir && d8 && rs[acao][d8]) || rs[acao][d] || rs[acao].down)) || null;
       const set = (this.player.isMoving && !isSit && !(jumpOff > 0)) ? pick('walk', dir) : (isSit || this.player.isAttacking || jumpOff > 0 ? pick('idle', (isSit || dir === 'up' || dir === 'down') ? dir : sideDir) : pick('idle', dir));
       if (set && set.length) {
         const idx = this.player.isMoving ? this.player.frameIndex % set.length : 0;
