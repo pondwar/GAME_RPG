@@ -121,7 +121,11 @@ def importar(race, cfg, ref):
                 alturas.append(q.height)
             if dirs[0] in ('down_left', 'up_left'):    # diagonal: cada quadro virado para a direita (pele bem do lado direito) vira
                 fila = quadros[(nome, dirs[0])]
-                quadros[(nome, dirs[0])] = [q.transpose(Image.FLIP_LEFT_RIGHT) if lado_da_pele(q) * (q.height / ALTURA) > (8 if dirs[0] == 'down_left' else 25) else q for q in fila]   # de frente o rosto desloca pouco
+                # de costas aparece a orelha/bochecha do lado para onde ele olha (pele a direita = virado para a direita);
+                # de 3/4 de frente e o contrario: o lado do rosto que mais aparece e o de tras (pele a esquerda = virado para a direita)
+                if dirs[0] == 'up_left': errado = lambda q: lado_da_pele(q) * (q.height / ALTURA) > 25
+                else: errado = lambda q: lado_da_pele(q) * (q.height / ALTURA) < -8
+                quadros[(nome, dirs[0])] = [q.transpose(Image.FLIP_LEFT_RIGHT) if errado(q) else q for q in fila]
             if dirs[0] == 'left':                       # a linha toda de perfil vira para o mesmo lado (voto dos quadros)
                 fila = quadros[(nome, 'left')]
                 if sum(olha_para_direita(q) for q in fila) > 0:
