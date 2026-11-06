@@ -11,6 +11,10 @@ class ArchitectSystem {
   constructor(game) {
     this.game = game;
     this.isActive = false;
+    // zoom do jogador fora do modo Deus (rodinha do mouse em cima do mapa), guardado no navegador
+    let pz = 1.6; try { pz = Number(localStorage.getItem('suritto_zoom')) || 1.6; } catch (e) { }
+    this.playerZoom = Math.max(this.PLAYER_ZOOM[0], Math.min(this.PLAYER_ZOOM[1], pz));
+    this.game.camera.zoom = this.playerZoom;
     this.GRID_SIZE = 48; // 48x48 pixel grid alignment
     this.CHUNK_TILES = 16; // F6: tamanho do chunk de save, em tiles
     this.selectedTool = 'fly';
@@ -402,6 +406,11 @@ class ArchitectSystem {
       if (this.isActive && !e.target.closest('#world-map-modal') && !e.target.closest('#architect-panel')) {
         const delta = e.deltaY > 0 ? -0.1 : 0.1;
         this.adjustZoom(delta);
+      } else if (!this.isActive && e.target === this.game.canvas) {   // jogador: so com o mouse em cima do mapa
+        const [z0, z1] = this.PLAYER_ZOOM;
+        this.playerZoom = Math.max(z0, Math.min(z1, Number((this.playerZoom + (e.deltaY > 0 ? -0.1 : 0.1)).toFixed(2))));
+        this.setZoom(this.playerZoom);
+        try { localStorage.setItem('suritto_zoom', String(this.playerZoom)); } catch (err) { }
       }
     }, { passive: true });
 
@@ -470,11 +479,13 @@ class ArchitectSystem {
       this.bannerEl.style.display = 'none';
       this.panelEl.style.display = 'none';
       this.game.player.speed = 185; // Normal speed
-      this.setZoom(1.0);
+      this.setZoom(this.playerZoom);                  // volta ao zoom que o jogador escolheu
       if (this.game.minimap) this.game.minimap.godHint.style.display = 'none';
       if (this.game.addLog) this.game.addLog('🛡️ [MODO CONSTRUTOR] Desativado. Modo sobrevivência restaurado.', 'system');
     }
   }
+
+  get PLAYER_ZOOM() { return [0.8, 2.6]; }             // limites do zoom do jogador (o modo Deus vai de 0.18 a 2.0)
 
   adjustZoom(delta) {
     let z = (this.game.camera.zoom || 1.0) + delta;
