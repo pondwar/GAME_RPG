@@ -3,7 +3,7 @@
   "w": 350,
   "h": 520,
   "corpo": 400,
-  "v": 1793967164,
+  "v": 1793967903,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -205,7 +205,7 @@
   "w": 232,
   "h": 520,
   "corpo": 400,
-  "v": 1793967172,
+  "v": 1793967911,
   "ref": {
    "pele": "#d28c7a",
    "cabelo": "#42d217",
@@ -277,7 +277,7 @@
   "w": 346,
   "h": 520,
   "corpo": 400,
-  "v": 1793967174,
+  "v": 1793967913,
   "ref": {
    "pele": "#ce8677",
    "cabelo": "#35ca0e",
@@ -457,7 +457,7 @@
   "w": 425,
   "h": 520,
   "corpo": 400,
-  "v": 1793967181,
+  "v": 1793967920,
   "ref": {
    "pele": "#d0867b",
    "cabelo": "#36cf19",
@@ -625,6 +625,166 @@
      "halfling/kick/right_2",
      "halfling/kick/right_3",
      "halfling/kick/right_4"
+    ]
+   }
+  }
+ },
+ "gnomo": {
+  "w": 341,
+  "h": 520,
+  "corpo": 400,
+  "v": 1793967928,
+  "ref": {
+   "pele": "#d68a84",
+   "cabelo": "#32c517",
+   "olhos": "#2d4371"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "gnomo/idle/down_0"
+    ],
+    "up": [
+     "gnomo/idle/up_0"
+    ],
+    "left": [
+     "gnomo/idle/left_0"
+    ],
+    "right": [
+     "gnomo/idle/right_0"
+    ],
+    "down_left": [
+     "gnomo/idle/down_left_0"
+    ],
+    "down_right": [
+     "gnomo/idle/down_right_0"
+    ],
+    "up_left": [
+     "gnomo/idle/up_left_0"
+    ],
+    "up_right": [
+     "gnomo/idle/up_right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "gnomo/walk/down_0",
+     "gnomo/walk/down_1",
+     "gnomo/walk/down_2",
+     "gnomo/walk/down_3"
+    ],
+    "up": [
+     "gnomo/walk/up_0",
+     "gnomo/walk/up_1",
+     "gnomo/walk/up_2",
+     "gnomo/walk/up_3"
+    ],
+    "left": [
+     "gnomo/walk/left_0",
+     "gnomo/walk/left_1",
+     "gnomo/walk/left_2",
+     "gnomo/walk/left_3"
+    ],
+    "right": [
+     "gnomo/walk/right_0",
+     "gnomo/walk/right_1",
+     "gnomo/walk/right_2",
+     "gnomo/walk/right_3"
+    ],
+    "down_left": [
+     "gnomo/walk/down_left_0",
+     "gnomo/walk/down_left_1",
+     "gnomo/walk/down_left_2",
+     "gnomo/walk/down_left_3"
+    ],
+    "down_right": [
+     "gnomo/walk/down_right_0",
+     "gnomo/walk/down_right_1",
+     "gnomo/walk/down_right_2",
+     "gnomo/walk/down_right_3"
+    ],
+    "up_left": [
+     "gnomo/walk/up_left_0",
+     "gnomo/walk/up_left_1",
+     "gnomo/walk/up_left_2",
+     "gnomo/walk/up_left_3"
+    ],
+    "up_right": [
+     "gnomo/walk/up_right_0",
+     "gnomo/walk/up_right_1",
+     "gnomo/walk/up_right_2",
+     "gnomo/walk/up_right_3"
+    ]
+   },
+   "jump": {
+    "left": [
+     "gnomo/jump/left_0",
+     "gnomo/jump/left_1",
+     "gnomo/jump/left_2",
+     "gnomo/jump/left_3"
+    ],
+    "right": [
+     "gnomo/jump/right_0",
+     "gnomo/jump/right_1",
+     "gnomo/jump/right_2",
+     "gnomo/jump/right_3"
+    ]
+   },
+   "sit": {
+    "down": [
+     "gnomo/sit/down_0"
+    ],
+    "up": [
+     "gnomo/sit/up_0"
+    ],
+    "left": [
+     "gnomo/sit/left_0"
+    ],
+    "right": [
+     "gnomo/sit/right_0"
+    ]
+   },
+   "gather": {
+    "left": [
+     "gnomo/gather/left_0",
+     "gnomo/gather/left_1",
+     "gnomo/gather/left_2",
+     "gnomo/gather/left_3"
+    ],
+    "right": [
+     "gnomo/gather/right_0",
+     "gnomo/gather/right_1",
+     "gnomo/gather/right_2",
+     "gnomo/gather/right_3"
+    ]
+   },
+   "attack_1h": {
+    "left": [
+     "gnomo/attack_1h/left_0",
+     "gnomo/attack_1h/left_1",
+     "gnomo/attack_1h/left_2"
+    ],
+    "right": [
+     "gnomo/attack_1h/right_0",
+     "gnomo/attack_1h/right_1",
+     "gnomo/attack_1h/right_2"
+    ]
+   },
+   "kick": {
+    "left": [
+     "gnomo/kick/left_0",
+     "gnomo/kick/left_1",
+     "gnomo/kick/left_2",
+     "gnomo/kick/left_3",
+     "gnomo/kick/left_4"
+    ],
+    "right": [
+     "gnomo/kick/right_0",
+     "gnomo/kick/right_1",
+     "gnomo/kick/right_2",
+     "gnomo/kick/right_3",
+     "gnomo/kick/right_4"
     ]
    }
   }
