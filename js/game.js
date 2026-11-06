@@ -2878,7 +2878,9 @@ class Game {
       else if (jumpOff > 0 || this.player.isJumping) {
         set = lado('jump');
         const prog = this.player.jumpProgress || 0;
-        idx = set ? Math.min(set.length - 1, Math.floor(prog * set.length)) : 0;
+        // folha do pulo: 0 = agachado (impulso), 1 = esticado no ar. Os outros quadros sao agachados encolhidos
+        // e pareciam um anao no ar: agacha so no comeco e no fim, o voo todo e o esticado
+        idx = (set && set.length > 1 && prog > 0.15 && prog < 0.85) ? 1 : 0;
         set = set || parado;
       } else if (this.player.isAttacking) {
         const w = this.player.equippedWeapon;
