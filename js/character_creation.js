@@ -32,21 +32,9 @@
   const clamp = (v) => Math.max(0, Math.min(1, v));
   // Monta o boneco: roupa; penteado (apaga a cabeca acima do nariz e desenha a peca); barba (apaga o rosto daquela
   // roupa e desenha a peca recortada para ela). Tudo na mesma tela da raca (importar_raca). Depois pinta as cores.
-  async function paint(pic, colors, parts) {
-    const url = (f) => 'assets/arte/' + f + '?v=' + (pic.v || 0);
-    const [img, mask] = await Promise.all([loadImg(url(pic.file)), loadImg(url(pic.mask))]);
-    const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
-    const cx = cv.getContext('2d', { willReadFrequently: true });
-    const mc = document.createElement('canvas'); mc.width = img.width; mc.height = img.height;
-    const mx = mc.getContext('2d', { willReadFrequently: true });
-    cx.drawImage(img, 0, 0); mx.drawImage(mask, 0, 0);
-    for (const pr of parts) {
-      const [hole, layer, lmask] = await Promise.all([loadImg(url(pr.hole.file)), loadImg(url(pr.layer.file)), loadImg(url(pr.layer.mask))]);
-      for (const c of [cx, mx]) { c.globalCompositeOperation = 'destination-out'; c.drawImage(hole, pr.hole.x, pr.hole.y); c.globalCompositeOperation = 'source-over'; }
-      cx.drawImage(layer, pr.layer.x, pr.layer.y); mx.drawImage(lmask, pr.layer.x, pr.layer.y);
-    }
-    const m = mx.getImageData(0, 0, cv.width, cv.height).data;
-    const id = cx.getImageData(0, 0, cv.width, cv.height), d = id.data;
+  // pinta os pixels d (RGBA) com a mascara m (R pele, G cabelo, B olhos) e as cores escolhidas. pic.ref = cor media
+  // original de cada parte; pic.chroma = cabelo em verde-chroma. Usada na previa e no boneco do jogo (game.js)
+  function paintData(d, m, pic, colors) {
     const tints = ['pele', 'cabelo', 'olhos'].map((k, ch) => {
       if (!colors[k] || !pic.ref || !pic.ref[k]) return null;
       const r = hexHsl(pic.ref[k]), t = hexHsl(colors[k]);
@@ -88,6 +76,25 @@
         for (let j = 0; j < 3; j++) d[i + j] = Math.round(d[i + j] * (1 - k) + c[j] * k);
       }
     }
+  }
+  window.SurittoPaint = { paintData };
+
+  async function paint(pic, colors, parts) {
+    const url = (f) => 'assets/arte/' + f + '?v=' + (pic.v || 0);
+    const [img, mask] = await Promise.all([loadImg(url(pic.file)), loadImg(url(pic.mask))]);
+    const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+    const cx = cv.getContext('2d', { willReadFrequently: true });
+    const mc = document.createElement('canvas'); mc.width = img.width; mc.height = img.height;
+    const mx = mc.getContext('2d', { willReadFrequently: true });
+    cx.drawImage(img, 0, 0); mx.drawImage(mask, 0, 0);
+    for (const pr of parts) {
+      const [hole, layer, lmask] = await Promise.all([loadImg(url(pr.hole.file)), loadImg(url(pr.layer.file)), loadImg(url(pr.layer.mask))]);
+      for (const c of [cx, mx]) { c.globalCompositeOperation = 'destination-out'; c.drawImage(hole, pr.hole.x, pr.hole.y); c.globalCompositeOperation = 'source-over'; }
+      cx.drawImage(layer, pr.layer.x, pr.layer.y); mx.drawImage(lmask, pr.layer.x, pr.layer.y);
+    }
+    const m = mx.getImageData(0, 0, cv.width, cv.height).data;
+    const id = cx.getImageData(0, 0, cv.width, cv.height), d = id.data;
+    paintData(d, m, pic, colors);
     cx.putImageData(id, 0, 0);
     return cv.toDataURL();
   }

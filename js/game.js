@@ -1260,6 +1260,49 @@ class Game {
     ctx.fillText(`Fogueira (${Math.round(campfire.life)}s)`, fx, fy - flameH - 10);
   }
 
+  // Boneco do mapa da raca (tools/arte/importar_folhas.py -> assets/player/racas): quadros de parado e andar, pintados
+  // com as cores da criacao (SurittoPaint, o mesmo da previa). Enquanto nao fica pronto (ou a raca nao tem folha),
+  // continua o boneco antigo. A chave muda quando muda a raca ou a aparencia, e ai pinta de novo.
+  async ensureRaceSprite() {
+    const p = this.player, Rr = window.SurittoRules;
+    if (!p.race || !window.SurittoPaint) return;
+    const key = p.race + '|' + JSON.stringify(p.appearance || {});
+    if (this._raceKey === key) return;
+    this._raceKey = key;
+    try {
+      if (!this._raceManifest) this._raceManifest = await fetch('assets/player/racas/manifest.json', { cache: 'no-store' }).then(r => r.json());
+    } catch (e) { this._raceManifest = {}; }
+    const ent = this._raceManifest[p.race];
+    if (!ent) { this.images.raca = null; return; }
+    const ap = p.appearance || {}, colors = {};
+    for (const k of ['pele', 'cabelo', 'olhos']) if (ap[k]) colors[k] = ap[k];
+    // cabelo verde sem cor escolhida (personagem antigo): usa a primeira cor da raca, nunca o verde
+    if (ent.chroma && !colors.cabelo) { const c = ((Rr && Rr.COLORS[p.race]) || {}).cabelo; if (c && c[0][1]) colors.cabelo = c[0][1]; }
+    const pic = { ref: ent.ref || {}, chroma: ent.chroma };
+    const load = (src) => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
+    const v = ent.v || 0, out = { scale: ((Rr && Rr.LOOKS[p.race]) || {}).scale || 1 };
+    try {
+      for (const [acao, dirs] of Object.entries(ent.acoes)) {
+        out[acao] = {};
+        for (const [dir, files] of Object.entries(dirs)) {
+          out[acao][dir] = await Promise.all(files.map(async (f) => {
+            const [img, mask] = await Promise.all([load(`assets/player/racas/${f}.png?v=${v}`), load(`assets/player/racas/${f}_mascara.png?v=${v}`)]);
+            const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+            const cx = cv.getContext('2d', { willReadFrequently: true }); cx.drawImage(img, 0, 0);
+            const mc = document.createElement('canvas'); mc.width = img.width; mc.height = img.height;
+            const mx = mc.getContext('2d', { willReadFrequently: true }); mx.drawImage(mask, 0, 0);
+            const id = cx.getImageData(0, 0, cv.width, cv.height);
+            window.SurittoPaint.paintData(id.data, mx.getImageData(0, 0, cv.width, cv.height).data, pic, colors);
+            cx.putImageData(id, 0, 0);
+            cv.complete = true; cv.naturalWidth = cv.width; cv.naturalHeight = cv.height;   // o desenho trata como imagem
+            return cv;
+          }));
+        }
+      }
+    } catch (e) { console.warn('boneco da raca', e); return; }
+    if (this._raceKey === key) this.images.raca = out;
+  }
+
   // Ficha do personagem (js/ruleset.js): raca, classe e atributos -> PV, PM, Defesa, bonus de ataque e modificadores
   // dos testes (diceSystem.stats). isNew: personagem recem-criado (vida cheia e nasce em Elmford).
   applySheet(sh, isNew) {
@@ -2722,6 +2765,7 @@ class Game {
   getLift() { return this.isGodMode ? 0 : (this.player && this.player.z) || 0; }
 
   drawPlayer(ctx, screenCenterX, screenCenterY) {
+    if (this.player.race) this.ensureRaceSprite();         // monta (uma vez por raca/aparencia) o boneco aldeao da raca
     const pdx = this.world ? this.world.wrapDelta(this.player.x - this.camera.x) : (this.player.x - this.camera.x);
     const px = Math.round(pdx + screenCenterX);
     const py = Math.round(this.player.y - this.getLift() - this.camera.y + screenCenterY);
@@ -2813,6 +2857,18 @@ class Game {
       frameKey = `idle_${dir}_${idx}`;
     }
 
+    // Boneco da raca (aldeao, com as cores da criacao): por enquanto so tem parado e andar; correr usa o andar e as
+    // outras acoes usam o parado da mesma direcao
+    const rs = this.images.raca;
+    if (rs && rs.idle) {
+      const pick = (acao, d) => (rs[acao] && (rs[acao][d] || rs[acao].down)) || null;
+      const set = (this.player.isMoving && !isSit && !(jumpOff > 0)) ? pick('walk', dir) : (isSit || this.player.isAttacking || jumpOff > 0 ? pick('idle', (isSit || dir === 'up' || dir === 'down') ? dir : sideDir) : pick('idle', dir));
+      if (set && set.length) {
+        const idx = this.player.isMoving ? this.player.frameIndex % set.length : 0;
+        frame = set[idx];
+      }
+    }
+
     // Fallback to legacy frames if v2 frame not yet loaded
     if (!frame || !frame.complete || frame.naturalWidth <= 0) {
       const legacyFrames = this.images.playerFrames[dir];
@@ -2820,7 +2876,7 @@ class Game {
     }
 
     // 3. Render Sprite with correct aspect ratio and foot anchor
-    const targetH = isSit ? 54 : 76;
+    const targetH = Math.round((isSit && !(rs && rs.idle) ? 54 : 76) * (rs && rs.idle ? (rs.scale || 1) : 1));
     let targetW = 48;
     if (frame && frame.naturalHeight > 0) {
       targetW = Math.round((frame.naturalWidth / frame.naturalHeight) * targetH);

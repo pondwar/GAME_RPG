@@ -1,0 +1,55 @@
+{
+ "humano": {
+  "w": 227,
+  "h": 400,
+  "v": 1793923865,
+  "ref": {
+   "pele": "#c87e6c",
+   "cabelo": "#3abe19",
+   "olhos": "#5c3630"
+  },
+  "chroma": true,
+  "acoes": {
+   "idle": {
+    "down": [
+     "humano/idle/down_0"
+    ],
+    "up": [
+     "humano/idle/up_0"
+    ],
+    "left": [
+     "humano/idle/left_0"
+    ],
+    "right": [
+     "humano/idle/right_0"
+    ]
+   },
+   "walk": {
+    "down": [
+     "humano/walk/down_0",
+     "humano/walk/down_1",
+     "humano/walk/down_2",
+     "humano/walk/down_3"
+    ],
+    "up": [
+     "humano/walk/up_0",
+     "humano/walk/up_1",
+     "humano/walk/up_2",
+     "humano/walk/up_3"
+    ],
+    "left": [
+     "humano/walk/left_0",
+     "humano/walk/left_1",
+     "humano/walk/left_2",
+     "humano/walk/left_3"
+    ],
+    "right": [
+     "humano/walk/right_0",
+     "humano/walk/right_1",
+     "humano/walk/right_2",
+     "humano/walk/right_3"
+    ]
+   }
+  }
+ }
+}
