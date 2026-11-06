@@ -1310,6 +1310,23 @@ class Game {
             cx.putImageData(id, 0, 0);
             cv.complete = true; cv.naturalWidth = cv.width; cv.naturalHeight = cv.height;   // o desenho trata como imagem
             cv.mao = (ent.maos || {})[f] || null;          // onde a mao segura a arma neste quadro (medir_maos.py)
+            // punho recortado (pele da mascara num circulo em volta da mao): desenhado de novo POR CIMA da arma,
+            // o cabo parece atravessar a mao fechada (tecnica de jogo 2D: a mao e uma camada acima da arma)
+            if (cv.mao && cv.mao[5]) {
+              const W = cv.width, H = cv.height, r = Math.max(2, Math.ceil(cv.mao[5] * W)), hx = cv.mao[0] * W, hy = cv.mao[1] * H;
+              const x0 = Math.max(0, Math.floor(hx - r)), y0 = Math.max(0, Math.floor(hy - r));
+              const pw = Math.min(W, Math.ceil(hx + r)) - x0, ph = Math.min(H, Math.ceil(hy + r)) - y0;
+              if (pw > 0 && ph > 0) {
+                const src = cx.getImageData(x0, y0, pw, ph), mk = mx.getImageData(x0, y0, pw, ph).data;
+                for (let yy = 0; yy < ph; yy++) for (let xx = 0; xx < pw; xx++) {
+                  const i = (yy * pw + xx) * 4, ddx = x0 + xx + 0.5 - hx, ddy = y0 + yy + 0.5 - hy;
+                  if (mk[i] < 128 || ddx * ddx + ddy * ddy > r * r) src.data[i + 3] = 0;
+                }
+                const pc = document.createElement('canvas'); pc.width = pw; pc.height = ph;
+                pc.getContext('2d').putImageData(src, 0, 0);
+                cv.punho = { img: pc, x: x0, y: y0 };
+              }
+            }
             return cv;
           }));
       })); }));
@@ -2961,6 +2978,15 @@ class Game {
     // Weapon in front of player if NOT drawn behind
     if (!drawBehind && !isSit) {
       this.drawWeapon(ctx, px, py, drawX, drawY, targetW, targetH, frameKey, socket);
+      // o punho por cima do cabo (recortado em ensureRaceSprite): a arma fica DENTRO da mao
+      const pu = this.player.equippedWeapon && frame && frame.punho;
+      if (pu) {
+        const k = targetW / frame.width;
+        ctx.save();
+        if (swayAngle !== 0) { ctx.translate(px, py); ctx.rotate(swayAngle); ctx.translate(-px, -py); }
+        ctx.drawImage(pu.img, drawX + pu.x * k, drawY + pu.y * k, pu.img.width * k, pu.img.height * k);
+        ctx.restore();
+      }
     }
 
     // 5. Dynamic Player Status Tag (Sitting, Exhausted, Running, Normal)

@@ -6,11 +6,11 @@ desenhadas na diagonal, ponta para cima a direita) para a lamina sair na direcao
 atras do boneco (de costas).
 
 Como acha: a mascara do quadro (_mascara.png, R = pele) marca rosto, bracos e maos. Tira a cabeca (perto do cabelo
-verde) e os pes (halfling anda descalco). Dos bracos que sobram:
-  - de frente/costas: o braco do lado da mao direita do personagem (de frente: a esquerda da imagem);
-  - de lado e na diagonal: o braco maior (o de perto, que passa na frente do corpo);
-a mao e o ponto desse braco mais longe do ombro. Parado/andando a lamina fica para cima e para a frente; nos golpes
-ela segue o braco (ombro -> mao).
+verde) e os pes (halfling anda descalco). Braco da arma, sempre o mesmo em cada direcao: de lado o de perto (o maior);
+de frente, de costas e na diagonal o lado da imagem em LADO_MAO. A mao e o ponto desse braco mais longe do ombro.
+A arma sai do punho girada em relacao ao ANTEBRACO (o cabo atravessa a mao fechada), para o lado do polegar: braco
+caido -> lamina para a frente e para baixo; esticado -> para cima; erguido -> para tras. Assim ela acompanha o braco
+em todos os quadros. O 6o numero e o raio do punho: o jogo redesenha esse pedaco de pele POR CIMA da arma (game.js).
 
 Uso: python tools/arte/medir_maos.py   (precisa de numpy, pillow e opencv-python-headless)
 """
@@ -25,6 +25,9 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'assets', 'player', 'racas')
 GOLPES = {'attack_1h', 'attack_2h', 'punch', 'kick'}
+FRENTE = ('down', 'up')
+# lado da imagem da mao direita do personagem (-1 esquerda, 1 direita); de lado (left/right): o braco de perto
+LADO_MAO = {'down': -1, 'up': 1, 'down_right': -1, 'down_left': 1, 'up_right': 1, 'up_left': -1}
 
 
 def angulo(dx, dy):
@@ -59,36 +62,47 @@ def medir(f, corpo, acao, d):
         comps = [i for i in comps if np.where(lab == i)[0].max() > hy + 0.2 * corpo] or comps
     if not comps: return None
     ombro = (hx, hy + 0.15 * corpo)
-    if d in ('down', 'up'):
-        # mao direita do personagem: de frente fica a esquerda da imagem; de costas, a direita
-        def lado(i):
-            yi, xi = np.where(lab == i)
-            return xi.mean()
-        i = min(comps, key=lado) if d == 'down' else max(comps, key=lado)
-    elif acao in GOLPES:
-        i = None                                          # golpe: o punho mais longe do ombro, de qualquer braco
-    else:
+    # braco da arma, sempre o mesmo em cada direcao (antes pulava de um braco para o outro entre os quadros):
+    #   de lado: o braco de perto (o maior, passa na frente do corpo);
+    #   de frente, de costas e na diagonal: o lado da imagem onde fica a mao direita do personagem
+    lado_img = LADO_MAO.get(d)
+    if lado_img is None:
         i = max(comps, key=lambda i: st[i, cv2.CC_STAT_AREA])
-    yi, xi = np.where(np.isin(lab, comps) if i is None else lab == i)
+    else:
+        def mx(i):
+            return np.where(lab == i)[1].mean() * lado_img
+        grandes = [c for c in comps if st[c, cv2.CC_STAT_AREA] > 0.15 * max(st[k, cv2.CC_STAT_AREA] for k in comps)]
+        i = max(grandes, key=mx)
+    yi, xi = np.where(lab == i)
     dist = (xi - ombro[0]) ** 2 + (yi - ombro[1]) ** 2
     k = int(np.argmax(dist))
     px, py = float(xi[k]), float(yi[k])
-    vx, vy = px - ombro[0], py - ombro[1]
-    nv = math.hypot(vx, vy) or 1
-    # a mao fecha um pouco antes da ponta dos dedos
-    px -= vx / nv * 0.025 * corpo; py -= vy / nv * 0.025 * corpo
-    # golpe com o braco esticado: a lamina continua o braco. Braco dobrado (guarda, punho no peito): lamina para cima
-    if acao in GOLPES and nv > 0.2 * corpo:
-        dx, dy = vx / nv, vy / nv
+    # antebraco: do meio do braco perto da mao ate a mao
+    perto = (xi - px) ** 2 + (yi - py) ** 2 < (0.13 * corpo) ** 2
+    vx, vy = px - xi[perto].mean(), py - yi[perto].mean()
+    nv = math.hypot(vx, vy)
+    if nv < 0.02 * corpo: vx, vy = px - ombro[0], py - ombro[1]; nv = math.hypot(vx, vy) or 1
+    vx, vy = vx / nv, vy / nv
+    # o punho fecha um pouco antes da ponta dos dedos
+    px -= vx * 0.03 * corpo; py -= vy * 0.03 * corpo
+    # a arma sai do punho de lado em relacao ao antebraco (o cabo atravessa a mao fechada), girada para o lado do
+    # polegar: braco caido -> lamina para a frente e para baixo; braco esticado -> para a frente e para cima;
+    # braco erguido -> para tras. De frente/costas o giro e menor (o cabo vem na direcao de quem olha)
+    if d in FRENTE:
+        f = -1 if px < hx else 1; phi = math.radians(35)
     else:
-        # parada: lamina para cima e para fora, para o lado em que a mao esta (ou para onde olha)
-        # de lado: para onde olha; de frente/costas e na diagonal: para o lado da mao (nao cruza o corpo)
-        if d in ('left', 'right'): s = -1 if d == 'left' else 1
-        else: s = -1 if px < W / 2 else 1
-        dx, dy = 0.55 * s, -1
+        f = 1 if 'right' in d else -1; phi = math.radians(60)
+    a = -f * phi
+    dx, dy = vx * math.cos(a) - vy * math.sin(a), vx * math.sin(a) + vy * math.cos(a)
     th, esp = angulo(dx, dy)
     atras = d.startswith('up')
-    return [round(px / W, 4), round(py / H, 4), th, int(atras), int(esp)]
+    # raio do punho (redesenhado por cima do cabo): ate encostar em outra pele
+    rf = 0.055 * corpo
+    outros = (lab > 0) & (lab != i) & pele
+    if outros.any():
+        oy, ox = np.where(outros)
+        rf = min(rf, 0.9 * math.sqrt(float(((ox - px) ** 2 + (oy - py) ** 2).min())))
+    return [round(px / W, 4), round(py / H, 4), th, int(atras), int(esp), round(rf / W, 4)]
 
 
 def main():
