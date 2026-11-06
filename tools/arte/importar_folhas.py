@@ -115,9 +115,10 @@ def importar(race, cfg, ref):
             print(f'  {os.path.basename(path)}: esperava {[len(l) for l in grade]} bonecos por linha, achei {[len(l) for l in linhas]}')
             continue
         # escala da folha: a altura mediana dos bonecos de frente vira ALTURA * 0.97
-        h = np.median([q.height for q in linhas[0]])
-        k = ALTURA * 0.97 / h
+        # escala por LINHA: o Gemini desenha cada linha num tamanho um pouco diferente (o perfil e as costas saiam
+        # 3-4% menores que a frente); a altura mediana de cada linha vira ALTURA * 0.97
         for linha, dirs in zip(linhas, grade):
+            k = ALTURA * 0.97 / np.median([q.height for q in linha])
             for q, d in zip(linha, dirs):
                 q = q.resize((max(1, round(q.width * k)), max(1, round(q.height * k))), Image.LANCZOS)
                 quadros.setdefault((nome, d), []).append(q)
