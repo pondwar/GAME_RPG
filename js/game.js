@@ -520,7 +520,9 @@ class Game {
         this.updatePlayerDirectionFromAngle(angle);
 
         // If clicking directly on a Wolf: Attack!
+        this.player.segurandoAtaque = false;
         if (this.mouse.hoveredEntity && this.mouse.hoveredEntity.type === 'wolf') {
+          this.player.segurandoAtaque = true;
           this.performAttack();
         }
         // If clicking directly on a Door: Open/Close Door!
@@ -542,6 +544,7 @@ class Game {
         }
         // Otherwise (clicking on open ground/air): Attack!
         else {
+          this.player.segurandoAtaque = true;
           this.performAttack();
         }
       }
@@ -555,6 +558,7 @@ class Game {
       }
       if (e.button === 0) {
         this.mouse.isLeftDown = false;
+        this.player.segurandoAtaque = false;
       }
     });
   }
@@ -670,216 +674,134 @@ class Game {
     }
   }
 
+  // Ataque basico (js/combate.js): cada arma tem o seu ritmo, movimento, alcance e folego. Clicar antes da hora
+  // guarda o golpe (sai assim que der); segurar o botao ataca sozinho no ritmo da arma. O dano entra no impacto.
   performAttack() {
-    // If sitting, stand up to attack
     if (this.player.isSitting) {
       this.player.isSitting = false;
       this.updateHUD();
     }
+    const C = window.SurittoCombate, p = this.player, w = p.equippedWeapon, f = C.ficha(w);
+    const agora = performance.now() / 1000;
+    const falta = (p.proxAtaque || 0) - agora;
+    if (falta > 0) { if (falta < 0.35) p.ataqueNaFila = true; return; }
+    p.ataqueNaFila = false;
+    p.proxAtaque = agora + f.tempo * (p.isExhausted ? 1.5 : 1);     // sem folego: golpes mais lentos
 
-    const now = performance.now();
-    const timeSinceLast = (now - (this.player.lastAttackTime || 0)) / 1000;
-
-    // If EXHAUSTED: Throttle cadence (forced 0.55s cooldown) and limit combo
-    if (this.player.isExhausted) {
-      if (timeSinceLast < 0.55) {
-        return; // Click ignored: player has no breath to swing faster!
-      }
-      this.player.lastAttackTime = now;
-      this.player.comboHits = 1;
-      this.player.comboTimer = 0.4;
-      this.spawnDamageText(this.player.x, this.player.y - 28, '💧 Golpe Sem Fôlego', '#ffa8a8', 13);
-    } else {
-      // Normal attack: zero-delay combo scaling
-      this.player.lastAttackTime = now;
-      if (timeSinceLast < 0.52) {
-        this.player.comboHits = Math.min(12, (this.player.comboHits || 0) + 1);
-      } else {
-        this.player.comboHits = 1;
-      }
-      this.player.comboTimer = 0.85;
-
-      // Consume stamina per strike: higher combo frenzy costs more stamina!
-      const staminaCost = 6 + Math.min(10, (this.player.comboHits || 1) * 0.9);
-      this.player.stamina = Math.max(0, this.player.stamina - staminaCost);
-
-      if (this.player.stamina <= 0) {
-        this.player.isExhausted = true;
-        this.player.isRunning = false;
-        this.spawnDamageText(this.player.x, this.player.y - 36, '💧 EXAUSTO!', '#ff6b6b', 17);
-        this.addLog(`⚠️ Você esgotou toda a sua estamina e ficou exausto! Descanse ou vá para a fogueira.`, 'warning');
-      }
-      this.updateHUD();
+    p.stamina = Math.max(0, p.stamina - f.folego);
+    if (p.stamina <= 0 && !p.isExhausted) {
+      p.isExhausted = true;
+      p.isRunning = false;
+      this.spawnDamageText(p.x, p.y - 36, '💧 EXAUSTO!', '#ff6b6b', 17);
+      this.addLog(`⚠️ Você esgotou toda a sua estamina e ficou exausto! Descanse ou vá para a fogueira.`, 'warning');
     }
-
-    this.player.isAttacking = true;
-    this.player.attackTimer = 0.12; // snappy instant reset on every click!
-
-    // Dynamic Combo Multiplier (Faster clicking = much more damage, exhausted = penalty!)
-    let comboMultiplier = 1.0;
-    if (this.player.isExhausted) {
-      comboMultiplier = 0.65; // Exhaustion reduces swing impact
-    } else {
-      if (this.player.comboHits === 2) comboMultiplier = 1.25;
-      else if (this.player.comboHits === 3) comboMultiplier = 1.55;
-      else if (this.player.comboHits === 4) comboMultiplier = 1.90;
-      else if (this.player.comboHits >= 5) comboMultiplier = 2.30 + (this.player.comboHits - 5) * 0.18;
-    }
+    this.updateHUD();
 
     if (this.mouse.worldX !== undefined && this.mouse.worldY !== undefined) {
-      const mdx = this.world ? this.world.wrapDelta(this.mouse.worldX - this.player.x) : (this.mouse.worldX - this.player.x);
-      const attackAngle = Math.atan2(this.mouse.worldY - this.player.y, mdx);
+      const mdx = this.world ? this.world.wrapDelta(this.mouse.worldX - p.x) : (this.mouse.worldX - p.x);
+      const attackAngle = Math.atan2(this.mouse.worldY - p.y, mdx);
       this.updatePlayerDirectionFromAngle(attackAngle);
-      this.player.facingAngle = attackAngle;
+      p.facingAngle = attackAngle;
     }
 
-    // Play pitch-scaled sound matching click frenzy
-    const pitch = Math.min(1.8, 1.0 + (this.player.comboHits - 1) * 0.08);
-    if (window.sounds) window.sounds.playSwordSlash(pitch);
+    p.isAttacking = true;
+    p.attackDuration = f.anim;
+    p.attackTimer = f.anim;
+    p.golpe = { w, mov: f.mov, bate: f.anim * (C.TEMPOS[f.mov] || C.TEMPOS.corte).bate, feito: false };
+    // arma leve assobia mais agudo, pesada mais grave
+    if (window.sounds) window.sounds.playSwordSlash(Math.max(0.7, Math.min(1.4, 1.5 - f.tempo * 0.5)));
+  }
 
-    // Dynamic Slash Particles & Colors based on Combo & Weapon
-    const isFiery = this.player.equippedWeapon === 'fire_sword';
-    const pColor = isFiery ? (Math.random() > 0.4 ? '#ff6b6b' : '#ffa94d') : (this.player.comboHits >= 5 ? '#ffd43b' : '#74c0fc');
-    const particleCount = this.player.comboHits >= 5 ? 12 : 6;
-    for (let i = 0; i < particleCount; i++) {
-      const pAngle = this.player.facingAngle + (Math.random() - 0.5) * 1.5;
+  // O golpe chegou: arvore (machado), lobo, cervo ou bicho ao alcance. Rolagem pela ficha D&D (js/combate.js)
+  resolverGolpe() {
+    const C = window.SurittoCombate, p = this.player, w = p.equippedWeapon, f = C.ficha(w);
+    const isFiery = w === 'fire_sword';
+    const dist = (x, y) => Math.hypot(this.world ? this.world.wrapDelta(p.x - x) : (p.x - x), p.y - y);
+
+    // faiscas do golpe, na direcao do ataque
+    const pColor = isFiery ? (Math.random() > 0.4 ? '#ff6b6b' : '#ffa94d') : '#74c0fc';
+    for (let i = 0; i < 6; i++) {
+      const pAngle = (p.facingAngle || 0) + (Math.random() - 0.5) * (f.mov === 'estocada' ? 0.4 : 1.5);
       const pDist = 25 + Math.random() * 35;
-      this.particles.push({
-        x: this.player.x + Math.cos(pAngle) * pDist,
-        y: this.player.y - 15 + Math.sin(pAngle) * pDist,
-        vx: Math.cos(pAngle) * (80 + this.player.comboHits * 15),
-        vy: Math.sin(pAngle) * (80 + this.player.comboHits * 15),
-        life: 0.35,
-        maxLife: 0.35,
-        color: pColor,
-        size: Math.random() * 3 + (this.player.comboHits >= 5 ? 3 : 1.5)
-      });
+      this.particles.push({ x: p.x + Math.cos(pAngle) * pDist, y: p.y - 15 + Math.sin(pAngle) * pDist,
+        vx: Math.cos(pAngle) * 90, vy: Math.sin(pAngle) * 90, life: 0.3, maxLife: 0.3, color: pColor, size: Math.random() * 3 + 1.5 });
     }
 
-    // Weapon Base Damage
-    let baseDmg = 12;
-    if (this.player.equippedWeapon === 'sword') baseDmg = 16;
-    else if (this.player.equippedWeapon === 'axe') baseDmg = 22;
-    else if (this.player.equippedWeapon === 'fire_sword') baseDmg = 32;
-    // armas do aldeao: proporcional ao dado do D&D (espada 1d8 = 16): 1d4 = 9, 1d6 = 12
-    else if ({ adaga: 1, clava: 1 }[this.player.equippedWeapon]) baseDmg = 9;
-    else if ({ machadinha: 1, espada_curta: 1, lanca: 1 }[this.player.equippedWeapon]) baseDmg = 12;
-
-    const finalDamage = Math.round(baseDmg * comboMultiplier);
-
-    // Check if chopping tree with Axe
-    if (this.player.equippedWeapon === 'axe' || this.player.equippedWeapon === 'machadinha') {
+    // machado na arvore: corta lenha (sem rolagem)
+    if (w === 'axe' || w === 'machadinha') {
       for (const tree of this.trees) {
-        const trunkX = tree.x + tree.trunkOffset.x;
-        const trunkY = tree.y + tree.trunkOffset.y;
-        const dx = this.world ? this.world.wrapDelta(this.player.x - trunkX) : (this.player.x - trunkX);
-        if (Math.hypot(dx, this.player.y - trunkY) < 95) {
+        if (dist(tree.x + tree.trunkOffset.x, tree.y + tree.trunkOffset.y) < Math.max(95, f.alcance)) {
           this.chopTreeForWood(tree);
           return;
         }
       }
     }
 
-    // Check hit against nearby Wolves
+    const mostrar = (alvo, r) => {
+      if (!r.acertou) { this.spawnDamageText(alvo.x, alvo.y - 30, 'ERROU', '#adb5bd', 13); return; }
+      const cor = r.critico ? '#ffd43b' : (isFiery ? '#ff6b6b' : '#ffffff');
+      this.spawnDamageText(alvo.x, alvo.y - 35, `${r.critico ? '★ CRÍTICO! ' : ''}-${r.dano}`, cor, r.critico ? 21 : 15);
+    };
+
+    // Lobos (Defesa 13, como no D&D)
     for (let i = this.wolves.length - 1; i >= 0; i--) {
-      const w = this.wolves[i];
-      const wdx = this.world ? this.world.wrapDelta(this.player.x - w.x) : (this.player.x - w.x);
-      const dist = Math.hypot(wdx, this.player.y - w.y);
-      if (dist < 85) {
-        // Fast Instant Combat Roll (Zero Delay)
-        const d20 = Math.floor(Math.random() * 20) + 1;
-        const comboMod = Math.floor((this.player.comboHits || 1) / 2);
-        const mod = window.diceSystem.stats.forca + (isFiery ? 4 : 2) + comboMod;
-        const total = d20 + mod;
-        const isCrit = (d20 === 20);
-        const isSuccess = (total >= 10 || isCrit);
-
-        if (isSuccess) {
-          let dmg = finalDamage;
-          if (isCrit) dmg = Math.round(dmg * 1.5);
-          w.hp -= dmg;
-
-          // Spawn floating damage & combo numbers
-          const textCol = isCrit ? '#ffd43b' : (this.player.comboHits >= 5 ? '#ff922b' : (isFiery ? '#ff6b6b' : '#ffffff'));
-          const textSize = isCrit ? 22 : (this.player.comboHits >= 5 ? 19 : 15);
-          this.spawnDamageText(w.x, w.y - 35, `${isCrit ? '★ CRÍTICO! ' : ''}-${dmg}`, textCol, textSize);
-
-          if (this.player.comboHits >= 2) {
-            const label = this.player.comboHits >= 5 ? `🔥 FÚRIA x${this.player.comboHits}!` : `COMBO x${this.player.comboHits}!`;
-            this.spawnDamageText(w.x + 8, w.y - 52, label, '#ffa94d', 12);
-          }
-
-          if (window.sounds) window.sounds.playWolfBite();
-          if (w.hp <= 0) {
-            this.wolves.splice(i, 1);
-            if (window.sounds) window.sounds.playCritSuccess();
-            this.inventory.addItem('wolf_pelt', 1);
-            this.inventory.addItem('wolf_tooth', 2);
-            if (this.skills) {
-              this.skills.addXP('attack', 35);
-              this.skills.addXP('hunter', 25);
-            }
-            this.addLog(`⚔️ Você aniquilou o Lobo em Combo Frenético (${this.player.comboHits}x golpes)! (+1 Pele, +2 Dentes na Mochila)!`, 'action');
-          } else {
-            w.state = 'fleeing';
-            w.fleeTimer = 2.0;
-            if (this.skills) {
-              this.skills.addXP('attack', 15);
-              this.skills.addXP('strength', 10);
-            }
-            this.addLog(`⚔️ Golpe veloz (${this.player.comboHits}x Combo, -${dmg} dano)! O lobo recuou ferido.`, 'action');
-          }
-          this.updateHUD();
-        } else {
-          this.spawnDamageText(w.x, w.y - 30, 'ESQUIVOU!', '#adb5bd', 13);
-          this.addLog(`O lobo se esquivou com rapidez selvagem!`, 'warning');
-        }
-        return;
+      const wf = this.wolves[i];
+      if (dist(wf.x, wf.y) >= f.alcance) continue;
+      const r = C.rolar(p, w, 13);
+      mostrar(wf, r);
+      if (!r.acertou) { this.addLog(`O lobo se esquivou! (${r.texto})`, 'warning'); return; }
+      wf.hp -= r.dano;
+      if (window.sounds) window.sounds.playWolfBite();
+      if (wf.hp <= 0) {
+        this.wolves.splice(i, 1);
+        if (window.sounds) window.sounds.playCritSuccess();
+        this.inventory.addItem('wolf_pelt', 1);
+        this.inventory.addItem('wolf_tooth', 2);
+        if (this.skills) { this.skills.addXP('attack', 35); this.skills.addXP('hunter', 25); }
+        this.addLog(`⚔️ Você abateu o Lobo! (+1 Pele, +2 Dentes na Mochila)`, 'action');
+      } else {
+        wf.state = 'fleeing';
+        wf.fleeTimer = 2.0;
+        if (this.skills) { this.skills.addXP('attack', 15); this.skills.addXP('strength', 10); }
+        this.addLog(`⚔️ Acertou o lobo: -${r.dano} (${r.texto}). Ele recuou ferido.`, 'action');
       }
+      this.updateHUD();
+      return;
     }
 
-    // Check hit against nearby Deer
+    // Cervos (Defesa 10): um golpe que acerta abate
     for (let i = this.deers.length - 1; i >= 0; i--) {
       const d = this.deers[i];
-      const ddx = this.world ? this.world.wrapDelta(this.player.x - d.x) : (this.player.x - d.x);
-      const dist = Math.hypot(ddx, this.player.y - d.y);
-      if (dist < 75) {
-        this.deers.splice(i, 1);
-        this.spawnCarcass(d.x, d.y);
-        this.inventory.addItem('meat', 2);
-        if (this.skills) {
-          this.skills.addXP('hunter', 40);
-          this.skills.addXP('attack', 15);
-        }
-        this.spawnDamageText(d.x, d.y - 30, `-${finalDamage} (ABATE)`, '#51cf66', 16);
-        if (this.player.comboHits >= 2) {
-          this.spawnDamageText(d.x + 8, d.y - 48, `COMBO x${this.player.comboHits}!`, '#ffa94d', 12);
-        }
-        if (window.sounds) window.sounds.playCritSuccess();
-        this.addLog(`🏹 Abate ágil com golpe veloz (${this.player.comboHits}x Combo)! (+2 Carnes guardadas na Mochila).`, 'action');
-        this.updateHUD();
-        return;
-      }
+      if (dist(d.x, d.y) >= f.alcance - 10) continue;
+      const r = C.rolar(p, w, 10);
+      mostrar(d, r);
+      if (!r.acertou) return;
+      this.deers.splice(i, 1);
+      this.spawnCarcass(d.x, d.y);
+      this.inventory.addItem('meat', 2);
+      if (this.skills) { this.skills.addXP('hunter', 40); this.skills.addXP('attack', 15); }
+      if (window.sounds) window.sounds.playCritSuccess();
+      this.addLog(`🏹 Abate certeiro! (+2 Carnes guardadas na Mochila)`, 'action');
+      this.updateHUD();
+      return;
     }
 
     // Bichos novos da fauna (coelho, raposa, javali, urso, corvo)
     const LOOT = { rabbit: [['meat', 1], ['rabbit_fur', 1]], fox: [['fox_pelt', 1]], boar: [['meat', 3], ['boar_tusk', 2]], bear: [['meat', 4], ['bear_pelt', 1]], crow: [] };
     const XP = { rabbit: 10, fox: 20, boar: 35, bear: 80, crow: 2 };
+    const DEFESA = { rabbit: 13, fox: 13, boar: 11, bear: 11, crow: 12 };       // D&D 5e (urso pardo 11)
     for (let i = this.critters.length - 1; i >= 0; i--) {
       const c = this.critters[i];
-      const cdx = this.world ? this.world.wrapDelta(this.player.x - c.x) : (this.player.x - c.x);
-      if (Math.hypot(cdx, this.player.y - c.y + (c.z || 0)) > (c.kind === 'bear' ? 95 : 75)) continue;
+      const cdx = this.world ? this.world.wrapDelta(p.x - c.x) : (p.x - c.x);
+      if (Math.hypot(cdx, p.y - c.y + (c.z || 0)) > f.alcance + (c.kind === 'bear' ? 10 : 0)) continue;
       const name = (window.CritterArt && window.CritterArt.names[c.kind]) || c.kind;
-      const d20 = Math.floor(Math.random() * 20) + 1, isCrit = d20 === 20;
-      const tough = { rabbit: 8, fox: 10, boar: 11, bear: 13, crow: 12 }[c.kind] || 10;
-      if (!(d20 + window.diceSystem.stats.forca + (isFiery ? 4 : 2) >= tough || isCrit)) {
-        this.spawnDamageText(c.x, c.y - 30, 'ESQUIVOU!', '#adb5bd', 13);
-        if (c.kind !== 'crow') { c.act = c.kind === 'bear' ? 'charge' : 'flee'; c.chargeT = 2.5; c.fleeTimer = 4; c.threatSource = this.player; }
+      const r = C.rolar(p, w, DEFESA[c.kind] || 12);
+      mostrar(c, r);
+      if (!r.acertou) {
+        if (c.kind !== 'crow') { c.act = c.kind === 'bear' ? 'charge' : 'flee'; c.chargeT = 2.5; c.fleeTimer = 4; c.threatSource = p; }
         return;
       }
-      const dmg = isCrit ? Math.round(finalDamage * 1.5) : finalDamage;
-      c.hp -= dmg;
-      this.spawnDamageText(c.x, c.y - 35, `${isCrit ? '★ CRÍTICO! ' : ''}-${dmg}`, isCrit ? '#ffd43b' : '#ffffff', isCrit ? 20 : 15);
+      c.hp -= r.dano;
       if (c.hp <= 0) {
         this.critters.splice(i, 1);
         if (c.kind !== 'crow') {
@@ -893,9 +815,9 @@ class Game {
         this.addLog(`🏹 Você abateu: ${name}!${got ? ` (${got})` : ''}`, 'action');
       } else {
         // reacao: urso e javali revidam, os outros fogem
-        if (c.kind === 'bear' || c.kind === 'boar') { c.act = 'charge'; c.chargeT = 2.5; c.chargeCd = 0; c.threatSource = this.player; }
-        else { c.act = 'flee'; c.fleeTimer = 5; c.threatSource = this.player; if (c.kind === 'crow') c.mode = 'scared'; }
-        this.addLog(`⚔️ Golpe no ${name} (-${dmg})!${c.kind === 'bear' ? ' Ele está furioso!' : ''}`, 'action');
+        if (c.kind === 'bear' || c.kind === 'boar') { c.act = 'charge'; c.chargeT = 2.5; c.chargeCd = 0; c.threatSource = p; }
+        else { c.act = 'flee'; c.fleeTimer = 5; c.threatSource = p; if (c.kind === 'crow') c.mode = 'scared'; }
+        this.addLog(`⚔️ Golpe no ${name}: -${r.dano} (${r.texto})${c.kind === 'bear' ? ' Ele está furioso!' : ''}`, 'action');
       }
       this.updateHUD();
       return;
@@ -2169,15 +2091,17 @@ class Game {
     // Update Player Attack Timer & Combo Decay
     if (this.player.isAttacking) {
       this.player.attackTimer -= dt;
+      const g = this.player.golpe;
+      if (g && !g.feito && this.player.attackDuration - this.player.attackTimer >= g.bate) { g.feito = true; this.resolverGolpe(); }
       if (this.player.attackTimer <= 0) {
         this.player.isAttacking = false;
+        if (g && !g.feito) { g.feito = true; this.resolverGolpe(); }
       }
     }
-    if (this.player.comboTimer > 0) {
-      this.player.comboTimer -= dt;
-      if (this.player.comboTimer <= 0) {
-        this.player.comboHits = 0;
-      }
+    // golpe guardado (clicou antes da hora) ou botao segurado: ataca de novo assim que a arma deixar
+    if ((this.player.ataqueNaFila || (this.mouse.isLeftDown && this.player.segurandoAtaque)) &&
+        performance.now() / 1000 >= (this.player.proxAtaque || 0)) {
+      this.performAttack();
     }
 
     // 3b. Campfires Update (Burn decay, ambient embers, cozy healing)
@@ -2897,6 +2821,7 @@ class Game {
     // Boneco da raca (aldeao, com as cores da criacao, tools/arte/importar_folhas.py). Cada acao usa a folha dela
     // quando a raca ja tem; sem a folha, usa o parado da mesma direcao. Correr usa o andar.
     const rs = this.images.raca;
+    let avancoGolpe = 0, estocando = 0;          // estocada: o corpo avanca e a arma aponta reto para a frente
     if (rs && rs.idle) {
       const d8 = this.player.dir8;                   // diagonal, quando a raca ja tem a folha dela
       const pick = (acao, d) => (rs[acao] && ((d === dir && d8 && rs[acao][d8]) || rs[acao][d] || rs[acao].down)) || null;
@@ -2912,13 +2837,16 @@ class Game {
         idx = (set && set.length > 1 && prog > 0.15 && prog < 0.85) ? 1 : 0;
         set = set || parado;
       } else if (this.player.isAttacking) {
-        const w = this.player.equippedWeapon;
-        const Ar = window.SurittoArmas, arma = Ar && w && Ar.ARMAS[Ar.DO_JOGO[w] || w];
-        const duas = w === 'axe' || (arma && arma.props.duas_maos);   // arma de duas maos: golpe de cima (folha do machado)
-        set = (duas && lado('attack_2h')) || (!w && lado('punch')) || lado('attack_1h');
+        // movimento da arma (js/combate.js): machadada = golpe de cima (folha do machado, de duas maos);
+        // estocada = lanca na folha de duas maos (avanco agachado), adaga e espada curta na de uma mao; corte = uma mao
+        const w = this.player.equippedWeapon, C = window.SurittoCombate, mov = C.ficha(w).mov;
+        const f = sideDir === 'left' ? -1 : 1;
+        set = mov === 'machadada' ? (lado('attack_2h') || lado('attack_1h'))
+          : mov === 'estocada' ? ((w === 'lanca' && lado('attack_2h')) || lado('attack_1h'))
+          : mov === 'soco' ? (lado('punch') || lado('attack_1h')) : lado('attack_1h');
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
-        idx = set ? Math.min(set.length - 1, Math.floor(prog * set.length)) : 0;
-        set = set || parado;
+        if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w ? f : 0; }
+        if (!set || idx < 0) { set = parado; idx = 0; }   // antes e depois do golpe: a guarda (boneco parado)
       } else if (this.player.isMoving) { set = pick('walk', dir); idx = this.player.frameIndex % (set ? set.length : 1); }
       else set = pick('idle', dir);
       if (set && set.length) frame = set[Math.max(0, idx) % set.length];
@@ -2938,7 +2866,7 @@ class Game {
     if (frame && frame.naturalHeight > 0) {
       targetW = Math.round((frame.naturalWidth / frame.naturalHeight) * targetH);
     }
-    const drawX = px - targetW / 2 + swayX;
+    const drawX = px - targetW / 2 + swayX + avancoGolpe;
     const drawY = py - targetH + 6 - jumpOff - stepBounce;
 
     // Precision Hand Socket Lookup
@@ -2947,7 +2875,8 @@ class Game {
     // com o punho erguido, e a espada ia parar na cabeca nos quadros que faltavam na tabela.)
     // boneco da raca: a mao medida no proprio quadro ([x, y, angulo, atras, espelhar] em fracao da tela)
     const mao = rs && rs.idle && frame && frame.mao;
-    const socket = mao ? { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4], len: mao[6] || 1 } :
+    const socket = mao ? (estocando ? { x: mao[0], y: mao[1], angle: Math.atan2(0.12, 1) + Math.PI / 4, behind: false, flip: estocando < 0, len: 1 }
+                               : { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4], len: mao[6] || 1 }) :
                    (socketTable[frameKey] ||
                    socketTable[`idle_${dir}_0`] ||
                    socketTable[`idle_${sideDir}_0`] ||
@@ -3037,8 +2966,9 @@ class Game {
       scaleX = isLeft ? -1 : 1;
     }
 
-    // Dynamic Attack Trail Arc
-    if (this.player.isAttacking) {
+    // Rastro do golpe: so depois do impacto, e nao na estocada (ali a arma vai reto)
+    const gp = this.player.golpe;
+    if (this.player.isAttacking && gp && gp.feito && gp.mov !== 'estocada') {
       ctx.save();
       ctx.translate(handX, handY);
       ctx.beginPath();
