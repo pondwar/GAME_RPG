@@ -2847,7 +2847,7 @@ class Game {
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
         if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w ? f : 0; }
         if (!set || idx < 0) { set = parado; idx = 0; }   // antes e depois do golpe: a guarda (boneco parado)
-      } else if (this.player.isMoving) { set = pick('walk', dir); idx = this.player.frameIndex % (set ? set.length : 1); }
+      } else if (this.player.isMoving) { set = pick('walk', dir); idx = set ? Math.floor((this.player.stridePhase || 0) * set.length) % set.length : 0; }   // uma passada completa = todos os quadros da folha (4 ou 8)
       else set = pick('idle', dir);
       if (set && set.length) frame = set[Math.max(0, idx) % set.length];
     }

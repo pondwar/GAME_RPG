@@ -103,6 +103,9 @@
       if (prog < T.bate) { idx = -1; av = -(T.avanco || 0) * 0.35 * (prog / T.bate); }
       else if (prog < T.volta) { idx = k.frente; av = T.avanco || 0; }
       else { idx = -1; av = (T.avanco || 0) * (1 - (prog - T.volta) / (1 - T.volta)); }
+    } else if (mov === 'corte' && set.length >= 7) {
+      // folha completa do corte (7+ quadros: guarda, preparo, alto, descida, batida, acompanha): toca todos em ordem
+      idx = prog < T.volta ? Math.min(set.length - 1, Math.floor(prog / T.volta * set.length)) : -1;
     } else {
       if (prog < T.alto) idx = 0;
       else if (prog < T.bate) idx = sub(0, k.alto, (prog - T.alto) / Math.max(0.01, (T.bate - T.alto) * 0.6));   // sobe e segura no alto
