@@ -238,9 +238,142 @@
     c.restore();
   }
 
+  // ---- Domesticos da vila (js/domestic.js): bloquinhos ate chegar a arte do Gem ----
+  const walking = (e) => e.act === 'walk' || e.act === 'flee';
+  function chicken(c, e, sx, sy) {
+    shadow(c, sx, sy, 10, 3);
+    begin(c, e, sx, sy);
+    const m = walking(e), bob = m ? [0, -1.5, 0, -1.5][e.frameIndex % 4] : 0, peck = e.act === 'idle' && (e.frameIndex % 4 > 1) ? 4 : 0;
+    c.translate(0, bob);
+    leg(c, 1, -6, 6, 1.6, '#d9a443', swing(e.frameIndex, m) * 0.7); leg(c, 4, -6, 6, 1.6, '#d9a443', -swing(e.frameIndex, m) * 0.7);
+    c.fillStyle = '#e9e1d2'; c.beginPath(); c.moveTo(7, -11); c.quadraticCurveTo(15, -18, 13, -8); c.lineTo(7, -8); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // cauda
+    blob(c, 1, -11, 8.5, 6.5, '#f1ece0');                      // corpo branco
+    blob(c, 0, -9, 5, 3.5, '#d8cdb6');                         // asa
+    blob(c, -6, -16 + peck, 3.6, 3.4, '#f4efe4');              // cabeca
+    c.fillStyle = '#c92a2a'; c.fillRect(-7, -21 + peck, 3.4, 2.6);   // crista
+    c.fillStyle = '#e0a63a'; c.beginPath(); c.moveTo(-9.5, -16 + peck); c.lineTo(-12.5, -15 + peck); c.lineTo(-9.5, -14.2 + peck); c.closePath(); c.fill();
+    c.fillStyle = '#c92a2a'; c.fillRect(-8.6, -14 + peck, 1.4, 2);
+    c.fillStyle = OUT; c.fillRect(-7.6, -17 + peck, 1.2, 1.2);
+    c.restore();
+  }
+  function sheep(c, e, sx, sy) {
+    shadow(c, sx, sy, 20, 5.5);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m) * 0.7, bob = m ? [0, -1, 0, -1][e.frameIndex % 4] : 0, graze = e.act === 'idle' && (e.frameIndex % 4 > 1) ? 4 : 0;
+    c.translate(0, bob);
+    leg(c, 9, -8, 8, 3, '#3a3029', s); leg(c, -9, -8, 8, 3, '#3a3029', -s);
+    for (const [x, y, r] of [[-10, -17, 8], [0, -20, 9], [10, -17, 8], [-4, -14, 9], [6, -14, 9]]) blob(c, x, y, r, r * 0.85, '#ece6d8');   // la fofa
+    c.fillStyle = 'rgba(255,255,255,0.35)'; c.beginPath(); c.ellipse(-2, -23, 6, 3, 0, 0, Math.PI * 2); c.fill();
+    leg(c, 5, -8, 8, 3, '#2a2420', -s); leg(c, -13, -8, 8, 3, '#2a2420', s);
+    blob(c, -19, -17 + graze, 5, 5.2, '#3a3029');              // cara escura
+    blob(c, -22, -15.5 + graze, 3, 2.4, '#4a3f36');
+    c.fillStyle = '#2a2420'; c.beginPath(); c.ellipse(-16, -20 + graze, 3, 1.6, 0.5, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#f1ece0'; c.fillRect(-20.5, -18.5 + graze, 1.3, 1.3);
+    c.restore();
+  }
+  function cow(c, e, sx, sy) {
+    shadow(c, sx, sy, 32, 8);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m) * 0.6, graze = e.act === 'idle' && (e.frameIndex % 4 > 1) ? 6 : 0;
+    leg(c, 17, -14, 14, 5, '#5a4a40', s); leg(c, -15, -14, 14, 5, '#5a4a40', -s);
+    blob(c, 2, -26, 26, 13, '#f1ece2');                        // corpo branco
+    for (const [x, y, rx, ry] of [[-8, -30, 9, 6], [10, -27, 8, 8], [2, -20, 7, 4]]) { c.fillStyle = '#2d2622'; c.beginPath(); c.ellipse(x, y, rx, ry, 0.3, 0, Math.PI * 2); c.fill(); }   // manchas
+    c.fillStyle = '#e6a7a0'; c.beginPath(); c.ellipse(14, -15, 5, 3.5, 0, 0, Math.PI * 2); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke();   // ubere
+    c.strokeStyle = '#3a2f28'; c.lineWidth = 2; c.beginPath(); c.moveTo(27, -32); c.quadraticCurveTo(32, -24, 28, -14); c.stroke();   // rabo
+    leg(c, 11, -14, 14, 5, '#3f342d', -s); leg(c, -21, -14, 14, 5, '#3f342d', s);
+    blob(c, -28, -26 + graze, 9, 7.5, '#f1ece2');              // cabeca
+    blob(c, -34, -23 + graze, 5, 4, '#d9a69a');                // focinho
+    c.fillStyle = '#e9dfc0'; c.beginPath(); c.moveTo(-26, -32 + graze); c.lineTo(-23, -38 + graze); c.lineTo(-22, -31 + graze); c.closePath(); c.fill(); c.strokeStyle = OUT; c.stroke();   // chifre
+    blob(c, -22, -29 + graze, 3, 2, '#2d2622', 0.6);           // orelha
+    c.fillStyle = OUT; c.fillRect(-30, -28 + graze, 1.6, 1.6);
+    c.restore();
+  }
+  function pig(c, e, sx, sy) {
+    shadow(c, sx, sy, 22, 6);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m) * 0.7, bob = m ? [0, -1, 0, -1][e.frameIndex % 4] : 0;
+    c.translate(0, bob);
+    leg(c, 11, -8, 8, 4, '#c98f84', s); leg(c, -11, -8, 8, 4, '#c98f84', -s);
+    blob(c, 2, -15, 18, 10, '#e8aaa0');                        // corpo rosado
+    blob(c, 2, -19, 12, 4, 'rgba(255,230,220,0.3)');
+    c.strokeStyle = '#c47c72'; c.lineWidth = 2; c.beginPath(); c.arc(21, -17, 3, 0, Math.PI * 1.6); c.stroke();   // rabo enrolado
+    leg(c, 6, -8, 8, 4, '#b87a70', -s); leg(c, -15, -8, 8, 4, '#b87a70', s);
+    blob(c, -18, -15, 8, 7, '#eeb2a8');                        // cabeca
+    blob(c, -25, -13, 4.5, 3.6, '#d98c82');                    // focinho
+    c.fillStyle = '#7a3a34'; c.fillRect(-27.5, -14, 1.4, 1.8); c.fillRect(-25, -14, 1.4, 1.8);
+    blob(c, -14, -21, 3.4, 4.2, '#d98c82', 0.5);               // orelha caida
+    c.fillStyle = OUT; c.fillRect(-20, -17, 1.6, 1.6);
+    c.restore();
+  }
+  function horse(c, e, sx, sy) {
+    shadow(c, sx, sy, 32, 8);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m), graze = e.act === 'idle' && (e.frameIndex % 4 > 1) ? 10 : 0;
+    leg(c, 19, -24, 24, 4.5, '#5a2f1a', s); leg(c, -17, -24, 24, 4.5, '#5a2f1a', -s);
+    c.fillStyle = '#2a1a12'; c.beginPath(); c.moveTo(26, -38); c.quadraticCurveTo(38, -34, 33, -12); c.quadraticCurveTo(28, -22, 24, -28); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // cauda
+    blob(c, 4, -36, 26, 12, '#8a4a26');                        // corpo alazao
+    blob(c, 4, -41, 18, 4.5, 'rgba(255,220,170,0.22)');
+    leg(c, 12, -24, 24, 4.5, '#6a3a1e', -s); leg(c, -22, -24, 24, 4.5, '#6a3a1e', s);
+    c.fillStyle = '#8a4a26'; c.beginPath(); c.moveTo(-18, -42); c.lineTo(-26, -58 + graze); c.lineTo(-34, -52 + graze); c.lineTo(-24, -34); c.closePath(); c.fill(); c.strokeStyle = OUT; c.stroke();   // pescoco
+    blob(c, -34, -52 + graze * 1.1, 9, 6, '#946030', -0.5);    // cabeca
+    c.fillStyle = '#2a1a12'; c.beginPath(); c.moveTo(-20, -44); c.lineTo(-27, -58 + graze); c.lineTo(-24, -60 + graze); c.lineTo(-16, -46); c.closePath(); c.fill();   // crina
+    c.fillStyle = '#946030'; c.beginPath(); c.moveTo(-28, -60 + graze); c.lineTo(-27, -66 + graze); c.lineTo(-24, -60 + graze); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = OUT; c.fillRect(-37, -54 + graze, 1.6, 1.6);
+    c.restore();
+  }
+  function goat(c, e, sx, sy) {
+    shadow(c, sx, sy, 19, 5);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m) * 0.8, graze = e.act === 'idle' && (e.frameIndex % 4 > 1) ? 4 : 0;
+    leg(c, 9, -12, 12, 3, '#5a5048', s); leg(c, -9, -12, 12, 3, '#5a5048', -s);
+    blob(c, 2, -19, 15, 8, '#efe9dc');                         // corpo
+    blob(c, 2, -23, 10, 3.4, 'rgba(255,255,255,0.3)');
+    c.fillStyle = '#efe9dc'; c.beginPath(); c.moveTo(16, -22); c.lineTo(20, -26); c.lineTo(18, -19); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // rabinho
+    leg(c, 5, -12, 12, 3, '#3f3a34', -s); leg(c, -13, -12, 12, 3, '#3f3a34', s);
+    c.fillStyle = '#efe9dc'; c.beginPath(); c.moveTo(-13, -23); c.lineTo(-19, -32 + graze); c.lineTo(-24, -28 + graze); c.lineTo(-16, -17); c.closePath(); c.fill(); c.stroke();   // pescoco
+    blob(c, -23, -28 + graze, 5.5, 4.6, '#f1ece0', -0.3);      // cabeca
+    c.fillStyle = '#d8cdb6'; c.beginPath(); c.moveTo(-26, -24 + graze); c.lineTo(-24, -19 + graze); c.lineTo(-22, -24 + graze); c.closePath(); c.fill();   // barbicha
+    c.strokeStyle = '#6a5a44'; c.lineWidth = 1.6; c.beginPath(); c.moveTo(-22, -32 + graze); c.quadraticCurveTo(-18, -42 + graze, -13, -38 + graze); c.stroke();   // chifre curvo
+    c.fillStyle = OUT; c.fillRect(-25, -29 + graze, 1.3, 1.3);
+    c.restore();
+  }
+  function dog(c, e, sx, sy) {
+    shadow(c, sx, sy, 17, 5);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m), wag = e.act === 'idle' ? Math.sin(e.frameIndex * 1.6) * 3 : 0;
+    leg(c, 9, -10, 10, 3.2, '#4a3220', s); leg(c, -8, -10, 10, 3.2, '#4a3220', -s);
+    c.fillStyle = '#7a5230'; c.beginPath(); c.moveTo(15, -17); c.quadraticCurveTo(23 + wag, -26, 21 + wag, -22); c.lineTo(15, -13); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // rabo
+    blob(c, 3, -15, 15, 7.5, '#8a5e3a');                       // corpo
+    blob(c, 3, -18, 10, 3, 'rgba(255,225,180,0.22)');
+    c.fillStyle = '#2d2018'; c.beginPath(); c.ellipse(5, -17, 7, 4, 0, 0, Math.PI * 2); c.fill();   // manto escuro
+    leg(c, 5, -10, 10, 3.2, '#5a3a22', -s); leg(c, -12, -10, 10, 3.2, '#5a3a22', s);
+    blob(c, -17, -21, 6.2, 5.6, '#8a5e3a');                    // cabeca
+    blob(c, -23, -19, 4.4, 3.2, '#c8a37a');                    // focinho
+    c.fillStyle = '#1c140d'; c.fillRect(-27, -20, 2, 1.8);
+    blob(c, -13, -24, 2.6, 5, '#3a2616', 0.3);                 // orelha caida
+    c.fillStyle = OUT; c.fillRect(-19.5, -22.5, 1.5, 1.5);
+    c.restore();
+  }
+  function cat(c, e, sx, sy) {
+    shadow(c, sx, sy, 11, 3.5);
+    begin(c, e, sx, sy);
+    const m = walking(e), s = swing(e.frameIndex, m) * 0.8, tail = Math.sin(e.frameIndex * 1.3) * 2;
+    leg(c, 6, -7, 7, 2.6, '#4a4a4f', s); leg(c, -6, -7, 7, 2.6, '#4a4a4f', -s);
+    c.strokeStyle = '#6a6a72'; c.lineWidth = 2.6; c.lineCap = 'round'; c.beginPath(); c.moveTo(10, -10); c.quadraticCurveTo(18, -14 + tail, 16, -24 + tail); c.stroke(); c.lineCap = 'butt';   // rabo erguido
+    blob(c, 1, -10, 10, 5.8, '#7b7b84');                       // corpo cinza
+    c.fillStyle = '#4a4a52'; for (let i = 0; i < 4; i++) c.fillRect(-4 + i * 3.4, -14, 1.3, 4);   // listras
+    leg(c, 3, -7, 7, 2.6, '#55555c', -s); leg(c, -9, -7, 7, 2.6, '#55555c', s);
+    blob(c, -11, -14, 4.8, 4.4, '#85858e');                    // cabeca
+    c.fillStyle = '#85858e'; c.beginPath(); c.moveTo(-15, -17); c.lineTo(-14, -22); c.lineTo(-11.5, -18); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke();   // orelhas
+    c.beginPath(); c.moveTo(-10, -18); c.lineTo(-8, -22); c.lineTo(-7, -17); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = '#d9c24a'; c.fillRect(-14, -15.2, 1.6, 1.4);
+    c.fillStyle = '#e9b8b8'; c.fillRect(-15.8, -13, 1.2, 1);
+    c.restore();
+  }
+
   window.CritterArt = {
-    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx }[e.kind]; if (f) f(c, e, sx, sy); },
+    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat }[e.kind]; if (f) f(c, e, sx, sy); },
     plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },
-    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince' }
+    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince', chicken: 'Galinha', sheep: 'Ovelha', cow: 'Vaca', pig: 'Porco', horse: 'Cavalo', goat: 'Cabra', dog: 'Cão', cat: 'Gato' }
   };
 })();

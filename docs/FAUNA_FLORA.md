@@ -366,7 +366,8 @@ Cada pacote entrega **a lista de sprites + o motor com as espécies novas na reg
 **Andamento (atualizado):**
 - ✅ **Mecanismo de reinos no código** (`js/fauna.js`): cada espécie pode ter `macros` (as macro-regiões onde vive). Fora delas, não nasce nem migra para lá. As 7 espécies antigas ainda vivem em qualquer lugar (temporário, até cada região ganhar os seus bichos).
 - ✅ **Pacote A, primeira leva (selvagens da Europa):** lebre, texugo, esquilo-vermelho, faisão e lince, já no ecossistema (comem, se reproduzem, são caçados; raposa, lobo e lince agora também caçam lebre e faisão). Desenhados por código (bloquinhos) até a arte chegar. Só aparecem em Ilhas do Oeste, Gália, Norte Europeu, Leste Europeu e Ibéria (a lebre e o faisão também na China, no Japão e na América do Norte).
-- ⏳ Falta no pacote A: coruja, pato, castor, domésticos (galinha, vaca, ovelha, porco, cavalo, cão, gato, cabra) e as plantas.
+- ✅ **Domésticos da vila** (`js/domestic.js`): galinha, vaca, ovelha, porco, cavalo, cabra, cão e gato (bloquinhos). Vivem em volta do centro da vila, andam devagar, não fogem do jogador (só correm se apanharem), voltam para a vila se passam do limite e são repostos quando o jogador chega perto. Dá para golpear, deixam carcaça e dão experiência. Por enquanto toda macro-região usa o mesmo grupo europeu; as raças locais entram depois.
+- ⏳ Falta no pacote A: coruja, pato e castor (ficam na margem, sem entrar na água) e as plantas (bétula, pinheiro, ervas, cultivos).
 
 **Sugestão de ordem:** **A** (onde o jogo roda hoje) → **B** (a sua região) → **C** → **D** → o resto.
 

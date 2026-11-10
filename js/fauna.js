@@ -428,7 +428,7 @@
       for (const r of this.regions.values()) if (r.active && !want.has(r.key)) { r.active = false; this.plants = this.plants.filter(p => p.reg !== r.key); }
       for (const key of want) { const r = this.region(key); if (!r.active) this.materialize(r); }
       for (const list of [g.deers, g.wolves, g.critters]) for (let i = list.length - 1; i >= 0; i--) {
-        if (list[i].kind === 'crow') continue;
+        if (list[i].kind === 'crow' || list[i].domestic) continue;
         const r = this.region(this.rkey(list[i].x, list[i].y));
         if (!r.active) this.dissolve(list[i], list, i, r);
       }
@@ -454,7 +454,7 @@
       }
       // faminto demais por muito tempo: vai embora (migra para a vizinha melhor)
       for (const list of [g.deers, g.wolves, g.critters]) for (let i = list.length - 1; i >= 0; i--) {
-        const e = list[i]; if (e.kind === 'crow') continue;
+        const e = list[i]; if (e.kind === 'crow' || e.domestic) continue;
         const pred = !!SPECIES[e.kind].prey && e.kind !== 'bear';
         e.starve = e.hunger >= 0.99 ? (e.starve || 0) + dt : 0;
         if (e.starve < (pred ? 480 : 120)) continue;
@@ -472,7 +472,7 @@
       const out = {}, P = this.game.player, [prx, pry] = this.rkey(P.x, P.y).split(',').map(Number);
       const live = new Map();
       for (const list of [this.game.deers, this.game.wolves, this.game.critters]) for (const e of list) {
-        if (e.kind === 'crow' || !e.kind) continue;
+        if (e.kind === 'crow' || e.domestic || !e.kind) continue;
         const k = this.rkey(e.x, e.y); if (!live.has(k)) live.set(k, {});
         const v = live.get(k); v[e.kind] = v[e.kind] || [0, 0]; v[e.kind][0]++; v[e.kind][1] += e.hunger || 0;
       }
@@ -861,13 +861,14 @@
       for (const d of g.deers) this.ensure(d, 'deer');
       for (const w of g.wolves) this.ensure(w, 'wolf');
       const by = { deer: g.deers, wolf: g.wolves };
-      for (const e of g.critters) if (e.kind !== 'crow') (by[e.kind] = by[e.kind] || []).push(e);
+      for (const e of g.critters) if (e.kind !== 'crow' && !e.domestic) (by[e.kind] = by[e.kind] || []).push(e);
       for (const list of [g.deers.slice(), g.wolves.slice(), g.critters.slice()]) for (const e of list) {
-        if (e.kind === 'crow') continue;
+        if (e.kind === 'crow' || e.domestic) continue;
         if (e.state === 'fleeing' && e.act !== 'flee' && e.fleeTimer > 0) e.act = 'flee';
         this.animal(e, dt, by);
       }
       this.crows(dt);
+      if (this.livestockUpdate) this.livestockUpdate(dt);
     }
   }
 
