@@ -97,7 +97,7 @@
     // ---------------- mundo ----------------
     wd(a, b) { const W = this.game.world; return W ? W.wrapDelta(a - b) : a - b; }
     dist(e, x, y) { return Math.hypot(this.wd(x, e.x), y - e.y); }
-    night() { const h = this.game.timeSystem && this.game.timeSystem.virtualDate ? this.game.timeSystem.virtualDate.getHours() : 12; return h >= 19 || h < 6; }
+    night() { const h = this.game.timeSystem && this.game.timeSystem.horaLocal ? this.game.timeSystem.horaLocal() : 12; return h >= 19 || h < 6; }
     terrain(x, y) {               // tipo do terreno, com cache por celula de 64 px (o modelo de terreno e caro)
       const W = this.game.world; if (!W || !W.getTerrainAt) return { type: 'plains', isWater: false };
       const k = Math.round(W.wrapX(x) / 64) + ',' + Math.round(y / 64);

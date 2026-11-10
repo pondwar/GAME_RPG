@@ -151,6 +151,7 @@ class Game {
     this.timeSystem = new WorldTimeSystem(this);
     this.clockTimeEl = document.getElementById('clock-time');
     this.clockPeriodEl = document.getElementById('clock-period');
+    this.clockTempEl = document.getElementById('clock-temp');
     this.celestialIconEl = document.getElementById('celestial-icon');
     this.calDateEl = document.getElementById('cal-date');
     this.calSeasonEl = document.getElementById('cal-season');
@@ -438,6 +439,7 @@ class Game {
         const nextIdx = (order.indexOf(this.timeSystem.weather) + 1) % order.length;
         this.timeSystem.weather = order[nextIdx];
         this.timeSystem.weatherTimer = 300;
+        this.timeSystem.climaTexto = null;                // teste manual: volta ao texto do estado escolhido
         if (this.timeSystem.weather === 'thunderstorm') {
           this.timeSystem.triggerLightning();
         }
@@ -453,7 +455,7 @@ class Game {
         const d = new Date(this.timeSystem.virtualDate);
         // Desired local solar hour = 12:00
         // Since local = virtual + fuso => virtual = 12 - fuso
-        d.setHours(12 - fuso, 0, 0, 0);
+        d.setUTCHours(12 - fuso, 0, 0, 0);
         this.timeSystem.virtualDate = d;
         this.addLog(`☀️ [Tempo] Horário ajustado para <b>Pleno Dia (12:00)</b>!`, 'action');
         this.updateHUD();
@@ -466,7 +468,7 @@ class Game {
         const fuso = this.world ? this.world.getTimezoneInfo(this.player.x).utcOffset : 0;
         const d = new Date(this.timeSystem.virtualDate);
         // Desired local solar hour = 00:00
-        d.setHours(0 - fuso, 0, 0, 0);
+        d.setUTCHours(0 - fuso, 0, 0, 0);
         this.timeSystem.virtualDate = d;
         this.addLog(`🌙 [Tempo] Horário ajustado para <b>Noite Profunda (00:00)</b>!`, 'action');
         this.updateHUD();
@@ -2686,13 +2688,15 @@ class Game {
     else { period = 'Noite'; icon = '🌙'; }
 
     if (this.clockPeriodEl) this.clockPeriodEl.innerText = period;
+    const cl = this.timeSystem.clima;
+    if (this.clockTempEl) this.clockTempEl.innerText = cl && Number.isFinite(cl.temp) ? `🌡 ${Math.round(cl.temp)}°C` : '';
     if (this.celestialIconEl) this.celestialIconEl.innerText = icon;
 
     // Date & Season
     const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     if (this.calDateEl) this.calDateEl.innerText = `${localDate.getDate()} de ${months[localDate.getMonth()]}`;
 
-    const season = this.timeSystem.getSeason(localDate);
+    const season = this.timeSystem.getSeason(localDate, this.world ? this.world.getLatitudeDeg(py) : undefined);
     if (this.calSeasonEl) this.calSeasonEl.innerText = `${season.icon} ${season.name}`;
 
     const moon = this.timeSystem.getMoonPhase(localDate);
@@ -2704,7 +2708,7 @@ class Game {
       if (this.timeSystem.weather === 'overcast') wTxt = '☁️ Céu Nublado';
       if (this.timeSystem.weather === 'light_rain') wTxt = '🌧 Chuva Fina';
       if (this.timeSystem.weather === 'thunderstorm') wTxt = '⛈ Tempestade com Raios';
-      this.weatherBadgeEl.innerText = wTxt;
+      this.weatherBadgeEl.innerText = this.timeSystem.climaTexto || wTxt;
     }
 
     // Geographic Coordinates & Timezone Bar
@@ -3100,7 +3104,7 @@ class Game {
     }
 
     // Glowing red predator eyes in darkness or when hunting
-    const isNight = this.timeSystem.virtualDate.getHours() >= 19 || this.timeSystem.virtualDate.getHours() < 5;
+    const hLocal = this.timeSystem.horaLocal(), isNight = hLocal >= 19 || hLocal < 5;
     if (wolf.state === 'hunting' || wolf.state === 'attack' || isNight) {
       ctx.fillStyle = '#ff3b3b';
       ctx.shadowColor = '#ff0000';

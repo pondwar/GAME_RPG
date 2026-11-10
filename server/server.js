@@ -6,6 +6,7 @@
 //   POST /api/world/chunks/merge           (junta sem apagar: primeiro envio de um navegador / importacao)
 //   GET  /api/world/settlements            PUT /api/world/settlements/:code
 //   GET  /api/world/fauna                  PUT /api/world/fauna         { regions: { "rx,ry": { plants, pop, hunger } } }
+//   GET  /api/clima?lat=..&lon=..          (clima real da regiao, com cache de 15 min; ver src/clima.js)
 //   GET  /api/characters                   (lista para a tela de escolha)
 //   GET  /api/characters/:name             PUT /api/characters/:name    (snapshot de js/save_system.js, com raca/classe/atributos)
 import http from 'node:http';
@@ -15,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import { pool } from './src/db.js';
 import * as world from './src/world_repo.js';
 import * as chars from './src/character_repo.js';
+import { climaReal } from './src/clima.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');   // pasta GAME_RPG
 const PORT = Number(process.env.PORT || 3000);
@@ -69,6 +71,12 @@ async function api(req, res, url) {
   }
   if (m === 'POST' && p === '/api/world/chunks/merge') {
     const b = await readJson(req); return send(res, 200, { ok: true, ...(await world.mergeChunks(REALM, b.chunks || {})) });
+  }
+  if (m === 'GET' && p === '/api/clima') {                           // clima real (Open-Meteo); o jogo cai no clima sorteado se falhar
+    const lat = Number(url.searchParams.get('lat')), lon = Number(url.searchParams.get('lon'));
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return send(res, 400, { error: 'use ?lat=..&lon=..' });
+    try { return send(res, 200, await climaReal(lat, lon)); }
+    catch (e) { return send(res, 502, { error: 'clima indisponivel: ' + e.message }); }
   }
   if (m === 'GET' && p === '/api/world/settlements') return send(res, 200, await world.listSettlements(REALM));
   if (p === '/api/world/fauna') {                                   // ecossistema por regiao (js/fauna.js)

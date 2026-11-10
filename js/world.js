@@ -101,10 +101,10 @@ class WorldCoordinates {
     let utcOffsetHours = fusoIndex;
     if (utcOffsetHours > 12) utcOffsetHours -= 24; // e.g. 21 -> -3 (Brasil)
 
-    // Preserve exact minutes, seconds, and milliseconds!
-    const shiftedDate = new Date(baseDate.getTime());
-    shiftedDate.setHours(baseDate.getHours() + utcOffsetHours);
-    return shiftedDate;
+    // Hora certa do fuso: parte do instante em UTC (e nao da hora do PC do jogador) e soma o fuso da regiao.
+    // Devolve um Date cujos getHours()/getMinutes()/getDate() ja sao a hora de parede la (minutos e segundos reais).
+    const u = new Date(baseDate.getTime() + utcOffsetHours * 3600000);
+    return new Date(u.getUTCFullYear(), u.getUTCMonth(), u.getUTCDate(), u.getUTCHours(), u.getUTCMinutes(), u.getUTCSeconds(), u.getUTCMilliseconds());
   }
 
   // Teleport player directly to a specific timezone (0 to 23) for testing

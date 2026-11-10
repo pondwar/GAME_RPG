@@ -62,7 +62,20 @@ class WorldTimeSystem {
   }
 
   // Season based on Southern Hemisphere real calendar
-  getSeason(date) {
+  // lat (graus, +N / -S): no Hemisferio Norte as estacoes sao as opostas das do Sul (mesmas datas, outro nome). Sem lat: Sul.
+  getSeason(date, lat) {
+    const sul = this._estacaoSul(date);
+    if (!(lat >= 0)) return sul;
+    const norte = {
+      'Outono': { name: 'Primavera', icon: '🌸', desc: 'Florescimento, brotos e chuvas amenas' },
+      'Inverno': { name: 'Verão', icon: '☀️', desc: 'Dias longos, calor e tempestades' },
+      'Primavera': { name: 'Outono', icon: '🍂', desc: 'Noites frescas e folhas secas' },
+      'Verão': { name: 'Inverno', icon: '❄️', desc: 'Frio e dias mais curtos' }
+    };
+    return norte[sul.name];
+  }
+
+  _estacaoSul(date) {
     const month = date.getMonth(); // 0 to 11
     const day = date.getDate();
 
@@ -80,7 +93,7 @@ class WorldTimeSystem {
 
   initWeather() {
     // Pick initial weather based on current season
-    const season = this.getSeason(this.virtualDate);
+    const season = this.getSeason(this.virtualDate, this.latJogador());
     const rand = Math.random();
     if (season.name === 'Primavera') {
       // 40% chance of rain in spring
@@ -98,8 +111,16 @@ class WorldTimeSystem {
 
     // Weather cycles
     this.weatherTimer -= dt;
+    this.climaTimer = (this.climaTimer ?? 0) - dt;
+    const gw = this.game && this.game.world, gp = this.game && this.game.player;
+    if (this.clima && gw && gp && this.climaTimer > 5) {          // andou longe do ponto medido (>2 graus): busca o clima do novo lugar
+      const dlat = gw.getLatitudeDeg(gp.y) - this.clima.lat, dlon = Math.abs(((gw.getLongitudeDeg(gp.x) - this.clima.lon + 540) % 360) - 180);
+      if (Math.abs(dlat) > 2 || dlon > 2) this.climaTimer = 2;
+    }
+    if (this.climaTimer <= 0) this.buscarClima();          // clima real da regiao (servidor + Open-Meteo)
     if (this.weatherTimer <= 0) {
-      this.cycleWeather();
+      if (this.clima) { this.aplicarClima(this.clima); this.weatherTimer = 60; }   // com dado real: nada de sorteio
+      else this.cycleWeather();                                                    // sem dado real: sorteio de antes
     }
 
     // Update Rain Drops
@@ -145,8 +166,44 @@ class WorldTimeSystem {
     }
   }
 
+  // Clima real: o servidor (server/src/clima.js) pergunta ao Open-Meteo pela latitude/longitude de quem joga e guarda 15 min.
+  // Se a internet ou o servidor falharem, tenta de novo em 1 min e o jogo segue com o sorteio antigo.
+  async buscarClima() {
+    this.climaTimer = 60;
+    const g = this.game, w = g && g.world, p = g && g.player;
+    if (!w || !p || !w.getLatitudeDeg) { this.climaTimer = 3; return; }   // jogo ainda carregando
+    try {
+      const lat = w.getLatitudeDeg(p.y), lon = w.getLongitudeDeg(p.x);
+      const r = await fetch(`/api/clima?lat=${lat.toFixed(3)}&lon=${lon.toFixed(3)}`);
+      if (!r.ok) return;
+      this.clima = await r.json();
+      this.climaTimer = 10 * 60;                            // pergunta de novo em 10 min (o servidor so renova a cada 15)
+      this.aplicarClima(this.clima, true);
+    } catch (e) { /* sem rede: continua com o que tinha */ }
+  }
+
+  // Codigos WMO do Open-Meteo -> os estados do jogo (clear, overcast, light_rain, thunderstorm) + texto do emblema
+  aplicarClima(c, avisar) {
+    const k = c.codigo, antes = this.weather;
+    let w = 'clear', txt = '🌤 Céu Limpo';
+    if (k === 2) { w = c.nuvens > 70 ? 'overcast' : 'clear'; txt = w === 'clear' ? '⛅ Poucas Nuvens' : '☁️ Céu Nublado'; }
+    else if (k === 3) { w = 'overcast'; txt = '☁️ Céu Nublado'; }
+    else if (k === 45 || k === 48) { w = 'overcast'; txt = '🌫 Neblina'; }
+    else if (k >= 51 && k <= 57) { w = 'light_rain'; txt = '🌦 Garoa'; }
+    else if ((k >= 61 && k <= 67) || (k >= 80 && k <= 82)) { w = 'light_rain'; txt = (k === 65 || k === 67 || k === 82) ? '🌧 Chuva Forte' : '🌧 Chuva'; }
+    else if ((k >= 71 && k <= 77) || k === 85 || k === 86) { w = 'overcast'; txt = '❄️ Neve'; }
+    else if (k >= 95) { w = 'thunderstorm'; txt = '⛈ Tempestade com Raios'; }
+    else if (c.nuvens > 85) { w = 'overcast'; txt = '☁️ Céu Nublado'; }
+    this.weather = w;
+    this.climaTexto = Number.isFinite(c.temp) ? `${txt} • ${Math.round(c.temp)}°C` : txt;
+    if (avisar && w !== antes && this.game) {
+      const msg = { clear: 'O céu clareou.', overcast: 'Nuvens cobrem o céu.', light_rain: 'Começa a chover.', thunderstorm: 'Uma tempestade com raios se aproxima!' }[w];
+      this.game.addLog(`[Clima] ${msg} (tempo real da região)`, 'system');
+    }
+  }
+
   cycleWeather() {
-    const season = this.getSeason(this.virtualDate);
+    const season = this.getSeason(this.virtualDate, this.latJogador());
     const rand = Math.random();
 
     if (this.weather === 'clear') {
@@ -173,6 +230,15 @@ class WorldTimeSystem {
   triggerLightning() {
     this.lightningFlash = 0.95;
     this.thunderDelay = 0.4 + Math.random() * 0.8; // thunder heard a moment after flash
+  }
+
+  latJogador() { const g = this.game; return (g && g.world && g.player) ? g.world.getLatitudeDeg(g.player.y) : undefined; }
+
+  // Hora (0-23) de onde o jogador esta, no fuso da regiao
+  horaLocal() {
+    const g = this.game;
+    const d = (g && g.world && g.player) ? g.world.getLocalSolarTime(this.virtualDate, g.player.x) : this.virtualDate;
+    return d.getHours();
   }
 
   // Calculate ambient sky light & darkness color
