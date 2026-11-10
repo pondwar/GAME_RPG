@@ -107,8 +107,10 @@
   const PLANTS = {
     grass: { cap: { plains: 1, forest: 0.8, dense_forest: 0.45, hills: 0.6, shore: 0.1, desert: 0.05, canyon: 0.05, mountain: 0.1 }, regrow: 0.004 },
     berries: { cap: { forest: 0.6, dense_forest: 0.8, hills: 0.4, plains: 0.2, mountain: 0.15 }, regrow: 0.0015 },
-    mushrooms: { cap: { dense_forest: 0.8, forest: 0.4, hills: 0.1 }, regrow: 0.003 }
+    mushrooms: { cap: { dense_forest: 0.8, forest: 0.4, hills: 0.1 }, regrow: 0.003 },
+    herbs: { cap: { plains: 0.7, forest: 0.5, hills: 0.5, shore: 0.2 }, regrow: 0.0012 }    // camomila, hortela, salvia (so no reino europeu/temperado)
   };
+  const POOL = { bush: 'berries', mushroom: 'mushrooms', herb: 'herbs' };   // tipo de planta -> estoque da regiao
 
   // ruido deterministico por regiao (posicao das plantas)
   function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -247,7 +249,7 @@
     region(key) {
       let r = this.regions.get(key); if (r) return r;
       const [rx, ry] = key.split(',').map(Number);
-      const cap = { grass: 0, berries: 0, mushrooms: 0 }, bio = {};
+      const cap = { grass: 0, berries: 0, mushrooms: 0, herbs: 0 }, bio = {};
       let town = 0;
       for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) {
         const x = (rx + (a + 0.5) / 4) * REG, y = (ry + (b + 0.5) / 4) * REG, t = this.biome(x, y);
@@ -258,6 +260,7 @@
       const cc = this.rcenter(key);
       r = { key, cap, town, hab, plants: {}, capS: {}, pop: {}, hun: {}, birth: {}, active: false, macro: this.macro(cc.x, cc.y) };
       for (const p in PLANTS) r.plants[p] = cap[p] * (0.7 + Math.random() * 0.3);
+      if (!HOLARTICO.includes(r.macro)) { r.cap.herbs = 0; r.plants.herbs = 0; }          // ervas europeias: so nas macro-regioes temperadas
       // capacidade de cada herbivoro: densidade x comida que ele come na regiao x fracao do bioma que ele habita x longe de vila
       for (const k of HERBIVORES) {
         const sp = SPECIES[k], d = sp.diet; let food = 0, w = 0;
@@ -397,14 +400,15 @@
       };
       put('bush', Math.round(r.cap.berries * 9), [B.F, B.D, B.H, B.P, B.M]);
       put('mushroom', Math.round(r.cap.mushrooms * 10), [B.D, B.F, B.H]);
+      put('herb', Math.round(r.cap.herbs * 7), [B.P, B.F, B.H]);
       this.plants = this.plants.filter(p => p.reg !== r.key).concat(out);
     }
     // Quanto um arbusto/cogumelo tem agora (0..1): o nivel da planta na regiao
-    plantLevel(p) { const r = this.regions.get(p.reg); if (!r) return 0; const k = p.kind === 'bush' ? 'berries' : 'mushrooms'; return r.cap[k] > 0 ? r.plants[k] / r.cap[k] : 0; }
+    plantLevel(p) { const r = this.regions.get(p.reg); if (!r) return 0; const k = POOL[p.kind]; return r.cap[k] > 0 ? r.plants[k] / r.cap[k] : 0; }
     // Comer / colher de uma planta: tira da regiao (amt = fracao da capacidade)
     takePlant(p, amt) {
       const r = this.regions.get(p.reg); if (!r) return 0;
-      const k = p.kind === 'bush' ? 'berries' : 'mushrooms', have = r.plants[k], take = Math.min(have, r.cap[k] * amt);
+      const k = POOL[p.kind], have = r.plants[k], take = Math.min(have, r.cap[k] * amt);
       r.plants[k] = have - take; return r.cap[k] > 0 ? take / (r.cap[k] * amt) : 0;
     }
     // Um animal sai do jogo e vira numero na regiao (a onde esta, ou a dada)
@@ -428,7 +432,7 @@
       for (const r of this.regions.values()) if (r.active && !want.has(r.key)) { r.active = false; this.plants = this.plants.filter(p => p.reg !== r.key); }
       for (const key of want) { const r = this.region(key); if (!r.active) this.materialize(r); }
       for (const list of [g.deers, g.wolves, g.critters]) for (let i = list.length - 1; i >= 0; i--) {
-        if (list[i].kind === 'crow' || list[i].domestic) continue;
+        if (list[i].kind === 'crow' || list[i].domestic || list[i].ambient) continue;
         const r = this.region(this.rkey(list[i].x, list[i].y));
         if (!r.active) this.dissolve(list[i], list, i, r);
       }
@@ -454,7 +458,7 @@
       }
       // faminto demais por muito tempo: vai embora (migra para a vizinha melhor)
       for (const list of [g.deers, g.wolves, g.critters]) for (let i = list.length - 1; i >= 0; i--) {
-        const e = list[i]; if (e.kind === 'crow' || e.domestic) continue;
+        const e = list[i]; if (e.kind === 'crow' || e.domestic || e.ambient) continue;
         const pred = !!SPECIES[e.kind].prey && e.kind !== 'bear';
         e.starve = e.hunger >= 0.99 ? (e.starve || 0) + dt : 0;
         if (e.starve < (pred ? 480 : 120)) continue;
@@ -472,7 +476,7 @@
       const out = {}, P = this.game.player, [prx, pry] = this.rkey(P.x, P.y).split(',').map(Number);
       const live = new Map();
       for (const list of [this.game.deers, this.game.wolves, this.game.critters]) for (const e of list) {
-        if (e.kind === 'crow' || e.domestic || !e.kind) continue;
+        if (e.kind === 'crow' || e.domestic || e.ambient || !e.kind) continue;
         const k = this.rkey(e.x, e.y); if (!live.has(k)) live.set(k, {});
         const v = live.get(k); v[e.kind] = v[e.kind] || [0, 0]; v[e.kind][0]++; v[e.kind][1] += e.hunger || 0;
       }
@@ -861,14 +865,15 @@
       for (const d of g.deers) this.ensure(d, 'deer');
       for (const w of g.wolves) this.ensure(w, 'wolf');
       const by = { deer: g.deers, wolf: g.wolves };
-      for (const e of g.critters) if (e.kind !== 'crow' && !e.domestic) (by[e.kind] = by[e.kind] || []).push(e);
+      for (const e of g.critters) if (e.kind !== 'crow' && !e.domestic && !e.ambient) (by[e.kind] = by[e.kind] || []).push(e);
       for (const list of [g.deers.slice(), g.wolves.slice(), g.critters.slice()]) for (const e of list) {
-        if (e.kind === 'crow' || e.domestic) continue;
+        if (e.kind === 'crow' || e.domestic || e.ambient) continue;
         if (e.state === 'fleeing' && e.act !== 'flee' && e.fleeTimer > 0) e.act = 'flee';
         this.animal(e, dt, by);
       }
       this.crows(dt);
       if (this.livestockUpdate) this.livestockUpdate(dt);
+      if (this.ambientUpdate) this.ambientUpdate(dt);
     }
   }
 

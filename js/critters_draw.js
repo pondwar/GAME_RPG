@@ -371,9 +371,80 @@
     c.restore();
   }
 
+  // ---- Pacote A: coruja, pato, castor e ervas ----
+  function owl(c, e, sx, sy) {
+    const z = e.z || 0, fly = z > 4;
+    shadow(c, sx, sy, 8 * Math.max(0.4, 1 - z / 160), 3 * Math.max(0.4, 1 - z / 160), 0.22);
+    begin(c, e, sx, sy - z);
+    const flap = fly ? [-1.0, -0.2, 0.7, -0.2][e.frameIndex % 4] : 0;
+    if (!fly) { leg(c, 0, -5, 5, 2, '#b98f4a', 0); leg(c, 4, -5, 5, 2, '#b98f4a', 0); }
+    blob(c, 1, -14, 8.5, 10, '#c9a26a');                       // corpo
+    blob(c, 1, -10, 5.4, 6.4, '#efe3c8');                      // peito claro
+    c.fillStyle = '#8a6a3a'; for (let i = 0; i < 4; i++) c.fillRect(-1 + (i % 2) * 3, -14 + i * 2.2, 1.6, 1.2);
+    c.save(); c.translate(5, -17); c.rotate(flap);              // asa
+    c.fillStyle = '#a98250'; c.beginPath(); c.moveTo(-3, 0); c.quadraticCurveTo(3, fly ? -16 : -3, 11, fly ? -11 : 6); c.lineTo(4, 5); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke();
+    c.restore();
+    blob(c, -2, -25, 8.2, 7.2, '#f3ead6');                     // cabeca em coracao
+    blob(c, -5, -25, 3.8, 3.8, '#fff8e8'); blob(c, 1, -25, 3.8, 3.8, '#fff8e8');
+    c.fillStyle = '#1c140d'; c.beginPath(); c.arc(-5, -25, 1.9, 0, 6.3); c.arc(1, -25, 1.9, 0, 6.3); c.fill();   // olhos grandes
+    c.fillStyle = '#d9a23a'; c.beginPath(); c.moveTo(-3, -23.4); c.lineTo(-2, -21); c.lineTo(-1, -23.4); c.closePath(); c.fill();   // bico
+    c.restore();
+  }
+  function duck(c, e, sx, sy) {
+    const z = e.z || 0, fly = z > 4;
+    shadow(c, sx, sy, 11 * Math.max(0.4, 1 - z / 160), 3.5 * Math.max(0.4, 1 - z / 160), 0.22);
+    begin(c, e, sx, sy - z);
+    const m = e.act === 'walk', bob = m ? [0, -1, 0, -1][e.frameIndex % 4] : 0, flap = fly ? [-1.0, -0.2, 0.8, -0.2][e.frameIndex % 4] : 0;
+    c.translate(0, bob);
+    if (!fly) { leg(c, 0, -5, 5, 1.8, '#e08a2a', swing(e.frameIndex, m) * 0.7); leg(c, 3, -5, 5, 1.8, '#e08a2a', -swing(e.frameIndex, m) * 0.7); }
+    c.fillStyle = '#6a6a72'; c.beginPath(); c.moveTo(8, -10); c.lineTo(14, -13); c.lineTo(12, -7); c.closePath(); c.fill();
+    blob(c, 2, -9, 9.5, 6, '#8f8f98');                         // corpo cinza
+    blob(c, -4, -8, 5, 5, '#8a4a2a');                          // peito marrom
+    c.fillStyle = '#2a4a8a'; c.fillRect(0, -9, 5, 2);           // espelho azul da asa
+    c.save(); c.translate(3, -12); c.rotate(flap); c.fillStyle = '#7d7d86'; c.beginPath(); c.moveTo(-3, 0); c.quadraticCurveTo(3, fly ? -13 : -3, 10, fly ? -8 : 2); c.lineTo(3, 3); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke(); c.restore();
+    blob(c, -8, -16, 4, 3.8, '#2f7a4a');                       // cabeca verde
+    c.fillStyle = '#efefef'; c.fillRect(-10.5, -13.5, 5, 1.2);   // anel branco
+    c.fillStyle = '#e8c23a'; c.beginPath(); c.ellipse(-13, -15.5, 3.4, 1.6, 0, 0, 6.3); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke();   // bico
+    c.fillStyle = OUT; c.fillRect(-9.2, -17.2, 1.3, 1.3);
+    c.restore();
+  }
+  function beaver(c, e, sx, sy) {
+    shadow(c, sx, sy, 15, 4.5);
+    begin(c, e, sx, sy);
+    const m = e.act === 'walk' || e.act === 'flee', s = swing(e.frameIndex, m) * 0.7, gnaw = e.act === 'idle' ? (e.frameIndex % 2) * 1.2 : 0;
+    leg(c, 6, -5, 5, 3.4, '#3f2a1a', s); leg(c, -6, -5, 5, 3.4, '#3f2a1a', -s);
+    c.fillStyle = '#2f2118'; c.beginPath(); c.ellipse(17, -6, 8, 3.2, 0.1, 0, 6.3); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // cauda larga e chata
+    c.strokeStyle = '#4a3322'; c.lineWidth = 0.8; for (let i = 0; i < 4; i++) { c.beginPath(); c.moveTo(12 + i * 3, -8); c.lineTo(12 + i * 3, -4); c.stroke(); }
+    blob(c, 2, -10, 12, 8, '#6b4a2e');                         // corpo
+    blob(c, 2, -13, 8, 3.4, 'rgba(255,220,170,0.2)');
+    leg(c, 3, -5, 5, 3.4, '#573a22', -s); leg(c, -9, -5, 5, 3.4, '#573a22', s);
+    blob(c, -11, -12, 6, 5.6, '#78543a');                      // cabeca
+    blob(c, -16, -10.5 + gnaw * 0.3, 3.6, 3, '#5a3d28');       // focinho
+    c.fillStyle = '#f1e6c0'; c.fillRect(-18.5, -9.5, 2.2, 3 + gnaw);   // dentes
+    c.fillStyle = OUT; c.fillRect(-13.6, -14, 1.4, 1.4);
+    blob(c, -8, -17, 2, 2, '#4a3322');
+    c.restore();
+  }
+  // Ervas medicinais: p.seed escolhe camomila (branca e amarela), hortela (folhas verdes) ou salvia (folhas cinzentas e flor roxa)
+  function herb(c, p, sx, sy, level) {
+    if (level < 0.2) return;
+    const r = (n) => { const v = Math.sin(p.seed * 6151 + n * 31.7) * 9631; return v - Math.floor(v); };
+    const type = Math.floor(p.seed * 3) % 3, n = 3 + Math.round(level * 3);
+    for (let i = 0; i < n; i++) {
+      const x = sx + (r(i) - 0.5) * 22, y = sy + (r(i + 5) - 0.5) * 9, k = (0.7 + r(i + 2) * 0.5) * (0.7 + level * 0.3), h = (8 + r(i + 9) * 5) * k;
+      shadow(c, x, y, 4 * k, 1.5 * k, 0.18);
+      c.strokeStyle = type === 2 ? '#7d9a7a' : '#3f7a35'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + (r(i + 3) - 0.5) * 4, y - h * 0.6, x + (r(i + 4) - 0.5) * 3, y - h); c.stroke();
+      const tx = x + (r(i + 4) - 0.5) * 3, ty = y - h;
+      if (type === 0) { c.fillStyle = '#fbf7ee'; for (let a = 0; a < 6; a++) { c.beginPath(); c.ellipse(tx + Math.cos(a * 1.05) * 2.6 * k, ty + Math.sin(a * 1.05) * 2.6 * k, 1.5 * k, 1 * k, a * 1.05, 0, 6.3); c.fill(); } c.fillStyle = '#e6b422'; c.beginPath(); c.arc(tx, ty, 1.4 * k, 0, 6.3); c.fill(); }
+      else if (type === 1) { c.fillStyle = '#4f9a3e'; c.beginPath(); c.ellipse(tx - 2 * k, ty + 1, 3 * k, 1.8 * k, -0.5, 0, 6.3); c.ellipse(tx + 2 * k, ty + 1, 3 * k, 1.8 * k, 0.5, 0, 6.3); c.ellipse(tx, ty - 1, 2.6 * k, 1.6 * k, 0, 0, 6.3); c.fill(); c.strokeStyle = OUT; c.lineWidth = 0.7; c.stroke(); }
+      else { c.fillStyle = '#9db79a'; c.beginPath(); c.ellipse(tx, ty + 2, 3.4 * k, 1.8 * k, 0.2, 0, 6.3); c.fill(); c.fillStyle = '#8a5fb0'; c.fillRect(tx - 1, ty - 3 * k, 2, 3 * k); }
+    }
+  }
+
   window.CritterArt = {
-    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat }[e.kind]; if (f) f(c, e, sx, sy); },
-    plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },
-    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince', chicken: 'Galinha', sheep: 'Ovelha', cow: 'Vaca', pig: 'Porco', horse: 'Cavalo', goat: 'Cabra', dog: 'Cão', cat: 'Gato' }
+    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat, owl, duck, beaver }[e.kind]; if (f) f(c, e, sx, sy); },
+    plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else if (p.kind === 'herb') herb(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },
+    herbName(p) { return ['Camomila', 'Hortelã', 'Sálvia'][Math.floor(p.seed * 3) % 3]; },
+    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince', chicken: 'Galinha', sheep: 'Ovelha', cow: 'Vaca', pig: 'Porco', horse: 'Cavalo', goat: 'Cabra', dog: 'Cão', cat: 'Gato', owl: 'Coruja', duck: 'Pato-real', beaver: 'Castor' }
   };
 })();

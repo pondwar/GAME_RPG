@@ -262,6 +262,24 @@ class InventorySystem {
           g.addLog(`🍄 Você comeu um Cogumelo da Mata! (+5 HP, +15% Nutrição)`, 'action');
         }
       },
+      chamomile: {
+        id: 'chamomile', name: 'Camomila', type: 'consumable', rarity: 'common', icon: '🌼', maxStack: 30,
+        desc: 'Flores de camomila colhidas no campo. Um chá calma o corpo e a mente.',
+        stats: '+10 HP',
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 10); if (window.sounds) window.sounds.playHarvest(); g.addLog('🌼 Você bebeu um chá de camomila! (+10 HP)', 'action'); }
+      },
+      mint: {
+        id: 'mint', name: 'Hortelã', type: 'consumable', rarity: 'common', icon: '🌿', maxStack: 30,
+        desc: 'Folhas de hortelã, frescas e perfumadas. Aliviam o estômago e dão ânimo.',
+        stats: '+4 HP, +8 Estamina',
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 4); if (g.player.stamina !== undefined) g.player.stamina = Math.min(g.player.maxStamina || 100, g.player.stamina + 8); if (window.sounds) window.sounds.playHarvest(); g.addLog('🌿 Você mascou hortelã e se sentiu revigorado! (+4 HP, +8 Estamina)', 'action'); }
+      },
+      sage: {
+        id: 'sage', name: 'Sálvia', type: 'consumable', rarity: 'common', icon: '🪻', maxStack: 30,
+        desc: 'Sálvia de folhas acinzentadas. Cicatriza pequenos ferimentos.',
+        stats: '+14 HP',
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 14); if (window.sounds) window.sounds.playHarvest(); g.addLog('🪻 Você usou sálvia nos ferimentos! (+14 HP)', 'action'); }
+      },
       rabbit_fur: {
         id: 'rabbit_fur',
         name: 'Pelo de Coelho',

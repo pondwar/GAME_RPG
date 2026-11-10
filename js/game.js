@@ -1595,6 +1595,16 @@ class Game {
         const pdx = this.world ? this.world.wrapDelta(this.player.x - p.x) : (this.player.x - p.x);
         if (Math.hypot(pdx, this.player.y - p.y) > 65) continue;
         const lvl = this.fauna.plantLevel(p);
+        if (p.kind === 'herb') {
+          if (lvl < 0.2) { this.addLog('🌿 As ervas daqui já foram colhidas. Elas brotam de novo com o tempo.', 'tip'); return; }
+          const gotH = this.fauna.takePlant(p, 0.1), nH = Math.max(1, Math.round(3 * gotH)), idH = ['chamomile', 'mint', 'sage'][Math.floor(p.seed * 3) % 3];
+          this.inventory.addItem(idH, nH);
+          if (this.skills) this.skills.addXP('hunter', 3);
+          if (window.sounds) window.sounds.playHarvest();
+          this.addLog(`🌿 Você colheu ${nH} ${window.CritterArt.herbName(p)}.`, 'action');
+          this.updateHUD();
+          return;
+        }
         if (lvl < 0.2) { this.addLog(p.kind === 'bush' ? '🌿 Este arbusto já foi colhido pelos bichos. As frutinhas voltam com o tempo.' : '🍂 Só restaram talos. Os cogumelos voltam a brotar depois.', 'tip'); return; }
         const got = this.fauna.takePlant(p, 0.12);
         const n = p.kind === 'bush' ? Math.max(1, Math.round(4 * got)) : Math.max(1, Math.round(3 * got));
@@ -2220,7 +2230,7 @@ class Game {
     if (!showPrompt && this.fauna) {
       for (const p of this.fauna.plants) {
         const pdx = this.world ? this.world.wrapDelta(this.player.x - p.x) : (this.player.x - p.x);
-        if (Math.hypot(pdx, this.player.y - p.y) < 65 && this.fauna.plantLevel(p) >= 0.2) { showPrompt = true; text = p.kind === 'bush' ? 'Colher Frutinhas' : 'Colher Cogumelos'; break; }
+        if (Math.hypot(pdx, this.player.y - p.y) < 65 && this.fauna.plantLevel(p) >= 0.2) { showPrompt = true; text = p.kind === 'bush' ? 'Colher Frutinhas' : p.kind === 'herb' ? 'Colher ' + window.CritterArt.herbName(p) : 'Colher Cogumelos'; break; }
       }
     }
 
