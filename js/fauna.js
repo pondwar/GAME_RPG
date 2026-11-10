@@ -14,6 +14,10 @@
 // Listas: cervos em game.deers, lobos em game.wolves (desenho/combate antigos), o resto em game.critters.
 (function () {
   const B = { P: 'plains', F: 'forest', D: 'dense_forest', H: 'hills', M: 'mountain' };
+  // Reinos: macro-regioes (js/regions.js) onde a especie vive. Sem `macros` = vive em qualquer lugar (as 7 antigas, por enquanto).
+  // Plano completo: docs/FAUNA_FLORA.md
+  const HOLARTICO = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'china', 'japao', 'america_norte'];
+  const FLORESTA_TEMPERADA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte'];
   // Ficha de especie. reg = parametros da simulacao "de numeros" (por segundo, por animal).
   //   diet: plantas/frutos que come (peso), prey: presas (peso), fears: quem faz fugir ('human' = jogador)
   //   temper: flee (foge), defend (investe se acuado), territorial (ataca quem chega perto), pack (matilha)
@@ -39,15 +43,15 @@
     wolf: {
       name: 'Lobo', list: 'wolves', biomes: [B.F, B.D, B.H, B.P], walk: 60, run: 215, radius: 11, w: 54, h: 60, hp: 35,
       sight: 150, scent: 1500, herd: [3, 4], fear: { town: 0.7, light: 0.45, fire: 1.0 }, fears: ['bear'], temper: 'pack',
-      hunger: 1 / 900, hunt: 0.45, chase: 4.0, pounce: 15, prey: { deer: 1, boar: 0.4, rabbit: 0.5 }, carrion: true, ambush: true,
-      reg: { kill: 0.0006, half: 1.5, value: { deer: 1, boar: 1.2, rabbit: 0.25 }, need: 0.0003, conv: 0.15, mort: 0.00002, max: 6,
+      hunger: 1 / 900, hunt: 0.45, chase: 4.0, pounce: 15, prey: { deer: 1, boar: 0.4, rabbit: 0.5, hare: 0.35 }, carrion: true, ambush: true,
+      reg: { kill: 0.0006, half: 1.5, value: { deer: 1, boar: 1.2, rabbit: 0.25, hare: 0.3 }, need: 0.0003, conv: 0.15, mort: 0.00002, max: 6,
         terr: (r) => 2 + r.pop.deer * 0.35 + (r.pop.boar || 0) * 0.3 + (r.pop.rabbit || 0) * 0.05, arrive: 0.00003, arriveIf: (r) => r.pop.deer > r.capS.deer * 0.7, start: [0.12, 3, 1.5] }
     },
     fox: {
       name: 'Raposa', biomes: [B.F, B.P, B.H], walk: 50, run: 240, radius: 8, w: 42, h: 32, hp: 12,
       sight: 95, scent: 700, herd: [1, 2], fear: { town: 0.9, light: 0.6, fire: 1.0 }, fears: ['wolf', 'bear', 'human'], temper: 'flee', tire: 3,
-      hunger: 1 / 600, hunt: 0.4, chase: 2.5, pounce: 11, prey: { rabbit: 1 }, carrion: true,
-      reg: { kill: 0.0012, half: 2, value: { rabbit: 1 }, need: 0.0007, conv: 0.2, mort: 0.00003, max: 3,
+      hunger: 1 / 600, hunt: 0.4, chase: 2.5, pounce: 11, prey: { rabbit: 1, hare: 0.4, pheasant: 0.5 }, carrion: true,
+      reg: { kill: 0.0012, half: 2, value: { rabbit: 1, hare: 1.2, pheasant: 0.6 }, need: 0.0007, conv: 0.2, mort: 0.00003, max: 3,
         terr: (r) => 1 + (r.pop.rabbit || 0) * 0.25, arrive: 0.00002, arriveIf: (r) => (r.pop.rabbit || 0) > 4, start: [0.25, 1, 1] }
     },
     bear: {
@@ -56,10 +60,42 @@
       hunger: 1 / 800, hunt: 0.7, chase: 3.0, pounce: 14, prey: { deer: 0.5, boar: 0.4 }, carrion: true, diet: { berries: 1, fruit: 1, mushrooms: 0.5 },
       reg: { density: 0.7, birth: 0.00012, starve: 0.0004, eat: { berries: 0.0003, mushrooms: 0.0001 }, kill: 0.00008, half: 2, start: [0.08, 1, 0] }
     },
+    hare: {      // Lebre: mais rapida e maior que o coelho; raposa, lince e lobo a cacam
+      name: 'Lebre', macros: HOLARTICO, biomes: [B.P, B.F, B.H], walk: 42, run: 290, radius: 7, w: 34, h: 28, hp: 6, xp: 12, ac: 13, carcass: 0.45,
+      sight: 210, herd: [1, 2], fear: { town: 0.8, light: 0.8 }, fears: ['fox', 'lynx', 'wolf', 'bear', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 240, diet: { grass: 1 }, born: '🐇 Nasceram leveretes na campina.',
+      reg: { density: 5, birth: 0.0025, starve: 0.0015, eat: { grass: 0.00007 } }
+    },
+    badger: {    // Texugo: baixo e teimoso; se acuado, morde forte. Come cogumelos, frutinhas e raizes
+      name: 'Texugo', macros: FLORESTA_TEMPERADA, biomes: [B.F, B.D, B.H], walk: 36, run: 125, radius: 9, w: 44, h: 26, hp: 18, dmg: 5, xp: 22, ac: 12, carcass: 0.55,
+      sight: 110, herd: [1, 1], fear: { town: 0.9, light: 0.5 }, fears: ['wolf', 'bear', 'lynx', 'human'], temper: 'defend', defendR: 70, tire: 4,
+      hunger: 1 / 380, diet: { mushrooms: 1, berries: 0.7, grass: 0.2 }, charge: '🦡 O texugo rosnou e partiu para cima!', hit: (d) => `🦡 O texugo te mordeu (-${d} HP)!`, born: '🦡 Nasceu um filhote de texugo na toca.',
+      reg: { density: 1.1, birth: 0.0004, starve: 0.0006, eat: { mushrooms: 0.00005, berries: 0.00004, grass: 0.00003 } }
+    },
+    squirrel: {  // Esquilo-vermelho: pequeno, foge para longe; vive de frutinhas e cogumelos nas matas
+      name: 'Esquilo', macros: FLORESTA_TEMPERADA, biomes: [B.F, B.D], walk: 44, run: 270, radius: 5, w: 22, h: 24, hp: 3, xp: 8, ac: 14, carcass: 0.3,
+      sight: 170, herd: [1, 2], fear: { town: 0.7, light: 0.7 }, fears: ['fox', 'lynx', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 260, diet: { berries: 1, mushrooms: 0.4 }, born: '🐿 Nasceram esquilos na copa das árvores.',
+      reg: { density: 5, birth: 0.0022, starve: 0.0014, eat: { berries: 0.00004, mushrooms: 0.00003 } }
+    },
+    pheasant: {  // Faisao: ave de chao; corre quando assustada
+      name: 'Faisão', macros: HOLARTICO, biomes: [B.P, B.F, B.H], walk: 32, run: 215, radius: 7, w: 34, h: 30, hp: 4, xp: 10, ac: 13, carcass: 0.4,
+      sight: 190, herd: [1, 3], fear: { town: 0.8, light: 0.8 }, fears: ['fox', 'lynx', 'wolf', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 250, diet: { grass: 0.7, berries: 0.8 }, born: '🐦 Nasceram pintinhos de faisão no mato.',
+      reg: { density: 4, birth: 0.002, starve: 0.0014, eat: { grass: 0.00005, berries: 0.00004 } }
+    },
+    lynx: {      // Lince: emboscada silenciosa; vive de lebre e coelho, as vezes cervo novo. Evita gente
+      name: 'Lince', macros: FLORESTA_TEMPERADA, biomes: [B.F, B.D, B.H, B.M], walk: 52, run: 245, radius: 9, w: 56, h: 40, hp: 28, dmg: 6, xp: 40, ac: 13, carcass: 0.8,
+      sight: 150, scent: 800, herd: [1, 1], fear: { town: 1.0, light: 0.6, fire: 1.0 }, fears: ['wolf', 'bear', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 700, hunt: 0.45, chase: 3.0, pounce: 12, prey: { hare: 1, rabbit: 0.8, pheasant: 0.5, deer: 0.12 },
+      reg: { kill: 0.0009, half: 1.5, value: { hare: 1, rabbit: 0.7, pheasant: 0.5, deer: 3 }, need: 0.0005, conv: 0.15, mort: 0.00002, max: 2,
+        terr: (r) => 0.6 + ((r.pop.hare || 0) + (r.pop.rabbit || 0) * 0.7) * 0.12, arrive: 0.00001, arriveIf: (r) => (r.pop.hare || 0) > 3, start: [0.12, 1, 0] }
+    },
     crow: { name: 'Corvo', w: 24, h: 18, hp: 2, radius: 5, fear: { town: 0, light: 0 }, fears: ['human'] }   // aparece nas carcacas (sem regiao)
   };
-  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear'], PREDATORS = ['wolf', 'fox'];
-  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear'];
+  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant'], PREDATORS = ['wolf', 'fox', 'lynx'];
+  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx'];
+  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger'];     // um grupo so ao ligar a regiao
   // lobo rondando gente: mais medo de entrar na vila que o normal (fica na borda, espreitando)
   const WOLF_AMBUSH = { ...SPECIES.wolf, name: 'LoboEspreita', fear: { ...SPECIES.wolf.fear, town: 1.2 } };
   const NEAR = 3200;              // limite de busca de lugar para nascer
@@ -111,6 +147,9 @@
       return !!(A && A.isSolidAt && A.isSolidAt(x, y, r, 0));
     }
     biome(x, y) { return this.terrain(x, y).type; }
+    macro(x, y) { const W = this.game.world, R = window.SurittoRegions; return W && R ? R.at(W, x, y).id : null; }
+    // A especie vive nesta macro-regiao? (sem `macros` na ficha = em qualquer lugar)
+    livesIn(kind, macro) { const m = SPECIES[kind].macros; return !m || !macro || m.includes(macro); }
     list(kind) { const g = this.game; return kind === 'deer' ? g.deers : kind === 'wolf' ? g.wolves : g.critters; }
 
     // Fontes de luz/fogo perto do jogador (refeito 1x por segundo)
@@ -216,7 +255,8 @@
         bio[t] = (bio[t] || 0) + 1 / 16; town = Math.max(town, this.townDanger(x, y));
       }
       const hab = cap.grass * (1 - town);
-      r = { key, cap, town, hab, plants: {}, capS: {}, pop: {}, hun: {}, birth: {}, active: false };
+      const cc = this.rcenter(key);
+      r = { key, cap, town, hab, plants: {}, capS: {}, pop: {}, hun: {}, birth: {}, active: false, macro: this.macro(cc.x, cc.y) };
       for (const p in PLANTS) r.plants[p] = cap[p] * (0.7 + Math.random() * 0.3);
       // capacidade de cada herbivoro: densidade x comida que ele come na regiao x fracao do bioma que ele habita x longe de vila
       for (const k of HERBIVORES) {
@@ -224,11 +264,12 @@
         for (const f in d) if (PLANTS[f]) { food += d[f] * cap[f]; w += d[f]; }
         const live = sp.biomes.reduce((s, t) => s + (bio[t] || 0), 0);
         r.capS[k] = Math.round(sp.reg.density * (w ? food / w : 0) * Math.min(1, live * 1.3) * (1 - town) * 10) / 10;
+        if (!this.livesIn(k, r.macro)) r.capS[k] = 0;
         r.pop[k] = r.capS[k] * (0.5 + Math.random() * 0.4);
       }
       for (const k of PREDATORS) {
         const s = SPECIES[k].reg.start;
-        const good = k === 'wolf' ? hab > 0.35 : (r.capS.rabbit || 0) > 3;
+        const good = this.livesIn(k, r.macro) && (k === 'wolf' ? hab > 0.35 : k === 'lynx' ? (r.capS.hare || 0) + (r.capS.rabbit || 0) > 3 : (r.capS.rabbit || 0) > 3);
         r.pop[k] = good && Math.random() < s[0] ? s[1] + Math.random() * s[2] : 0;
         r.hun[k] = 0.4;
       }
@@ -295,7 +336,7 @@
       // predador de fora chega numa regiao boa sem a especie (a area simulada nao e isolada)
       for (const k of PREDATORS) {
         const R = SPECIES[k].reg;
-        if (r.pop[k] === 0 && r.hab > 0.3 && R.arriveIf(r) && Math.random() < dt * R.arrive && !this.neighbors(r.key).some(o => o.pop[k] > 0)) { r.pop[k] = R.start[1] + Math.random() * R.start[2]; r.hun[k] = 0.5; }
+        if (r.pop[k] === 0 && r.hab > 0.3 && this.livesIn(k, r.macro) && R.arriveIf(r) && Math.random() < dt * R.arrive && !this.neighbors(r.key).some(o => o.pop[k] > 0)) { r.pop[k] = R.start[1] + Math.random() * R.start[2]; r.hun[k] = 0.5; }
       }
       // migracao: herbivoro sem comida procura a vizinha com mais comida; predador sem caca vai atras dela
       for (const k of HERBIVORES) {
@@ -338,7 +379,7 @@
       };
       for (const k of KINDS) {
         const sp = SPECIES[k]; let n = Math.floor(r.pop[k] || 0);
-        if (k === 'wolf' || k === 'fox' || k === 'bear') { if (n > 0) r.pop[k] -= group(k, n); continue; }   // matilha / solitario: um grupo so
+        if (SOLO.includes(k)) { if (n > 0) r.pop[k] -= group(k, n); continue; }   // matilha / solitario: um grupo so
         while (n > 0) { const g = Math.min(n, sp.herd[0] + Math.floor(Math.random() * (sp.herd[1] - sp.herd[0] + 1))), m = group(k, g); if (!m) break; n -= g; r.pop[k] -= m; }
         r.pop[k] = Math.max(0, r.pop[k]);
       }
@@ -407,7 +448,7 @@
           const m = list[Math.floor(Math.random() * list.length)], q = this.spot(sp, m.x, m.y, 10, 60);
           if (q) {
             const f = this.make(kind, q.x, q.y, m.herd); f.home = m.home; this.list(kind).push(f);
-            if (this.dist(m, P.x, P.y) < 900) g.addLog(kind === 'deer' ? '🦌 Um filhote nasceu na manada de cervos.' : kind === 'rabbit' ? '🐇 Nasceram filhotes de coelho na toca.' : '🐗 Um leitão nasceu no bando de javalis.', 'system');
+            if (this.dist(m, P.x, P.y) < 900) g.addLog(sp.born || (kind === 'deer' ? '🦌 Um filhote nasceu na manada de cervos.' : kind === 'rabbit' ? '🐇 Nasceram filhotes de coelho na toca.' : '🐗 Um leitão nasceu no bando de javalis.'), 'system');
           }
         }
       }
@@ -607,7 +648,7 @@
         if (best[0] === 'flee' && was !== 'flee') { e.state = 'alert'; e.alertTimer = 0.35; e.fleeTimer = Math.max(e.fleeTimer || 0, 4); if (window.sounds && pd < 700 && e.kind === 'deer') window.sounds.playRustle(); }
         if (best[0] === 'hunt') e.chaseTimer = sp.chase;
         if (best[0] === 'roam' || best[0] === 'graze') e.timer = 3 + Math.random() * 4;
-        if (best[0] === 'charge') { e.chargeT = 2.5; if (pd < 900) g.addLog(e.kind === 'bear' ? '🐻 O urso se ergueu e avançou para defender o território!' : '🐗 O javali bufou e partiu para cima!', 'warning'); }
+        if (best[0] === 'charge') { e.chargeT = 2.5; if (pd < 900) g.addLog(e.kind === 'bear' ? '🐻 O urso se ergueu e avançou para defender o território!' : (sp.charge || '🐗 O javali bufou e partiu para cima!'), 'warning'); }
         if (best[0] === 'ambush' && pd < 1200 && this.t - (this._ambushMsg || -1e9) > 60) { this._ambushMsg = this.t; g.addLog('🐺 Sem caça na região, a matilha faminta começou a rondar os humanos...', 'warning'); }
         e.act = best[0];
       }
@@ -643,7 +684,7 @@
           let d; [vx, vy, d] = toward(t.x, t.y, sp.run * 0.9);
           e.chargeT -= dt;
           if (d < 32 + sp.radius) {
-            if (t === P) { P.hp = Math.max(0, P.hp - sp.dmg); if (window.sounds) window.sounds.playWolfBite(); g.addLog(e.kind === 'bear' ? `🐻 A patada do urso acertou em cheio (-${sp.dmg} HP)! Afaste-se do território dele!` : `🐗 O javali te acertou com as presas (-${sp.dmg} HP)!`, 'warning'); g.updateHUD(); }
+            if (t === P) { P.hp = Math.max(0, P.hp - sp.dmg); if (window.sounds) window.sounds.playWolfBite(); g.addLog(e.kind === 'bear' ? `🐻 A patada do urso acertou em cheio (-${sp.dmg} HP)! Afaste-se do território dele!` : (sp.hit ? sp.hit(sp.dmg) : `🐗 O javali te acertou com as presas (-${sp.dmg} HP)!`), 'warning'); g.updateHUD(); }
             else if (t.hp !== undefined) { t.hp -= sp.dmg; t.act = 'flee'; t.fleeTimer = 3; t.threatSource = e; }
             e.chargeCd = sp.temper === 'territorial' ? 5 : 8; e.act = sp.temper === 'territorial' ? 'roam' : 'flee'; e.fleeTimer = 3; e.threatSource = t;
           } else if (e.chargeT <= 0) { e.chargeCd = 6; e.act = 'roam'; }
@@ -746,14 +787,14 @@
         const i = list.indexOf(prey); if (i === -1) return;
         list.splice(i, 1);
         g.spawnCarcass(prey.x, prey.y);
-        const c = g.carcasses[g.carcasses.length - 1]; if (c) { c.kind = prey.kind; c.scale = prey.kind === 'rabbit' ? 0.4 : prey.kind === 'boar' ? 0.85 : 1; }
-        const meal = prey.kind === 'rabbit' ? (w.kind === 'fox' ? 0.9 : 0.25) : 0.75;
+        const c = g.carcasses[g.carcasses.length - 1]; if (c) { c.kind = prey.kind; c.scale = SPECIES[prey.kind].carcass || (prey.kind === 'rabbit' ? 0.4 : prey.kind === 'boar' ? 0.85 : 1); }
+        const small = ['rabbit', 'hare', 'pheasant'].includes(prey.kind), meal = small ? (w.kind === 'wolf' || w.kind === 'bear' ? 0.25 : 0.9) : 0.75;
         for (const o of this.list(w.kind)) if (o.kind === w.kind && o.herd === w.herd) o.hunger = Math.max(0, o.hunger - meal);   // o bando come junto
         w.hunger = Math.max(0, w.hunger - meal); w.act = 'rest'; w.state = 'satiated';
         if (seen) {
           if (window.sounds && w.kind === 'wolf') { window.sounds.playWolfBite(); window.sounds.playWolfHowl(); }
-          const names = { deer: 'um cervo', boar: 'um javali', rabbit: 'um coelho' };
-          g.addLog(w.kind === 'fox' ? '🦊 Uma raposa deu o bote e pegou um coelho!' : w.kind === 'bear' ? `🐻 O urso derrubou ${names[prey.kind]}!` : `🐺 Um lobo predador saltou sobre ${names[prey.kind]} e o abateu! Carcaça fresca no solo.`, 'system');
+          const names = { deer: 'um cervo', boar: 'um javali', rabbit: 'um coelho', hare: 'uma lebre', pheasant: 'um faisão' };
+          g.addLog(w.kind === 'lynx' ? `🐆 Um lince saltou das sombras e pegou ${names[prey.kind]}!` : w.kind === 'fox' ? `🦊 Uma raposa deu o bote e pegou ${names[prey.kind]}!` : w.kind === 'bear' ? `🐻 O urso derrubou ${names[prey.kind]}!` : `🐺 Um lobo predador saltou sobre ${names[prey.kind]} e o abateu! Carcaça fresca no solo.`, 'system');
         }
         g.updateHUD();
       } else {

@@ -1,4 +1,4 @@
-// critters_draw.js - Desenho por codigo dos bichos novos da fauna (coelho, raposa, javali, urso, corvo) e das
+// critters_draw.js - Desenho por codigo dos bichos novos da fauna (coelho, raposa, javali, urso, corvo, lebre, texugo, esquilo, faisao, lince) e das
 // plantas (arbusto de frutinhas, cogumelos), ate existir arte do Gem para eles. Luz de cima-esquerda, contorno escuro,
 // 4 quadros de passo (frameIndex). (sx, sy) = pes no chao, na tela. Olhando para a esquerda; 'right' espelha.
 (function () {
@@ -140,9 +140,107 @@
     }
   }
 
+  // ---- Pacote A (Europa): lebre, texugo, esquilo, faisao, lince. Bloquinhos ate chegar a arte do Gem ----
+  function hare(c, e, sx, sy) {
+    shadow(c, sx, sy, 14, 4.5);
+    begin(c, e, sx, sy);
+    const moving = e.act === 'flee' || e.act === 'roam' || e.act === 'forage', hop = moving ? [0, -6, -9, -4][e.frameIndex % 4] : 0;
+    const head = e.state === 'grazing' ? 4 : 0;
+    c.translate(0, hop);
+    leg(c, 7, -7, 7, 3.4, '#6f5a45', swing(e.frameIndex, moving));
+    blob(c, 3, -12, 12, 7.5, '#9a8268');                       // corpo
+    blob(c, 3, -14.5, 8, 3.2, 'rgba(255,240,215,0.2)');
+    blob(c, 3, -8.5, 8, 3, '#d8ccb6');                         // barriga
+    blob(c, 14, -12, 3.2, 3.2, '#f1ece4');                     // rabo (preto em cima)
+    c.fillStyle = '#2a211a'; c.fillRect(13, -15, 4, 2);
+    leg(c, -6, -7, 7, 3.4, '#9a8268', -swing(e.frameIndex, moving));
+    blob(c, -9, -17 + head, 5.4, 4.6, '#a68e73');               // cabeca
+    blob(c, -8, -29 + head, 2.2, 8.5, '#947c62', -0.12);       // orelhas altas
+    blob(c, -4.5, -29 + head, 2.2, 8.5, '#a68e73', 0.2);
+    c.fillStyle = '#1c140d'; c.fillRect(-9.2, -37.5 + head, 2.6, 2.4); c.fillRect(-5.7, -37.5 + head, 2.6, 2.4);   // pontas pretas
+    c.fillStyle = OUT; c.fillRect(-12.5, -18.5 + head, 1.8, 1.8);
+    c.restore();
+  }
+  function badger(c, e, sx, sy) {
+    shadow(c, sx, sy, 19, 5.5);
+    begin(c, e, sx, sy);
+    const moving = e.act !== 'rest' && e.act !== 'idle', s = swing(e.frameIndex, moving) * 0.8;
+    leg(c, 9, -6, 6, 4, '#2a2420', s); leg(c, -8, -6, 6, 4, '#2a2420', -s);
+    blob(c, 2, -11, 17, 8.5, '#7c7a76');                       // corpo largo e baixo
+    blob(c, 2, -14, 12, 4, 'rgba(255,255,255,0.18)');
+    blob(c, -4, -9, 12, 4, '#4a4744');                         // flanco escuro
+    blob(c, 19, -11, 3.2, 2.4, '#6b6966');                     // rabo curto
+    leg(c, 5, -6, 6, 4, '#38322e', -s); leg(c, -11, -6, 6, 4, '#38322e', s);
+    blob(c, -15, -12, 7, 5.5, '#efece6');                      // cabeca clara
+    c.fillStyle = '#211c18'; c.beginPath(); c.moveTo(-21, -15); c.lineTo(-9, -17); c.lineTo(-10, -14); c.lineTo(-20, -12); c.closePath(); c.fill();   // faixa escura
+    c.fillStyle = '#211c18'; c.beginPath(); c.moveTo(-21, -9); c.lineTo(-12, -9.5); c.lineTo(-12, -7.5); c.closePath(); c.fill();
+    blob(c, -22, -11.5, 1.8, 1.6, '#17110d');                  // focinho
+    c.fillStyle = '#f5f5f0'; c.fillRect(-17.5, -14.2, 1.4, 1.4);
+    c.restore();
+  }
+  function squirrel(c, e, sx, sy) {
+    shadow(c, sx, sy, 8, 3);
+    begin(c, e, sx, sy);
+    const moving = e.act === 'flee' || e.act === 'roam' || e.act === 'forage', hop = moving ? [0, -3, -4, -2][e.frameIndex % 4] : 0;
+    c.translate(0, hop);
+    c.fillStyle = '#b5532a'; c.beginPath(); c.moveTo(4, -6); c.quadraticCurveTo(16, -14, 11, -26); c.quadraticCurveTo(4, -22, 1, -11); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // cauda enorme
+    blob(c, 11, -22, 2.6, 4, '#d9794a', 0.3);
+    leg(c, 2, -4, 4, 2.4, '#7a361b', swing(e.frameIndex, moving));
+    blob(c, 0, -9, 6.2, 5.2, '#c2602f');                       // corpo
+    blob(c, -1, -7, 3.6, 3, '#f1e6d2');                        // barriga
+    blob(c, -6, -14, 4, 3.6, '#c76a37');                       // cabeca
+    blob(c, -6.5, -18.5, 1.3, 2.6, '#a24a24');                 // orelhas com tufo
+    blob(c, -4, -18.5, 1.3, 2.6, '#a24a24');
+    blob(c, -9.5, -13.5, 1.5, 1.2, '#f1e6d2');
+    c.fillStyle = OUT; c.fillRect(-8.4, -15.2, 1.4, 1.4);
+    c.restore();
+  }
+  function pheasant(c, e, sx, sy) {
+    shadow(c, sx, sy, 11, 3.5);
+    begin(c, e, sx, sy);
+    const moving = e.act === 'flee' || e.act === 'roam' || e.act === 'forage', bob = moving ? [0, -1.5, 0, -1.5][e.frameIndex % 4] : 0, peck = e.state === 'grazing' ? 5 : 0;
+    c.translate(0, bob);
+    c.fillStyle = '#9a5a2a'; c.beginPath(); c.moveTo(8, -13); c.quadraticCurveTo(26, -17, 33, -8); c.quadraticCurveTo(22, -9, 9, -8); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // cauda longa
+    c.fillStyle = '#6b3a1a'; c.fillRect(14, -12.5, 14, 1.2);
+    leg(c, 1, -6, 6, 1.6, '#8a7a5a', swing(e.frameIndex, moving) * 0.7); leg(c, 4, -6, 6, 1.6, '#8a7a5a', -swing(e.frameIndex, moving) * 0.7);
+    blob(c, 1, -12, 9, 6.2, '#b0642e');                        // corpo cobre
+    blob(c, 0, -14, 6, 2.8, 'rgba(255,225,170,0.25)');
+    c.fillStyle = '#3a2a1a'; for (let i = 0; i < 4; i++) c.fillRect(-4 + i * 3.4, -12 + (i % 2), 1.4, 1.4);
+    blob(c, -7, -17 + peck, 3.8, 3.6, '#2f6b52');              // cabeca verde
+    blob(c, -9, -16 + peck, 1.9, 2, '#b8262a');                // face vermelha
+    c.fillStyle = '#efe9dc'; c.fillRect(-7, -14 + peck, 4, 1.2);   // colar branco
+    c.fillStyle = '#e0c060'; c.beginPath(); c.moveTo(-11, -17 + peck); c.lineTo(-14, -16 + peck); c.lineTo(-11, -15.5 + peck); c.closePath(); c.fill();
+    c.fillStyle = OUT; c.fillRect(-9.2, -18 + peck, 1.2, 1.2);
+    c.restore();
+  }
+  function lynx(c, e, sx, sy) {
+    shadow(c, sx, sy, 22, 6);
+    begin(c, e, sx, sy);
+    const moving = e.act !== 'rest' && e.state !== 'satiated' && e.act !== 'idle', s = swing(e.frameIndex, moving);
+    const low = e.act === 'stalk' || e.act === 'ambush' ? 4 : 0;
+    c.translate(0, low);
+    leg(c, 10, -11, 11, 3.6, '#5a4a34', s); leg(c, -9, -11, 11, 3.6, '#5a4a34', -s);
+    c.fillStyle = '#a07c4c'; c.beginPath(); c.moveTo(15, -16); c.quadraticCurveTo(22, -17, 23, -11); c.lineTo(14, -11); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // rabo curto
+    c.fillStyle = '#1c140d'; c.fillRect(20.5, -13, 2.6, 2.4);
+    blob(c, 3, -17, 17, 9, '#b8905a');                         // corpo
+    blob(c, 3, -20, 12, 4, 'rgba(255,235,190,0.22)');
+    c.fillStyle = '#5a4128'; for (const [x, y] of [[-4, -19], [3, -22], [9, -18], [-1, -15], [7, -14], [12, -20]]) c.fillRect(x, y, 2, 2);
+    blob(c, 3, -11, 12, 3.4, '#e6d9bd');                       // barriga clara
+    leg(c, 7, -11, 11, 3.6, '#6a5439', -s); leg(c, -13, -11, 11, 3.6, '#7a6244', s);
+    blob(c, -17, -21, 7.4, 6.6, '#c09a64');                    // cabeca com bochechas
+    blob(c, -21, -18, 4.4, 3.4, '#ece2cc');                    // bochecha clara
+    c.fillStyle = '#b8905a'; c.beginPath(); c.moveTo(-21, -26); c.lineTo(-19, -34); c.lineTo(-16, -27); c.closePath(); c.fill(); c.strokeStyle = OUT; c.stroke();   // orelha com tufo
+    c.beginPath(); c.moveTo(-15, -27); c.lineTo(-12, -34); c.lineTo(-11, -26); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = '#17110d'; c.fillRect(-19.8, -35.6, 1.6, 2.6); c.fillRect(-12.6, -35.6, 1.6, 2.6);
+    c.fillStyle = '#d9c24a'; c.fillRect(-22, -22.5, 2.2, 1.8);   // olho amarelo
+    c.fillStyle = OUT; c.fillRect(-21.4, -22.2, 1, 1.2);
+    blob(c, -24, -18, 1.6, 1.3, '#3a2a22');
+    c.restore();
+  }
+
   window.CritterArt = {
-    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow }[e.kind]; if (f) f(c, e, sx, sy); },
+    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx }[e.kind]; if (f) f(c, e, sx, sy); },
     plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },
-    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo' }
+    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince' }
   };
 })();

@@ -790,6 +790,7 @@ class Game {
 
     // Bichos novos da fauna (coelho, raposa, javali, urso, corvo)
     const LOOT = { rabbit: [['meat', 1], ['rabbit_fur', 1]], fox: [['fox_pelt', 1]], boar: [['meat', 3], ['boar_tusk', 2]], bear: [['meat', 4], ['bear_pelt', 1]], crow: [] };
+    const FS = (window.Fauna && window.Fauna.SPECIES) || {};
     const XP = { rabbit: 10, fox: 20, boar: 35, bear: 80, crow: 2 };
     const DEFESA = { rabbit: 13, fox: 13, boar: 11, bear: 11, crow: 12 };       // D&D 5e (urso pardo 11)
     for (let i = this.critters.length - 1; i >= 0; i--) {
@@ -797,7 +798,7 @@ class Game {
       const cdx = this.world ? this.world.wrapDelta(p.x - c.x) : (p.x - c.x);
       if (Math.hypot(cdx, p.y - c.y + (c.z || 0)) > f.alcance + (c.kind === 'bear' ? 10 : 0)) continue;
       const name = (window.CritterArt && window.CritterArt.names[c.kind]) || c.kind;
-      const r = C.rolar(p, w, DEFESA[c.kind] || 12);
+      const r = C.rolar(p, w, DEFESA[c.kind] || (FS[c.kind] && FS[c.kind].ac) || 12);
       mostrar(c, r);
       if (!r.acertou) {
         if (c.kind !== 'crow') { c.act = c.kind === 'bear' ? 'charge' : 'flee'; c.chargeT = 2.5; c.fleeTimer = 4; c.threatSource = p; }
@@ -808,10 +809,10 @@ class Game {
         this.critters.splice(i, 1);
         if (c.kind !== 'crow') {
           this.spawnCarcass(c.x, c.y);
-          const k = this.carcasses[this.carcasses.length - 1]; if (k) { k.kind = c.kind; k.scale = c.kind === 'rabbit' ? 0.4 : c.kind === 'fox' ? 0.55 : c.kind === 'bear' ? 1.35 : 0.85; }
+          const k = this.carcasses[this.carcasses.length - 1]; if (k) { k.kind = c.kind; k.scale = (FS[c.kind] && FS[c.kind].carcass) || (c.kind === 'rabbit' ? 0.4 : c.kind === 'fox' ? 0.55 : c.kind === 'bear' ? 1.35 : 0.85); }
         }
         for (const [id, n] of LOOT[c.kind] || []) this.inventory.addItem(id, n);
-        if (this.skills) { this.skills.addXP('hunter', XP[c.kind] || 10); this.skills.addXP('attack', Math.round((XP[c.kind] || 10) / 2)); }
+        if (this.skills) { const xp = XP[c.kind] || (FS[c.kind] && FS[c.kind].xp) || 10; this.skills.addXP('hunter', xp); this.skills.addXP('attack', Math.round(xp / 2)); }
         if (window.sounds) window.sounds.playCritSuccess();
         const got = (LOOT[c.kind] || []).map(([id, n]) => `+${n} ${this.inventory.itemDB[id] ? this.inventory.itemDB[id].name : id}`).join(', ');
         this.addLog(`🏹 Você abateu: ${name}!${got ? ` (${got})` : ''}`, 'action');
