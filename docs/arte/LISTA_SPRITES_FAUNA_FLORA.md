@@ -146,6 +146,8 @@ Legenda: ⭐ = fazer primeiro · ✅ = já existe · 🟦 = temos só os "bloqui
 - Domésticos de lá: boi-zebu, galinha caipira, cavalo crioulo
 - **Flora:** [ ] Mogno · [ ] Seringueira · [ ] Pau-brasil/Ipê · [ ] Palmeiras (açaí, buriti, coco) · [ ] Araucária · [ ] Bambu · [ ] Mandioca, milho, cana, café (cultivo) · [ ] Frutas (caju, goiaba, banana, manga, pequi, abacaxi) · [ ] Samambaia-gigante, bromélia, vitória-régia
 
+### Pacote D: África e deserto (🟦 bloquinhos no jogo: zebra, gnu, gazela, girafa, elefante, rinoceronte, avestruz, camelo, órix, leão, leopardo, hiena, abutre, crocodilo-do-Nilo, hipopótamo, escorpião, naja; falta raposa-do-deserto)
+
 ### Pacote C: Frio e polar
 - [ ] ⭐ Alce · [ ] ⭐ Rena · [ ] ⭐ Lebre-da-neve · [ ] ⭐ Urso-polar · [ ] ⭐ Raposa-do-ártico
 - [ ] ⭐ Coruja-das-neves · [ ] Glutão · [ ] Boi-almiscarado · [ ] ⭐ Pinguim (polo sul, anda em terra/gelo)

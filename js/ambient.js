@@ -7,6 +7,7 @@
   const HOLARTICO = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'china', 'japao', 'america_norte'];
   const FLORESTA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte', 'china', 'japao'];
   const TROPICO_AM = ['brasil', 'america_central'];
+  const DESERTO = ['africa', 'oriente_medio'];
   const AMBIENT = {
     owl: { name: 'Coruja', w: 30, h: 34, hp: 4, xp: 10, ac: 14, carcass: 0.35, macros: FLORESTA, biomes: ['forest', 'dense_forest', 'hills'], night: true, cap: 1, group: [1, 1], spook: 170, flyZ: 62 },
     duck: { name: 'Pato-real', w: 32, h: 26, hp: 4, xp: 6, ac: 13, carcass: 0.4, macros: null, biomes: ['plains', 'forest', 'shore', 'hills', 'dense_forest'], water: true, cap: 3, group: [1, 3], spook: 150, flyZ: 58 },
@@ -17,9 +18,14 @@
     caiman: { name: 'Jacaré', w: 72, h: 22, hp: 26, xp: 40, ac: 12, carcass: 0.9, macros: TROPICO_AM, biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 2, group: [1, 1], spook: 110, run: 95, walk: 12 },
     snowy_owl: { name: 'Coruja-das-neves', w: 32, h: 36, hp: 5, xp: 14, ac: 14, carcass: 0.4, macros: null, lat: [48, 90], biomes: ['snow', 'plains', 'hills', 'forest'], cap: 1, group: [1, 1], spook: 170, flyZ: 62, perch: true },
     penguin: { name: 'Pinguim', w: 26, h: 34, hp: 6, xp: 12, ac: 12, carcass: 0.4, macros: null, lat: [-90, -60], biomes: ['snow', 'shore', 'plains', 'hills'], cap: 6, group: [2, 4], spook: 90, run: 70, walk: 14 },
+    vulture: { name: 'Abutre', w: 40, h: 40, hp: 8, xp: 20, ac: 13, carcass: 0.6, macros: DESERTO, biomes: ['plains', 'hills', 'desert', 'canyon'], cap: 3, group: [1, 3], spook: 190, flyZ: 90, perch: true, perchZ: 30 },
+    nile_croc: { name: 'Crocodilo-do-Nilo', w: 110, h: 24, hp: 30, xp: 50, ac: 13, carcass: 1.0, macros: ['africa'], biomes: ['plains', 'shore', 'forest'], water: true, cap: 2, group: [1, 1], spook: 110, run: 90, walk: 12 },
+    hippo: { name: 'Hipopótamo', w: 100, h: 60, hp: 70, xp: 120, ac: 13, carcass: 2.0, macros: ['africa'], biomes: ['plains', 'shore', 'forest'], water: true, cap: 2, group: [1, 2], spook: 80, run: 45, walk: 10 },
+    scorpion: { name: 'Escorpião', w: 24, h: 18, hp: 2, xp: 8, ac: 12, carcass: 0, macros: DESERTO, biomes: ['desert', 'canyon', 'plains'], cap: 3, group: [1, 2], spook: 50, run: 70, walk: 10 },
+    cobra: { name: 'Naja', w: 26, h: 34, hp: 6, xp: 20, ac: 13, carcass: 0.1, macros: DESERTO, biomes: ['desert', 'canyon', 'plains', 'hills'], cap: 2, group: [1, 1], spook: 60, run: 80, walk: 12 },
     beaver: { name: 'Castor', w: 38, h: 26, hp: 12, xp: 14, ac: 12, carcass: 0.5, macros: HOLARTICO, biomes: ['plains', 'forest', 'shore', 'dense_forest', 'hills'], water: true, cap: 2, group: [1, 1], spook: 120, run: 120, walk: 22 }
   };
-  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12 };
+  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5 };
   const NEAR = 1500, GONE = 2300;
 
   function install() {
@@ -107,7 +113,7 @@
           if (!this.blocked(nx, ny, RAD[e.kind] + 2)) { e.x = nx; e.y = ny; if (Math.abs(vx) > 0.15) e.direction = vx > 0 ? 'right' : 'left'; }
           else { e.act = 'idle'; e.timer = 1; e.target = null; }
         }
-        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda') e.frameIndex = (e.frameIndex + 1) % 4; }
+        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra') e.frameIndex = (e.frameIndex + 1) % 4; }
       }
     };
   }

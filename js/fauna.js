@@ -21,19 +21,21 @@
   const TROPICO_AM = ['brasil', 'america_central'];                    // Brasil e America Central
   const CAMPO_SUL = ['brasil', 'america_sul_hispanica'];               // campos do sul: pampas, cerrado
   const FRIOS = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'oriente_medio', 'sudoeste_asiatico', 'china', 'japao', 'america_norte', 'america_sul_hispanica'];   // onde vivem lobo e urso (nao no tropico, na Africa nem na Oceania)
+  const SAVANA = ['africa'];                                           // savana africana
+  const DESERTO = ['africa', 'oriente_medio'];                         // desertos: Saara/Arabia
   const FLORESTA_TEMPERADA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte'];
   // Ficha de especie. reg = parametros da simulacao "de numeros" (por segundo, por animal).
   //   diet: plantas/frutos que come (peso), prey: presas (peso), fears: quem faz fugir ('human' = jogador)
   //   temper: flee (foge), defend (investe se acuado), territorial (ataca quem chega perto), pack (matilha)
   const SPECIES = {
     deer: {
-      name: 'Cervo', list: 'deers', biomes: [B.P, B.F, B.D, B.H], walk: 55, run: 230, radius: 11, w: 58, h: 68, hp: 20,
+      name: 'Cervo', list: 'deers', notMacros: ['africa'], biomes: [B.P, B.F, B.D, B.H], walk: 55, run: 230, radius: 11, w: 58, h: 68, hp: 20,
       sight: 260, herd: [3, 5], fear: { town: 1.0, light: 1.0 }, fears: ['wolf', 'bear', 'human'], temper: 'flee', tire: 3,
       hunger: 1 / 300, diet: { grass: 1, fruit: 0.6 },
       reg: { density: 7, birth: 0.0012, starve: 0.001, eat: { grass: 0.00025 } }
     },
     rabbit: {
-      name: 'Coelho', biomes: [B.P, B.F, B.H], walk: 38, run: 255, radius: 6, w: 26, h: 22, hp: 4,
+      name: 'Coelho', notMacros: ['africa'], biomes: [B.P, B.F, B.H], walk: 38, run: 255, radius: 6, w: 26, h: 22, hp: 4,
       sight: 190, herd: [1, 3], fear: { town: 0.8, light: 0.8 }, fears: ['fox', 'wolf', 'bear', 'human'], temper: 'flee', tire: 2,
       hunger: 1 / 240, diet: { grass: 1 },
       reg: { density: 9, birth: 0.0028, starve: 0.0015, eat: { grass: 0.00006 } }
@@ -209,11 +211,92 @@
       reg: { kill: 0.0008, half: 1.5, value: { snow_hare: 1, rabbit: 0.5, hare: 0.8 }, need: 0.0005, conv: 0.15, mort: 0.00002, max: 2,
         terr: (r) => 0.6 + ((r.pop.snow_hare || 0) + (r.pop.hare || 0)) * 0.1, arrive: 0.00001, arriveIf: (r) => (r.pop.snow_hare || 0) > 3, start: [0.1, 1, 0] }
     },
+    // ---- Pacote D: Africa e deserto ----
+    zebra: {     // Zebra: manada listrada; foge dos leoes e das hienas
+      name: 'Zebra', macros: SAVANA, biomes: [B.P, B.H], walk: 46, run: 235, radius: 12, w: 64, h: 62, hp: 26, xp: 30, ac: 11, carcass: 1.0,
+      sight: 260, herd: [4, 8], fear: { town: 1.0, light: 0.9 }, fears: ['lion', 'hyena', 'leopard', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 320, diet: { grass: 1 }, born: '🦓 Nasceu um potro de zebra na manada.',
+      reg: { density: 5, birth: 0.001, starve: 0.001, eat: { grass: 0.00018 } }
+    },
+    wildebeest: { // Gnu: manada enorme que anda atras do capim
+      name: 'Gnu', macros: SAVANA, biomes: [B.P, B.H], walk: 44, run: 225, radius: 12, w: 64, h: 62, hp: 28, xp: 30, ac: 11, carcass: 1.0,
+      sight: 230, herd: [5, 9], fear: { town: 1.0, light: 0.9 }, fears: ['lion', 'hyena', 'leopard', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 320, diet: { grass: 1 }, born: '🐃 Nasceu um bezerro de gnu.',
+      reg: { density: 5.5, birth: 0.001, starve: 0.001, eat: { grass: 0.0002 } }
+    },
+    gazelle: {   // Gazela: pequena e muito rapida
+      name: 'Gazela', macros: SAVANA, biomes: [B.P, B.H, 'desert'], walk: 50, run: 310, radius: 8, w: 40, h: 48, hp: 10, xp: 14, ac: 14, carcass: 0.5,
+      sight: 280, herd: [4, 7], fear: { town: 0.9, light: 0.9 }, fears: ['lion', 'hyena', 'leopard', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 260, diet: { grass: 1 }, born: '🦌 Nasceu um filhote de gazela.',
+      reg: { density: 6, birth: 0.0018, starve: 0.0013, eat: { grass: 0.00009 } }
+    },
+    giraffe: {   // Girafa: alta, enxerga longe; se acuada, chuta
+      name: 'Girafa', macros: ['africa'], biomes: [B.P, B.H], walk: 36, run: 170, radius: 14, w: 70, h: 132, hp: 55, dmg: 12, xp: 60, ac: 12, carcass: 1.6,
+      sight: 360, herd: [2, 4], fear: { town: 1.0, light: 0.7 }, fears: ['lion', 'human'], temper: 'defend', defendR: 80, tire: 5,
+      hunger: 1 / 520, diet: { berries: 1, grass: 0.3 }, charge: '🦒 A girafa recuou e deu um coice!', hit: (d) => `🦒 O coice da girafa te acertou (-${d} HP)!`, born: '🦒 Nasceu um filhote de girafa.',
+      reg: { density: 1.6, birth: 0.0005, starve: 0.0006, eat: { berries: 0.00006, grass: 0.00005 } }
+    },
+    elephant: {  // Elefante: manada; investe contra quem chega perto dos filhotes
+      name: 'Elefante', macros: ['africa'], biomes: [B.P, B.H, B.F], walk: 34, run: 150, radius: 22, w: 124, h: 100, hp: 110, dmg: 22, xp: 150, ac: 12, carcass: 2.5,
+      sight: 220, herd: [2, 4], fear: { town: 1.1, light: 0.4, fire: 0.6 }, fears: ['human'], temper: 'defend', defendR: 130, tire: 7,
+      hunger: 1 / 700, diet: { grass: 1, berries: 0.5 }, charge: '🐘 O elefante levantou a tromba e investiu!', hit: (d) => `🐘 O elefante te pisoteou (-${d} HP)!`, born: '🐘 Nasceu um filhote de elefante.',
+      reg: { density: 0.9, birth: 0.0002, starve: 0.0004, eat: { grass: 0.00016, berries: 0.00003 } }
+    },
+    rhino: {     // Rinoceronte: solitario, miope e territorial; ataca quem invade
+      name: 'Rinoceronte', macros: ['africa'], biomes: [B.P, B.H], walk: 30, run: 200, radius: 18, w: 90, h: 62, hp: 80, dmg: 18, xp: 100, ac: 14, carcass: 1.8,
+      sight: 140, herd: [1, 1], fear: { town: 1.0, light: 0.3, fire: 0.5 }, fears: [], temper: 'territorial', territoryR: 140, tire: 6,
+      hunger: 1 / 650, diet: { grass: 1 }, charge: '🦏 O rinoceronte baixou o chifre e avançou!', hit: (d) => `🦏 O chifre do rinoceronte te acertou (-${d} HP)!`, born: '🦏 Nasceu um filhote de rinoceronte.',
+      reg: { density: 0.7, birth: 0.0002, starve: 0.0004, eat: { grass: 0.0001 } }
+    },
+    ostrich: {   // Avestruz: corre muito; se encurralada, chuta forte
+      name: 'Avestruz', macros: SAVANA, biomes: [B.P, B.H, 'desert'], walk: 44, run: 270, radius: 10, w: 50, h: 92, hp: 22, dmg: 7, xp: 26, ac: 12, carcass: 0.9,
+      sight: 300, herd: [2, 4], fear: { town: 1.0, light: 0.8 }, fears: ['lion', 'hyena', 'human'], temper: 'defend', defendR: 60, tire: 4,
+      hunger: 1 / 400, diet: { grass: 1, berries: 0.5 }, charge: '🪶 O avestruz deu um chute poderoso!', hit: (d) => `🪶 O chute do avestruz te acertou (-${d} HP)!`, born: '🪶 Nasceu um filhote de avestruz.',
+      reg: { density: 3, birth: 0.0012, starve: 0.001, eat: { grass: 0.0001, berries: 0.00004 } }
+    },
+    camel: {     // Camelo: aguenta o deserto; manada pequena
+      name: 'Camelo', macros: DESERTO, biomes: ['desert', 'canyon', B.P, B.H], walk: 38, run: 160, radius: 14, w: 76, h: 84, hp: 38, xp: 40, ac: 11, carcass: 1.4,
+      sight: 280, herd: [2, 4], fear: { town: 0.8, light: 0.6 }, fears: ['human'], temper: 'flee', tire: 5,
+      hunger: 1 / 700, diet: { grass: 1 }, born: '🐪 Nasceu um filhote de camelo.',
+      reg: { density: 6, birth: 0.0006, starve: 0.0005, eat: { grass: 0.00008 } }
+    },
+    oryx: {      // Orix: antilope do deserto de chifres compridos; se acuado, espeta
+      name: 'Órix', macros: DESERTO, biomes: ['desert', 'canyon', B.P, B.H], walk: 44, run: 250, radius: 10, w: 56, h: 66, hp: 24, dmg: 8, xp: 30, ac: 13, carcass: 0.9,
+      sight: 280, herd: [3, 5], fear: { town: 1.0, light: 0.8 }, fears: ['lion', 'leopard', 'hyena', 'human'], temper: 'flee', tire: 4,
+      hunger: 1 / 420, diet: { grass: 1 }, born: '🦌 Nasceu um filhote de órix.',
+      reg: { density: 6, birth: 0.0009, starve: 0.0008, eat: { grass: 0.00009 } }
+    },
+    lion: {      // Leao: rei da savana; ataca quem invade o territorio e caca em emboscada
+      name: 'Leão', macros: ['africa'], biomes: [B.P, B.H, B.F], walk: 48, run: 240, radius: 15, w: 84, h: 56, hp: 55, dmg: 14, xp: 90, ac: 13, carcass: 1.3,
+      sight: 240, scent: 1100, herd: [1, 1], fear: { town: 1.1, light: 0.3, fire: 0.7 }, fears: [], temper: 'territorial', territoryR: 140, tire: 5,
+      hunger: 1 / 800, hunt: 0.5, chase: 3.4, pounce: 14, prey: { zebra: 1, wildebeest: 1, gazelle: 0.6, giraffe: 0.3, ostrich: 0.3, oryx: 0.4 }, carrion: true, ambush: true,
+      charge: '🦁 O leão rugiu e saltou sobre você!', hit: (d) => `🦁 As garras do leão te rasgaram (-${d} HP)!`,
+      reg: { kill: 0.0007, half: 1.5, value: { zebra: 1.2, wildebeest: 1.2, gazelle: 0.4, giraffe: 3, ostrich: 0.7, oryx: 0.8 }, need: 0.0004, conv: 0.14, mort: 0.00002, max: 3,
+        terr: (r) => 0.8 + ((r.pop.zebra || 0) + (r.pop.wildebeest || 0)) * 0.2, arrive: 0.00001, arriveIf: (r) => (r.pop.zebra || 0) + (r.pop.wildebeest || 0) + (r.pop.gazelle || 0) > 4, start: [0.2, 1, 1],
+        startIf: (r) => (r.capS.zebra || 0) + (r.capS.wildebeest || 0) + (r.capS.gazelle || 0) > 4 }
+    },
+    hyena: {     // Hiena: bando que come carcaca e caca os fracos; mais ousada a noite
+      name: 'Hiena', macros: ['africa'], biomes: [B.P, B.H, B.F, 'desert'], walk: 50, run: 215, radius: 10, w: 56, h: 44, hp: 24, dmg: 7, xp: 35, ac: 12, carcass: 0.7,
+      sight: 200, scent: 1200, herd: [2, 3], fear: { town: 0.9, light: 0.6, fire: 0.9 }, fears: ['lion'], temper: 'defend', defendR: 90, tire: 4,
+      hunger: 1 / 650, hunt: 0.5, chase: 3.2, pounce: 12, prey: { gazelle: 1, wildebeest: 0.4, zebra: 0.3, oryx: 0.4, rabbit: 0.5 }, carrion: true,
+      charge: '🐕 A hiena mostrou os dentes e atacou!', hit: (d) => `🐕 A hiena te mordeu (-${d} HP)!`,
+      reg: { kill: 0.0009, half: 1.5, value: { gazelle: 1, wildebeest: 1.5, zebra: 1.5, oryx: 1, rabbit: 0.3 }, need: 0.0005, conv: 0.16, mort: 0.00003, max: 4,
+        terr: (r) => 0.8 + (r.pop.gazelle || 0) * 0.15, arrive: 0.00001, arriveIf: (r) => (r.pop.gazelle || 0) + (r.pop.wildebeest || 0) > 4, start: [0.2, 2, 1],
+        startIf: (r) => (r.capS.gazelle || 0) + (r.capS.wildebeest || 0) > 3 }
+    },
+    leopard: {   // Leopardo: solitario e discreto; foge de gente, mas e mortal se acuado
+      name: 'Leopardo', macros: ['africa'], biomes: [B.D, B.F, B.P, B.H], walk: 50, run: 250, radius: 11, w: 66, h: 42, hp: 34, dmg: 10, xp: 60, ac: 14, carcass: 0.9,
+      sight: 170, scent: 900, herd: [1, 1], fear: { town: 1.1, light: 0.5, fire: 1.0 }, fears: ['lion', 'human'], temper: 'flee', tire: 4,
+      hunger: 1 / 800, hunt: 0.45, chase: 3.2, pounce: 12, prey: { gazelle: 1, oryx: 0.5, ostrich: 0.2, rabbit: 0.4 },
+      reg: { kill: 0.0007, half: 1.5, value: { gazelle: 1, oryx: 1, ostrich: 1, rabbit: 0.2 }, need: 0.0004, conv: 0.14, mort: 0.00002, max: 2,
+        terr: (r) => 0.7 + (r.pop.gazelle || 0) * 0.2, arrive: 0.00001, arriveIf: (r) => (r.pop.gazelle || 0) + (r.pop.oryx || 0) > 3, start: [0.1, 1, 0],
+        startIf: (r) => (r.capS.gazelle || 0) + (r.capS.oryx || 0) > 3 }
+    },
     crow: { name: 'Corvo', w: 24, h: 18, hp: 2, radius: 5, fear: { town: 0, light: 0 }, fears: ['human'] }   // aparece nas carcacas (sem regiao)
   };
-  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar', 'polar_bear', 'arctic_fox', 'wolverine'];
-  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'polar_bear', 'arctic_fox', 'wolverine'];
-  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo', 'moose', 'polar_bear', 'arctic_fox', 'wolverine'];     // um grupo so ao ligar a regiao
+  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar', 'polar_bear', 'arctic_fox', 'wolverine', 'lion', 'hyena', 'leopard'];
+  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'polar_bear', 'arctic_fox', 'wolverine', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'lion', 'hyena', 'leopard'];
+  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo', 'moose', 'polar_bear', 'arctic_fox', 'wolverine', 'rhino', 'lion', 'leopard'];     // um grupo so ao ligar a regiao
   // lobo rondando gente: mais medo de entrar na vila que o normal (fica na borda, espreitando)
   const WOLF_AMBUSH = { ...SPECIES.wolf, name: 'LoboEspreita', fear: { ...SPECIES.wolf.fear, town: 1.2 } };
   const NEAR = 3200;              // limite de busca de lugar para nascer
@@ -223,7 +306,7 @@
   const SAVE_KEY = 'suritto_fauna_v2';
   // capacidade de cada planta por bioma (0..1) e rebrota (fracao da capacidade por segundo, no maximo)
   const PLANTS = {
-    grass: { cap: { plains: 1, forest: 0.8, dense_forest: 0.45, hills: 0.6, shore: 0.1, desert: 0.05, canyon: 0.05, mountain: 0.1, snow: 0.3 }, regrow: 0.004 },
+    grass: { cap: { plains: 1, forest: 0.8, dense_forest: 0.45, hills: 0.6, shore: 0.1, desert: 0.35, canyon: 0.2, mountain: 0.1, snow: 0.3 }, regrow: 0.004 },
     berries: { cap: { forest: 0.6, dense_forest: 0.8, hills: 0.4, plains: 0.2, mountain: 0.15 }, regrow: 0.0015 },
     mushrooms: { cap: { dense_forest: 0.8, forest: 0.4, hills: 0.1 }, regrow: 0.003 },
     herbs: { cap: { plains: 0.7, forest: 0.5, hills: 0.5, shore: 0.2 }, regrow: 0.0012 }    // camomila, hortela, salvia (so no reino europeu/temperado)
@@ -269,7 +352,7 @@
     biome(x, y) { return this.terrain(x, y).type; }
     macro(x, y) { const W = this.game.world, R = window.SurittoRegions; return W && R ? R.at(W, x, y).id : null; }
     // A especie vive nesta macro-regiao? (sem `macros` na ficha = em qualquer lugar)
-    livesIn(kind, r) { const sp = SPECIES[kind], m = sp.macros; if (m && r.macro && !m.includes(r.macro)) return false; return !sp.lat || (r.lat >= sp.lat[0] && r.lat <= sp.lat[1]); }
+    livesIn(kind, r) { const sp = SPECIES[kind], m = sp.macros; if (m && r.macro && !m.includes(r.macro)) return false; if (sp.notMacros && sp.notMacros.includes(r.macro)) return false; return !sp.lat || (r.lat >= sp.lat[0] && r.lat <= sp.lat[1]); }
     list(kind) { const g = this.game; return kind === 'deer' ? g.deers : kind === 'wolf' ? g.wolves : g.critters; }
 
     // Fontes de luz/fogo perto do jogador (refeito 1x por segundo)
@@ -390,7 +473,7 @@
       }
       for (const k of PREDATORS) {
         const s = SPECIES[k].reg.start;
-        const good = this.livesIn(k, r) && (k === 'polar_bear' ? (r.capS.reindeer || 0) + (r.capS.snow_hare || 0) > 1 : k === 'arctic_fox' ? (r.capS.snow_hare || 0) > 2 : k === 'wolverine' ? (r.capS.snow_hare || 0) + (r.capS.rabbit || 0) > 2 : true) && (k === 'wolf' ? hab > 0.35 : k === 'lynx' ? (r.capS.hare || 0) + (r.capS.rabbit || 0) > 3 : k === 'jaguar' ? (r.capS.capybara || 0) + (r.capS.peccary || 0) > 2 : (r.capS.rabbit || 0) > 3);
+        const SI = SPECIES[k].reg.startIf, good = this.livesIn(k, r) && (SI ? SI(r) : ((k === 'polar_bear' ? (r.capS.reindeer || 0) + (r.capS.snow_hare || 0) > 1 : k === 'arctic_fox' ? (r.capS.snow_hare || 0) > 2 : k === 'wolverine' ? (r.capS.snow_hare || 0) + (r.capS.rabbit || 0) > 2 : true) && (k === 'wolf' ? hab > 0.35 : k === 'lynx' ? (r.capS.hare || 0) + (r.capS.rabbit || 0) > 3 : k === 'jaguar' ? (r.capS.capybara || 0) + (r.capS.peccary || 0) > 2 : (r.capS.rabbit || 0) > 3)));
         r.pop[k] = good && Math.random() < s[0] ? s[1] + Math.random() * s[2] : 0;
         r.hun[k] = 0.4;
       }
