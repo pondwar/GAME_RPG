@@ -2856,9 +2856,12 @@ class Game {
         // estocada = lanca na folha de duas maos (avanco agachado), adaga e espada curta na de uma mao; corte = uma mao
         const w = this.player.equippedWeapon, C = window.SurittoCombate, mov = C.ficha(w).mov;
         const f = sideDir === 'left' ? -1 : 1;
-        set = mov === 'machadada' ? (lado('attack_2h') || lado('attack_1h'))
-          : mov === 'estocada' ? ((w === 'lanca' && lado('attack_2h')) || lado('attack_1h'))
-          : mov === 'soco' ? (lado('punch') || lado('attack_1h')) : lado('attack_1h');
+        // golpe de espada para baixo/cima usa a folha de frente/costas quando a raca tem (humano); senao a de lado
+        const frenteCosta = (acao) => ((dir === 'up' || dir === 'down') && rs[acao] && rs[acao][dir]) || null;
+        const corte1h = () => frenteCosta('attack_1h') || lado('attack_1h');
+        set = mov === 'machadada' ? (lado('attack_2h') || corte1h())
+          : mov === 'estocada' ? ((w === 'lanca' && lado('attack_2h')) || corte1h())
+          : mov === 'soco' ? (lado('punch') || corte1h()) : corte1h();
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
         if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w ? f : 0; }
         if (!set || idx < 0) { set = parado; idx = 0; }   // antes e depois do golpe: a guarda (boneco parado)
