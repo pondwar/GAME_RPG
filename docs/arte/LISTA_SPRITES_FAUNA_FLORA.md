@@ -148,6 +148,8 @@ Legenda: ⭐ = fazer primeiro · ✅ = já existe · 🟦 = temos só os "bloqui
 
 ### Pacote D: África e deserto (🟦 bloquinhos no jogo: zebra, gnu, gazela, girafa, elefante, rinoceronte, avestruz, camelo, órix, leão, leopardo, hiena, abutre, crocodilo-do-Nilo, hipopótamo, escorpião, naja; falta raposa-do-deserto)
 
+### Pacote E: Ásia (🟦 bloquinhos no jogo: tigre, panda-gigante, iaque, tahr, leopardo-das-neves, elefante-asiático, búfalo-d'água, macaco-rhesus, grou, pavão, píton)
+
 ### Pacote C: Frio e polar
 - [ ] ⭐ Alce · [ ] ⭐ Rena · [ ] ⭐ Lebre-da-neve · [ ] ⭐ Urso-polar · [ ] ⭐ Raposa-do-ártico
 - [ ] ⭐ Coruja-das-neves · [ ] Glutão · [ ] Boi-almiscarado · [ ] ⭐ Pinguim (polo sul, anda em terra/gelo)

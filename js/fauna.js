@@ -21,6 +21,9 @@
   const TROPICO_AM = ['brasil', 'america_central'];                    // Brasil e America Central
   const CAMPO_SUL = ['brasil', 'america_sul_hispanica'];               // campos do sul: pampas, cerrado
   const FRIOS = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'oriente_medio', 'sudoeste_asiatico', 'china', 'japao', 'america_norte', 'america_sul_hispanica'];   // onde vivem lobo e urso (nao no tropico, na Africa nem na Oceania)
+  const ASIA_TIGRE = ['sudoeste_asiatico', 'sul_asiatico', 'china'];     // onde vive o tigre
+  const ASIA_TROP = ['sudoeste_asiatico', 'sul_asiatico'];              // Asia tropical: India e Indochina/Indonesia
+  const HIMALAIA = ['sudoeste_asiatico', 'china'];                       // altas montanhas da Asia
   const SAVANA = ['africa'];                                           // savana africana
   const DESERTO = ['africa', 'oriente_medio'];                         // desertos: Saara/Arabia
   const FLORESTA_TEMPERADA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte'];
@@ -292,11 +295,64 @@
         terr: (r) => 0.7 + (r.pop.gazelle || 0) * 0.2, arrive: 0.00001, arriveIf: (r) => (r.pop.gazelle || 0) + (r.pop.oryx || 0) > 3, start: [0.1, 1, 0],
         startIf: (r) => (r.capS.gazelle || 0) + (r.capS.oryx || 0) > 3 }
     },
+    // ---- Pacote E: Asia ----
+    tiger: {     // Tigre: solitario e muito forte; caça de emboscada; evita gente, mas e mortal se acuado
+      name: 'Tigre', macros: ASIA_TIGRE, lat: [-10, 50], biomes: [B.D, B.F, B.P, B.H], walk: 50, run: 245, radius: 15, w: 88, h: 58, hp: 62, dmg: 15, xp: 110, ac: 13, carcass: 1.3,
+      sight: 180, scent: 1000, herd: [1, 1], fear: { town: 1.1, light: 0.4, fire: 0.9 }, fears: ['human'], temper: 'flee', tire: 5,
+      hunger: 1 / 850, hunt: 0.5, chase: 3.4, pounce: 14, prey: { deer: 0.8, boar: 0.8, water_buffalo: 0.35, macaque: 0.2, rabbit: 0.2 }, ambush: true,
+      reg: { kill: 0.0007, half: 1.5, value: { deer: 1, boar: 1.2, water_buffalo: 3, macaque: 0.3, rabbit: 0.2 }, need: 0.0004, conv: 0.14, mort: 0.00002, max: 2,
+        terr: (r) => 0.8 + ((r.pop.deer || 0) + (r.pop.boar || 0)) * 0.12, arrive: 0.00001, arriveIf: (r) => (r.pop.deer || 0) + (r.pop.boar || 0) + (r.pop.water_buffalo || 0) > 3, start: [0.12, 1, 0],
+        startIf: (r) => (r.capS.deer || 0) + (r.capS.boar || 0) + (r.capS.water_buffalo || 0) > 3 }
+    },
+    giant_panda: { // Panda-gigante: calmo, vive nos bambuzais da China; so reage se acuado
+      name: 'Panda-gigante', macros: ['china'], lat: [22, 36], biomes: [B.D, B.F, B.M], walk: 26, run: 90, radius: 15, w: 84, h: 62, hp: 42, dmg: 10, xp: 70, ac: 12, carcass: 1.0,
+      sight: 140, herd: [1, 1], fear: { town: 1.0, light: 0.5 }, fears: ['human'], temper: 'defend', defendR: 55, tire: 6,
+      hunger: 1 / 600, diet: { grass: 1, berries: 0.3 }, charge: '🐼 O panda se ergueu e deu uma patada!', hit: (d) => `🐼 A patada do panda te acertou (-${d} HP)!`, born: '🐼 Nasceu um filhote de panda.',
+      reg: { density: 0.9, birth: 0.0002, starve: 0.0004, eat: { grass: 0.00008, berries: 0.00003 } }
+    },
+    yak: {       // Iaque: gigante peludo do Himalaia; manada, investe se acuado
+      name: 'Iaque', macros: HIMALAIA, lat: [26, 46], biomes: [B.M, B.H, B.S, B.P], walk: 30, run: 150, radius: 15, w: 88, h: 66, hp: 48, dmg: 12, xp: 55, ac: 12, carcass: 1.4,
+      sight: 200, herd: [3, 5], fear: { town: 1.0, light: 0.5 }, fears: ['wolf', 'snow_leopard', 'human'], temper: 'defend', defendR: 100, tire: 5,
+      hunger: 1 / 480, diet: { grass: 1 }, charge: '🐂 O iaque baixou a cabeça e investiu!', hit: (d) => `🐂 O chifre do iaque te acertou (-${d} HP)!`, born: '🐂 Nasceu um bezerro de iaque.',
+      reg: { density: 3.5, birth: 0.0005, starve: 0.0006, eat: { grass: 0.00012 } }
+    },
+    tahr: {      // Tahr: bode selvagem das encostas; sobe onde ninguem chega
+      name: 'Tahr', macros: HIMALAIA, lat: [26, 46], biomes: [B.M, B.H, B.S], walk: 40, run: 230, radius: 9, w: 48, h: 56, hp: 16, xp: 22, ac: 13, carcass: 0.7,
+      sight: 260, herd: [4, 8], fear: { town: 1.0, light: 0.8 }, fears: ['snow_leopard', 'wolf', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 340, diet: { grass: 1 }, born: '🐐 Nasceu um cabritinho de tahr.',
+      reg: { density: 6, birth: 0.0012, starve: 0.001, eat: { grass: 0.0001 } }
+    },
+    snow_leopard: { // Leopardo-das-neves: o fantasma das montanhas; solitario
+      name: 'Leopardo-das-neves', macros: HIMALAIA, lat: [26, 46], biomes: [B.M, B.S, B.H], walk: 48, run: 245, radius: 12, w: 70, h: 44, hp: 34, dmg: 10, xp: 70, ac: 14, carcass: 0.9,
+      sight: 170, scent: 900, herd: [1, 1], fear: { town: 1.1, light: 0.5, fire: 1.0 }, fears: ['human'], temper: 'flee', tire: 4,
+      hunger: 1 / 800, hunt: 0.45, chase: 3.2, pounce: 12, prey: { tahr: 1, yak: 0.1, rabbit: 0.3 },
+      reg: { kill: 0.0007, half: 1.5, value: { tahr: 1, yak: 3, rabbit: 0.2 }, need: 0.0004, conv: 0.14, mort: 0.00002, max: 2,
+        terr: (r) => 0.7 + (r.pop.tahr || 0) * 0.2, arrive: 0.00001, arriveIf: (r) => (r.pop.tahr || 0) > 2, start: [0.18, 1, 0],
+        startIf: (r) => (r.capS.tahr || 0) > 1 }
+    },
+    asian_elephant: { // Elefante-asiatico: orelha menor que o africano; manada, investe se acuado
+      name: 'Elefante-asiático', macros: ASIA_TROP, lat: [-8, 28], biomes: [B.D, B.F, B.P], walk: 34, run: 150, radius: 21, w: 118, h: 96, hp: 100, dmg: 20, xp: 130, ac: 12, carcass: 2.3,
+      sight: 220, herd: [2, 4], fear: { town: 1.1, light: 0.4, fire: 0.6 }, fears: ['human'], temper: 'defend', defendR: 125, tire: 7,
+      hunger: 1 / 700, diet: { grass: 1, berries: 0.5 }, charge: '🐘 O elefante levantou a tromba e investiu!', hit: (d) => `🐘 O elefante te pisoteou (-${d} HP)!`, born: '🐘 Nasceu um filhote de elefante-asiático.',
+      reg: { density: 1.8, birth: 0.0002, starve: 0.0004, eat: { grass: 0.00016, berries: 0.00004 } }
+    },
+    water_buffalo: { // Bufalo-d'agua: manada de alagados e campos; muito teimoso
+      name: "Búfalo-d'água", macros: ASIA_TROP, lat: [-8, 32], biomes: [B.P, B.D, B.F], walk: 34, run: 170, radius: 17, w: 96, h: 66, hp: 50, dmg: 14, xp: 60, ac: 12, carcass: 1.4,
+      sight: 190, herd: [3, 6], fear: { town: 1.0, light: 0.6 }, fears: ['tiger', 'human'], temper: 'defend', defendR: 100, tire: 5,
+      hunger: 1 / 480, diet: { grass: 1 }, charge: '🐃 O búfalo baixou os chifres e investiu!', hit: (d) => `🐃 O chifre do búfalo te acertou (-${d} HP)!`, born: '🐃 Nasceu um bezerro de búfalo.',
+      reg: { density: 4, birth: 0.0005, starve: 0.0006, eat: { grass: 0.00014 } }
+    },
+    macaque: {   // Macaco-rhesus: bando barulhento nas matas e perto de templos
+      name: 'Macaco-rhesus', macros: ASIA_TROP, lat: [0, 36], biomes: [B.D, B.F, B.H], walk: 42, run: 235, radius: 7, w: 34, h: 38, hp: 8, xp: 16, ac: 14, carcass: 0.4,
+      sight: 220, herd: [4, 8], fear: { town: 0.5, light: 0.7 }, fears: ['tiger', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 260, diet: { berries: 1, grass: 0.3 }, born: '🐒 Nasceu um filhote de macaco no bando.',
+      reg: { density: 3.5, birth: 0.0016, starve: 0.0012, eat: { berries: 0.00008, grass: 0.00003 } }
+    },
     crow: { name: 'Corvo', w: 24, h: 18, hp: 2, radius: 5, fear: { town: 0, light: 0 }, fears: ['human'] }   // aparece nas carcacas (sem regiao)
   };
-  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar', 'polar_bear', 'arctic_fox', 'wolverine', 'lion', 'hyena', 'leopard'];
-  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'polar_bear', 'arctic_fox', 'wolverine', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'lion', 'hyena', 'leopard'];
-  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo', 'moose', 'polar_bear', 'arctic_fox', 'wolverine', 'rhino', 'lion', 'leopard'];     // um grupo so ao ligar a regiao
+  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'giant_panda', 'yak', 'tahr', 'asian_elephant', 'water_buffalo', 'macaque'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar', 'polar_bear', 'arctic_fox', 'wolverine', 'lion', 'hyena', 'leopard', 'tiger', 'snow_leopard'];
+  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'polar_bear', 'arctic_fox', 'wolverine', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'lion', 'hyena', 'leopard', 'giant_panda', 'yak', 'tahr', 'asian_elephant', 'water_buffalo', 'macaque', 'tiger', 'snow_leopard'];
+  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo', 'moose', 'polar_bear', 'arctic_fox', 'wolverine', 'rhino', 'lion', 'leopard', 'tiger', 'snow_leopard', 'giant_panda'];     // um grupo so ao ligar a regiao
   // lobo rondando gente: mais medo de entrar na vila que o normal (fica na borda, espreitando)
   const WOLF_AMBUSH = { ...SPECIES.wolf, name: 'LoboEspreita', fear: { ...SPECIES.wolf.fear, town: 1.2 } };
   const NEAR = 3200;              // limite de busca de lugar para nascer
@@ -306,7 +362,7 @@
   const SAVE_KEY = 'suritto_fauna_v2';
   // capacidade de cada planta por bioma (0..1) e rebrota (fracao da capacidade por segundo, no maximo)
   const PLANTS = {
-    grass: { cap: { plains: 1, forest: 0.8, dense_forest: 0.45, hills: 0.6, shore: 0.1, desert: 0.35, canyon: 0.2, mountain: 0.1, snow: 0.3 }, regrow: 0.004 },
+    grass: { cap: { plains: 1, forest: 0.8, dense_forest: 0.45, hills: 0.6, shore: 0.1, desert: 0.35, canyon: 0.2, mountain: 0.3, snow: 0.3 }, regrow: 0.004 },
     berries: { cap: { forest: 0.6, dense_forest: 0.8, hills: 0.4, plains: 0.2, mountain: 0.15 }, regrow: 0.0015 },
     mushrooms: { cap: { dense_forest: 0.8, forest: 0.4, hills: 0.1 }, regrow: 0.003 },
     herbs: { cap: { plains: 0.7, forest: 0.5, hills: 0.5, shore: 0.2 }, regrow: 0.0012 }    // camomila, hortela, salvia (so no reino europeu/temperado)

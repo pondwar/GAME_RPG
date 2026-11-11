@@ -23,9 +23,12 @@
     hippo: { name: 'Hipopótamo', w: 100, h: 60, hp: 70, xp: 120, ac: 13, carcass: 2.0, macros: ['africa'], biomes: ['plains', 'shore', 'forest'], water: true, cap: 2, group: [1, 2], spook: 80, run: 45, walk: 10 },
     scorpion: { name: 'Escorpião', w: 24, h: 18, hp: 2, xp: 8, ac: 12, carcass: 0, macros: DESERTO, biomes: ['desert', 'canyon', 'plains'], cap: 3, group: [1, 2], spook: 50, run: 70, walk: 10 },
     cobra: { name: 'Naja', w: 26, h: 34, hp: 6, xp: 20, ac: 13, carcass: 0.1, macros: DESERTO, biomes: ['desert', 'canyon', 'plains', 'hills'], cap: 2, group: [1, 1], spook: 60, run: 80, walk: 12 },
+    crane: { name: 'Grou-de-coroa-vermelha', w: 34, h: 56, hp: 6, xp: 16, ac: 13, carcass: 0.5, macros: ['china', 'japao'], biomes: ['plains', 'shore', 'forest'], water: true, cap: 3, group: [1, 2], spook: 170, flyZ: 80 },
+    peafowl: { name: 'Pavão', w: 36, h: 40, hp: 6, xp: 14, ac: 13, carcass: 0.5, macros: ['sudoeste_asiatico', 'sul_asiatico'], biomes: ['plains', 'forest', 'dense_forest', 'hills'], cap: 3, group: [1, 3], spook: 120, flyZ: 50, walk: 14 },
+    python: { name: 'Píton-reticulada', w: 100, h: 18, hp: 28, xp: 55, ac: 12, carcass: 0.8, macros: ['sudoeste_asiatico', 'sul_asiatico'], biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 1, group: [1, 1], spook: 80, run: 60, walk: 9 },
     beaver: { name: 'Castor', w: 38, h: 26, hp: 12, xp: 14, ac: 12, carcass: 0.5, macros: HOLARTICO, biomes: ['plains', 'forest', 'shore', 'dense_forest', 'hills'], water: true, cap: 2, group: [1, 1], spook: 120, run: 120, walk: 22 }
   };
-  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5 };
+  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5, crane: 8, peafowl: 7, python: 12 };
   const NEAR = 1500, GONE = 2300;
 
   function install() {
@@ -113,7 +116,7 @@
           if (!this.blocked(nx, ny, RAD[e.kind] + 2)) { e.x = nx; e.y = ny; if (Math.abs(vx) > 0.15) e.direction = vx > 0 ? 'right' : 'left'; }
           else { e.act = 'idle'; e.timer = 1; e.target = null; }
         }
-        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra') e.frameIndex = (e.frameIndex + 1) % 4; }
+        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra' || e.kind === 'python') e.frameIndex = (e.frameIndex + 1) % 4; }
       }
     };
   }
