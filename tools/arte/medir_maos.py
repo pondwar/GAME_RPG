@@ -71,6 +71,7 @@ def medir(f, corpo, acao, d):
     #   de lado: o braco de perto (o maior, passa na frente do corpo);
     #   de frente, de costas e na diagonal: o lado da imagem onde fica a mao direita do personagem
     lado_img = LADO_MAO.get(d)
+    if acao == 'attack_1h' and d in ('left', 'right'): lado_img = -1 if d == 'left' else 1      # golpe de espada em 3/4: sempre o braco da mao direita (o que bate), nao o que fica caido
     if lado_img is None:
         i = max(comps, key=lambda i: st[i, cv2.CC_STAT_AREA])
     else:
