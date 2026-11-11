@@ -26,9 +26,15 @@
     crane: { name: 'Grou-de-coroa-vermelha', w: 34, h: 56, hp: 6, xp: 16, ac: 13, carcass: 0.5, macros: ['china', 'japao'], biomes: ['plains', 'shore', 'forest'], water: true, cap: 3, group: [1, 2], spook: 170, flyZ: 80 },
     peafowl: { name: 'Pavão', w: 36, h: 40, hp: 6, xp: 14, ac: 13, carcass: 0.5, macros: ['sudoeste_asiatico', 'sul_asiatico'], biomes: ['plains', 'forest', 'dense_forest', 'hills'], cap: 3, group: [1, 3], spook: 120, flyZ: 50, walk: 14 },
     python: { name: 'Píton-reticulada', w: 100, h: 18, hp: 28, xp: 55, ac: 12, carcass: 0.8, macros: ['sudoeste_asiatico', 'sul_asiatico'], biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 1, group: [1, 1], spook: 80, run: 60, walk: 9 },
+    bald_eagle: { name: 'Águia-careca', w: 40, h: 40, hp: 8, xp: 22, ac: 14, carcass: 0.6, macros: ['america_norte'], biomes: ['plains', 'shore', 'forest', 'hills'], water: true, cap: 2, group: [1, 2], spook: 200, flyZ: 110, perch: true, perchZ: 30 },
+    turkey: { name: 'Peru-selvagem', w: 34, h: 36, hp: 6, xp: 14, ac: 12, carcass: 0.6, macros: ['america_norte'], biomes: ['plains', 'forest', 'hills'], cap: 3, group: [2, 4], spook: 130, flyZ: 40, walk: 14 },
+    rattlesnake: { name: 'Cascavel', w: 30, h: 16, hp: 5, xp: 18, ac: 13, carcass: 0.1, macros: ['america_norte', 'america_central'], biomes: ['desert', 'canyon', 'plains', 'hills'], cap: 2, group: [1, 1], spook: 60, run: 70, walk: 11 },
+    kookaburra: { name: 'Kookaburra', w: 24, h: 28, hp: 4, xp: 10, ac: 13, carcass: 0.3, macros: ['oceania'], biomes: ['forest', 'plains', 'dense_forest'], cap: 3, group: [1, 2], spook: 110, flyZ: 50 },
+    koala: { name: 'Coala', w: 28, h: 32, hp: 7, xp: 16, ac: 12, carcass: 0.4, macros: ['oceania'], biomes: ['forest', 'dense_forest'], cap: 2, group: [1, 1], spook: 70, run: 50, walk: 8 },
+    condor: { name: 'Condor-dos-Andes', w: 48, h: 44, hp: 10, xp: 28, ac: 13, carcass: 0.8, macros: ['america_sul_hispanica'], biomes: ['hills', 'plains', 'desert'], cap: 2, group: [1, 3], spook: 210, flyZ: 130, perch: true, perchZ: 30 },
     beaver: { name: 'Castor', w: 38, h: 26, hp: 12, xp: 14, ac: 12, carcass: 0.5, macros: HOLARTICO, biomes: ['plains', 'forest', 'shore', 'dense_forest', 'hills'], water: true, cap: 2, group: [1, 1], spook: 120, run: 120, walk: 22 }
   };
-  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5, crane: 8, peafowl: 7, python: 12 };
+  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5, crane: 8, peafowl: 7, python: 12, bald_eagle: 8, turkey: 7, rattlesnake: 5, kookaburra: 5, koala: 5, condor: 9 };
   const NEAR = 1500, GONE = 2300;
 
   function install() {
@@ -116,7 +122,7 @@
           if (!this.blocked(nx, ny, RAD[e.kind] + 2)) { e.x = nx; e.y = ny; if (Math.abs(vx) > 0.15) e.direction = vx > 0 ? 'right' : 'left'; }
           else { e.act = 'idle'; e.timer = 1; e.target = null; }
         }
-        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra' || e.kind === 'python') e.frameIndex = (e.frameIndex + 1) % 4; }
+        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra' || e.kind === 'python' || e.kind === 'rattlesnake') e.frameIndex = (e.frameIndex + 1) % 4; }
       }
     };
   }

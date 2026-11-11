@@ -24,6 +24,10 @@
   const ASIA_TIGRE = ['sudoeste_asiatico', 'sul_asiatico', 'china'];     // onde vive o tigre
   const ASIA_TROP = ['sudoeste_asiatico', 'sul_asiatico'];              // Asia tropical: India e Indochina/Indonesia
   const HIMALAIA = ['sudoeste_asiatico', 'china'];                       // altas montanhas da Asia
+  const PRADARIA_NORTE = ['america_norte'];                              // pradarias e montanhas da America do Norte
+  const AMERICAS_PUMA = ['america_norte', 'america_central', 'america_sul_hispanica', 'brasil'];   // onde vive o puma
+  const OCEANIA = ['oceania'];                                            // Australia e Nova Zelandia
+  const ANDES = ['america_sul_hispanica'];                               // Andes e pampas
   const SAVANA = ['africa'];                                           // savana africana
   const DESERTO = ['africa', 'oriente_medio'];                         // desertos: Saara/Arabia
   const FLORESTA_TEMPERADA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte'];
@@ -348,11 +352,93 @@
       hunger: 1 / 260, diet: { berries: 1, grass: 0.3 }, born: '🐒 Nasceu um filhote de macaco no bando.',
       reg: { density: 3.5, birth: 0.0016, starve: 0.0012, eat: { berries: 0.00008, grass: 0.00003 } }
     },
+    // ---- Pacote F: America do Norte ----
+    bison: {     // Bisao: manada enorme das pradarias; calmo, mas investe se acuado
+      name: 'Bisão', macros: PRADARIA_NORTE, lat: [28, 58], biomes: [B.P, B.H, B.D], walk: 32, run: 170, radius: 18, w: 100, h: 74, hp: 58, dmg: 15, xp: 65, ac: 12, carcass: 1.6,
+      sight: 200, herd: [4, 7], fear: { town: 1.0, light: 0.5 }, fears: ['wolf', 'puma', 'bear', 'human'], temper: 'defend', defendR: 110, tire: 5,
+      hunger: 1 / 480, diet: { grass: 1 }, charge: '🦬 O bisão baixou a cabeça e investiu!', hit: (d) => `🦬 A cabeçada do bisão te acertou (-${d} HP)!`, born: '🦬 Nasceu um bezerro de bisão.',
+      reg: { density: 2.4, birth: 0.0005, starve: 0.0006, eat: { grass: 0.00014 } }
+    },
+    wapiti: {    // Wapiti: cervo grande de manada, com galhada; foge
+      name: 'Wapiti', macros: ['america_norte'], lat: [30, 62], biomes: [B.F, B.H, B.P, B.M], walk: 38, run: 210, radius: 14, w: 82, h: 86, hp: 34, xp: 40, ac: 12, carcass: 1.2,
+      sight: 230, herd: [3, 6], fear: { town: 1.0, light: 0.8 }, fears: ['wolf', 'puma', 'bear', 'coyote', 'human'], temper: 'flee', tire: 4,
+      hunger: 1 / 460, diet: { grass: 1, berries: 0.3 }, born: '🦌 Nasceu um filhote de wapiti.',
+      reg: { density: 3, birth: 0.0007, starve: 0.0008, eat: { grass: 0.00012, berries: 0.00004 } }
+    },
+    pronghorn: { // Antilocapra: o bicho mais veloz da America; bando de campo aberto
+      name: 'Antilocapra', macros: PRADARIA_NORTE, lat: [28, 52], biomes: [B.P, B.D, B.H], walk: 44, run: 300, radius: 10, w: 56, h: 60, hp: 14, xp: 20, ac: 14, carcass: 0.7,
+      sight: 280, herd: [4, 8], fear: { town: 1.0, light: 0.8 }, fears: ['coyote', 'puma', 'wolf', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 340, diet: { grass: 1 }, born: '🦌 Nasceu um filhote de antilocapra.',
+      reg: { density: 4, birth: 0.0012, starve: 0.001, eat: { grass: 0.00010 } }
+    },
+    puma: {      // Puma: solitario, caca de emboscada, vive das Rochosas aos Andes
+      name: 'Puma', macros: AMERICAS_PUMA, lat: [-50, 58], biomes: [B.F, B.D, B.H, B.M, B.P], walk: 50, run: 250, radius: 12, w: 72, h: 46, hp: 36, dmg: 10, xp: 75, ac: 13, carcass: 0.9,
+      sight: 170, scent: 900, herd: [1, 1], fear: { town: 1.1, light: 0.5, fire: 1.0 }, fears: ['human'], temper: 'flee', tire: 4,
+      hunger: 1 / 800, hunt: 0.5, chase: 3.2, pounce: 12, prey: { deer: 0.9, wapiti: 0.4, pronghorn: 0.5, guanaco: 0.7, vicuna: 0.5, rabbit: 0.2 }, ambush: true,
+      reg: { kill: 0.0007, half: 1.5, value: { deer: 1, wapiti: 2.5, pronghorn: 0.8, guanaco: 2, vicuna: 1.2, rabbit: 0.2 }, need: 0.0004, conv: 0.14, mort: 0.00002, max: 2,
+        terr: (r) => 0.8 + ((r.pop.deer || 0) + (r.pop.wapiti || 0) + (r.pop.guanaco || 0)) * 0.1, arrive: 0.00001, arriveIf: (r) => (r.pop.deer || 0) + (r.pop.wapiti || 0) + (r.pop.guanaco || 0) > 3, start: [0.12, 1, 0],
+        startIf: (r) => (r.capS.deer || 0) + (r.capS.wapiti || 0) + (r.capS.guanaco || 0) + (r.capS.vicuna || 0) > 3 }
+    },
+    coyote: {    // Coiote: esperto e adaptavel; caca coelhos e lebres, evita gente
+      name: 'Coiote', macros: ['america_norte', 'america_central'], lat: [15, 62], biomes: [B.P, B.D, B.H, B.F], walk: 46, run: 235, radius: 9, w: 52, h: 42, hp: 16, dmg: 5, xp: 28, ac: 13, carcass: 0.6,
+      sight: 190, scent: 900, herd: [1, 2], fear: { town: 1.1, light: 0.6, fire: 1.0 }, fears: ['human'], temper: 'flee', tire: 4,
+      hunger: 1 / 700, hunt: 0.5, chase: 3, pounce: 10, prey: { rabbit: 0.8, hare: 0.7, pronghorn: 0.05 },
+      reg: { kill: 0.0007, half: 1.4, value: { rabbit: 1, hare: 1.2, pronghorn: 3 }, need: 0.0004, conv: 0.18, mort: 0.00003, max: 3,
+        terr: (r) => 0.7 + ((r.pop.rabbit || 0) + (r.pop.hare || 0)) * 0.12, arrive: 0.00001, arriveIf: (r) => (r.pop.rabbit || 0) + (r.pop.hare || 0) > 3, start: [0.2, 1, 0],
+        startIf: (r) => (r.capS.rabbit || 0) + (r.capS.hare || 0) > 3 }
+    },
+    // ---- Pacote G: Oceania ----
+    kangaroo: {  // Canguru: pula em bando pelas planicies; chuta se acuado
+      name: 'Canguru', macros: OCEANIA, lat: [-45, -10], biomes: [B.P, B.D, B.H], walk: 36, run: 290, radius: 12, w: 66, h: 80, hp: 26, dmg: 8, xp: 34, ac: 13, carcass: 1.0,
+      sight: 230, herd: [3, 6], fear: { town: 1.0, light: 0.7 }, fears: ['dingo', 'human'], temper: 'defend', defendR: 70, tire: 3,
+      hunger: 1 / 420, diet: { grass: 1 }, charge: '🦘 O canguru se apoiou na cauda e chutou!', hit: (d) => `🦘 O chute do canguru te acertou (-${d} HP)!`, born: '🦘 Nasceu um filhote de canguru.',
+      reg: { density: 3.2, birth: 0.0008, starve: 0.0008, eat: { grass: 0.00012 } }
+    },
+    emu: {       // Emu: ave grande que nao voa, corre muito
+      name: 'Emu', macros: OCEANIA, lat: [-45, -10], biomes: [B.P, B.D, B.H], walk: 36, run: 260, radius: 11, w: 52, h: 72, hp: 18, dmg: 4, xp: 26, ac: 12, carcass: 0.8,
+      sight: 240, herd: [2, 4], fear: { town: 1.0, light: 0.7 }, fears: ['dingo', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 380, diet: { grass: 1, berries: 0.4 }, born: '🐦 Nasceu um filhote de emu.',
+      reg: { density: 2.6, birth: 0.001, starve: 0.0009, eat: { grass: 0.00010, berries: 0.00004 } }
+    },
+    wombat: {    // Vombate: cavador atarracado, solitario
+      name: 'Vombate', macros: OCEANIA, lat: [-45, -20], biomes: [B.F, B.H, B.P], walk: 22, run: 110, radius: 9, w: 46, h: 30, hp: 22, dmg: 6, xp: 24, ac: 12, carcass: 0.7,
+      sight: 120, herd: [1, 2], fear: { town: 1.0, light: 0.4 }, fears: ['dingo', 'human'], temper: 'defend', defendR: 40, tire: 4,
+      hunger: 1 / 420, diet: { grass: 1 }, charge: '🐾 O vombate correu de cabeça para cima de você!', hit: (d) => `🐾 O vombate te acertou (-${d} HP)!`, born: '🐾 Nasceu um filhote de vombate.',
+      reg: { density: 1.8, birth: 0.0006, starve: 0.0007, eat: { grass: 0.00008 } }
+    },
+    dingo: {     // Dingo: cao selvagem da Australia; caça cangurus e coelhos
+      name: 'Dingo', macros: OCEANIA, lat: [-45, -10], biomes: [B.P, B.D, B.H, B.F], walk: 48, run: 230, radius: 10, w: 56, h: 44, hp: 20, dmg: 6, xp: 34, ac: 13, carcass: 0.7,
+      sight: 190, scent: 950, herd: [1, 2], fear: { town: 1.1, light: 0.6, fire: 1.0 }, fears: ['human'], temper: 'flee', tire: 4,
+      hunger: 1 / 700, hunt: 0.5, chase: 3, pounce: 10, prey: { kangaroo: 0.4, rabbit: 0.8, emu: 0.1, wombat: 0.3 },
+      reg: { kill: 0.0007, half: 1.4, value: { kangaroo: 2, rabbit: 1, emu: 2, wombat: 1.2 }, need: 0.0004, conv: 0.16, mort: 0.00003, max: 3,
+        terr: (r) => 0.7 + ((r.pop.kangaroo || 0) + (r.pop.rabbit || 0)) * 0.1, arrive: 0.00001, arriveIf: (r) => (r.pop.kangaroo || 0) + (r.pop.rabbit || 0) > 3, start: [0.2, 1, 0],
+        startIf: (r) => (r.capS.kangaroo || 0) + (r.capS.rabbit || 0) > 3 }
+    },
+    // ---- Pacote H: Andes e pampas ----
+    guanaco: {   // Guanaco: parente selvagem da lhama; bando nos pampas e nas encostas
+      name: 'Guanaco', macros: ANDES, lat: [-55, 5], biomes: [B.P, B.H, B.M, B.D], walk: 38, run: 240, radius: 12, w: 62, h: 82, hp: 24, xp: 32, ac: 12, carcass: 1.0,
+      sight: 250, herd: [4, 8], fear: { town: 1.0, light: 0.8 }, fears: ['puma', 'human'], temper: 'flee', tire: 4,
+      hunger: 1 / 420, diet: { grass: 1 }, born: '🦙 Nasceu um filhote de guanaco.',
+      reg: { density: 3.4, birth: 0.0008, starve: 0.0008, eat: { grass: 0.00012 } }
+    },
+    vicuna: {    // Vicunha: a mais delicada e rapida dos Andes altos
+      name: 'Vicunha', macros: ANDES, lat: [-40, 5], biomes: [B.M, B.H, B.S], walk: 40, run: 255, radius: 9, w: 48, h: 68, hp: 14, xp: 24, ac: 13, carcass: 0.7,
+      sight: 270, herd: [4, 9], fear: { town: 1.0, light: 0.8 }, fears: ['puma', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 340, diet: { grass: 1 }, born: '🦙 Nasceu um filhote de vicunha.',
+      reg: { density: 4, birth: 0.0012, starve: 0.001, eat: { grass: 0.00010 } }
+    },
+    viscacha: {  // Viscacha: roedor parecido com coelho, vive em tocas nas pedras
+      name: 'Viscacha', macros: ANDES, lat: [-50, 0], biomes: [B.H, B.M, B.P], walk: 30, run: 200, radius: 6, w: 32, h: 30, hp: 5, xp: 10, ac: 13, carcass: 0.35,
+      sight: 200, herd: [3, 6], fear: { town: 0.6, light: 0.7 }, fears: ['puma', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 240, diet: { grass: 1 }, born: '🐰 Nasceu um filhote de viscacha.',
+      reg: { density: 4, birth: 0.0018, starve: 0.0014, eat: { grass: 0.00005 } }
+    },
+
     crow: { name: 'Corvo', w: 24, h: 18, hp: 2, radius: 5, fear: { town: 0, light: 0 }, fears: ['human'] }   // aparece nas carcacas (sem regiao)
   };
-  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'giant_panda', 'yak', 'tahr', 'asian_elephant', 'water_buffalo', 'macaque'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar', 'polar_bear', 'arctic_fox', 'wolverine', 'lion', 'hyena', 'leopard', 'tiger', 'snow_leopard'];
-  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'polar_bear', 'arctic_fox', 'wolverine', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'lion', 'hyena', 'leopard', 'giant_panda', 'yak', 'tahr', 'asian_elephant', 'water_buffalo', 'macaque', 'tiger', 'snow_leopard'];
-  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo', 'moose', 'polar_bear', 'arctic_fox', 'wolverine', 'rhino', 'lion', 'leopard', 'tiger', 'snow_leopard', 'giant_panda'];     // um grupo so ao ligar a regiao
+  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'giant_panda', 'yak', 'tahr', 'asian_elephant', 'water_buffalo', 'macaque', 'bison', 'wapiti', 'pronghorn', 'kangaroo', 'emu', 'wombat', 'guanaco', 'vicuna', 'viscacha'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar', 'polar_bear', 'arctic_fox', 'wolverine', 'lion', 'hyena', 'leopard', 'tiger', 'snow_leopard', 'puma', 'coyote', 'dingo'];
+  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer', 'moose', 'reindeer', 'snow_hare', 'musk_ox', 'polar_bear', 'arctic_fox', 'wolverine', 'zebra', 'wildebeest', 'gazelle', 'giraffe', 'elephant', 'rhino', 'ostrich', 'camel', 'oryx', 'lion', 'hyena', 'leopard', 'giant_panda', 'yak', 'tahr', 'asian_elephant', 'water_buffalo', 'macaque', 'tiger', 'snow_leopard', 'bison', 'wapiti', 'pronghorn', 'puma', 'coyote', 'kangaroo', 'emu', 'wombat', 'dingo', 'guanaco', 'vicuna', 'viscacha'];
+  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo', 'moose', 'polar_bear', 'arctic_fox', 'wolverine', 'rhino', 'lion', 'leopard', 'tiger', 'snow_leopard', 'giant_panda', 'puma', 'dingo'];     // um grupo so ao ligar a regiao
   // lobo rondando gente: mais medo de entrar na vila que o normal (fica na borda, espreitando)
   const WOLF_AMBUSH = { ...SPECIES.wolf, name: 'LoboEspreita', fear: { ...SPECIES.wolf.fear, town: 1.2 } };
   const NEAR = 3200;              // limite de busca de lugar para nascer

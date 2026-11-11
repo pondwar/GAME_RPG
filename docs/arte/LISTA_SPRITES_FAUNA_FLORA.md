@@ -150,6 +150,10 @@ Legenda: ⭐ = fazer primeiro · ✅ = já existe · 🟦 = temos só os "bloqui
 
 ### Pacote E: Ásia (🟦 bloquinhos no jogo: tigre, panda-gigante, iaque, tahr, leopardo-das-neves, elefante-asiático, búfalo-d'água, macaco-rhesus, grou, pavão, píton)
 
+### Pacote F: América do Norte (🟦 bloquinhos: bisão, wapiti, antilocapra, puma, coiote, águia-careca, peru, cascavel)
+### Pacote G: Oceania (🟦 bloquinhos: canguru, emu, vombate, dingo, kookaburra, coala)
+### Pacote H: Andes e pampas (🟦 bloquinhos: guanaco, vicunha, viscacha, condor)
+
 ### Pacote C: Frio e polar
 - [ ] ⭐ Alce · [ ] ⭐ Rena · [ ] ⭐ Lebre-da-neve · [ ] ⭐ Urso-polar · [ ] ⭐ Raposa-do-ártico
 - [ ] ⭐ Coruja-das-neves · [ ] Glutão · [ ] Boi-almiscarado · [ ] ⭐ Pinguim (polo sul, anda em terra/gelo)
