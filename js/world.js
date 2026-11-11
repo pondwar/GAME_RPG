@@ -233,7 +233,10 @@ class ProceduralChunkManager {
     const fruits = [];
 
     // Flora por bioma: cada tentativa sorteia uma posicao e so vira arvore se o terreno ali (nao so o centro do chunk) permitir
-    const DENS = { forest: 0.55, dense_forest: 0.95, plains: 0.10, hills: 0.14, shore: 0.03 };
+    const DENS = { forest: 0.55, dense_forest: 0.95, plains: 0.10, hills: 0.14, shore: 0.03, desert: 0.03, canyon: 0.02, snow: 0.05 };
+    // Especie de arvore por regiao e clima (js/trees_draw.js): macro-regiao e latitude do centro do chunk
+    const TA = window.TreeArt, SR = window.SurittoRegions;
+    const treeMacro = SR ? SR.at(this.world, chunkCenterX, chunkCenterY).id : null, treeLat = this.world.getLatitudeDeg(chunkCenterY);
     const attempts = 11;
     for (let i = 0; i < attempts; i++) {
       const entityId = `chunk_${cx}_${cy}_tree_${i}`;
@@ -250,6 +253,10 @@ class ProceduralChunkManager {
       }
       const spot = this.world.getTerrainAt(chunkOriginX + relX, chunkOriginY + relY);
       if (this.hash2D(cx, cy, 15 + i * 4) > (DENS[spot.type] || 0)) continue;
+      const treeV = this.hash2D(cx, cy, 16 + i * 4);
+      const species = TA ? TA.pick(treeMacro, treeLat, spot.type, treeV) : 'oak';
+      if (!species) continue;                                   // deserto sem arvore
+      const sp = TA ? TA.info(species) : { w: 190, h: 220, r: 24, fruit: true };
       const woodCap = Math.floor(this.hash2D(cx, cy, 12 + i * 4) * 5) + 4;
 
       const tree = {
@@ -258,10 +265,13 @@ class ProceduralChunkManager {
         cy: cy,
         x: chunkOriginX + relX,
         y: chunkOriginY + relY,
-        width: 190,
-        height: 220,
-        trunkOffset: { x: 0, y: 80, radius: 24 },
-        fruits: Math.floor(this.hash2D(cx, cy, 13 + i * 4) * 4) + 2,
+        species,
+        v: treeV,
+        snowy: spot.type === 'snow',
+        width: sp.w,
+        height: sp.h,
+        trunkOffset: { x: 0, y: 80, radius: sp.r },
+        fruits: sp.fruit ? Math.floor(this.hash2D(cx, cy, 13 + i * 4) * 4) + 2 : 0,
         maxFruits: 6,
         growthTimer: 0,
         wood: woodCap,

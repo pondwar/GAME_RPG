@@ -842,6 +842,8 @@ class Game {
     });
   }
 
+  treeName(tree) { return (window.TreeArt && window.TreeArt.info(tree.species).name) || 'Carvalho'; }
+
   chopTreeForWood(tree) {
     const tx = tree.x + tree.trunkOffset.x;
     const ty = tree.y + tree.trunkOffset.y;
@@ -921,7 +923,7 @@ class Game {
       if (window.sounds) window.sounds.playCritSuccess();
       this.addLog(`★ GOLPE DE MESTRE! O machado rachou o lenho perfeito (+${woodAmount} Toras de Carvalho)! Restam [${tree.wood}/${tree.maxWood}].`, 'action');
     } else {
-      this.addLog(`🪓 Você golpeou o carvalho com o machado (+${woodAmount} Tora). Lenho restante: [${tree.wood}/${tree.maxWood}].`, 'action');
+      this.addLog(`🪓 Você golpeou o ${this.treeName(tree).toLowerCase()} com o machado (+${woodAmount} Tora). Lenho restante: [${tree.wood}/${tree.maxWood}].`, 'action');
     }
 
     // 2. CHECK IF TREE IS COMPLETELY CHOPPED DOWN -> TRANSFORMS INTO STUMP!
@@ -1527,14 +1529,14 @@ class Game {
       this.targetCard.style.left = `${this.mouse.x + 18}px`;
       this.targetCard.style.top = `${this.mouse.y - 10}px`;
       if (hovered.entity.isStump) {
-        this.targetName.innerText = `Toco de Carvalho Enraizado`;
+        this.targetName.innerText = `Toco de ${this.treeName(hovered.entity)} Enraizado`;
         this.targetDesc.innerText = (hovered.entity.mushrooms && hovered.entity.mushrooms > 0)
           ? 'Toco úmido com cogumelos silvestres brotando! Pressione F ou ataque para colher.'
           : 'Tronco cortado. Suas raízes profundas nutrem o solo florestal e a microfauna viva.';
       } else {
         const woodCount = (typeof hovered.entity.wood !== 'undefined') ? hovered.entity.wood : 5;
         const maxWood = hovered.entity.maxWood || 6;
-        this.targetName.innerText = `Carvalho de Frutos [Lenha: ${woodCount}/${maxWood}]`;
+        this.targetName.innerText = `${this.treeName(hovered.entity)}${hovered.entity.fruits > 0 ? ' de Frutos' : ''} [Lenha: ${woodCount}/${maxWood}]`;
         this.targetDesc.innerText = `Equipe o Machado [4] para extrair lenha. Pressione F perto do tronco para sacudir frutos!`;
       }
     } else {
@@ -3265,8 +3267,10 @@ class Game {
       shakeX = Math.sin(tree.shake * 55) * (tree.shake * 14);
     }
 
-    // Living Tree Sprite
-    if (this.images.tree.complete && this.images.tree.naturalWidth > 0) {
+    // Living Tree Sprite (carvalho = imagem; as outras especies sao desenhadas por codigo em js/trees_draw.js)
+    if (tree.species && tree.species !== 'oak' && window.TreeArt && window.TreeArt.draw(ctx, tree, tx, ty + tree.trunkOffset.y, shakeX)) {
+      // desenhada
+    } else if (this.images.tree.complete && this.images.tree.naturalWidth > 0) {
       const w = tree.width;
       const h = tree.height;
       ctx.drawImage(this.images.tree, tx - w / 2 + shakeX, ty - h / 2, w, h);
