@@ -721,10 +721,155 @@
     c.restore();
   }
 
+  // ---- Pacote C (frio e polar): bloquinhos ----
+  function moose(c, e, sx, sy) {
+    shadow(c, sx, sy, 34, 8);
+    begin(c, e, sx, sy);
+    const m = mv(e), s = swing(e.frameIndex, m) * 0.8, graze = e.state === 'grazing' || e.act === 'graze' ? 14 : 0;
+    leg(c, 17, -30, 30, 4.6, '#3a2a20', s); leg(c, -16, -30, 30, 4.6, '#3a2a20', -s);
+    blob(c, 3, -46, 28, 15, '#4a3326');                        // corpo escuro
+    blob(c, -14, -56, 14, 9, '#3d2a1f');                       // corcova dos ombros
+    blob(c, 3, -52, 20, 4.4, 'rgba(255,230,200,0.14)');
+    leg(c, 10, -30, 30, 4.6, '#2a1c14', -s); leg(c, -23, -30, 30, 4.6, '#2a1c14', s);
+    c.fillStyle = '#4a3326'; c.beginPath(); c.moveTo(-20, -56); c.lineTo(-30, -68 + graze); c.lineTo(-38, -60 + graze); c.lineTo(-22, -42); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.2; c.stroke();   // pescoco
+    blob(c, -40, -60 + graze, 9, 7, '#55392b', -0.35);         // cabeca comprida
+    blob(c, -48, -55 + graze, 6, 5, '#6a4a38');                // focinho caido
+    c.strokeStyle = '#8a6a48'; c.lineWidth = 2.2; c.beginPath(); c.moveTo(-34, -66 + graze); c.lineTo(-30, -78 + graze); c.lineTo(-20, -82 + graze); c.moveTo(-30, -78 + graze); c.lineTo(-30, -88 + graze); c.moveTo(-24, -80 + graze); c.lineTo(-22, -90 + graze); c.stroke();   // galhada larga
+    c.fillStyle = OUT; c.fillRect(-42, -62 + graze, 1.6, 1.6);
+    c.restore();
+  }
+  function reindeer(c, e, sx, sy) {
+    shadow(c, sx, sy, 28, 6.5);
+    begin(c, e, sx, sy);
+    const m = mv(e), s = swing(e.frameIndex, m), graze = e.state === 'grazing' || e.act === 'graze' ? 14 : 0;
+    leg(c, 14, -26, 26, 3.6, '#6a5a4a', s); leg(c, -13, -26, 26, 3.6, '#6a5a4a', -s);
+    blob(c, 2, -38, 21, 11, '#8a7a68');                        // corpo cinza-marrom
+    blob(c, -14, -37, 9, 7, '#f0ece4');                        // pescoco branco
+    blob(c, 2, -43, 14, 4, 'rgba(255,255,255,0.2)');
+    leg(c, 8, -26, 26, 3.6, '#5a4a3c', -s); leg(c, -19, -26, 26, 3.6, '#5a4a3c', s);
+    c.fillStyle = '#9a8a76'; c.beginPath(); c.moveTo(-14, -44); c.lineTo(-22, -62 + graze); c.lineTo(-29, -57 + graze); c.lineTo(-18, -34); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.2; c.stroke();
+    blob(c, -28, -58 + graze, 7, 5.2, '#a39482', -0.4);
+    blob(c, -34, -56 + graze, 3.4, 2.8, '#2a2420');
+    c.strokeStyle = '#c8b48a'; c.lineWidth = 1.8; c.beginPath(); c.moveTo(-24, -63 + graze); c.lineTo(-20, -76 + graze); c.lineTo(-12, -80 + graze); c.moveTo(-20, -76 + graze); c.lineTo(-24, -84 + graze); c.moveTo(-17, -78 + graze); c.lineTo(-15, -86 + graze); c.stroke();   // galhada
+    c.fillStyle = OUT; c.fillRect(-30, -60 + graze, 1.4, 1.4);
+    c.restore();
+  }
+  function snow_hare(c, e, sx, sy) {
+    shadow(c, sx, sy, 14, 4.5);
+    begin(c, e, sx, sy);
+    const moving = e.act === 'flee' || e.act === 'roam' || e.act === 'forage', hop = moving ? [0, -6, -9, -4][e.frameIndex % 4] : 0;
+    const head = e.state === 'grazing' ? 4 : 0;
+    c.translate(0, hop);
+    leg(c, 7, -7, 7, 3.4, '#cfc9c0', swing(e.frameIndex, moving));
+    blob(c, 3, -12, 12, 7.5, '#f1efe9');                       // corpo branco
+    blob(c, 3, -8.5, 8, 3, '#e4e0d6');
+    blob(c, 14, -12, 3.2, 3.2, '#ffffff');
+    leg(c, -6, -7, 7, 3.4, '#e2ded4', -swing(e.frameIndex, moving));
+    blob(c, -9, -17 + head, 5.4, 4.6, '#f4f2ec');
+    blob(c, -8, -29 + head, 2.2, 8.5, '#e6e2d8', -0.12); blob(c, -4.5, -29 + head, 2.2, 8.5, '#f1efe9', 0.2);
+    c.fillStyle = '#2a2420'; c.fillRect(-9.2, -37.5 + head, 2.6, 2.4); c.fillRect(-5.7, -37.5 + head, 2.6, 2.4);
+    c.fillStyle = OUT; c.fillRect(-12.5, -18.5 + head, 1.8, 1.8);
+    c.restore();
+  }
+  function musk_ox(c, e, sx, sy) {
+    shadow(c, sx, sy, 30, 7);
+    begin(c, e, sx, sy);
+    const m = mv(e), s = swing(e.frameIndex, m) * 0.6, graze = e.state === 'grazing' || e.act === 'graze' ? 6 : 0;
+    leg(c, 14, -14, 14, 5, '#efe6d0', s); leg(c, -13, -14, 14, 5, '#efe6d0', -s);
+    blob(c, 3, -30, 28, 16, '#2f241c');                        // corpo peludo escuro
+    c.fillStyle = '#2f241c'; c.beginPath(); c.moveTo(-26, -34); c.quadraticCurveTo(-22, -10, -18, -8); c.lineTo(28, -8); c.quadraticCurveTo(34, -20, 30, -34); c.closePath(); c.fill();   // saia de pelo
+    c.strokeStyle = '#4a3a2c'; c.lineWidth = 1; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(-18 + i * 5, -22); c.lineTo(-19 + i * 5, -10); c.stroke(); }
+    blob(c, -4, -40, 14, 6, '#3d2f24');                        // cupula dos ombros
+    leg(c, 8, -14, 14, 5, '#e2d8c0', -s); leg(c, -19, -14, 14, 5, '#e2d8c0', s);
+    blob(c, -30, -26 + graze, 9.4, 8.4, '#3a2c22');            // cabeca
+    c.fillStyle = '#efe6cc'; c.beginPath(); c.moveTo(-34, -34 + graze); c.quadraticCurveTo(-42, -36 + graze, -41, -22 + graze); c.lineTo(-37, -26 + graze); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke();   // chifre curvo
+    c.beginPath(); c.moveTo(-27, -33 + graze); c.quadraticCurveTo(-22, -36 + graze, -22, -26 + graze); c.lineTo(-26, -28 + graze); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = OUT; c.fillRect(-33, -28 + graze, 1.6, 1.6);
+    c.restore();
+  }
+  function polar_bear(c, e, sx, sy) {
+    shadow(c, sx, sy, 38, 9);
+    begin(c, e, sx, sy);
+    const m = mv(e), s = swing(e.frameIndex, m) * 0.7;
+    leg(c, 17, -18, 18, 7, '#ddd6c6', s); leg(c, -16, -18, 18, 7, '#ddd6c6', -s);
+    blob(c, 3, -34, 32, 17, '#f4efe4');                        // corpo
+    blob(c, 3, -42, 22, 6, 'rgba(255,255,255,0.4)');
+    blob(c, 3, -22, 24, 5, '#e2dccd');
+    leg(c, 9, -18, 18, 7, '#cfc8b6', -s); leg(c, -23, -18, 18, 7, '#cfc8b6', s);
+    blob(c, -34, -34, 11, 9.4, '#f6f1e6');                     // cabeca
+    blob(c, -43, -30, 7, 5, '#efe8da');                        // focinho comprido
+    blob(c, -49, -30.4, 2, 1.8, '#17120e');                    // nariz preto
+    c.fillStyle = '#f1ece0'; c.beginPath(); c.arc(-30, -43, 3.2, 0, 6.3); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke();   // orelha
+    c.fillStyle = OUT; c.fillRect(-38, -36, 1.8, 1.8);
+    c.restore();
+  }
+  function arctic_fox(c, e, sx, sy) {
+    shadow(c, sx, sy, 17, 5);
+    begin(c, e, sx, sy);
+    const moving = e.act !== 'rest' && e.state !== 'satiated' && e.act !== 'idle', s = swing(e.frameIndex, moving), low = e.act === 'stalk' ? 3 : 0;
+    c.translate(0, low);
+    leg(c, 8, -10, 10, 3, '#cfc9be', s); leg(c, -7, -10, 10, 3, '#cfc9be', -s);
+    c.fillStyle = '#f4f1ea'; c.beginPath(); c.moveTo(13, -14); c.quadraticCurveTo(28, -18, 30, -8); c.quadraticCurveTo(24, -6, 13, -10); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.2; c.stroke();
+    blob(c, 3, -15, 13, 6.4, '#f6f3ec');                       // corpo branco
+    blob(c, 3, -18, 9, 3, 'rgba(255,255,255,0.5)');
+    leg(c, 4, -10, 10, 3, '#e4dfd4', -s); leg(c, -11, -10, 10, 3, '#e4dfd4', s);
+    blob(c, -15, -19, 6, 5.2, '#f6f3ec');
+    blob(c, -21, -17, 3.6, 2.4, '#eeeae0');
+    c.fillStyle = '#f1eee6'; c.beginPath(); c.moveTo(-17, -23); c.lineTo(-15, -29); c.lineTo(-12, -23); c.closePath(); c.fill(); c.strokeStyle = OUT; c.stroke();
+    c.fillStyle = '#17120e'; c.fillRect(-23.6, -17.4, 1.8, 1.6); c.fillRect(-17, -20, 1.4, 1.4);
+    c.restore();
+  }
+  function wolverine(c, e, sx, sy) {
+    shadow(c, sx, sy, 20, 5.5);
+    begin(c, e, sx, sy);
+    const m = mv(e), s = swing(e.frameIndex, m) * 0.8;
+    leg(c, 9, -7, 7, 4, '#2a2018', s); leg(c, -9, -7, 7, 4, '#2a2018', -s);
+    c.fillStyle = '#2a2018'; c.beginPath(); c.moveTo(14, -14); c.quadraticCurveTo(24, -16, 25, -8); c.lineTo(14, -9); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1.1; c.stroke();   // rabo felpudo
+    blob(c, 2, -12, 16, 8, '#4a3626');                         // corpo marrom escuro
+    c.fillStyle = '#c9a463'; c.beginPath(); c.moveTo(-10, -17); c.quadraticCurveTo(4, -22, 16, -14); c.lineTo(14, -12); c.quadraticCurveTo(2, -17, -9, -14); c.closePath(); c.fill();   // faixa clara do dorso
+    leg(c, 5, -7, 7, 4, '#3a2a1e', -s); leg(c, -13, -7, 7, 4, '#3a2a1e', s);
+    blob(c, -17, -14, 7, 6, '#3a2c20');                        // cabeca
+    blob(c, -23, -12, 4, 3, '#4a3828');
+    c.fillStyle = '#6a5a48'; c.beginPath(); c.arc(-15, -20, 2.2, 0, 6.3); c.fill();
+    c.fillStyle = '#e6dcc4'; c.fillRect(-26, -10, 1.4, 1.8);   // dente
+    c.fillStyle = OUT; c.fillRect(-19.4, -15.4, 1.4, 1.4);
+    c.restore();
+  }
+  function snowy_owl(c, e, sx, sy) {
+    const z = e.z || 0, fly = e.mode === 'fly' || e.mode === 'leave';
+    shadow(c, sx, sy, 8 * Math.max(0.4, 1 - z / 160), 3, 0.2);
+    begin(c, e, sx, sy - z);
+    const flap = fly ? [-1.0, -0.2, 0.7, -0.2][e.frameIndex % 4] : 0;
+    if (!fly) { leg(c, 0, -5, 5, 2.4, '#efe8dc', 0); leg(c, 4, -5, 5, 2.4, '#efe8dc', 0); }
+    blob(c, 1, -14, 9, 10.4, '#f6f3ec');                       // corpo branco
+    c.fillStyle = '#3a342e'; for (let i = 0; i < 6; i++) c.fillRect(-4 + (i % 3) * 4, -18 + Math.floor(i / 3) * 5, 1.8, 1.2);   // pintas
+    c.save(); c.translate(5, -17); c.rotate(flap); c.fillStyle = '#ebe6da'; c.beginPath(); c.moveTo(-3, 0); c.quadraticCurveTo(3, fly ? -16 : -3, 11, fly ? -11 : 6); c.lineTo(4, 5); c.closePath(); c.fill(); c.strokeStyle = OUT; c.lineWidth = 1; c.stroke(); c.restore();
+    blob(c, -2, -25, 7.6, 7, '#fbf9f4');                       // cabeca redonda
+    c.fillStyle = '#e8b72a'; c.beginPath(); c.arc(-5, -25, 2.2, 0, 6.3); c.arc(1, -25, 2.2, 0, 6.3); c.fill();   // olhos amarelos
+    c.fillStyle = '#1c140d'; c.beginPath(); c.arc(-5, -25, 1.1, 0, 6.3); c.arc(1, -25, 1.1, 0, 6.3); c.fill();
+    c.fillStyle = '#2a2a2e'; c.beginPath(); c.moveTo(-3, -23); c.lineTo(-2, -20.5); c.lineTo(-1, -23); c.closePath(); c.fill();
+    c.restore();
+  }
+  function penguin(c, e, sx, sy) {
+    shadow(c, sx, sy, 10, 3, 0.2);
+    begin(c, e, sx, sy);
+    const m = e.act === 'walk' || e.act === 'flee', sway = m ? [0, 0.12, 0, -0.12][e.frameIndex % 4] : 0;
+    c.rotate(sway);
+    c.fillStyle = '#e8a02a'; c.fillRect(-4, -3, 3.4, 3); c.fillRect(1, -3, 3.4, 3);   // pes
+    blob(c, 0, -14, 8, 12, '#1d1f26');                         // corpo
+    blob(c, -1, -12, 5.4, 9, '#f6f4ee');                       // barriga branca
+    c.fillStyle = '#1d1f26'; c.beginPath(); c.moveTo(6, -18); c.lineTo(11, -10); c.lineTo(6, -9); c.closePath(); c.fill();   // asa
+    blob(c, -3, -25, 5, 4.6, '#1d1f26');                       // cabeca
+    c.fillStyle = '#f2c230'; c.fillRect(-6, -23, 8, 1.6);       // faixa amarela do pescoco
+    c.fillStyle = '#e8a02a'; c.beginPath(); c.moveTo(-7.4, -25.6); c.lineTo(-12, -24); c.lineTo(-7.4, -23); c.closePath(); c.fill();   // bico
+    c.fillStyle = '#f4f2ec'; c.fillRect(-5.4, -26.6, 1.3, 1.3);
+    c.restore();
+  }
+
   window.CritterArt = {
-    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat, owl, duck, beaver, jaguar, capybara, tapir, peccary, anteater, sloth, capuchin, rhea, maned_wolf, armadillo, toucan, macaw, caiman, marsh_deer, harpy, anaconda }[e.kind]; if (f) f(c, e, sx, sy); },
+    draw(c, e, sx, sy) { const f = { rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat, owl, duck, beaver, jaguar, capybara, tapir, peccary, anteater, sloth, capuchin, rhea, maned_wolf, armadillo, toucan, macaw, caiman, marsh_deer, harpy, anaconda, moose, reindeer, snow_hare, musk_ox, polar_bear, arctic_fox, wolverine, snowy_owl, penguin }[e.kind]; if (f) f(c, e, sx, sy); },
     plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else if (p.kind === 'herb') herb(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },
     herbName(p) { return (p.set === 1 ? ['Boldo', 'Erva-cidreira', 'Guaco'] : ['Camomila', 'Hortelã', 'Sálvia'])[Math.floor(p.seed * 3) % 3]; },
-    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince', chicken: 'Galinha', sheep: 'Ovelha', cow: 'Vaca', pig: 'Porco', horse: 'Cavalo', goat: 'Cabra', dog: 'Cão', cat: 'Gato', owl: 'Coruja', duck: 'Pato-real', beaver: 'Castor', jaguar: 'Onça-pintada', capybara: 'Capivara', tapir: 'Anta', peccary: 'Queixada', anteater: 'Tamanduá-bandeira', sloth: 'Preguiça', capuchin: 'Macaco-prego', rhea: 'Ema', maned_wolf: 'Lobo-guará', armadillo: 'Tatu', toucan: 'Tucano', macaw: 'Arara', caiman: 'Jacaré', marsh_deer: 'Cervo-do-pantanal', harpy: 'Harpia', anaconda: 'Sucuri' }
+    names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince', chicken: 'Galinha', sheep: 'Ovelha', cow: 'Vaca', pig: 'Porco', horse: 'Cavalo', goat: 'Cabra', dog: 'Cão', cat: 'Gato', owl: 'Coruja', duck: 'Pato-real', beaver: 'Castor', jaguar: 'Onça-pintada', capybara: 'Capivara', tapir: 'Anta', peccary: 'Queixada', anteater: 'Tamanduá-bandeira', sloth: 'Preguiça', capuchin: 'Macaco-prego', rhea: 'Ema', maned_wolf: 'Lobo-guará', armadillo: 'Tatu', toucan: 'Tucano', macaw: 'Arara', caiman: 'Jacaré', marsh_deer: 'Cervo-do-pantanal', harpy: 'Harpia', anaconda: 'Sucuri', moose: 'Alce', reindeer: 'Rena', snow_hare: 'Lebre-da-neve', musk_ox: 'Boi-almiscarado', polar_bear: 'Urso-polar', arctic_fox: 'Raposa-do-ártico', wolverine: 'Glutão', snowy_owl: 'Coruja-das-neves', penguin: 'Pinguim' }
   };
 })();

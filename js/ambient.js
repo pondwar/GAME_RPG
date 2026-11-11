@@ -15,9 +15,11 @@
     harpy: { name: 'Harpia', w: 44, h: 52, hp: 14, xp: 60, ac: 14, carcass: 0.8, macros: TROPICO_AM, biomes: ['dense_forest'], cap: 1, group: [1, 1], spook: 230, flyZ: 95, perch: true, perchZ: 52 },
     anaconda: { name: 'Sucuri', w: 96, h: 18, hp: 32, xp: 65, ac: 12, carcass: 0.8, macros: TROPICO_AM, biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 1, group: [1, 1], spook: 80, run: 60, walk: 9 },
     caiman: { name: 'Jacaré', w: 72, h: 22, hp: 26, xp: 40, ac: 12, carcass: 0.9, macros: TROPICO_AM, biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 2, group: [1, 1], spook: 110, run: 95, walk: 12 },
+    snowy_owl: { name: 'Coruja-das-neves', w: 32, h: 36, hp: 5, xp: 14, ac: 14, carcass: 0.4, macros: null, lat: [48, 90], biomes: ['snow', 'plains', 'hills', 'forest'], cap: 1, group: [1, 1], spook: 170, flyZ: 62, perch: true },
+    penguin: { name: 'Pinguim', w: 26, h: 34, hp: 6, xp: 12, ac: 12, carcass: 0.4, macros: null, lat: [-90, -60], biomes: ['snow', 'shore', 'plains', 'hills'], cap: 6, group: [2, 4], spook: 90, run: 70, walk: 14 },
     beaver: { name: 'Castor', w: 38, h: 26, hp: 12, xp: 14, ac: 12, carcass: 0.5, macros: HOLARTICO, biomes: ['plains', 'forest', 'shore', 'dense_forest', 'hills'], water: true, cap: 2, group: [1, 1], spook: 120, run: 120, walk: 22 }
   };
-  const RAD = { owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12 };
+  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12 };
   const NEAR = 1500, GONE = 2300;
 
   function install() {
@@ -36,6 +38,7 @@
         const x = this.game.world ? this.game.world.wrapX(Pl.x + Math.cos(a) * r) : Pl.x + Math.cos(a) * r, y = Pl.y + Math.sin(a) * r * 0.75;
         const T = this.terrain(x, y); if (T.isWater || !A.biomes.includes(T.type)) continue;
         if (A.macros && !A.macros.includes(this.macro(x, y))) continue;
+        if (A.lat) { const la = this.game.world ? this.game.world.getLatitudeDeg(y) : 0; if (la < A.lat[0] || la > A.lat[1]) continue; }
         if (A.water && !this.nearWater(x, y)) continue;
         if (this.townDanger(x, y) > 0.1 || this.blocked(x, y, RAD[kind] + 4)) continue;
         return { x, y };

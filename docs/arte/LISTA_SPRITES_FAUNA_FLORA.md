@@ -120,7 +120,7 @@ Leão (dourado, juba escura no macho, G) · Elefante (cinza, presas, orelhas gra
 
 Legenda: ⭐ = fazer primeiro · ✅ = já existe · 🟦 = temos só os "bloquinhos" feitos por código (no jogo, sem arte do Gemini ainda).
 
-> **Já no jogo como bloquinhos (precisam de arte):** pacote A: lebre, texugo, esquilo, faisão, lince, coruja, pato, castor, galinha, vaca, ovelha, porco, cavalo, cabra, cão, gato e as 3 ervas. Pacote B: onça-pintada, capivara, anta, queixada, tamanduá, preguiça, macaco-prego, tatu, ema, lobo-guará, tucano, arara, jacaré, urubu, cervo-do-pantanal, harpia, sucuri e as 3 ervas do Brasil (e as variantes brasileiras dos domésticos: zebu, caipira, crioulo, vira-lata).
+> **Já no jogo como bloquinhos (precisam de arte):** pacote A: lebre, texugo, esquilo, faisão, lince, coruja, pato, castor, galinha, vaca, ovelha, porco, cavalo, cabra, cão, gato e as 3 ervas. Pacote B: onça-pintada, capivara, anta, queixada, tamanduá, preguiça, macaco-prego, tatu, ema, lobo-guará, tucano, arara, jacaré, urubu, cervo-do-pantanal, harpia, sucuri e as 3 ervas do Brasil (e as variantes brasileiras dos domésticos: zebu, caipira, crioulo, vira-lata). Pacote C: alce, rena, lebre-da-neve, boi-almiscarado, urso-polar, raposa-do-ártico, glutão, coruja-das-neves e pinguim.
 
 ### Pacote A: Europa e vila (Elmford)
 **Selvagens**
