@@ -17,6 +17,9 @@
   // Reinos: macro-regioes (js/regions.js) onde a especie vive. Sem `macros` = vive em qualquer lugar (as 7 antigas, por enquanto).
   // Plano completo: docs/FAUNA_FLORA.md
   const HOLARTICO = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'china', 'japao', 'america_norte'];
+  const TROPICO_AM = ['brasil', 'america_central'];                    // Brasil e America Central
+  const CAMPO_SUL = ['brasil', 'america_sul_hispanica'];               // campos do sul: pampas, cerrado
+  const FRIOS = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'oriente_medio', 'sudoeste_asiatico', 'china', 'japao', 'america_norte', 'america_sul_hispanica'];   // onde vivem lobo e urso (nao no tropico, na Africa nem na Oceania)
   const FLORESTA_TEMPERADA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte'];
   // Ficha de especie. reg = parametros da simulacao "de numeros" (por segundo, por animal).
   //   diet: plantas/frutos que come (peso), prey: presas (peso), fears: quem faz fugir ('human' = jogador)
@@ -41,7 +44,7 @@
       reg: { density: 4, birth: 0.0009, starve: 0.0008, eat: { mushrooms: 0.00022, berries: 0.0001, grass: 0.00008 } }
     },
     wolf: {
-      name: 'Lobo', list: 'wolves', biomes: [B.F, B.D, B.H, B.P], walk: 60, run: 215, radius: 11, w: 54, h: 60, hp: 35,
+      name: 'Lobo', list: 'wolves', macros: FRIOS, biomes: [B.F, B.D, B.H, B.P], walk: 60, run: 215, radius: 11, w: 54, h: 60, hp: 35,
       sight: 150, scent: 1500, herd: [3, 4], fear: { town: 0.7, light: 0.45, fire: 1.0 }, fears: ['bear'], temper: 'pack',
       hunger: 1 / 900, hunt: 0.45, chase: 4.0, pounce: 15, prey: { deer: 1, boar: 0.4, rabbit: 0.5, hare: 0.35 }, carrion: true, ambush: true,
       reg: { kill: 0.0006, half: 1.5, value: { deer: 1, boar: 1.2, rabbit: 0.25, hare: 0.3 }, need: 0.0003, conv: 0.15, mort: 0.00002, max: 6,
@@ -55,7 +58,7 @@
         terr: (r) => 1 + (r.pop.rabbit || 0) * 0.25, arrive: 0.00002, arriveIf: (r) => (r.pop.rabbit || 0) > 4, start: [0.25, 1, 1] }
     },
     bear: {
-      name: 'Urso', biomes: [B.D, B.H, B.F, B.M], walk: 45, run: 205, radius: 16, w: 84, h: 74, hp: 70, dmg: 16,      // ~6 golpes de espada (antes 120 = ~10)
+      name: 'Urso', macros: FRIOS, biomes: [B.D, B.H, B.F, B.M], walk: 45, run: 205, radius: 16, w: 84, h: 74, hp: 70, dmg: 16,      // ~6 golpes de espada (antes 120 = ~10)
       sight: 200, scent: 900, herd: [1, 1], fear: { town: 1.2, light: 0.3, fire: 0.6 }, fears: [], temper: 'territorial', territoryR: 150, tire: 5,
       hunger: 1 / 800, hunt: 0.7, chase: 3.0, pounce: 14, prey: { deer: 0.5, boar: 0.4 }, carrion: true, diet: { berries: 1, fruit: 1, mushrooms: 0.5 },
       reg: { density: 0.7, birth: 0.00012, starve: 0.0004, eat: { berries: 0.0003, mushrooms: 0.0001 }, kill: 0.00008, half: 2, start: [0.08, 1, 0] }
@@ -91,11 +94,78 @@
       reg: { kill: 0.0009, half: 1.5, value: { hare: 1, rabbit: 0.7, pheasant: 0.5, deer: 3 }, need: 0.0005, conv: 0.15, mort: 0.00002, max: 2,
         terr: (r) => 0.6 + ((r.pop.hare || 0) + (r.pop.rabbit || 0) * 0.7) * 0.12, arrive: 0.00001, arriveIf: (r) => (r.pop.hare || 0) > 3, start: [0.12, 1, 0] }
     },
+    capybara: {  // Capivara: grande roedor de campo e beira de mato; vive em grupo e pasta
+      name: 'Capivara', macros: TROPICO_AM, biomes: [B.P, B.F, B.D], walk: 34, run: 150, radius: 10, w: 54, h: 36, hp: 22, xp: 25, ac: 11, carcass: 0.8,
+      sight: 200, herd: [3, 6], fear: { town: 0.9, light: 0.8 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 320, diet: { grass: 1 }, born: '🐹 Nasceram filhotes de capivara no bando.',
+      reg: { density: 5, birth: 0.0011, starve: 0.001, eat: { grass: 0.00012 } }
+    },
+    tapir: {     // Anta: grande, tranquila, foge para o mato fechado; come frutos e folhas
+      name: 'Anta', macros: TROPICO_AM, biomes: [B.D, B.F], walk: 32, run: 165, radius: 13, w: 74, h: 52, hp: 42, xp: 45, ac: 12, carcass: 1.0,
+      sight: 160, herd: [1, 2], fear: { town: 1.0, light: 0.8 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 4,
+      hunger: 1 / 400, diet: { berries: 1, grass: 0.4 }, born: '🐽 Nasceu um filhote de anta.',
+      reg: { density: 1.3, birth: 0.0004, starve: 0.0006, eat: { berries: 0.00012, grass: 0.00006 } }
+    },
+    peccary: {   // Queixada: bando agitado; se acuado, ataca em grupo com os dentes
+      name: 'Queixada', macros: TROPICO_AM, biomes: [B.D, B.F, B.P], walk: 40, run: 190, radius: 10, w: 46, h: 34, hp: 22, dmg: 6, xp: 30, ac: 12, carcass: 0.7,
+      sight: 170, herd: [4, 7], fear: { town: 1.0, light: 0.6, fire: 0.8 }, fears: ['jaguar', 'human'], temper: 'defend', defendR: 85, tire: 4,
+      hunger: 1 / 320, diet: { mushrooms: 0.8, berries: 0.8, grass: 0.3 }, charge: '🐗 A queixada estalou os dentes e o bando partiu para cima!', hit: (d) => `🐗 A queixada te mordeu (-${d} HP)!`, born: '🐗 Nasceram filhotes no bando de queixadas.',
+      reg: { density: 4, birth: 0.0009, starve: 0.0008, eat: { mushrooms: 0.0001, berries: 0.00008, grass: 0.00005 } }
+    },
+    anteater: {  // Tamandua-bandeira: lento, come cupins; se acuado, abre os bracos e crava as garras
+      name: 'Tamanduá-bandeira', macros: TROPICO_AM, biomes: [B.P, B.F, B.H], walk: 30, run: 120, radius: 12, w: 78, h: 42, hp: 28, dmg: 8, xp: 40, ac: 12, carcass: 0.9,
+      sight: 110, herd: [1, 1], fear: { town: 0.9, light: 0.5 }, fears: ['jaguar', 'human'], temper: 'defend', defendR: 75, tire: 4,
+      hunger: 1 / 420, diet: { mushrooms: 1 }, charge: '🐜 O tamanduá se ergueu nas patas de trás, de garras abertas!', hit: (d) => `🐜 O tamanduá te arranhou (-${d} HP)!`, born: '🐜 Um filhote de tamanduá subiu nas costas da mãe.',
+      reg: { density: 1.0, birth: 0.0003, starve: 0.0005, eat: { mushrooms: 0.00006 } }
+    },
+    sloth: {     // Preguica: quase parada, foge devagar; vive de folhas e frutos nas matas
+      name: 'Preguiça', macros: TROPICO_AM, biomes: [B.D, B.F], walk: 10, run: 38, radius: 7, w: 30, h: 32, hp: 8, xp: 20, ac: 11, carcass: 0.45,
+      sight: 130, herd: [1, 1], fear: { town: 0.7, light: 0.5 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 500, diet: { berries: 1 }, born: '🦥 Nasceu um filhote de preguiça.',
+      reg: { density: 2, birth: 0.0004, starve: 0.0006, eat: { berries: 0.00004 } }
+    },
+    capuchin: {  // Macaco-prego: bando esperto e barulhento que come frutinhas e cogumelos
+      name: 'Macaco-prego', macros: TROPICO_AM, biomes: [B.D, B.F], walk: 44, run: 240, radius: 6, w: 28, h: 32, hp: 7, xp: 18, ac: 14, carcass: 0.4,
+      sight: 200, herd: [3, 6], fear: { town: 0.8, light: 0.8 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 260, diet: { berries: 1, mushrooms: 0.3 }, born: '🐒 Nasceu um filhote no bando de macacos.',
+      reg: { density: 4, birth: 0.0015, starve: 0.0012, eat: { berries: 0.00006, mushrooms: 0.00002 } }
+    },
+    rhea: {      // Ema: ave grande e corredora dos campos; pasta e come frutos
+      name: 'Ema', macros: CAMPO_SUL, biomes: [B.P, B.H], walk: 36, run: 250, radius: 11, w: 54, h: 66, hp: 20, dmg: 4, xp: 28, ac: 12, carcass: 0.8,
+      sight: 230, herd: [2, 4], fear: { town: 0.9, light: 0.8 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 320, diet: { grass: 1, berries: 0.3 }, born: '🐦 Nasceram filhotes de ema no ninho.',
+      reg: { density: 3, birth: 0.001, starve: 0.001, eat: { grass: 0.0001, berries: 0.00003 } }
+    },
+    maned_wolf: {  // Lobo-guara: onivoro de pernas longas; vive sozinho e come frutos (lobeira) e pequenos bichos
+      name: 'Lobo-guará', macros: CAMPO_SUL, biomes: [B.P, B.H, B.F], walk: 46, run: 215, radius: 10, w: 56, h: 62, hp: 22, xp: 30, ac: 12, carcass: 0.8,
+      sight: 150, herd: [1, 1], fear: { town: 0.9, light: 0.6 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 500, diet: { berries: 1, grass: 0.2 }, born: '🐺 Nasceu um filhote de lobo-guará.',
+      reg: { density: 0.9, birth: 0.0003, starve: 0.0005, eat: { berries: 0.00006, grass: 0.00002 } }
+    },
+    armadillo: { // Tatu: cava, rola em bola e foge para a toca
+      name: 'Tatu', macros: TROPICO_AM, biomes: [B.P, B.F, B.H], walk: 26, run: 130, radius: 7, w: 34, h: 24, hp: 9, xp: 16, ac: 15, carcass: 0.45,
+      sight: 110, herd: [1, 1], fear: { town: 0.8, light: 0.6 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 2,
+      hunger: 1 / 320, diet: { mushrooms: 0.6, grass: 0.3 }, born: '🐢 Nasceu um filhote de tatu.',
+      reg: { density: 3, birth: 0.0009, starve: 0.0008, eat: { mushrooms: 0.00004, grass: 0.00003 } }
+    },
+    marsh_deer: {  // Cervo-do-pantanal: o maior cervo da America do Sul; vive nos campos alagadicos e foge para o mato alto
+      name: 'Cervo-do-pantanal', macros: ['brasil'], biomes: [B.P, B.F], walk: 46, run: 215, radius: 12, w: 62, h: 70, hp: 30, xp: 35, ac: 12, carcass: 1.0,
+      sight: 230, herd: [2, 4], fear: { town: 1.0, light: 0.9 }, fears: ['jaguar', 'human'], temper: 'flee', tire: 3,
+      hunger: 1 / 320, diet: { grass: 1, berries: 0.3 }, born: '🦌 Nasceu um filhote de cervo-do-pantanal.',
+      reg: { density: 3.5, birth: 0.0009, starve: 0.0009, eat: { grass: 0.00014, berries: 0.00003 } }
+    },
+    jaguar: {    // Onca-pintada: a rainha da mata; solitaria, emboscada, nada; evita gente mas e mortal se acuada
+      name: 'Onça-pintada', macros: TROPICO_AM, biomes: [B.D, B.F, B.P, B.H], walk: 50, run: 235, radius: 13, w: 80, h: 54, hp: 48, dmg: 12, xp: 80, ac: 13, carcass: 1.1,
+      sight: 170, scent: 900, herd: [1, 1], fear: { town: 1.1, light: 0.5, fire: 1.0 }, fears: ['human'], temper: 'flee', tire: 4,
+      hunger: 1 / 800, hunt: 0.45, chase: 3.2, pounce: 12, prey: { capybara: 1, peccary: 0.7, tapir: 0.5, deer: 0.5, marsh_deer: 0.6, armadillo: 0.3, rabbit: 0.2 },
+      reg: { kill: 0.0007, half: 1.5, value: { capybara: 1.2, peccary: 1, tapir: 2.5, deer: 1, marsh_deer: 1.2, armadillo: 0.3, rabbit: 0.2 }, need: 0.0004, conv: 0.14, mort: 0.00002, max: 2,
+        terr: (r) => 0.8 + ((r.pop.capybara || 0) * 0.3 + (r.pop.peccary || 0) * 0.25 + (r.pop.tapir || 0) * 0.5), arrive: 0.00001, arriveIf: (r) => (r.pop.capybara || 0) + (r.pop.peccary || 0) > 3, start: [0.12, 1, 0] }
+    },
     crow: { name: 'Corvo', w: 24, h: 18, hp: 2, radius: 5, fear: { town: 0, light: 0 }, fears: ['human'] }   // aparece nas carcacas (sem regiao)
   };
-  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant'], PREDATORS = ['wolf', 'fox', 'lynx'];
-  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx'];
-  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger'];     // um grupo so ao ligar a regiao
+  const HERBIVORES = ['deer', 'rabbit', 'boar', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'marsh_deer'], PREDATORS = ['wolf', 'fox', 'lynx', 'jaguar'];
+  const KINDS = ['deer', 'rabbit', 'boar', 'wolf', 'fox', 'bear', 'hare', 'badger', 'squirrel', 'pheasant', 'lynx', 'capybara', 'tapir', 'peccary', 'anteater', 'sloth', 'capuchin', 'rhea', 'maned_wolf', 'armadillo', 'jaguar', 'marsh_deer'];
+  const SOLO = ['wolf', 'fox', 'bear', 'lynx', 'badger', 'jaguar', 'tapir', 'anteater', 'sloth', 'maned_wolf', 'armadillo'];     // um grupo so ao ligar a regiao
   // lobo rondando gente: mais medo de entrar na vila que o normal (fica na borda, espreitando)
   const WOLF_AMBUSH = { ...SPECIES.wolf, name: 'LoboEspreita', fear: { ...SPECIES.wolf.fear, town: 1.2 } };
   const NEAR = 3200;              // limite de busca de lugar para nascer
@@ -260,7 +330,7 @@
       const cc = this.rcenter(key);
       r = { key, cap, town, hab, plants: {}, capS: {}, pop: {}, hun: {}, birth: {}, active: false, macro: this.macro(cc.x, cc.y) };
       for (const p in PLANTS) r.plants[p] = cap[p] * (0.7 + Math.random() * 0.3);
-      if (!HOLARTICO.includes(r.macro)) { r.cap.herbs = 0; r.plants.herbs = 0; }          // ervas europeias: so nas macro-regioes temperadas
+      if (!HOLARTICO.includes(r.macro) && !TROPICO_AM.includes(r.macro)) { r.cap.herbs = 0; r.plants.herbs = 0; }   // ervas: temperadas (camomila...) e do Brasil (boldo...)
       // capacidade de cada herbivoro: densidade x comida que ele come na regiao x fracao do bioma que ele habita x longe de vila
       for (const k of HERBIVORES) {
         const sp = SPECIES[k], d = sp.diet; let food = 0, w = 0;
@@ -272,7 +342,7 @@
       }
       for (const k of PREDATORS) {
         const s = SPECIES[k].reg.start;
-        const good = this.livesIn(k, r.macro) && (k === 'wolf' ? hab > 0.35 : k === 'lynx' ? (r.capS.hare || 0) + (r.capS.rabbit || 0) > 3 : (r.capS.rabbit || 0) > 3);
+        const good = this.livesIn(k, r.macro) && (k === 'wolf' ? hab > 0.35 : k === 'lynx' ? (r.capS.hare || 0) + (r.capS.rabbit || 0) > 3 : k === 'jaguar' ? (r.capS.capybara || 0) + (r.capS.peccary || 0) > 2 : (r.capS.rabbit || 0) > 3);
         r.pop[k] = good && Math.random() < s[0] ? s[1] + Math.random() * s[2] : 0;
         r.hun[k] = 0.4;
       }
@@ -395,7 +465,7 @@
         for (let i = 0, tries = 0; i < n && tries < n * 6; tries++) {
           const x = c.x + (rand() - 0.5) * REG, y = c.y + (rand() - 0.5) * REG, t = this.biome(x, y);
           if (!biomes.includes(t) || this.townDanger(x, y) > 0.2 || this.blocked(x, y, 14)) continue;
-          out.push({ kind, x: this.game.world ? this.game.world.wrapX(x) : x, y, reg: r.key, seed: rand() }); i++;
+          out.push({ kind, x: this.game.world ? this.game.world.wrapX(x) : x, y, reg: r.key, seed: rand(), set: TROPICO_AM.includes(r.macro) ? 1 : 0 }); i++;
         }
       };
       put('bush', Math.round(r.cap.berries * 9), [B.F, B.D, B.H, B.P, B.M]);
@@ -792,13 +862,13 @@
         list.splice(i, 1);
         g.spawnCarcass(prey.x, prey.y);
         const c = g.carcasses[g.carcasses.length - 1]; if (c) { c.kind = prey.kind; c.scale = SPECIES[prey.kind].carcass || (prey.kind === 'rabbit' ? 0.4 : prey.kind === 'boar' ? 0.85 : 1); }
-        const small = ['rabbit', 'hare', 'pheasant'].includes(prey.kind), meal = small ? (w.kind === 'wolf' || w.kind === 'bear' ? 0.25 : 0.9) : 0.75;
+        const small = ['rabbit', 'hare', 'pheasant', 'armadillo'].includes(prey.kind), meal = small ? (w.kind === 'wolf' || w.kind === 'bear' ? 0.25 : 0.9) : 0.75;
         for (const o of this.list(w.kind)) if (o.kind === w.kind && o.herd === w.herd) o.hunger = Math.max(0, o.hunger - meal);   // o bando come junto
         w.hunger = Math.max(0, w.hunger - meal); w.act = 'rest'; w.state = 'satiated';
         if (seen) {
           if (window.sounds && w.kind === 'wolf') { window.sounds.playWolfBite(); window.sounds.playWolfHowl(); }
-          const names = { deer: 'um cervo', boar: 'um javali', rabbit: 'um coelho', hare: 'uma lebre', pheasant: 'um faisão' };
-          g.addLog(w.kind === 'lynx' ? `🐆 Um lince saltou das sombras e pegou ${names[prey.kind]}!` : w.kind === 'fox' ? `🦊 Uma raposa deu o bote e pegou ${names[prey.kind]}!` : w.kind === 'bear' ? `🐻 O urso derrubou ${names[prey.kind]}!` : `🐺 Um lobo predador saltou sobre ${names[prey.kind]} e o abateu! Carcaça fresca no solo.`, 'system');
+          const names0 = { deer: 'um cervo', boar: 'um javali', rabbit: 'um coelho', hare: 'uma lebre', pheasant: 'um faisão' }, names = new Proxy(names0, { get: (o, k) => o[k] || ('um(a) ' + ((SPECIES[k] && SPECIES[k].name) || 'animal').toLowerCase()) });
+          g.addLog(w.kind === 'jaguar' ? `🐆 A onça-pintada saltou da mata e derrubou ${names[prey.kind]}!` : w.kind === 'lynx' ? `🐆 Um lince saltou das sombras e pegou ${names[prey.kind]}!` : w.kind === 'fox' ? `🦊 Uma raposa deu o bote e pegou ${names[prey.kind]}!` : w.kind === 'bear' ? `🐻 O urso derrubou ${names[prey.kind]}!` : `🐺 Um lobo predador saltou sobre ${names[prey.kind]} e o abateu! Carcaça fresca no solo.`, 'system');
         }
         g.updateHUD();
       } else {
@@ -819,7 +889,7 @@
         const n = list.filter(o => o.kind === 'crow' && o.carc === c).length, want = 2 + (c.id ? Math.floor((c.id * 7) % 2) : 0);
         for (let i = n; i < want; i++) {
           const a = Math.random() * Math.PI * 2;
-          list.push({ kind: 'crow', carc: c, x: c.x + Math.cos(a) * 700, y: c.y + Math.sin(a) * 400, z: 140, phase: Math.random() * 6, mode: 'arrive', t: 0, width: 24, height: 18, hp: 2, maxHp: 2, direction: 'left', frameIndex: 0, animTimer: 0 });
+          list.push({ kind: 'crow', urubu: this.macro(c.x, c.y) === 'brasil', carc: c, x: c.x + Math.cos(a) * 700, y: c.y + Math.sin(a) * 400, z: 140, phase: Math.random() * 6, mode: 'arrive', t: 0, width: 24, height: 18, hp: 2, maxHp: 2, direction: 'left', frameIndex: 0, animTimer: 0 });
         }
       }
       for (let i = list.length - 1; i >= 0; i--) {

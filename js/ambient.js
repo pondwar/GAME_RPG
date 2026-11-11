@@ -6,12 +6,18 @@
 (function () {
   const HOLARTICO = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'china', 'japao', 'america_norte'];
   const FLORESTA = ['ilhas_ocidentais', 'galia', 'norte_europeu', 'europa_oriental', 'iberia', 'america_norte', 'china', 'japao'];
+  const TROPICO_AM = ['brasil', 'america_central'];
   const AMBIENT = {
     owl: { name: 'Coruja', w: 30, h: 34, hp: 4, xp: 10, ac: 14, carcass: 0.35, macros: FLORESTA, biomes: ['forest', 'dense_forest', 'hills'], night: true, cap: 1, group: [1, 1], spook: 170, flyZ: 62 },
     duck: { name: 'Pato-real', w: 32, h: 26, hp: 4, xp: 6, ac: 13, carcass: 0.4, macros: null, biomes: ['plains', 'forest', 'shore', 'hills', 'dense_forest'], water: true, cap: 3, group: [1, 3], spook: 150, flyZ: 58 },
+    toucan: { name: 'Tucano', w: 30, h: 30, hp: 4, xp: 12, ac: 14, carcass: 0.4, macros: TROPICO_AM, biomes: ['dense_forest', 'forest'], cap: 3, group: [1, 2], spook: 170, flyZ: 70, perch: true, perchZ: 26 },
+    macaw: { name: 'Arara', w: 34, h: 34, hp: 5, xp: 14, ac: 14, carcass: 0.45, macros: TROPICO_AM, biomes: ['dense_forest', 'forest'], cap: 4, group: [2, 3], spook: 180, flyZ: 78, perch: true, perchZ: 30 },
+    harpy: { name: 'Harpia', w: 44, h: 52, hp: 14, xp: 60, ac: 14, carcass: 0.8, macros: TROPICO_AM, biomes: ['dense_forest'], cap: 1, group: [1, 1], spook: 230, flyZ: 95, perch: true, perchZ: 52 },
+    anaconda: { name: 'Sucuri', w: 96, h: 18, hp: 32, xp: 65, ac: 12, carcass: 0.8, macros: TROPICO_AM, biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 1, group: [1, 1], spook: 80, run: 60, walk: 9 },
+    caiman: { name: 'Jacaré', w: 72, h: 22, hp: 26, xp: 40, ac: 12, carcass: 0.9, macros: TROPICO_AM, biomes: ['plains', 'shore', 'forest', 'dense_forest'], water: true, cap: 2, group: [1, 1], spook: 110, run: 95, walk: 12 },
     beaver: { name: 'Castor', w: 38, h: 26, hp: 12, xp: 14, ac: 12, carcass: 0.5, macros: HOLARTICO, biomes: ['plains', 'forest', 'shore', 'dense_forest', 'hills'], water: true, cap: 2, group: [1, 1], spook: 120, run: 120, walk: 22 }
   };
-  const RAD = { owl: 6, duck: 6, beaver: 8 };
+  const RAD = { owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12 };
   const NEAR = 1500, GONE = 2300;
 
   function install() {
@@ -77,14 +83,14 @@
           if (e.animTimer > 0.09) { e.animTimer = 0; e.frameIndex = (e.frameIndex + 1) % 4; }
           continue;
         }
-        e.z = Math.max(0, e.z - dt * 120);
-        if (e.kind === 'beaver' && dp < A.spook && e.fleeTimer <= 0) e.fleeTimer = 3;
+        e.z = e.z > (A.perchZ || 0) ? Math.max(A.perchZ || 0, e.z - dt * 120) : Math.min(A.perchZ || 0, e.z + dt * 60);
+        if (!flyer && A.run && dp < A.spook && e.fleeTimer <= 0) e.fleeTimer = 3;
         if (e.fleeTimer > 0) {                                                                                  // castor assustado corre para longe
           e.fleeTimer -= dt; e.act = 'flee'; const dx = this.wd(e.x, Pl.x), dy = e.y - Pl.y, n = Math.hypot(dx, dy) || 1; vx = dx / n; vy = dy / n; speed = A.run || 120;
         } else {
           e.timer -= dt;
           if (e.act === 'flee') { e.act = 'idle'; e.timer = 1 + Math.random() * 2; }
-          if (e.act === 'idle' && e.timer <= 0 && e.kind !== 'owl') {
+          if (e.act === 'idle' && e.timer <= 0 && !A.perch) {
             const a = Math.random() * Math.PI * 2, r = 25 + Math.random() * 60;
             e.target = { x: e.home.x + Math.cos(a) * r * 1.6, y: e.home.y + Math.sin(a) * r }; e.act = 'walk'; e.timer = 5;
           }
@@ -98,7 +104,7 @@
           if (!this.blocked(nx, ny, RAD[e.kind] + 2)) { e.x = nx; e.y = ny; if (Math.abs(vx) > 0.15) e.direction = vx > 0 ? 'right' : 'left'; }
           else { e.act = 'idle'; e.timer = 1; e.target = null; }
         }
-        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver') e.frameIndex = (e.frameIndex + 1) % 4; }
+        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda') e.frameIndex = (e.frameIndex + 1) % 4; }
       }
     };
   }

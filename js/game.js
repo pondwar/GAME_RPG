@@ -1597,7 +1597,7 @@ class Game {
         const lvl = this.fauna.plantLevel(p);
         if (p.kind === 'herb') {
           if (lvl < 0.2) { this.addLog('🌿 As ervas daqui já foram colhidas. Elas brotam de novo com o tempo.', 'tip'); return; }
-          const gotH = this.fauna.takePlant(p, 0.1), nH = Math.max(1, Math.round(3 * gotH)), idH = ['chamomile', 'mint', 'sage'][Math.floor(p.seed * 3) % 3];
+          const gotH = this.fauna.takePlant(p, 0.1), nH = Math.max(1, Math.round(3 * gotH)), idH = (p.set === 1 ? ['boldo', 'lemongrass', 'guaco'] : ['chamomile', 'mint', 'sage'])[Math.floor(p.seed * 3) % 3];
           this.inventory.addItem(idH, nH);
           if (this.skills) this.skills.addXP('hunter', 3);
           if (window.sounds) window.sounds.playHarvest();

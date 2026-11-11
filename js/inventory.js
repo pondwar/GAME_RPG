@@ -280,6 +280,24 @@ class InventorySystem {
         stats: '+14 HP',
         useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 14); if (window.sounds) window.sounds.playHarvest(); g.addLog('🪻 Você usou sálvia nos ferimentos! (+14 HP)', 'action'); }
       },
+      boldo: {
+        id: 'boldo', name: 'Boldo', type: 'consumable', rarity: 'common', icon: '🍃', maxStack: 30,
+        desc: 'Folhas largas de boldo, de gosto amargo. Um chá alivia o estômago depois de uma refeição pesada.',
+        stats: '+10 HP, +5% Nutrição',
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 10); g.player.hunger = Math.min(100, g.player.hunger + 5); if (window.sounds) window.sounds.playHarvest(); g.addLog('🍃 Você bebeu um chá de boldo! (+10 HP, +5% Nutrição)', 'action'); }
+      },
+      lemongrass: {
+        id: 'lemongrass', name: 'Erva-cidreira', type: 'consumable', rarity: 'common', icon: '🌾', maxStack: 30,
+        desc: 'Capim perfumado de cheiro cítrico. O chá acalma e dá fôlego.',
+        stats: '+6 HP, +10 Estamina',
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 6); if (g.player.stamina !== undefined) g.player.stamina = Math.min(g.player.maxStamina || 100, g.player.stamina + 10); if (window.sounds) window.sounds.playHarvest(); g.addLog('🌾 Você bebeu chá de erva-cidreira! (+6 HP, +10 Estamina)', 'action'); }
+      },
+      guaco: {
+        id: 'guaco', name: 'Guaco', type: 'consumable', rarity: 'common', icon: '🌿', maxStack: 30,
+        desc: 'Trepadeira de folhas em forma de coração. O xarope de guaco cura a tosse e fortalece o peito.',
+        stats: '+14 HP',
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + 14); if (window.sounds) window.sounds.playHarvest(); g.addLog('🌿 Você tomou um xarope de guaco! (+14 HP)', 'action'); }
+      },
       rabbit_fur: {
         id: 'rabbit_fur',
         name: 'Pelo de Coelho',

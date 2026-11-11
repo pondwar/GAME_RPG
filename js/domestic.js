@@ -41,8 +41,8 @@
       return null;
     };
     P.makeDomestic = function (kind, town, x, y) {
-      const sp = F.SPECIES[kind];
-      return { id: Date.now() + Math.random(), kind, domestic: true, town: town.id, home: { x: town.x, y: town.y }, x, y, width: sp.w, height: sp.h, hp: sp.hp, maxHp: sp.hp,
+      const sp = F.SPECIES[kind], br = ['brasil', 'america_central'].includes(this.macro(town.x, town.y));   // br = racas do Brasil (zebu, galinha caipira, cavalo crioulo, vira-lata)
+      return { id: Date.now() + Math.random(), kind, domestic: true, br, town: town.id, home: { x: town.x, y: town.y }, x, y, width: sp.w, height: sp.h, hp: sp.hp, maxHp: sp.hp,
         speed: sp.walk, direction: Math.random() > 0.5 ? 'left' : 'right', state: 'idle', act: 'idle', frameIndex: 0, animTimer: 0, animSpeed: 0.2,
         timer: 1 + Math.random() * 4, fleeTimer: 0, target: null, stuck: 0 };
     };
