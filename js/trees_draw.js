@@ -7,20 +7,33 @@
 
   // Medidas de cada especie: w/h = caixa para o mouse e o desenho; r = raio do tronco (colisao); nome; frutos?
   const SPECIES = {
-    oak:        { name: 'Carvalho', w: 190, h: 220, r: 24, fruit: true, wood: 'Carvalho' },
-    pine:       { name: 'Pinheiro', w: 130, h: 230, r: 20, wood: 'Pinheiro' },
+    oak:        { name: 'Carvalho', w: 190, h: 220, r: 24, fruitItem: 'fruit', fy: -140, fw: 34, wood: 'Carvalho' },
+    pine:       { name: 'Pinheiro', w: 130, h: 230, r: 20, fruitItem: 'fruit_pinenut', fy: -120, fw: 26, wood: 'Pinheiro' },
     spruce:     { name: 'Abeto', w: 120, h: 240, r: 18, wood: 'Abeto' },
-    palm:       { name: 'Palmeira', w: 150, h: 220, r: 14, wood: 'Palmeira' },
+    palm:       { name: 'Palmeira', w: 150, h: 220, r: 14, fruitItem: 'fruit_coconut', fy: -142, fw: 12, wood: 'Palmeira' },
     acacia:     { name: 'Acácia', w: 200, h: 170, r: 16, wood: 'Acácia' },
-    baobab:     { name: 'Baobá', w: 190, h: 200, r: 36, wood: 'Baobá' },
-    cactus:     { name: 'Cacto', w: 80, h: 130, r: 12, wood: 'Cacto' },
-    cherry:     { name: 'Cerejeira', w: 190, h: 200, r: 20, fruit: true, wood: 'Cerejeira' },
-    bamboo:     { name: 'Bambuzal', w: 130, h: 250, r: 18, wood: 'Bambu' },
+    baobab:     { name: 'Baobá', w: 190, h: 200, r: 36, fruitItem: 'fruit_baobab', fy: -138, fw: 30, wood: 'Baobá' },
+    cactus:     { name: 'Cacto', w: 80, h: 130, r: 12, fruitItem: 'fruit_pear', fy: -78, fw: 20, wood: 'Cacto' },
+    cherry:     { name: 'Cerejeira', w: 190, h: 200, r: 20, fruitItem: 'fruit_cherry', fy: -128, fw: 50, wood: 'Cerejeira' },
+    bamboo:     { name: 'Bambuzal', w: 130, h: 250, r: 18, fruitItem: 'fruit_shoot', fy: -14, fw: 38, wood: 'Bambu' },
     eucalyptus: { name: 'Eucalipto', w: 160, h: 240, r: 17, wood: 'Eucalipto' },
-    araucaria:  { name: 'Araucária', w: 170, h: 240, r: 18, wood: 'Araucária' },
-    jungle:     { name: 'Árvore Tropical', w: 210, h: 230, r: 30, wood: 'Madeira Tropical' },
+    araucaria:  { name: 'Araucária', w: 170, h: 240, r: 18, fruitItem: 'fruit_pinhao', fy: -195, fw: 40, wood: 'Araucária' },
+    jungle:     { name: 'Árvore Tropical', w: 210, h: 230, r: 30, fruitItem: 'fruit_mango', fy: -150, fw: 56, wood: 'Madeira Tropical' },
     birch:      { name: 'Bétula', w: 150, h: 220, r: 16, wood: 'Bétula' },
-    olive:      { name: 'Oliveira', w: 160, h: 150, r: 20, wood: 'Oliveira' }
+    olive:      { name: 'Oliveira', w: 160, h: 150, r: 20, fruitItem: 'fruit_olive', fy: -88, fw: 44, wood: 'Oliveira' }
+  };
+  // Frutos: cada especie de arvore dá o seu. color = cor da bolinha na copa e no chao; hp/food = o que restaura ao comer.
+  const FRUITS = {
+    fruit:         { name: 'Fruto Silvestre', color: '#e03131', icon: '🍎', hp: 15, food: 20, desc: 'Fruto fresco colhido das copas dos carvalhos ancestrais.' },
+    fruit_cherry:  { name: 'Cerejas', color: '#b0122c', icon: '🍒', hp: 8, food: 12, desc: 'Cerejas doces e maduras das cerejeiras da Ásia.' },
+    fruit_coconut: { name: 'Coco', color: '#6a4a28', icon: '🥥', hp: 10, food: 28, desc: 'Coco verde cheio de água e polpa. Mata a fome e a sede.' },
+    fruit_olive:   { name: 'Azeitonas', color: '#6a7a30', icon: '🫒', hp: 6, food: 10, desc: 'Azeitonas colhidas da oliveira. Pequenas e nutritivas.' },
+    fruit_baobab:  { name: 'Fruto de Baobá', color: '#b8944e', icon: '🥔', hp: 14, food: 26, desc: 'Fruto de casca dura do baobá, de polpa seca e azedinha.' },
+    fruit_mango:   { name: 'Manga', color: '#f0a020', icon: '🥭', hp: 18, food: 22, desc: 'Manga suculenta das florestas tropicais.' },
+    fruit_pinenut: { name: 'Pinhão', color: '#8a5a30', icon: '🌰', hp: 8, food: 24, desc: 'Sementes de pinheiro, ricas em energia.' },
+    fruit_pinhao:  { name: 'Pinhão de Araucária', color: '#7a4a28', icon: '🌰', hp: 10, food: 30, desc: 'Semente grande da araucária, muito nutritiva cozida.' },
+    fruit_pear:    { name: 'Figo-da-Índia', color: '#d83a7a', icon: '🌵', hp: 8, food: 14, desc: 'Fruto doce do cacto, de casca com espinhos pequenos.' },
+    fruit_shoot:   { name: 'Broto de Bambu', color: '#a4d46a', icon: '🎋', hp: 6, food: 12, desc: 'Broto tenro de bambu, crocante.' }
   };
   const AMERICAS = ['america_norte', 'america_central', 'america_sul_hispanica', 'brasil'];
 
@@ -170,7 +183,8 @@
   };
 
   window.TreeArt = {
-    SPECIES, pick,
+    SPECIES, FRUITS, pick,
+    fruitColor(item) { return (FRUITS[item] || FRUITS.fruit).color; },
     info(kind) { return SPECIES[kind] || SPECIES.oak; },
     // desenha uma arvore viva que nao seja carvalho; devolve false se nao souber (o jogo usa o carvalho)
     draw(c, tree, bx, by, shakeX) {

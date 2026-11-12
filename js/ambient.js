@@ -32,9 +32,11 @@
     kookaburra: { name: 'Kookaburra', w: 24, h: 28, hp: 4, xp: 10, ac: 13, carcass: 0.3, macros: ['oceania'], biomes: ['forest', 'plains', 'dense_forest'], cap: 3, group: [1, 2], spook: 110, flyZ: 50 },
     koala: { name: 'Coala', w: 28, h: 32, hp: 7, xp: 16, ac: 12, carcass: 0.4, macros: ['oceania'], biomes: ['forest', 'dense_forest'], cap: 2, group: [1, 1], spook: 70, run: 50, walk: 8 },
     condor: { name: 'Condor-dos-Andes', w: 48, h: 44, hp: 10, xp: 28, ac: 13, carcass: 0.8, macros: ['america_sul_hispanica'], biomes: ['hills', 'plains', 'desert'], cap: 2, group: [1, 3], spook: 210, flyZ: 130, perch: true, perchZ: 30 },
+    king_cobra: { name: 'Cobra-real', w: 34, h: 42, hp: 8, xp: 28, ac: 13, carcass: 0.2, macros: ['sudoeste_asiatico', 'sul_asiatico'], biomes: ['forest', 'dense_forest', 'plains', 'hills'], cap: 1, group: [1, 1], spook: 70, run: 80, walk: 12 },
+    platypus: { name: 'Ornitorrinco', w: 34, h: 20, hp: 6, xp: 18, ac: 13, carcass: 0.3, macros: ['oceania'], biomes: ['plains', 'forest', 'shore', 'dense_forest'], water: true, cap: 1, group: [1, 1], spook: 90, run: 90, walk: 18 },
     beaver: { name: 'Castor', w: 38, h: 26, hp: 12, xp: 14, ac: 12, carcass: 0.5, macros: HOLARTICO, biomes: ['plains', 'forest', 'shore', 'dense_forest', 'hills'], water: true, cap: 2, group: [1, 1], spook: 120, run: 120, walk: 22 }
   };
-  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5, crane: 8, peafowl: 7, python: 12, bald_eagle: 8, turkey: 7, rattlesnake: 5, kookaburra: 5, koala: 5, condor: 9 };
+  const RAD = { snowy_owl: 6, penguin: 6, owl: 6, duck: 6, beaver: 8, toucan: 6, macaw: 6, caiman: 12, harpy: 8, anaconda: 12, vulture: 8, nile_croc: 14, hippo: 14, scorpion: 4, cobra: 5, crane: 8, peafowl: 7, python: 12, bald_eagle: 8, turkey: 7, rattlesnake: 5, kookaburra: 5, koala: 5, condor: 9, king_cobra: 7, platypus: 6 };
   const NEAR = 1500, GONE = 2300;
 
   function install() {
@@ -122,7 +124,7 @@
           if (!this.blocked(nx, ny, RAD[e.kind] + 2)) { e.x = nx; e.y = ny; if (Math.abs(vx) > 0.15) e.direction = vx > 0 ? 'right' : 'left'; }
           else { e.act = 'idle'; e.timer = 1; e.target = null; }
         }
-        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra' || e.kind === 'python' || e.kind === 'rattlesnake') e.frameIndex = (e.frameIndex + 1) % 4; }
+        if (e.animTimer > (speed > 80 ? 0.1 : 0.25)) { e.animTimer = 0; if (speed > 0 || e.kind === 'beaver' || e.kind === 'caiman' || e.kind === 'anaconda' || e.kind === 'nile_croc' || e.kind === 'hippo' || e.kind === 'cobra' || e.kind === 'python' || e.kind === 'rattlesnake' || e.kind === 'king_cobra' || e.kind === 'platypus') e.frameIndex = (e.frameIndex + 1) % 4; }
       }
     };
   }

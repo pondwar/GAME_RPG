@@ -256,7 +256,7 @@ class ProceduralChunkManager {
       const treeV = this.hash2D(cx, cy, 16 + i * 4);
       const species = TA ? TA.pick(treeMacro, treeLat, spot.type, treeV) : 'oak';
       if (!species) continue;                                   // deserto sem arvore
-      const sp = TA ? TA.info(species) : { w: 190, h: 220, r: 24, fruit: true };
+      const sp = TA ? TA.info(species) : { w: 190, h: 220, r: 24, fruitItem: 'fruit' };
       const woodCap = Math.floor(this.hash2D(cx, cy, 12 + i * 4) * 5) + 4;
 
       const tree = {
@@ -271,7 +271,8 @@ class ProceduralChunkManager {
         width: sp.w,
         height: sp.h,
         trunkOffset: { x: 0, y: 80, radius: sp.r },
-        fruits: sp.fruit ? Math.floor(this.hash2D(cx, cy, 13 + i * 4) * 4) + 2 : 0,
+        fruitItem: sp.fruitItem || null,
+        fruits: sp.fruitItem ? Math.floor(this.hash2D(cx, cy, 13 + i * 4) * 4) + 2 : 0,
         maxFruits: 6,
         growthTimer: 0,
         wood: woodCap,

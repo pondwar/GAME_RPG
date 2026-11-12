@@ -425,6 +425,14 @@ class InventorySystem {
       this.itemDB['wood_' + k] = { ...this.itemDB.wood, id: 'wood_' + k, name, rarity, icon, desc: desc + ' Use 2 toras para acender uma fogueira de acampamento!' };
     }
     this.itemDB.resin.name = 'Resina Aromática';
+    // Frutos de cada especie (js/trees_draw.js, TreeArt.FRUITS): o "fruit" antigo (carvalho) fica como esta
+    const FR = (window.TreeArt && window.TreeArt.FRUITS) || {};
+    for (const id in FR) {
+      if (id === 'fruit') continue;
+      const f = FR[id];
+      this.itemDB[id] = { id, name: f.name, type: 'consumable', rarity: 'common', icon: f.icon, maxStack: 20, desc: f.desc + ' Restaura vida e saciedade.', stats: `+${f.hp} HP, +${f.food}% Nutrição`,
+        useEffect: (g) => { g.player.hp = Math.min(g.player.maxHp, g.player.hp + f.hp); g.player.hunger = Math.min(100, g.player.hunger + f.food); if (window.sounds) window.sounds.playHarvest(); g.addLog(`${f.icon} Você comeu: ${f.name}! (+${f.hp} HP, +${f.food}% Nutrição)`, 'action'); } };
+    }
 
     this.initStartingItems();
   }
@@ -806,8 +814,9 @@ class InventorySystem {
     const itemData = this.itemDB[slot.id];
 
     // Spawn item drop on ground in world
-    if (slot.id === 'fruit') {
+    if (slot.id === 'fruit' || slot.id.startsWith('fruit_')) {
       this.game.fruitsOnGround.push({
+        item: slot.id,
         x: this.game.player.x + (Math.random() - 0.5) * 30,
         y: this.game.player.y + (Math.random() - 0.5) * 30,
         bounceY: 0,

@@ -967,6 +967,7 @@ class Game {
       if (tree.fruits > 0) {
         for (let k = 0; k < tree.fruits; k++) {
           this.fruitsOnGround.push({
+            item: tree.fruitItem || 'fruit',
             x: tree.x + (Math.random() - 0.5) * 75,
             y: ty + (Math.random() * 30 - 15),
             bounceY: 0,
@@ -1385,12 +1386,13 @@ class Game {
   }
 
   dropFruitBait() {
-    const fruitSlotIdx = this.inventory.slots.findIndex(s => s && s.id === 'fruit');
+    const fruitSlotIdx = this.inventory.slots.findIndex(s => s && (s.id === 'fruit' || s.id.startsWith('fruit_')));
     if (fruitSlotIdx === -1) {
       this.addLog(`Você não tem frutos na mochila para usar como isca!`, 'warning');
       return;
     }
 
+    const baitItem = this.inventory.slots[fruitSlotIdx].id;
     this.inventory.removeItem(fruitSlotIdx, 1);
     
     // Throw fruit slightly ahead in facing direction
@@ -1403,6 +1405,7 @@ class Game {
     dropX = this.world ? this.world.wrapX(dropX) : dropX;
 
     this.fruitsOnGround.push({
+      item: baitItem,
       x: dropX,
       y: dropY,
       bounceY: 0,
@@ -1410,7 +1413,7 @@ class Game {
     });
 
     if (window.sounds) window.sounds.playHarvest();
-    this.addLog(`🍎 Você jogou um Fruto Silvestre no chão como isca! Cervos próximos vão farejar o aroma.`, 'action');
+    this.addLog(`🍎 Você jogou ${(this.inventory.itemDB[baitItem] || {}).name || 'um fruto'} no chão como isca! Cervos próximos vão farejar o aroma.`, 'action');
     this.updateHUD();
   }
 
@@ -1666,9 +1669,10 @@ class Game {
       const dist = Math.hypot(this.player.x - f.x, this.player.y - f.y);
       if (dist < 50) {
         this.fruitsOnGround.splice(i, 1);
-        this.inventory.addItem('fruit', 1);
+        const fi = f.item || 'fruit', fname = (this.inventory.itemDB[fi] || {}).name || 'Fruto Silvestre';
+        this.inventory.addItem(fi, 1);
         if (window.sounds) window.sounds.playHarvest();
-        this.addLog(`🧺 Você colheu 1 Fruto Silvestre do chão!`, 'action');
+        this.addLog(`🧺 Você colheu 1 ${fname} do chão!`, 'action');
         this.updateHUD();
         return;
       }
@@ -1710,7 +1714,7 @@ class Game {
       }
 
       if (nearestTree.fruits <= 0) {
-        this.addLog(`Esta árvore está sem frutos no momento. A natureza precisa de tempo para florescer!`, 'tip');
+        this.addLog(`${nearestTree.fruitItem === null ? 'Esta árvore não dá frutos.' : 'Esta árvore está sem frutos no momento. A natureza precisa de tempo para florescer!'}`, 'tip');
         return;
       }
 
@@ -1723,6 +1727,7 @@ class Game {
           nearestTree.fruits -= dropped;
           for (let k = 0; k < dropped; k++) {
             this.fruitsOnGround.push({
+              item: nearestTree.fruitItem || 'fruit',
               x: nearestTree.x + (Math.random() - 0.5) * 60,
               y: nearestTree.y + nearestTree.trunkOffset.y + (Math.random() * 30 + 10),
               bounceY: 0
@@ -1737,6 +1742,7 @@ class Game {
         } else if (res.isSuccess) {
           nearestTree.fruits--;
           this.fruitsOnGround.push({
+            item: nearestTree.fruitItem || 'fruit',
             x: nearestTree.x + (Math.random() - 0.5) * 40,
             y: nearestTree.y + nearestTree.trunkOffset.y + 20,
             bounceY: 0
@@ -2090,7 +2096,7 @@ class Game {
         tree.growthTimer += dt;
         if (tree.growthTimer > 25) {
           tree.growthTimer = 0;
-          if (tree.fruits < tree.maxFruits) {
+          if (tree.fruitItem !== null && tree.fruits < tree.maxFruits) {
             tree.fruits++;
             this.updateHUD();
           }
@@ -2104,9 +2110,10 @@ class Game {
       const fdx = this.world ? this.world.wrapDelta(this.player.x - f.x) : (this.player.x - f.x);
       if (Math.hypot(fdx, this.player.y - f.y) < 22) {
         this.fruitsOnGround.splice(i, 1);
-        this.inventory.addItem('fruit', 1);
+        const fi2 = f.item || 'fruit', fname2 = (this.inventory.itemDB[fi2] || {}).name || 'Fruto';
+        this.inventory.addItem(fi2, 1);
         if (window.sounds) window.sounds.playHarvest();
-        this.addLog(`🍎 Fruto colhido automaticamente do solo!`, 'action');
+        this.addLog(`🍎 ${fname2} colhido automaticamente do solo!`, 'action');
         this.updateHUD();
       }
     }
@@ -3287,20 +3294,24 @@ class Game {
       ctx.drawImage(this.images.tree, tx - w / 2 + shakeX, ty - h / 2, w, h);
     }
 
-    // Red Fruits on canopy
+    // Frutos na copa: cada especie tem a sua cor e a sua altura (js/trees_draw.js)
     if (tree.fruits > 0) {
+      const item = tree.fruitItem || 'fruit', TA = window.TreeArt, spc = (TA && tree.species && tree.species !== 'oak') ? TA.info(tree.species) : null;
+      const col = TA ? TA.fruitColor(item) : '#e03131', base = ty + tree.trunkOffset.y;
       for (let i = 0; i < tree.fruits; i++) {
-        const fruitOffsetX = ((i % 3) - 1) * 32 + (i * 7 % 11);
-        const fruitOffsetY = -60 + Math.floor(i / 3) * 26 + (i * 5 % 9);
+        const fw = spc && spc.fw ? spc.fw : 32;
+        const fruitOffsetX = spc ? ((i % 3) - 1) * fw * 0.8 + (i * 7 % 11) - 5 : ((i % 3) - 1) * 32 + (i * 7 % 11);
+        const fruitOffsetY = spc ? (spc.fy || -120) + Math.floor(i / 3) * 18 + (i * 5 % 9) : -60 + Math.floor(i / 3) * 26 + (i * 5 % 9);
         const fx = tx + fruitOffsetX + shakeX;
-        const fy = ty + fruitOffsetY;
+        const fy = spc ? base + fruitOffsetY : ty + fruitOffsetY;
 
-        ctx.fillStyle = '#e03131';
+        ctx.fillStyle = col;
         ctx.beginPath();
         ctx.arc(fx, fy, 5, 0, Math.PI * 2);
         ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.45)'; ctx.lineWidth = 1; ctx.stroke();
 
-        ctx.fillStyle = '#ffc9c9';
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
         ctx.beginPath();
         ctx.arc(fx - 1.5, fy - 1.5, 1.8, 0, Math.PI * 2);
         ctx.fill();
@@ -3318,13 +3329,12 @@ class Game {
     ctx.ellipse(fx, fy + 3, 5, 2.5, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#e03131';
+    ctx.fillStyle = (window.TreeArt && window.TreeArt.fruitColor(fruit.item || 'fruit')) || '#e03131';
     ctx.beginPath();
     ctx.arc(fx, fy, 4.5, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#51cf66';
-    ctx.fillRect(fx - 0.5, fy - 6, 2, 2.5);
+    if (!fruit.item || fruit.item === 'fruit' || fruit.item === 'fruit_cherry' || fruit.item === 'fruit_mango') { ctx.fillStyle = '#51cf66'; ctx.fillRect(fx - 0.5, fy - 6, 2, 2.5); }
   }
 
   updateHUD() {

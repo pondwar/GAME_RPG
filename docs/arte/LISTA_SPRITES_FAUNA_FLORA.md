@@ -154,6 +154,8 @@ Legenda: ⭐ = fazer primeiro · ✅ = já existe · 🟦 = temos só os "bloqui
 ### Pacote G: Oceania (🟦 bloquinhos: canguru, emu, vombate, dingo, kookaburra, coala)
 ### Pacote H: Andes e pampas (🟦 bloquinhos: guanaco, vicunha, viscacha, condor)
 
+### Pacote I: espécies extras (🟦 bloquinhos: raposa-do-deserto, orangotango, rinoceronte-indiano, gaur, panda-vermelho, morsa, foca, diabo-da-tasmânia, casuar, lhama, alpaca, urso-de-óculos, chinchila, cobra-real, ornitorrinco)
+
 ### Pacote C: Frio e polar
 - [ ] ⭐ Alce · [ ] ⭐ Rena · [ ] ⭐ Lebre-da-neve · [ ] ⭐ Urso-polar · [ ] ⭐ Raposa-do-ártico
 - [ ] ⭐ Coruja-das-neves · [ ] Glutão · [ ] Boi-almiscarado · [ ] ⭐ Pinguim (polo sul, anda em terra/gelo)
