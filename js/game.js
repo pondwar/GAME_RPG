@@ -905,7 +905,9 @@ class Game {
     const woodAmount = isCrit ? Math.min(tree.wood, 2) : 1;
 
     tree.wood -= woodAmount;
-    this.inventory.addItem('wood', woodAmount);
+    const woodId = tree.species && tree.species !== 'oak' ? 'wood_' + tree.species : 'wood';
+    const woodName = (this.inventory.itemDB[woodId] || {}).name || 'Toras de Carvalho';
+    this.inventory.addItem(woodId, woodAmount);
 
     // Award Woodcutting & Survival XP
     if (this.skills) {
@@ -913,7 +915,7 @@ class Game {
       this.skills.addXP('sobrevivencia', 6);
     }
 
-    this.spawnDamageText(tx, ty - 35, `+${woodAmount} Madeira 🪵 (${tree.wood} restantes)`, '#ffd43b', 15);
+    this.spawnDamageText(tx, ty - 35, `+${woodAmount} ${woodName} 🪵 (${tree.wood} restantes)`, '#ffd43b', 15);
 
     // 35% chance to extract aromatic tree resin
     if (Math.random() < 0.35) {
@@ -923,9 +925,9 @@ class Game {
 
     if (isCrit) {
       if (window.sounds) window.sounds.playCritSuccess();
-      this.addLog(`★ GOLPE DE MESTRE! O machado rachou o lenho perfeito (+${woodAmount} Toras de Carvalho)! Restam [${tree.wood}/${tree.maxWood}].`, 'action');
+      this.addLog(`★ GOLPE DE MESTRE! O machado rachou o lenho perfeito (+${woodAmount} × ${woodName})! Restam [${tree.wood}/${tree.maxWood}].`, 'action');
     } else {
-      this.addLog(`🪓 Você golpeou o ${this.treeName(tree).toLowerCase()} com o machado (+${woodAmount} Tora). Lenho restante: [${tree.wood}/${tree.maxWood}].`, 'action');
+      this.addLog(`🪓 O machado atingiu: ${this.treeName(tree)} (+${woodAmount} × ${woodName}). Lenho restante: [${tree.wood}/${tree.maxWood}].`, 'action');
     }
 
     // 2. CHECK IF TREE IS COMPLETELY CHOPPED DOWN -> TRANSFORMS INTO STUMP!
@@ -989,7 +991,7 @@ class Game {
     // Check if player has at least 2 wood across slots or 1 campfire_kit
     let totalWood = 0;
     for (const s of this.inventory.slots) {
-      if (s && s.id === 'wood') totalWood += s.count;
+      if (s && InventorySystem.isWood(s.id)) totalWood += s.count;
     }
     const kitIdx = this.inventory.slots.findIndex(s => s && s.id === 'campfire_kit');
 
@@ -1004,7 +1006,7 @@ class Game {
       let needed = 2;
       for (let i = 0; i < this.inventory.slots.length; i++) {
         const s = this.inventory.slots[i];
-        if (s && s.id === 'wood') {
+        if (s && InventorySystem.isWood(s.id)) {
           const take = Math.min(s.count, needed);
           this.inventory.removeItem(i, take);
           needed -= take;

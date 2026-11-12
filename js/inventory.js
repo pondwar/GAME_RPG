@@ -1,5 +1,8 @@
 // inventory.js - Interactive Dark Fantasy Grid Inventory & Equipment System
 class InventorySystem {
+  // madeira de qualquer especie conta como madeira (fogueira, construcao)
+  static isWood(id) { return id === 'wood' || (typeof id === 'string' && id.startsWith('wood_')); }
+
   constructor(game) {
     this.game = game;
     this.maxSlots = 20; // 5 columns x 4 rows
@@ -405,6 +408,23 @@ class InventorySystem {
         }
       }
     };
+
+    // Madeira de cada especie de arvore (js/trees_draw.js): "wood" = carvalho; as outras viram wood_<especie>.
+    // Todas valem como madeira para fogueira e construcao (ver Inventory.isWood).
+    const MADEIRAS = {
+      pine: ['Toras de Pinheiro', 'common', '🪵', 'Madeira clara e resinosa de conífera.'], spruce: ['Toras de Abeto', 'common', '🪵', 'Madeira leve e reta das florestas frias.'],
+      palm: ['Toras de Palmeira', 'common', '🪵', 'Tronco fibroso e leve de palmeira.'], acacia: ['Toras de Acácia', 'common', '🪵', 'Madeira dura e espinhosa da savana.'],
+      baobab: ['Toras de Baobá', 'uncommon', '🪵', 'Madeira esponjosa e macia do gigante da savana.'], cactus: ['Hastes de Cacto', 'common', '🌵', 'Hastes secas de cacto, servem de lenha.'],
+      cherry: ['Toras de Cerejeira', 'uncommon', '🪵', 'Madeira avermelhada e perfumada, muito apreciada.'], bamboo: ['Colmos de Bambu', 'common', '🎋', 'Hastes de bambu, leves e resistentes.'],
+      eucalyptus: ['Toras de Eucalipto', 'common', '🪵', 'Madeira dura e aromática da Oceania.'], araucaria: ['Toras de Araucária', 'uncommon', '🪵', 'Madeira nobre e clara do pinheiro-brasileiro.'],
+      jungle: ['Toras Tropicais', 'uncommon', '🪵', 'Madeira pesada e escura das florestas tropicais.'], birch: ['Toras de Bétula', 'common', '🪵', 'Madeira branca e flexível, queima bem.'],
+      olive: ['Toras de Oliveira', 'uncommon', '🪵', 'Madeira dura e retorcida, de queima lenta.']
+    };
+    for (const k in MADEIRAS) {
+      const [name, rarity, icon, desc] = MADEIRAS[k];
+      this.itemDB['wood_' + k] = { ...this.itemDB.wood, id: 'wood_' + k, name, rarity, icon, desc: desc + ' Use 2 toras para acender uma fogueira de acampamento!' };
+    }
+    this.itemDB.resin.name = 'Resina Aromática';
 
     this.initStartingItems();
   }

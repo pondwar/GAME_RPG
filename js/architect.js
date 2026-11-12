@@ -719,7 +719,7 @@ class ArchitectSystem {
 
   _invCount(id) {
     const inv = this.game.inventory; if (!inv) return 0;
-    let n = 0; for (const sl of inv.slots) if (sl && sl.id === id) n += sl.count; return n;
+    let n = 0; for (const sl of inv.slots) if (sl && (id === 'wood' ? InventorySystem.isWood(sl.id) : sl.id === id)) n += sl.count; return n;
   }
   _missing(cost) {
     const out = {}; if (!cost || this.FREE_BUILD) return out;
@@ -747,7 +747,7 @@ class ArchitectSystem {
     for (const id in cost) {
       let left = cost[id];
       for (let i = inv.slots.length - 1; i >= 0 && left > 0; i--) {
-        const sl = inv.slots[i]; if (!sl || sl.id !== id) continue;
+        const sl = inv.slots[i]; if (!sl || !(id === 'wood' ? InventorySystem.isWood(sl.id) : sl.id === id)) continue;
         const take = Math.min(sl.count, left); inv.removeItem(i, take); left -= take;
       }
     }
