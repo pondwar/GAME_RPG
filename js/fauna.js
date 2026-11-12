@@ -1134,7 +1134,7 @@
         const i = list.indexOf(prey); if (i === -1) return;
         list.splice(i, 1);
         g.spawnCarcass(prey.x, prey.y);
-        const c = g.carcasses[g.carcasses.length - 1]; if (c) { c.kind = prey.kind; c.scale = SPECIES[prey.kind].carcass || (prey.kind === 'rabbit' ? 0.4 : prey.kind === 'boar' ? 0.85 : 1); }
+        const c = g.carcasses[g.carcasses.length - 1]; if (c) { c.kind = prey.kind; c.w = prey.width; c.h = prey.height; c.scale = SPECIES[prey.kind].carcass || (prey.kind === 'rabbit' ? 0.4 : prey.kind === 'boar' ? 0.85 : 1); }
         const small = ['rabbit', 'hare', 'pheasant', 'armadillo', 'snow_hare'].includes(prey.kind), meal = small ? (w.kind === 'wolf' || w.kind === 'bear' ? 0.25 : 0.9) : 0.75;
         for (const o of this.list(w.kind)) if (o.kind === w.kind && o.herd === w.herd) o.hunger = Math.max(0, o.hunger - meal);   // o bando come junto
         w.hunger = Math.max(0, w.hunger - meal); w.act = 'rest'; w.state = 'satiated';

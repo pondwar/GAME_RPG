@@ -809,7 +809,7 @@ class Game {
         this.critters.splice(i, 1);
         if (c.kind !== 'crow') {
           this.spawnCarcass(c.x, c.y);
-          const k = this.carcasses[this.carcasses.length - 1]; if (k) { k.kind = c.kind; k.scale = (FS[c.kind] && FS[c.kind].carcass) || (c.kind === 'rabbit' ? 0.4 : c.kind === 'fox' ? 0.55 : c.kind === 'bear' ? 1.35 : 0.85); }
+          const k = this.carcasses[this.carcasses.length - 1]; if (k) { k.kind = c.kind; k.w = c.width; k.h = c.height; k.scale = (FS[c.kind] && FS[c.kind].carcass) || (c.kind === 'rabbit' ? 0.4 : c.kind === 'fox' ? 0.55 : c.kind === 'bear' ? 1.35 : 0.85); }
         }
         for (const [id, n] of LOOT[c.kind] || []) this.inventory.addItem(id, n);
         if (this.skills) { const xp = XP[c.kind] || (FS[c.kind] && FS[c.kind].xp) || 10; this.skills.addXP('hunter', xp); this.skills.addXP('attack', Math.round(xp / 2)); }
@@ -841,6 +841,8 @@ class Game {
       maxLife: 0.85
     });
   }
+
+  carcassName(k) { return (k && k.kind && window.CritterArt && window.CritterArt.names[k.kind]) || 'Cervo'; }
 
   treeName(tree) { return (window.TreeArt && window.TreeArt.info(tree.species).name) || 'Carvalho'; }
 
@@ -1501,7 +1503,7 @@ class Game {
       let estadoTxt = 'Fresca (Pressione [F] para esfolar carne e couro)';
       if (hovered.entity.stage === 1) estadoTxt = 'Em decomposição (atrai insetos e vermes)';
       if (hovered.entity.stage === 2) estadoTxt = 'Ossada seca (consumida pelo tempo)';
-      this.targetName.innerText = `Carcaça de Cervo`;
+      this.targetName.innerText = `Carcaça de ${this.carcassName(hovered.entity)}`;
       this.targetDesc.innerText = `Estado: ${estadoTxt}.`;
     } else if (hovered && hovered.type === 'deer') {
       this.targetCard.style.display = 'block';
@@ -1563,15 +1565,19 @@ class Game {
       if (dist < 70) {
         if (c.stage === 0) {
           const mod = window.diceSystem.stats.sobrevivencia;
-          window.diceSystem.rollD20('Esfolar Carcaça de Cervo', mod, 10, (res) => {
+          window.diceSystem.rollD20('Esfolar Carcaça de ' + this.carcassName(c), mod, 10, (res) => {
             if (res.isSuccess) {
-              const meatGain = res.isCrit ? 4 : 2;
+              // carne pelo tamanho do bicho (coelho 1, cervo 2, bisao/elefante mais); couro so das pecas que existem
+              const big = c.scale >= 1.3 ? 2 : (c.scale >= 1.05 ? 1 : 0), tiny = c.scale && c.scale < 0.6;
+              const meatGain = Math.max(1, (res.isCrit ? 4 : 2) + big - (tiny ? 1 : 0));
+              const HIDE = { rabbit: 'rabbit_fur', fox: 'fox_pelt', bear: 'bear_pelt', wolf: 'wolf_pelt' };
+              const hideId = !c.kind || c.kind === 'deer' ? 'deer_hide' : (HIDE[c.kind] || (c.scale >= 0.8 && this.inventory.itemDB.deer_hide ? 'deer_hide' : null));
               this.inventory.addItem('meat', meatGain);
-              this.inventory.addItem('deer_hide', 1);
+              if (hideId && !(c.kind === 'rabbit' || c.kind === 'fox' || c.kind === 'bear') ) this.inventory.addItem(hideId, 1);
               c.stage = 1;
               c.timer = 0;
               if (window.sounds) window.sounds.playHarvest();
-              this.addLog(`🥩 Você esfolou a carcaça com maestria! (+${meatGain} Carnes de Caça, +1 Couro de Cervo guardados na Mochila)!`, 'action');
+              this.addLog(`🥩 Você esfolou a carcaça com maestria! (+${meatGain} Carnes de Caça${hideId && !(c.kind === 'rabbit' || c.kind === 'fox' || c.kind === 'bear') ? ', +1 Couro' : ''} guardados na Mochila)!`, 'action');
             } else {
               this.inventory.addItem('meat', 1);
               c.stage = 1;
@@ -3179,7 +3185,10 @@ class Game {
     ctx.fill();
 
     const frame = this.images.carcass[carcass.stage];
-    if (frame && frame.complete && frame.naturalWidth > 0) {
+    const own = carcass.kind && carcass.kind !== 'deer' && window.CritterArt && window.CritterArt.has(carcass.kind) && window.CritterArt.carcass(ctx, carcass, cx, cy);   // bicho caido desenhado por codigo
+    if (own) {
+      // ja desenhou
+    } else if (frame && frame.complete && frame.naturalWidth > 0) {
       const targetH = 38 * (carcass.scale || 1);
       const targetW = (frame.naturalWidth / frame.naturalHeight) * targetH;
       ctx.drawImage(frame, cx - targetW / 2, cy - targetH + 10, targetW, targetH);

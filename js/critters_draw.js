@@ -1369,8 +1369,45 @@
   }
 
 
+  const DRAWERS = { bison, wapiti, pronghorn, puma, coyote, dingo, guanaco, vicuna, viscacha, kangaroo, emu, wombat, bald_eagle, turkey, rattlesnake, kookaburra, koala, condor, tiger, snow_leopard, asian_elephant, yak, tahr, water_buffalo, giant_panda, macaque, crane, peafowl, python, zebra, wildebeest, gazelle, giraffe, camel, oryx, rhino, elephant, ostrich, lion, leopard, hyena, vulture, nile_croc, hippo, scorpion, cobra, rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat, owl, duck, beaver, jaguar, capybara, tapir, peccary, anteater, sloth, capuchin, rhea, maned_wolf, armadillo, toucan, macaw, caiman, marsh_deer, harpy, anaconda, moose, reindeer, snow_hare, musk_ox, polar_bear, arctic_fox, wolverine, snowy_owl, penguin };
+
+  // ---- carcacas: o bicho caido de lado (fresco e em decomposicao) ou ossada (seca). k = carcaca do jogo (kind, w, h, stage, id)
+  function bones(c, cx, cy, size) {
+    const k = Math.max(0.32, Math.min(0.95, size * 0.0115));
+    c.save(); c.translate(cx, cy); c.scale(k, k);
+    const bone = '#e9e3d1', line = '#6a6252';
+    c.lineCap = 'round';
+    c.strokeStyle = line; c.lineWidth = 5; c.beginPath(); c.moveTo(-24, 0); c.lineTo(20, 0); c.stroke();
+    c.strokeStyle = bone; c.lineWidth = 3; c.beginPath(); c.moveTo(-24, 0); c.lineTo(20, 0); c.stroke();
+    for (let i = 0; i < 5; i++) { const x = -16 + i * 7; c.strokeStyle = line; c.lineWidth = 4; c.beginPath(); c.moveTo(x, 0); c.quadraticCurveTo(x - 3, -10, x - 1, -13 + (i % 2)); c.moveTo(x, 0); c.quadraticCurveTo(x - 3, 9, x - 1, 12 - (i % 2)); c.stroke(); c.strokeStyle = bone; c.lineWidth = 2; c.stroke(); }
+    c.strokeStyle = line; c.lineWidth = 4; c.beginPath(); c.moveTo(18, 3); c.lineTo(30, 9); c.moveTo(-22, 4); c.lineTo(-32, 12); c.stroke(); c.strokeStyle = bone; c.lineWidth = 2; c.stroke();
+    c.fillStyle = bone; c.strokeStyle = line; c.lineWidth = 1.2; c.beginPath(); c.ellipse(-31, -3, 7, 5.4, 0.2, 0, 6.3); c.fill(); c.stroke();      // cranio
+    c.beginPath(); c.moveTo(-36, -1); c.lineTo(-42, 1); c.lineTo(-36, 3); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = '#3a342a'; c.beginPath(); c.arc(-31, -4, 1.8, 0, 6.3); c.fill();
+    c.restore();
+  }
+  function carcass(c, k, cx, cy) {
+    const fn = DRAWERS[k.kind]; if (!fn) return false;
+    const w = k.w || 50, h = k.h || 40;
+    if (k.stage >= 2) { bones(c, cx, cy + 2, Math.max(w, h)); return true; }
+    const e = { kind: k.kind, direction: 'left', act: 'rest', state: 'satiated', frameIndex: 0, z: 0, mode: 'ground', hp: 0, maxHp: 1 };
+    c.save();
+    if (k.stage === 1) c.filter = 'grayscale(0.55) brightness(0.78)'; else c.filter = 'brightness(0.92)';
+    const flat = w > h * 2.2;                                               // cobra, crocodilo: ja sao baixos, so escurecem
+    if (flat) { c.translate(cx, cy + 4); fn(c, e, 0, 0); }
+    else {
+      const dir = (String(k.id).charCodeAt(String(k.id).length - 1) % 2) ? 1 : -1;     // cai para um lado ou para o outro
+      c.translate(cx - dir * h * 0.5, cy + 6 - w * 0.4); c.rotate(dir * Math.PI / 2);
+      fn(c, e, 0, 0);
+    }
+    c.restore();
+    return true;
+  }
+
   window.CritterArt = {
-    draw(c, e, sx, sy) { const f = { bison, wapiti, pronghorn, puma, coyote, dingo, guanaco, vicuna, viscacha, kangaroo, emu, wombat, bald_eagle, turkey, rattlesnake, kookaburra, koala, condor, tiger, snow_leopard, asian_elephant, yak, tahr, water_buffalo, giant_panda, macaque, crane, peafowl, python, zebra, wildebeest, gazelle, giraffe, camel, oryx, rhino, elephant, ostrich, lion, leopard, hyena, vulture, nile_croc, hippo, scorpion, cobra, rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat, owl, duck, beaver, jaguar, capybara, tapir, peccary, anteater, sloth, capuchin, rhea, maned_wolf, armadillo, toucan, macaw, caiman, marsh_deer, harpy, anaconda, moose, reindeer, snow_hare, musk_ox, polar_bear, arctic_fox, wolverine, snowy_owl, penguin }[e.kind]; if (f) f(c, e, sx, sy); },
+    draw(c, e, sx, sy) { const f = DRAWERS[e.kind]; if (f) f(c, e, sx, sy); },
+    has(kind) { return !!DRAWERS[kind]; },
+    carcass,
     plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else if (p.kind === 'herb') herb(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },
     herbName(p) { return (p.set === 1 ? ['Boldo', 'Erva-cidreira', 'Guaco'] : ['Camomila', 'Hortelã', 'Sálvia'])[Math.floor(p.seed * 3) % 3]; },
     names: { rabbit: 'Coelho Silvestre', fox: 'Raposa Vermelha', boar: 'Javali', bear: 'Urso Pardo', crow: 'Corvo', hare: 'Lebre', badger: 'Texugo', squirrel: 'Esquilo-vermelho', pheasant: 'Faisão', lynx: 'Lince', chicken: 'Galinha', sheep: 'Ovelha', cow: 'Vaca', pig: 'Porco', horse: 'Cavalo', goat: 'Cabra', dog: 'Cão', cat: 'Gato', owl: 'Coruja', duck: 'Pato-real', beaver: 'Castor', jaguar: 'Onça-pintada', capybara: 'Capivara', tapir: 'Anta', peccary: 'Queixada', anteater: 'Tamanduá-bandeira', sloth: 'Preguiça', capuchin: 'Macaco-prego', rhea: 'Ema', maned_wolf: 'Lobo-guará', armadillo: 'Tatu', toucan: 'Tucano', macaw: 'Arara', caiman: 'Jacaré', marsh_deer: 'Cervo-do-pantanal', harpy: 'Harpia', anaconda: 'Sucuri', moose: 'Alce', reindeer: 'Rena', snow_hare: 'Lebre-da-neve', musk_ox: 'Boi-almiscarado', polar_bear: 'Urso-polar', arctic_fox: 'Raposa-do-ártico', wolverine: 'Glutão', snowy_owl: 'Coruja-das-neves', penguin: 'Pinguim', zebra: 'Zebra', wildebeest: 'Gnu', gazelle: 'Gazela', giraffe: 'Girafa', camel: 'Camelo', oryx: 'Órix', rhino: 'Rinoceronte', elephant: 'Elefante', ostrich: 'Avestruz', lion: 'Leão', leopard: 'Leopardo', hyena: 'Hiena', vulture: 'Abutre', nile_croc: 'Crocodilo-do-Nilo', hippo: 'Hipopótamo', scorpion: 'Escorpião', cobra: 'Naja', tiger: 'Tigre', snow_leopard: 'Leopardo-das-neves', asian_elephant: 'Elefante-asiático', yak: 'Iaque', tahr: 'Tahr', water_buffalo: "Búfalo-d'água", giant_panda: 'Panda-gigante', macaque: 'Macaco-rhesus', crane: 'Grou-de-coroa-vermelha', peafowl: 'Pavão', python: 'Píton', bison: 'Bisão', wapiti: 'Wapiti', pronghorn: 'Antilocapra', puma: 'Puma', coyote: 'Coiote', dingo: 'Dingo', guanaco: 'Guanaco', vicuna: 'Vicunha', viscacha: 'Viscacha', kangaroo: 'Canguru', emu: 'Emu', wombat: 'Vombate', bald_eagle: 'Águia-careca', turkey: 'Peru-selvagem', rattlesnake: 'Cascavel', kookaburra: 'Kookaburra', koala: 'Coala', condor: 'Condor-dos-Andes' }
