@@ -182,12 +182,25 @@
     }
   };
 
+  // ---- arte desenhada (Gemini): assets/trees/<especie>.png (e _neve.png). catalogo.json diz quais ja existem; sem ele usa o desenho por codigo.
+  const ART = { cat: null, img: {} };
+  try { fetch('assets/trees/catalogo.json?v=' + Date.now()).then(r => r.ok ? r.json() : {}).then(j => { ART.cat = j || {}; }).catch(() => { ART.cat = {}; }); } catch (e) { ART.cat = {}; }
+  function artDraw(c, tree, bx, by, shakeX) {
+    const k = tree.species, e = ART.cat && ART.cat[k]; if (!e) return false;
+    const key = (tree.snowy && e.neve) ? k + '_neve' : k;
+    let im = ART.img[key]; if (!im) { im = ART.img[key] = new Image(); im.src = `assets/trees/${key}.png?v=${e.v || 1}`; }
+    if (!im.complete || !im.naturalWidth) return false;
+    const sp = SPECIES[k] || SPECIES.oak, kk = Math.min(sp.w / im.naturalWidth, sp.h / im.naturalHeight), w = im.naturalWidth * kk, h = im.naturalHeight * kk;
+    c.drawImage(im, Math.round(bx + shakeX - w / 2), Math.round(by - h + 4), w, h);
+    return true;
+  }
   window.TreeArt = {
     SPECIES, FRUITS, pick,
     fruitColor(item) { return (FRUITS[item] || FRUITS.fruit).color; },
     info(kind) { return SPECIES[kind] || SPECIES.oak; },
     // desenha uma arvore viva que nao seja carvalho; devolve false se nao souber (o jogo usa o carvalho)
     draw(c, tree, bx, by, shakeX) {
+      if (artDraw(c, tree, bx, by, shakeX)) return true;
       const f = D[tree.species]; if (!f) return false;
       c.save(); c.translate(Math.round(bx + shakeX), Math.round(by)); c.lineJoin = 'round';
       f(c, tree);

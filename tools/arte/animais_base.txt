@@ -1,0 +1,21 @@
+Crie UMA folha de sprites de um animal, em pixel art de RPG isométrico (câmera levemente de cima, como nos RPGs de mapa), estilo limpo e simples (menos detalhe que um personagem humano), no mesmo estilo do cervo anexado.
+
+ANIMAL: {desc}.
+
+FORMATO DA IMAGEM: proporção {ratio}. Grade exata de 4 colunas por 6 linhas = 24 quadros, todos do MESMO tamanho de célula, em grade uniforme, sem moldura e sem números. Cada quadro é uma célula de {cw} x {ch} pixels (a imagem toda tem cerca de {iw} x {ih} pixels).
+
+TAMANHO DO ANIMAL: em vista de lado ele ocupa cerca de {aw} x {ah} pixels dentro da célula, centrado, com as patas apoiadas na MESMA linha do chão em todos os quadros da mesma linha. Nada é cortado nas bordas da célula. O animal tem o MESMO tamanho e as MESMAS cores e proporções nas 6 linhas.
+
+LINHAS (todas com 4 quadros de ciclo de passo, perna da frente, meio, perna de trás, meio):
+ Linha 1: andando DE FRENTE para quem vê (vindo na direção da câmera, olhando para baixo na tela). {walk}
+ Linha 2: andando DE COSTAS (indo para longe da câmera, olhando para cima na tela). {walk}
+ Linha 3: andando DE LADO, perfil olhando para a ESQUERDA. {walk}
+ Linha 4: andando em 3/4 DE FRENTE virado para a ESQUERDA (indo para baixo e para a esquerda; vemos a frente e o lado esquerdo do animal). {walk}
+ Linha 5: andando em 3/4 DE COSTAS virado para a ESQUERDA (indo para cima e para a esquerda; vemos as costas e o lado esquerdo do animal). {walk}
+ Linha 6: DE LADO, perfil olhando para a ESQUERDA, {extra}
+
+ESTILO: contorno escuro fino (marrom bem escuro, não preto), 3 tons por cor, luz vindo de cima e da esquerda em TODAS as linhas, cores naturais. Sem sombra no chão. Sem texto.
+
+FUNDO: {fundo} em toda a imagem, sem degradê, sem chão.
+
+O MESMO animal em todos os 24 quadros.

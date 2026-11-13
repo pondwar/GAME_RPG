@@ -1,0 +1,30 @@
+{
+ "chicken": {
+  "extra": "eat",
+  "v": 1
+ },
+ "cow": {
+  "extra": "eat",
+  "v": 1
+ },
+ "sheep": {
+  "extra": "eat",
+  "v": 1
+ },
+ "pig": {
+  "extra": "eat",
+  "v": 1
+ },
+ "horse": {
+  "extra": "eat",
+  "v": 1
+ },
+ "goat": {
+  "extra": "eat",
+  "v": 1
+ },
+ "dog": {
+  "extra": "attack",
+  "v": 1
+ }
+}

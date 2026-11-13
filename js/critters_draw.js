@@ -1523,6 +1523,55 @@
     c.restore();
   }
 
+  // ---- arte desenhada (Gemini): se existir assets/animals/<especie>_frames/, o jogo usa; senao usa os bloquinhos por codigo.
+  // catalogo.json diz quais especies ja tem arte: { "lebre": { "extra": "eat" | "attack" | "fly", "dirs": 5 } }
+  // dirs 5 = folha de 8 direcoes: down, up, left, down_left, up_left (+ <extra>), 4 quadros cada; as 3 da direita sao espelhadas.
+  // dirs 1 = folha antiga: so left (+ <extra>), o bicho so vira para os lados. Veja docs/arte/PROMPTS_ANIMAIS.md
+  const ART = { cat: null, sets: {} };
+  try { fetch('assets/animals/catalogo.json?v=' + Date.now()).then(r => r.ok ? r.json() : {}).then(j => { ART.cat = j || {}; }).catch(() => { ART.cat = {}; }); } catch (e) { ART.cat = {}; }
+  function artSet(kind) {
+    if (!ART.cat || !ART.cat[kind]) return null;
+    let st = ART.sets[kind]; if (st) return st;
+    const cf = ART.cat[kind], extra = cf.extra || 'eat', v = cf.v || 1;
+    st = ART.sets[kind] = { extra, dirs: cf.dirs || 1, rows: {} };
+    const names = st.dirs >= 5 ? ['down', 'up', 'left', 'down_left', 'up_left', extra] : ['left', extra];
+    for (const n of names) {
+      st.rows[n] = [];
+      for (let i = 0; i < 4; i++) { const im = new Image(); im.src = `assets/animals/${kind}_frames/${n}_${i}.png?v=${v}`; st.rows[n].push(im); }
+    }
+    return st;
+  }
+  // para onde o bicho anda (8 direcoes), pela variacao de posicao entre um desenho e o seguinte. Sem movimento: mantem a ultima.
+  function facing(e) {
+    if (e._px !== undefined) {
+      const dx = e.x - e._px, dy = e.y - e._py;
+      if (Math.abs(dx) < 200 && Math.abs(dy) < 200) { e._vx = (e._vx || 0) * 0.7 + dx * 0.3; e._vy = (e._vy || 0) * 0.7 + dy * 0.3; }
+    }
+    e._px = e.x; e._py = e.y;
+    const vx = e._vx || 0, vy = e._vy || 0;
+    if (vx * vx + vy * vy > 0.02) e._ang = Math.atan2(vy, vx);
+    if (e._ang === undefined) return { name: 'left', flip: e.direction === 'right' };
+    const k = Math.round(e._ang / (Math.PI / 4));            // 0 dir, 1 baixo-dir, 2 baixo, 3 baixo-esq, 4 esq, -3 cima-esq, -2 cima, -1 cima-dir
+    return [{ name: 'left', flip: true }, { name: 'down_left', flip: true }, { name: 'down', flip: false }, { name: 'down_left', flip: false }, { name: 'left', flip: false },
+      { name: 'up_left', flip: false }, { name: 'up', flip: false }, { name: 'up_left', flip: true }][((k % 8) + 8) % 8 === 0 ? 0 : ((k % 8) + 8) % 8];
+  }
+  function spriteDraw(c, e, sx, sy) {
+    const st = artSet(e.kind); if (!st) return false;
+    const doing = (st.extra === 'eat' && e.act === 'graze') || (st.extra === 'attack' && (e.act === 'charge' || e.act === 'pounce' || e.act === 'attack' || e.attacking)) || (st.extra === 'fly' && e.z > 4);
+    let fc = e.hp === 0 ? { name: 'left', flip: e.direction === 'right' } : facing(e);     // caido (carcaca): sempre de lado
+    if (st.dirs < 5 || doing) fc = { name: 'left', flip: fc.name === 'left' ? fc.flip : (e._vx || 0) > 0 || (!e._vx && e.direction === 'right') };
+    const row = st.rows[doing ? st.extra : fc.name] || st.rows.left;
+    const img = row[(e.frameIndex || 0) % 4];
+    if (!img || !img.complete || !img.naturalWidth) return false;
+    const bw = e.width || 40, bh = e.height || 40, k = Math.min(bw / img.naturalWidth, bh / img.naturalHeight), w = img.naturalWidth * k, h = img.naturalHeight * k;   // cabe na caixa do bicho sem esticar
+    if (e.hp !== 0) shadow(c, sx, sy, w * 0.38, Math.max(3, h * 0.12));
+    c.save(); c.translate(Math.round(sx), Math.round(sy));
+    if (fc.flip) c.scale(-1, 1);
+    c.drawImage(img, -w / 2, -h + 4, w, h);
+    c.restore();
+    return true;
+  }
+
   const DRAWERS = { fennec, orangutan, indian_rhino, gaur, red_panda, walrus, seal, tasmanian_devil, cassowary, llama, alpaca, spectacled_bear, chinchilla, king_cobra, platypus, bison, wapiti, pronghorn, puma, coyote, dingo, guanaco, vicuna, viscacha, kangaroo, emu, wombat, bald_eagle, turkey, rattlesnake, kookaburra, koala, condor, tiger, snow_leopard, asian_elephant, yak, tahr, water_buffalo, giant_panda, macaque, crane, peafowl, python, zebra, wildebeest, gazelle, giraffe, camel, oryx, rhino, elephant, ostrich, lion, leopard, hyena, vulture, nile_croc, hippo, scorpion, cobra, rabbit, fox, boar, bear, crow, hare, badger, squirrel, pheasant, lynx, chicken, sheep, cow, pig, horse, goat, dog, cat, owl, duck, beaver, jaguar, capybara, tapir, peccary, anteater, sloth, capuchin, rhea, maned_wolf, armadillo, toucan, macaw, caiman, marsh_deer, harpy, anaconda, moose, reindeer, snow_hare, musk_ox, polar_bear, arctic_fox, wolverine, snowy_owl, penguin };
 
   // ---- carcacas: o bicho caido de lado (fresco e em decomposicao) ou ossada (seca). k = carcaca do jogo (kind, w, h, stage, id)
@@ -1548,18 +1597,19 @@
     c.save();
     if (k.stage === 1) c.filter = 'grayscale(0.55) brightness(0.78)'; else c.filter = 'brightness(0.92)';
     const flat = w > h * 2.2;                                               // cobra, crocodilo: ja sao baixos, so escurecem
-    if (flat) { c.translate(cx, cy + 4); fn(c, e, 0, 0); }
+    e.width = w; e.height = h;
+    if (flat) { c.translate(cx, cy + 4); spriteDraw(c, e, 0, 0) || fn(c, e, 0, 0); }
     else {
       const dir = (String(k.id).charCodeAt(String(k.id).length - 1) % 2) ? 1 : -1;     // cai para um lado ou para o outro
       c.translate(cx - dir * h * 0.5, cy + 6 - w * 0.4); c.rotate(dir * Math.PI / 2);
-      fn(c, e, 0, 0);
+      spriteDraw(c, e, 0, 0) || fn(c, e, 0, 0);
     }
     c.restore();
     return true;
   }
 
   window.CritterArt = {
-    draw(c, e, sx, sy) { const f = DRAWERS[e.kind]; if (f) f(c, e, sx, sy); },
+    draw(c, e, sx, sy) { if (spriteDraw(c, e, sx, sy)) return; const f = DRAWERS[e.kind]; if (f) f(c, e, sx, sy); },
     has(kind) { return !!DRAWERS[kind]; },
     carcass,
     plant(c, p, sx, sy, level) { if (p.kind === 'bush') bush(c, p, sx, sy, level); else if (p.kind === 'herb') herb(c, p, sx, sy, level); else mushroom(c, p, sx, sy, level); },

@@ -1,5 +1,13 @@
 # Lista de sprites: fauna e flora
 
+> **ATUALIZADO (12/11/2026): use os prompts prontos.**
+> - Animais: [`PROMPTS_ANIMAIS.md`](PROMPTS_ANIMAIS.md) (107 especies, um prompt por bicho, com tamanho real do jogo). Folha **4 colunas x 6 linhas** (24 quadros): frente, costas, lado, 3/4 frente, 3/4 costas (todos virados para a esquerda) e a acao (pastar / atacar / voar). O jogo espelha para a direita e o bicho anda nas **8 direcoes**. Importar: `python tools/arte/importar_animal.py <folha.png> <especie>` (porco, hipopotamo e morsa: `--fundo ciano`; folha antiga de 2 linhas: `--2linhas`).
+> - Arvores: [`PROMPTS_ARVORES.md`](PROMPTS_ARVORES.md) (13 especies, **sem frutos**; o jogo poe os frutos por cima). Importar: `python tools/arte/importar_arvore.py <imagem.png> <especie> [--neve]`.
+> - O jogo usa a arte assim que a especie entra em `assets/animals/catalogo.json` / `assets/trees/catalogo.json` (o importador faz isso). Sem arte, continua o bloquinho por codigo.
+> - **Todos de terra** por enquanto: jacare, hipopotamo, crocodilo, sucuri, pato, castor, ornitorrinco, foca e morsa vem em terra, sem entrar na agua.
+> - O restante deste arquivo (secao 1.1 em 4 linhas e as tabelas dos pacotes A a D) e o plano antigo; vale o que esta acima.
+
+
 Plano completo (quem mora onde e por quê): [`docs/FAUNA_FLORA.md`](../FAUNA_FLORA.md).
 Aqui ficam **o padrão técnico**, **o prompt-base do Gemini** e **a lista de sprites por pacote**, para a gente ir marcando.
 
