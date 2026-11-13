@@ -100,6 +100,12 @@ def medir(f, corpo, acao, d):
         f = 1 if 'right' in d else -1; phi = math.radians(60)
     a = -f * phi
     dx, dy = vx * math.cos(a) - vy * math.sin(a), vx * math.sin(a) + vy * math.cos(a)
+    # golpe de espada de frente/costas, braco caido (posicao de guarda): costas -> lamina quase reta para cima;
+    # frente -> lamina para baixo, inclinada para o centro do corpo (antes saia aberta para fora)
+    if acao in ('attack_1h', 'idle', 'walk') and d in FRENTE and vy > (0.4 if d == 'up' else (0.7 if acao == 'attack_1h' else 0.4)):
+        dentro = 1 if hx > px else -1
+        dx, dy = (0.12 * dentro, -1.0) if d == 'up' else (0.62 * dentro, 0.78)
+        n2 = math.hypot(dx, dy); dx, dy = dx / n2, dy / n2
     # diagonal: o giro acima e o de um boneco de perfil (frente = lado da tela). Na diagonal a frente do corpo
     # aponta para dentro da tela (costas) ou para quem olha (frente): a parte "para a frente" da arma vai para essa
     # direcao e encurta (perspectiva); a parte de cima/baixo fica igual. len = quanto a arma encolhe no comprimento
