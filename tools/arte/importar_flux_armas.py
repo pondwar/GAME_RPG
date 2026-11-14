@@ -28,34 +28,21 @@ MAXLADO = 256
 
 
 def sem_fundo(im):
+    """Tira o fundo magenta pela COR (matiz entre 280 e 338 graus, saturado e claro). Pega tambem os vaos fechados
+    (dentro da curva do arco, entre os bracos da besta). Vermelho de pena (matiz ~350) e madeira nao entram."""
     a = np.array(im.convert('RGB'))
-    h, w = a.shape[:2]
-    bgr = cv2.cvtColor(a, cv2.COLOR_RGB2BGR)
-    mask = np.zeros((h + 2, w + 2), np.uint8)
-    tol = (28, 28, 28)
-    # semeia em todas as bordas (o degrade do fundo e suave, o flood fill flutuante acompanha)
-    for x in range(0, w, 8):
-        for y in (0, h - 1):
-            if not mask[y + 1, x + 1]: cv2.floodFill(bgr.copy(), mask, (x, y), 0, tol, tol, cv2.FLOODFILL_MASK_ONLY | (255 << 8))
-    for y in range(0, h, 8):
-        for x in (0, w - 1):
-            if not mask[y + 1, x + 1]: cv2.floodFill(bgr.copy(), mask, (x, y), 0, tol, tol, cv2.FLOODFILL_MASK_ONLY | (255 << 8))
-    fundo = mask[1:-1, 1:-1] > 0
-    # miolo preso (ex.: dentro do arco) tambem e fundo se for da cor do fundo: pega tudo que e magenta/rosa forte e isolado
-    r, g, b = [a[..., i].astype(int) for i in range(3)]
-    magenta = (r > 150) & (b > 60) & (g < 0.55 * np.minimum(r, b) + 10) & (np.abs(r - b) < 140)
-    fundo |= magenta & (cv2.dilate(fundo.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=6) > 0)
+    hsv = cv2.cvtColor(a, cv2.COLOR_RGB2HSV)
+    h, sat, v = hsv[..., 0].astype(int), hsv[..., 1].astype(int), hsv[..., 2].astype(int)
+    fundo = (h >= 140) & (h <= 169) & (sat > 100) & (v > 100)
     obj = (~fundo).astype(np.uint8)
-    # tira ilhas minusculas e fecha buracos pequenos
-    n, lab, st, _ = cv2.connectedComponentsWithStats(obj, connectivity=8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(obj, connectivity=8)       # tira ilhas minusculas
     if n > 1:
         grande = max(range(1, n), key=lambda i: st[i, cv2.CC_STAT_AREA])
-        obj = np.isin(lab, [i for i in range(1, n) if st[i, cv2.CC_STAT_AREA] > 0.02 * st[grande, cv2.CC_STAT_AREA]]).astype(np.uint8)
-    obj = cv2.erode(obj, np.ones((3, 3), np.uint8), iterations=1)       # tira o halo rosado da borda
+        obj = np.isin(lab, [i for i in range(1, n) if st[i, cv2.CC_STAT_AREA] > 0.01 * st[grande, cv2.CC_STAT_AREA]]).astype(np.uint8)
+    obj = cv2.erode(obj, np.ones((3, 3), np.uint8), iterations=1)               # tira o halo rosado da borda
     alpha = cv2.GaussianBlur(obj.astype(np.float32), (3, 3), 0)
     rgba = np.dstack([a, (alpha * 255).astype(np.uint8)])
-    # despill: pixel de borda com tom magenta perde o excesso de vermelho/azul
-    borda = (alpha > 0) & (alpha < 1)
+    borda = (alpha > 0) & (alpha < 1)                                          # despill: borda com tom magenta perde o excesso
     for c in (0, 2):
         ch = rgba[..., c].astype(int); g2 = rgba[..., 1].astype(int)
         ch[borda] = np.minimum(ch[borda], g2[borda] + 40)
@@ -85,12 +72,24 @@ def main():
         im = sem_fundo(Image.open(f))
         bb = im.getbbox()
         im = im.crop(bb)
+        if i.startswith('arco'):        # tira a corda que o FLUX desenhou (fina): abertura morfologica; a corda do jogo e desenhada por codigo
+            arr = np.array(im); al = (arr[..., 3] > 128).astype(np.uint8)
+            ab = cv2.morphologyEx(al, cv2.MORPH_OPEN, np.ones((7, 7), np.uint8))
+            n, lab, st, _ = cv2.connectedComponentsWithStats(ab, connectivity=8)          # fica so a peca maior (o couro da corda sobra solto)
+            if n > 1: ab = (lab == max(range(1, n), key=lambda q: st[q, cv2.CC_STAT_AREA])).astype(np.uint8)
+            arr[..., 3] = np.where(ab > 0, arr[..., 3], 0); im = Image.fromarray(arr, 'RGBA'); im = im.crop(im.getbbox())
+        if i.startswith('arco'):        # o jogo quer as pontas do arco voltadas para quem atira (esquerda) e a barriga para onde mira (direita)
+            al = np.array(im)[..., 3] > 128; ys, xs = np.where(al); h = im.height
+            meio = xs[(ys > h * 0.45) & (ys < h * 0.55)].mean(); pt = pontas(im); pontas_x = (pt[0][0] + pt[1][0]) / 2 * im.width
+            if pontas_x > meio: im = im.transpose(Image.FLIP_LEFT_RIGHT)
         k = MAXLADO / max(im.size)
         if k < 1: im = im.resize((max(1, round(im.width * k)), max(1, round(im.height * k))), Image.LANCZOS)
         im.save(os.path.join(OUT, i + '.png'))
         meta[i] = {'w': im.width, 'h': im.height}
-        if i in COM_PONTAS and i.startswith('arco'): meta[i]['pontas'] = pontas(im)
-        elif i in COM_PONTAS: meta[i]['pontas'] = pontas(im)
+        if i in COM_PONTAS: meta[i]['pontas'] = pontas(im)
+        if i.startswith('arco'):        # barriga do arco (x mais a direita no meio): e onde a mao segura
+            al = np.array(im)[..., 3] > 128; ys, xs = np.where(al)
+            meta[i]['barriga'] = round(float(xs[(ys > im.height * 0.4) & (ys < im.height * 0.6)].max()) / im.width, 4)
         print('ok', i, im.size)
     json.dump(meta, open(jp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 

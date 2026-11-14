@@ -84,6 +84,12 @@ async function api(req, res, url) {
   }
   let gi = /^\/api\/world\/ground-items\/(\d{1,12})$/.exec(p);
   if (gi && m === 'DELETE') { const t = await world.takeGroundItem(REALM, Number(gi[1])); return t ? send(res, 200, { ok: true, ...t }) : send(res, 404, { ok: false, error: 'ja pegaram' }); }
+  if (p === '/api/dev/pegada' && m === 'PUT') {                          // editor de pegada das armas (js/editor_pegada.js): grava os ajustes no arquivo
+    const b = await readJson(req);
+    if (!b || typeof b !== 'object' || Array.isArray(b)) return send(res, 400, { error: 'json invalido' });
+    fs.writeFileSync(path.join(ROOT, 'assets', 'weapons', 'items', '_pegada.json'), JSON.stringify(b, null, 1));
+    return send(res, 200, { ok: true });
+  }
   if (m === 'GET' && p === '/api/world/settlements') return send(res, 200, await world.listSettlements(REALM));
   if (p === '/api/world/fauna') {                                   // ecossistema por regiao (js/fauna.js)
     if (m === 'GET') return send(res, 200, { regions: await world.listFauna(REALM) });

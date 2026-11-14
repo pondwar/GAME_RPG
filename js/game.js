@@ -225,7 +225,8 @@ class Game {
     try {
       const nomeT = (window.SurittoServer && window.SurittoServer.charName) || '';
       if (/[?&]testearmas=1/.test(location.search) && /^[a-z_]+-pondwar$/i.test(nomeT)) {
-        const ids = ['sword', 'axe', 'machadinha', 'clava', 'adaga', 'espada_curta', 'lanca', 'arco_curto', 'arco_longo', 'besta_leve', 'besta_pesada', 'besta_mao', 'funda'].filter((id) => this.inventory.itemDB[id]);
+        const ids = Object.keys(this.inventory.itemDB).filter((id) => this.inventory.itemDB[id].type === 'weapon' && id !== 'fire_sword');      // todas as armas prontas
+        this.inventory.maxSlots = Math.max(this.inventory.maxSlots, 64);
         const mun = [['flecha', 60], ['virote', 60], ['pedra', 60], ['dardo', 10], ['azagaia', 5]].filter((m) => this.inventory.itemDB[m[0]]);
         this.inventory.slots = new Array(this.inventory.maxSlots).fill(null).map((_, i) => (ids[i] ? { id: ids[i], count: 1 } : (mun[i - ids.length] ? { id: mun[i - ids.length][0], count: mun[i - ids.length][1] } : null)));
         this.inventory.renderUI();
@@ -372,6 +373,14 @@ class Game {
     this.images.weapons.fire_sword.src = `assets/weapons/items/fire_sword.png?v=${v}`;
     for (const k of ['adaga', 'espada_curta', 'clava', 'machadinha', 'lanca']) this.images.weapons[k].src = `assets/weapons/items/${k}.png?v=${v}`;
     this.wArmaExtra = {};
+    this.pegada = {};                              // ajustes de pegada feitos no editor (js/editor_pegada.js): { arma: { 'acao_dir8[_quadro]': [dx, dy, giro, comprimento, atras] } }
+    fetch(`assets/weapons/items/_pegada.json?v=${Date.now()}`).then(r => (r.ok ? r.json() : null)).then(j => { if (j) this.pegada = j; }).catch(() => { });
+    this.longeMeta = {}; this.imgLonge = {};      // sprites de arco, besta, funda e municao (assets/weapons/items/_longe.json, tools/arte/importar_flux_armas.py)
+    fetch(`assets/weapons/items/_longe.json?v=${v}`).then(r => (r.ok ? r.json() : null)).then(j => {
+      if (!j) return;
+      this.longeMeta = j;
+      for (const k of Object.keys(j)) { const im = new Image(); im.src = `assets/weapons/items/${k}.png?v=${v}`; this.imgLonge[k] = im; }
+    }).catch(() => { });
     fetch(`assets/weapons/items/_corpo.json?v=${v}`).then(r => (r.ok ? r.json() : null)).then(j => {
       if (!j) return;
       this.wArmaExtra = j;
@@ -1040,6 +1049,9 @@ class Game {
     if (q.tipo === 'arremesso') {
       if (q.giro) ctx.rotate(q.ja * 0.16);
       this.desenharArmaArremessada(ctx, q.arma);
+    } else if (this.spriteLonge(q.tipo)) {                    // flecha, virote e pedra com sprite
+      const SP = this.spriteLonge(q.tipo), Lp = { flecha: 24, virote: 15, pedra: 8 }[q.tipo] || 16, Hp = Lp * SP.mt.h / SP.mt.w;
+      ctx.drawImage(SP.im, -Lp / 2, -Hp / 2, Lp, Hp);
     } else if (q.tipo === 'pedra') {
       ctx.fillStyle = '#8d8d96'; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.arc(0, 0, 3.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
@@ -1057,6 +1069,12 @@ class Game {
 
   // Forma de cada arma arremessada, centrada na origem e apontando para +x (usada no voo e no chao)
   desenharArmaArremessada(ctx, id) {
+    const SP = ['dardo', 'azagaia', 'flecha', 'virote', 'pedra'].includes(id) && this.spriteLonge(id);
+    if (SP) {      // sprite do FLUX
+      const Lp = { dardo: 16, azagaia: 36, flecha: 24, virote: 15, pedra: 8 }[id], Hp = Lp * SP.mt.h / SP.mt.w;
+      ctx.drawImage(SP.im, -Lp / 2, -Hp / 2, Lp, Hp);
+      return;
+    }
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     const haste = (x0, x1, lw, cor) => { ctx.strokeStyle = '#301028'; ctx.lineWidth = lw + 2; ctx.beginPath(); ctx.moveTo(x0, 0); ctx.lineTo(x1, 0); ctx.stroke(); ctx.strokeStyle = cor; ctx.lineWidth = lw; ctx.beginPath(); ctx.moveTo(x0, 0); ctx.lineTo(x1, 0); ctx.stroke(); };
     const ponta = (x, c, w, h) => { ctx.fillStyle = c; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + w, 0); ctx.lineTo(x, -h); ctx.lineTo(x, h); ctx.closePath(); ctx.fill(); ctx.stroke(); };
@@ -1132,18 +1150,26 @@ class Game {
     }
   }
 
+  // Sprite de arma de longe / municao pronto para desenhar? { im, mt: { w, h, pontas } } ou null (cai no desenho por codigo)
+  spriteLonge(id) {
+    const im = this.imgLonge && this.imgLonge[id], mt = this.longeMeta && this.longeMeta[id];
+    return im && mt && im.complete && im.naturalWidth > 0 ? { im, mt } : null;
+  }
+
   // Arco, besta e funda na mao do boneco (desenhados por codigo, girados para o lado da mira; a mao vem do quadro medido)
   drawArmaDeTiro(ctx, drawX, drawY, targetW, targetH, socket) {
     if (!socket) return;
     const p = this.player, C = window.SurittoCombate, w = p.equippedWeapon, f = C.ficha(w);
     const rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
-    const hx = drawX + targetW * socket.x, hy = drawY + targetH * socket.y;
+    let hx = drawX + targetW * socket.x, hy = drawY + targetH * socket.y;
+    const aj = this.pegadaAjuste(); if (aj) { hx += aj[0]; hy += aj[1]; }
     const atk = p.isAttacking && p.attackDuration > 0;
     const prog = atk ? 1 - p.attackTimer / p.attackDuration : -1;
     const solta = (C.TEMPOS.tiro || {}).bate || 0.62;
     // parado: o arco fica em pe na mao, com a barriga para o lado que olha; a besta fica de lado, inclinada para a frente e para baixo
     const d8 = p.dir8 || '', olhaEsq = d8.includes('left') || (!d8.includes('right') && p.direction === 'left');
-    const a = atk ? (p.facingAngle || 0) : (f.proj === 'flecha' ? (olhaEsq ? Math.PI : 0) : (olhaEsq ? Math.PI - 0.55 : 0.55));
+    let a = atk ? (p.facingAngle || 0) : (f.proj === 'flecha' ? (olhaEsq ? Math.PI : 0) : (olhaEsq ? Math.PI - 0.55 : 0.55));
+    if (aj) a += aj[2] * Math.PI / 180;
     const ax = Math.cos(a), ay = Math.sin(a), nx = -ay, ny = ax;
     const k = rsc * (w === 'besta_mao' ? 0.62 : 1);
     const pt = (x, y, t, u) => [x + ax * t + nx * u, y + ay * t + ny * u];
@@ -1153,7 +1179,34 @@ class Game {
       ctx.strokeStyle = cor; ctx.lineWidth = lw; ctx.beginPath(); pts.forEach((q, i) => (i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke();
     };
     ctx.save();
-    if (f.proj === 'flecha') {                                    // arco
+    const SPR = this.spriteLonge(w);
+    if (f.proj === 'flecha' && SPR) {                              // arco (sprite): a corda e a flecha sao desenhadas por cima
+      const mt = SPR.mt, L = (w === 'arco_longo' ? 24 : 18) * k, H = 2 * L, Wd = H * mt.w / mt.h;
+      const puxa = prog < 0 ? 0 : (prog < solta * 0.75 ? prog / (solta * 0.75) : (prog < solta ? 1 : Math.max(0, 1 - (prog - solta) * 8)));
+      const x0 = mt.barriga != null ? -mt.barriga * Wd : -2 * k - ((mt.pontas[0][0] + mt.pontas[1][0]) / 2) * Wd;      // a mao segura na barriga do arco
+      ctx.translate(hx, hy); ctx.rotate(a);
+      ctx.drawImage(SPR.im, x0, -L, Wd, H);
+      const tA = [x0 + mt.pontas[0][0] * Wd, -L + mt.pontas[0][1] * H], tB = [x0 + mt.pontas[1][0] * Wd, -L + mt.pontas[1][1] * H];
+      const Px = (tA[0] + tB[0]) / 2 - 9 * k * puxa;
+      ctx.strokeStyle = '#a89a78'; ctx.lineWidth = 0.7; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(tA[0], tA[1]); ctx.lineTo(Px, 0); ctx.lineTo(tB[0], tB[1]); ctx.stroke();
+      if (atk && prog < solta) {
+        const F = this.spriteLonge('flecha');
+        if (F) { const Lf = 24 * k, Hf = Lf * F.mt.h / F.mt.w; ctx.drawImage(F.im, Px, -Hf / 2, Lf, Hf); }
+        else { ctx.strokeStyle = '#a8764a'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(Px, 0); ctx.lineTo(Px + 14 * k, 0); ctx.stroke(); }
+      }
+    } else if (f.proj === 'virote' && SPR) {                       // besta (sprite)
+      const mt = SPR.mt, Wd = (w === 'besta_mao' ? 20 : w === 'besta_pesada' ? 36 : 30) * rsc, Hd = Wd * mt.h / mt.w;
+      const x0 = -0.38 * Wd, y0 = -Hd * 0.55;
+      ctx.translate(hx, hy); ctx.rotate(a);
+      ctx.drawImage(SPR.im, x0, y0, Wd, Hd);
+      if (atk && prog < solta) {                                   // virote no trilho ate disparar
+        const B = this.spriteLonge('virote');
+        if (B) { const Lb = Wd * 0.55, Hb = Lb * B.mt.h / B.mt.w; ctx.drawImage(B.im, x0 + Wd * 0.42, y0 + Hd * 0.3 - Hb / 2, Lb, Hb); }
+      }
+    } else if (f.proj === 'pedra' && SPR && !(atk && prog < solta)) {   // funda parada (sprite): pendurada na mao
+      const mt = SPR.mt, Wd = 14 * k, Hd = Wd * mt.h / mt.w;
+      ctx.translate(hx, hy); ctx.rotate(Math.PI / 2); ctx.drawImage(SPR.im, 0, -Hd / 2, Wd, Hd);
+    } else if (f.proj === 'flecha') {                              // arco
       const L = (w === 'arco_longo' ? 24 : 18) * k, B = 6 * k;
       const puxa = prog < 0 ? 0 : (prog < solta * 0.75 ? prog / (solta * 0.75) : (prog < solta ? 1 : Math.max(0, 1 - (prog - solta) * 8)));
       const P = pt(hx, hy, -9 * k * puxa, 0);                     // onde a mao de tras puxa a corda
@@ -3232,6 +3285,7 @@ class Game {
   getLift() { return this.isGodMode ? 0 : (this.player && this.player.z) || 0; }
 
   drawPlayer(ctx, screenCenterX, screenCenterY) {
+    if (window.EditorPegada && window.EditorPegada.ativo) window.EditorPegada.preparar(this, screenCenterX, screenCenterY);      // trava o boneco na pose escolhida
     if (this.player.race) this.ensureRaceSprite();         // monta (uma vez por raca/aparencia) o boneco aldeao da raca
     // enquanto o boneco da raca ainda esta sendo montado, nao desenha nada (antes aparecia o humano antigo de armadura)
     if (this.player.race && !(this.images.raca && this.images.raca.idle) && !this._racaSemFolha) return;
@@ -3329,6 +3383,7 @@ class Game {
     // Boneco da raca (aldeao, com as cores da criacao, tools/arte/importar_folhas.py). Cada acao usa a folha dela
     // quando a raca ja tem; sem a folha, usa o parado da mesma direcao. Correr usa o andar.
     const rs = this.images.raca;
+    let acaoNome = 'idle', idxPose = 0;      // para achar o ajuste de pegada (pegadaAjuste)
     let avancoGolpe = 0, estocando = 0, estocadaProfunda = false;   // estocadaProfunda: estocada de frente/costas/diagonal (a arma aponta para a camera ou para longe: encurtada)
               // estocada: o corpo avanca e a arma aponta reto para a frente
     if (rs && rs.idle) {
@@ -3340,11 +3395,11 @@ class Game {
       const parado = pick('idle', (dir === 'up' || dir === 'down') ? dir : sideDir);
       let set = null, idx = 0;
       if (isSit) {
-        set = via8('sit') || (rs.sit && (rs.sit[dir] || rs.sit[sideDir] || rs.sit.down)) || parado;
+        acaoNome = 'sit'; set = via8('sit') || (rs.sit && (rs.sit[dir] || rs.sit[sideDir] || rs.sit.down)) || parado;
         if (set && set.length >= 7) { const st = (performance.now() - (this.player.sitStart || 0)) / 1000; idx = st < 0.5 ? Math.floor(st / 0.5 * 4) : 4 + (Math.floor(st * 2.5) % (set.length - 4)); }   // senta (4 quadros) e respira
       }
       else if (jumpOff > 0 || this.player.isJumping) {
-        set = via8('jump') || ((dir === 'up' || dir === 'down') && rs.jump && rs.jump[dir]) || lado('jump');
+        acaoNome = 'jump'; set = via8('jump') || ((dir === 'up' || dir === 'down') && rs.jump && rs.jump[dir]) || lado('jump');
         const prog = this.player.jumpProgress || 0;
         // folha do pulo: 0 = agachado (impulso), 1 = esticado no ar. Os outros quadros sao agachados encolhidos
         // e pareciam um anao no ar: agacha so no comeco e no fim, o voo todo e o esticado
@@ -3352,7 +3407,7 @@ class Game {
         if (set && set.length >= 7) idx = Math.min(set.length - 1, Math.floor(Math.min(1, prog) * set.length));      // folha de video: todos os quadros, do impulso ao pouso
         set = set || parado;
       } else if (this.player.gatherT > 0 && rs.gather && !this.player.isMoving && !this.player.isAttacking) {
-        set = via8('gather') || ((dir === 'up' || dir === 'down') && rs.gather[dir]) || lado('gather');
+        acaoNome = 'gather'; set = via8('gather') || ((dir === 'up' || dir === 'down') && rs.gather[dir]) || lado('gather');
         if (set && set.length) idx = Math.min(set.length - 1, Math.floor((1 - this.player.gatherT / 0.7) * set.length));
         set = set || parado;
       } else if (this.player.isAttacking) {
@@ -3366,17 +3421,18 @@ class Game {
         const frenteCosta = (acao) => (vg && rs[acao] && rs[acao][vg]) || null;
         const forma = (acao) => via8(acao) || frenteCosta(acao) || lado(acao);       // folha da acao na direcao do golpe (frente/costas ou lado)
         const corte1h = () => forma('attack_1h');
-        set = mov === 'machadada' ? (forma('attack_2h') || corte1h())
+        acaoNome = mov; set = mov === 'machadada' ? (forma('attack_2h') || corte1h())
           : mov === 'estocada' ? (((w === 'lanca' || C.ficha(w).duas) ? (forma('thrust_2h') || lado('attack_2h')) : forma('thrust_1h')) || corte1h())
           : mov === 'soco' ? (forma('punch') || corte1h())
           : mov === 'arremesso' ? (forma('throw') || corte1h())
           : mov === 'tiro' ? (forma(C.ficha(w).acao) || corte1h()) : corte1h();
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
         if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w && (dir === 'left' || dir === 'right') && !(this.player.dir8 || '').includes('_') ? f : 0; estocadaProfunda = !!(q.estocando && w && !estocando); }
-        if (!set || idx < 0) { set = parado; idx = 0; }   // antes e depois do golpe: a guarda (boneco parado)
-      } else if (this.player.isMoving) { set = pick('walk', dir); idx = set ? Math.floor((this.player.stridePhase || 0) * set.length) % set.length : 0; }   // uma passada completa = todos os quadros da folha (4 ou 8)
+        if (!set || idx < 0) { set = parado; idx = 0; acaoNome = 'idle'; }   // antes e depois do golpe: a guarda (boneco parado)
+      } else if (this.player.isMoving) { acaoNome = 'walk'; set = pick('walk', dir); idx = set ? Math.floor((this.player.stridePhase || 0) * set.length) % set.length : 0; }   // uma passada completa = todos os quadros da folha (4 ou 8)
       else set = pick('idle', dir);
       if (set && set.length) frame = set[Math.max(0, idx) % set.length];
+      idxPose = set && set.length ? Math.max(0, idx) % set.length : 0;
     }
 
     // Fallback to legacy frames if v2 frame not yet loaded
@@ -3409,7 +3465,9 @@ class Game {
                    socketTable[`idle_${sideDir}_0`] ||
                    null);
 
-    const drawBehind = socket ? socket.behind : (dir === 'up');
+    this._pose = { acao: acaoNome, d: this.player.dir8 || dir, idx: idxPose, n: 0 };
+    const ajPegada = this.pegadaAjuste();
+    const drawBehind = ajPegada && ajPegada[4] ? ajPegada[4] === 1 : (socket ? socket.behind : (dir === 'up'));
 
     // Weapon behind player if specified by socket (e.g. facing UP or backswing)
     if (drawBehind && !isSit) {
@@ -3469,6 +3527,13 @@ class Game {
     ctx.fillText(tag, px, tagY);
   }
 
+  // Ajuste de pegada da arma equipada neste quadro: [dx, dy, giro em graus, comprimento (x), ordem 0=normal 1=atras 2=na frente] ou null
+  pegadaAjuste() {
+    const t = this.pegada && this.pegada[this.player.equippedWeapon], P = this._pose;
+    if (!t || !P) return null;
+    return t[`${P.acao}_${P.d}_${P.idx}`] || t[`${P.acao}_${P.d}`] || null;
+  }
+
   drawWeapon(ctx, px, py, drawX, drawY, targetW, targetH, frameKey, socket) {
     const gA = this.player.golpe;
     if (this.player.isAttacking && gA && gA.mov === 'arremesso') {      // arremesso: so a arma que vai voar fica na mao, ate soltar
@@ -3499,6 +3564,8 @@ class Game {
       scaleX = isLeft ? -1 : 1;
     }
 
+    const aj = this.pegadaAjuste();
+    if (aj) { handX += aj[0]; handY += aj[1]; angle += aj[2] * Math.PI / 180 * scaleX; }
     // Rastro do golpe: so depois do impacto, e nao na estocada (ali a arma vai reto)
     const gp = this.player.golpe;
     if (this.player.isAttacking && gp && gp.feito && gp.mov !== 'estocada') {
@@ -3538,7 +3605,7 @@ class Game {
     const gripY = wSize * wa[2];
     // diagonal: a arma aponta para dentro da tela (ou para quem olha) e encurta so no comprimento (perspectiva).
     // A imagem da arma e diagonal (ponta para cima a direita): gira o eixo para x, encolhe, desgira
-    const ln = (socket && socket.len) || 1;
+    const ln = ((socket && socket.len) || 1) * (aj ? aj[3] : 1);
     if (ln !== 1) { ctx.rotate(-Math.PI / 4); ctx.scale(ln, 1); ctx.rotate(Math.PI / 4); }
     ctx.drawImage(weaponImg, -gripX, -gripY, wSize, wSize);
 

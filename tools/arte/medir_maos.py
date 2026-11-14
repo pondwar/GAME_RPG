@@ -27,6 +27,9 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'assets', 'player', 'racas')
 GOLPES = {'attack_1h', 'attack_2h', 'thrust_1h', 'thrust_2h', 'punch', 'kick', 'throw'}
+# poses de tiro: as DUAS maos importam (arco: uma segura o arco, a outra puxa a corda; besta: as duas seguram). Entram no 8o e 9o numero
+RANGED = {'shoot_bow', 'shoot_xbow1', 'shoot_xbow2', 'sling'}
+GOLPES |= RANGED
 FRENTE = ('down', 'up')
 DIAG = ('down_right', 'down_left', 'up_right', 'up_left')
 # "para a frente" de um boneco na diagonal, na tela (x para o lado dele, y para baixo/cima): ~30 graus, encurtado
@@ -125,7 +128,17 @@ def medir(f, corpo, acao, d):
     if outros.any():
         oy, ox = np.where(outros)
         rf = min(rf, 0.9 * math.sqrt(float(((ox - px) ** 2 + (oy - py) ** 2).min())))
-    return [round(px / W, 4), round(py / H, 4), th, int(atras), int(esp), round(rf / W, 4), round(ln, 3)]
+    res = [round(px / W, 4), round(py / H, 4), th, int(atras), int(esp), round(rf / W, 4), round(ln, 3)]
+    if acao in RANGED:        # a outra mao: o outro braco (o maior que sobra), ponto mais longe do ombro
+        resto = [c for c in comps if c != i and st[c, cv2.CC_STAT_AREA] > 0.08 * max(st[k, cv2.CC_STAT_AREA] for k in comps)]
+        if resto:
+            j = max(resto, key=lambda c: st[c, cv2.CC_STAT_AREA])
+            yj, xj = np.where(lab == j)
+            kk = int(np.argmax((xj - ombro[0]) ** 2 + (yj - ombro[1]) ** 2))
+            res += [round(float(xj[kk]) / W, 4), round(float(yj[kk]) / H, 4)]
+        else:
+            res += [None, None]
+    return res
 
 
 def main():
