@@ -949,7 +949,9 @@ class Game {
     const atk = p.isAttacking && p.attackDuration > 0;
     const prog = atk ? 1 - p.attackTimer / p.attackDuration : -1;
     const solta = (C.TEMPOS.tiro || {}).bate || 0.62;
-    const a = atk ? (p.facingAngle || 0) : Math.PI / 2;             // parado: a arma fica na vertical, na mao
+    // parado: o arco fica em pe na mao, com a barriga para o lado que olha; a besta fica de lado, inclinada para a frente e para baixo
+    const d8 = p.dir8 || '', olhaEsq = d8.includes('left') || (!d8.includes('right') && p.direction === 'left');
+    const a = atk ? (p.facingAngle || 0) : (f.proj === 'flecha' ? (olhaEsq ? Math.PI : 0) : (olhaEsq ? Math.PI - 0.55 : 0.55));
     const ax = Math.cos(a), ay = Math.sin(a), nx = -ay, ny = ax;
     const k = rsc * (w === 'besta_mao' ? 0.62 : 1);
     const pt = (x, y, t, u) => [x + ax * t + nx * u, y + ay * t + ny * u];
