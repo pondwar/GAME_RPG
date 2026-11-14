@@ -3013,3 +3013,11 @@ body.inv-open .hotbar { box-shadow: 0 0 0 2px rgba(240, 192, 90, 0.45), 0 6px 20
 .cs-sheet b { font-size: 18px; color: #ffe7a8; }
 .cs-err { color: #ff8787; font-size: 12px; min-height: 16px; margin-top: 8px; }
 .cs-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+
+/* Menu do botao direito num item da mochila */
+.inv-ctx { position: fixed; z-index: 1100; min-width: 170px; padding: 4px; display: flex; flex-direction: column; gap: 2px;
+  background: rgba(18, 14, 10, 0.97); border: 1px solid #8a6a3a; border-radius: 6px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); }
+.inv-ctx button { text-align: left; padding: 6px 10px; border: 0; border-radius: 4px; background: transparent; color: #f1e6d0;
+  font: 600 13px Outfit, sans-serif; cursor: pointer; }
+.inv-ctx button:hover { background: rgba(212, 160, 76, 0.28); }
+.inv-ctx-titulo { padding: 3px 10px 5px; font: 700 11px Outfit, sans-serif; color: #d4a04c; border-bottom: 1px solid rgba(138, 106, 58, 0.5); margin-bottom: 2px; }

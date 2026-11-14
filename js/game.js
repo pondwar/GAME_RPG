@@ -112,13 +112,13 @@ class Game {
     // World Entities
     this.trees = [];
     this.fruitsOnGround = [];
-    this.armasNoChao = [];      // armas arremessadas que cairam no chao (tecla Q); pegam-se andando por cima
-    this.chaoSujo = false; this._chaoTimer = null;
+    this.itensNoChao = [];      // itens largados no chao (arma arremessada, drop da mochila): { uid, id, n, x, y, a, vida }; pegam-se andando por cima
+    this._chaoSync = 0;
     try {      // ao abrir: o que estava no chao volta (banco; sem servidor, o navegador)
-      const S = window.SurittoServer, ok = window.SurittoCombate.ARREMESSO;
-      const lista = S && S.online ? S.groundItems : JSON.parse(localStorage.getItem('suritto_ground_v1') || 'null');
-      if (Array.isArray(lista)) this.armasNoChao = lista.filter(i => i && ok[i.item] && isFinite(i.x) && isFinite(i.y) && i.vida > 0).map(i => ({ id: i.item, x: i.x, y: i.y, a: i.a || 0, vida: i.vida }));
-    } catch (e) { console.warn('armas no chao', e); }
+      const S = window.SurittoServer;
+      const lista = S && S.online ? S.groundItems : JSON.parse(localStorage.getItem('suritto_ground_v2') || 'null');
+      if (Array.isArray(lista)) this.itensNoChao = lista.filter(i => i && i.item && isFinite(i.x) && isFinite(i.y) && i.vida > 0).map(i => ({ uid: i.id || null, id: i.item, n: i.n || 1, x: i.x, y: i.y, a: i.a || 0, vida: i.vida }));
+    } catch (e) { console.warn('itens no chao', e); }
     this.deers = [];
     this.wolves = [];
     this.critters = [];          // coelhos, raposas, javalis, ursos e corvos (js/fauna.js)
@@ -371,6 +371,12 @@ class Game {
     this.images.weapons.axe.src = `assets/weapons/items/axe.png?v=${v}`;
     this.images.weapons.fire_sword.src = `assets/weapons/items/fire_sword.png?v=${v}`;
     for (const k of ['adaga', 'espada_curta', 'clava', 'machadinha', 'lanca']) this.images.weapons[k].src = `assets/weapons/items/${k}.png?v=${v}`;
+    this.wArmaExtra = {};
+    fetch(`assets/weapons/items/_corpo.json?v=${v}`).then(r => (r.ok ? r.json() : null)).then(j => {
+      if (!j) return;
+      this.wArmaExtra = j;
+      for (const k of Object.keys(j)) { const im = new Image(); im.src = `assets/weapons/items/${k}.png?v=${v}`; this.images.weapons[k] = im; }
+    }).catch(() => { });
 
     // Load Carcasses (3 stages)
     for (let i = 0; i < 3; i++) {
@@ -531,6 +537,8 @@ class Game {
 
       // Right Click (button 2): EXCLUSIVE MOVEMENT (Click-to-Move & Hold-to-Walk)
       if (e.button === 2) {
+        const sob = this.itensSobMouse();
+        if (sob.length) { this.abrirMenuChao(e, sob); return; }      // clicou em item(ns) no chao: escolhe o que pegar
         this.mouse.isRightDown = true;
         this.setMoveDestination(this.mouse.worldX, this.mouse.worldY);
       }
@@ -804,25 +812,193 @@ class Game {
   // A arma arremessada parou (acertou ou acabou o alcance): cai no chao
   soltarArma(q) {
     if (!q.arma) return;
-    const a = this.armasNoChao;
-    a.push({ id: q.arma, x: q.x, y: q.y, a: q.a + (q.giro ? Math.random() * 6.28 : 0), vida: 900 });
-    if (a.length > 40) a.shift();
-    this.marcarChaoSujo();
+    this.largarNoChao(q.arma, 1, q.x, q.y, q.a + (q.giro ? Math.random() * 6.28 : 0));
   }
 
-  // As armas no chao vao para o banco (world.ground_item) logo depois de mudar e junto com o autosave
-  marcarChaoSujo() {
-    this.chaoSujo = true;
-    if (!this._chaoTimer) this._chaoTimer = setTimeout(() => { this._chaoTimer = null; this.salvarArmasNoChao(false); }, 1500);
-  }
-
-  salvarArmasNoChao(keepalive) {
-    if (this.saveSystem && this.saveSystem._resetting) return;
-    this.chaoSujo = false;
-    const lista = this.armasNoChao.map(a => ({ item: a.id, x: Math.round(a.x * 10) / 10, y: Math.round(a.y * 10) / 10, a: Math.round(a.a * 100) / 100, vida: Math.max(1, Math.round(a.vida)) }));
-    try { localStorage.setItem('suritto_ground_v1', JSON.stringify(lista)); } catch (e) { }
+  // ---- Itens no chao (multiplayer: o servidor manda; POST ao largar, DELETE ao pegar, GET a cada 5 s para ver os dos outros)
+  largarNoChao(id, n, x, y, a) {
+    const it = { uid: null, id, n: Math.max(1, Math.floor(n) || 1), x, y, a: a || 0, vida: 1800, pendente: false };
+    this.itensNoChao.push(it);
+    if (this.itensNoChao.length > 400) this.itensNoChao.shift();
     const S = window.SurittoServer;
-    if (S && S.online) S.saveGroundItems(lista, !!keepalive).catch(() => { this.chaoSujo = true; });
+    if (S && S.online && !(this.saveSystem && this.saveSystem._resetting)) {
+      it.pendente = true;
+      S.addGroundItem({ item: id, n: it.n, x, y, a: it.a, vida: it.vida }).then(r => { it.uid = r.id; it.pendente = false; }).catch(() => { it.pendente = false; });
+    } else this.salvarChaoLocal();
+    return it;
+  }
+
+  salvarChaoLocal() {      // sem servidor: o navegador guarda o chao
+    const S = window.SurittoServer;
+    if (S && S.online) return;
+    try { localStorage.setItem('suritto_ground_v2', JSON.stringify(this.itensNoChao.map(a => ({ item: a.id, n: a.n, x: Math.round(a.x), y: Math.round(a.y), a: Math.round(a.a * 100) / 100, vida: Math.round(a.vida) })))); } catch (e) { }
+  }
+
+  posicaoAosPes() {
+    const p = this.player, a = (p.facingAngle || 0) + (Math.random() - 0.5) * 0.9, d = 26 + Math.random() * 10;
+    return { x: p.x + Math.cos(a) * d, y: p.y + Math.sin(a) * d };
+  }
+
+  // Largar da mochila (botao direito, botao Largar ou arrastar para fora da mochila). qtd = quantos da pilha
+  largarDaMochila(slotIdx, qtd) {
+    const inv = this.inventory, sl = inv.slots[slotIdx];
+    if (!sl) return false;
+    const it = inv.itemDB[sl.id], id = sl.id, n = Math.max(1, Math.min(qtd || 1, sl.count));
+    inv.removeItem(slotIdx, n);
+    const pos = this.posicaoAosPes();
+    this.largarNoChao(id, n, pos.x, pos.y, Math.random() * 6.28);
+    this.addLog(`🫳 Você largou ${n > 1 ? n + 'x ' : ''}<b>${it.name}</b> no chão.`, 'tip');
+    if (window.sounds && window.sounds.playRustle) window.sounds.playRustle();
+    return true;
+  }
+
+  // Largar o que esta na mao / mao secundaria (arrastar do equipamento para fora da mochila)
+  largarEquipado(tipo) {
+    const inv = this.inventory, id = inv.equipment[tipo];
+    if (!id || !inv.itemDB[id]) return false;
+    inv.equipment[tipo] = null;
+    if (tipo === 'weapon') this.player.equippedWeapon = null;
+    if (tipo === 'offhand') this.player.torchLit = false;
+    const pos = this.posicaoAosPes();
+    this.largarNoChao(id, 1, pos.x, pos.y, Math.random() * 6.28);
+    this.addLog(`🫳 Você largou <b>${inv.itemDB[id].name}</b> no chão.`, 'tip');
+    inv.renderUI();
+    return true;
+  }
+
+  atualizarItensNoChao(dt) {
+    const p = this.player, S = window.SurittoServer, online = !!(S && S.online && !(this.saveSystem && this.saveSystem._resetting));
+    const L = this.itensNoChao;
+    for (let i = L.length - 1; i >= 0; i--) {
+      L[i].vida -= dt;
+      if (L[i].vida <= 0) L.splice(i, 1);
+    }
+    // item sob o mouse (mostra o nome); alvo de "pegar ao chegar" (botao direito longe do item)
+    this.itemHover = this.itensSobMouse()[0] || null;
+    if (this.pegarAlvo) {
+      const a = this.pegarAlvo; this.pegarAlvoT -= dt;
+      const dx = this.world ? this.world.wrapDelta(p.x - a.x) : (p.x - a.x);
+      if (!(a.fruta ? this.fruitsOnGround.includes(a.ref) : L.includes(a)) || this.pegarAlvoT <= 0) this.pegarAlvo = null;
+      else if (Math.hypot(dx, p.y - a.y) < 30) { this.pegarAlvo = null; this.pegarItemChao(a); }
+    }
+    // a cada 5 s: o que os outros jogadores largaram ou pegaram
+    this._chaoSync += dt;
+    if (online && this._chaoSync >= 5) {
+      this._chaoSync = 0;
+      S.listGroundItems().then(lista => {
+        if (L.some(a => a.pendente)) return;           // espera as gravacoes terminarem para nao duplicar
+        const noServidor = new Set(lista.map(i => i.id));
+        for (let i = L.length - 1; i >= 0; i--) if (L[i].uid && !noServidor.has(L[i].uid) && !L[i].pegando) L.splice(i, 1);
+        const tenho = new Set(L.map(a => a.uid).filter(Boolean));
+        for (const i of lista) if (!tenho.has(i.id)) L.push({ uid: i.id, id: i.item, n: i.n, x: i.x, y: i.y, a: i.a, vida: i.vida });
+      }).catch(() => { });
+    }
+  }
+
+  // Itens no chao embaixo do cursor (do mais perto para o mais longe)
+  itensSobMouse() {
+    const m = this.mouse;
+    if (!m || m.worldX === undefined) return [];
+    const out = [];
+    for (const a of this.itensNoChao) {
+      const dx = this.world ? this.world.wrapDelta(m.worldX - a.x) : (m.worldX - a.x), d = Math.hypot(dx, m.worldY - (a.y - 8));
+      if (d < 18) out.push({ a, d });
+    }
+    for (const f of this.fruitsOnGround) {      // frutas (isca largada, caidas das arvores) tambem entram na lista
+      const dx = this.world ? this.world.wrapDelta(m.worldX - f.x) : (m.worldX - f.x), d = Math.hypot(dx, m.worldY - f.y);
+      if (d < 16) out.push({ a: { fruta: true, ref: f, id: f.item || 'fruit', n: 1, x: f.x, y: f.y }, d });
+    }
+    return out.sort((u, v) => u.d - v.d).map(o => o.a);
+  }
+
+  // Item no chao mais perto do jogador (tecla F)
+  itemChaoMaisPerto(raio) {
+    const p = this.player; let best = null, bd = raio;
+    for (const a of this.itensNoChao) {
+      const dx = this.world ? this.world.wrapDelta(p.x - a.x) : (p.x - a.x), d = Math.hypot(dx, p.y - a.y);
+      if (d < bd && !a.pegando) { bd = d; best = a; }
+    }
+    return best;
+  }
+
+  // Pega um item do chao (precisa estar perto). Online: o servidor decide quem pegou primeiro
+  pegarItemChao(a) {
+    if (a.pegando) return;
+    if (a.fruta) {      // fruta no chao (nao e item do chao novo: vem de fruitsOnGround)
+      const k = this.fruitsOnGround.indexOf(a.ref);
+      if (k < 0) return;
+      if (!this.inventory.cabe(a.id, 1)) { this.addLog('⚠️ Mochila cheia: não cabe mais um fruto.', 'warning'); return; }
+      this.fruitsOnGround.splice(k, 1); this.inventory.addItem(a.id, 1);
+      if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
+      this.addLog(`🧺 Você pegou 1 <b>${(this.inventory.itemDB[a.id] || {}).name || 'Fruto'}</b> do chão.`, 'action'); this.updateHUD();
+      return;
+    }
+    const S = window.SurittoServer, online = !!(S && S.online && !(this.saveSystem && this.saveSystem._resetting)), inv = this.inventory;
+    const nome = (inv.itemDB[a.id] || {}).name || a.id;
+    if (!inv.cabe(a.id, a.n)) { this.addLog(`⚠️ Mochila cheia: não cabe ${a.n > 1 ? a.n + 'x ' : ''}${nome}.`, 'warning'); return; }
+    if (online && a.uid) {
+      a.pegando = true;
+      S.takeGroundItem(a.uid).then(r => {
+        const k = this.itensNoChao.indexOf(a); if (k >= 0) this.itensNoChao.splice(k, 1);
+        if (r.ok) { inv.addItem(a.id, a.n); this.pegouDoChao(a, nome); } else this.addLog(`🫳 Outro jogador pegou ${nome} antes de você.`, 'tip');
+      }).catch(() => { a.pegando = false; });
+    } else if (online && a.pendente) {
+      this.addLog('⏳ Esse item ainda está sendo gravado no mundo; tente de novo em um instante.', 'tip');
+    } else {
+      const k = this.itensNoChao.indexOf(a); if (k >= 0) this.itensNoChao.splice(k, 1);
+      inv.addItem(a.id, a.n); this.pegouDoChao(a, nome); this.salvarChaoLocal();
+    }
+  }
+
+  // Pega agora se estiver perto; senao anda ate o item e pega ao chegar
+  pegarOuAndar(a) {
+    const p = this.player, dx = this.world ? this.world.wrapDelta(p.x - a.x) : (p.x - a.x);
+    if (Math.hypot(dx, p.y - a.y) <= 48) this.pegarItemChao(a);
+    else { this.pegarAlvo = a; this.pegarAlvoT = 8; this.setMoveDestination(a.x, a.y); }
+  }
+
+  // Botao direito em cima de itens: lista de tudo que esta ali, o jogador escolhe o que pegar
+  abrirMenuChao(e, lista) {
+    this.fecharMenuChao();
+    const m = document.createElement('div');
+    m.id = 'chao-ctx'; m.className = 'inv-ctx';
+    const t = document.createElement('div'); t.className = 'inv-ctx-titulo'; t.textContent = lista.length > 1 ? `Itens aqui (${lista.length})` : 'Item no chão'; m.appendChild(t);
+    for (const a of lista) {
+      const it = this.inventory.itemDB[a.id] || {};
+      const b = document.createElement('button');
+      b.innerHTML = `${it.icon || '❔'} Pegar <b>${it.name || a.id}</b>${a.n > 1 ? ' x' + a.n : ''}`;
+      b.addEventListener('click', () => { this.fecharMenuChao(); this.pegarOuAndar(a); });
+      m.appendChild(b);
+    }
+    document.body.appendChild(m);
+    const w = m.offsetWidth, h = m.offsetHeight;
+    m.style.left = Math.max(4, Math.min(e.clientX, window.innerWidth - w - 4)) + 'px';
+    m.style.top = Math.max(4, Math.min(e.clientY, window.innerHeight - h - 4)) + 'px';
+    this._menuChaoFecha = (ev) => { if (!ev.target.closest || !ev.target.closest('#chao-ctx')) this.fecharMenuChao(); };
+    setTimeout(() => { document.addEventListener('mousedown', this._menuChaoFecha); }, 0);
+  }
+
+  fecharMenuChao() {
+    const m = document.getElementById('chao-ctx');
+    if (m) m.remove();
+    if (this._menuChaoFecha) { document.removeEventListener('mousedown', this._menuChaoFecha); this._menuChaoFecha = null; }
+  }
+
+  pegouDoChao(a, nome) {
+    if (window.sounds && window.sounds.playRustle) window.sounds.playRustle();
+    this.addLog(`🫳 Você pegou ${a.n > 1 ? a.n + 'x ' : ''}<b>${nome}</b>.`, 'action');
+    this.updateHUD();
+  }
+
+  // Imagem de arma para a miniatura no chao (assets/weapons/items/<id>.png); null = nao tem
+  imagemItem(id) {
+    const c = this._imgChao || (this._imgChao = {});
+    if (!(id in c)) {
+      const d = this.inventory && this.inventory.itemDB[id];
+      if (!d || d.type !== 'weapon') { c[id] = null; return null; }
+      const im = new Image(); im.onerror = () => { c[id] = null; }; im.src = `assets/weapons/items/${id}.png?v=1`; c[id] = im;
+    }
+    return c[id];
   }
 
   atualizarProjeteis(dt) {
@@ -895,6 +1071,17 @@ class Game {
     } else if (id === 'azagaia') {
       haste(-24, 12, 1.8, '#a8764a'); ponta(12, '#d8dce6', 8, 2.6);
       ctx.strokeStyle = '#e8e0d0'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(-20, 0); ctx.lineTo(-24, -2.4); ctx.moveTo(-20, 0); ctx.lineTo(-24, 2.4); ctx.stroke();
+    } else if (id === 'flecha') {
+      haste(-12, 9, 1.5, '#a8764a'); ponta(9, '#d8dce6', 6, 2.2);
+      ctx.strokeStyle = '#e8e0d0'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(-9, 0); ctx.lineTo(-13, -2.6); ctx.moveTo(-9, 0); ctx.lineTo(-13, 2.6); ctx.stroke();
+    } else if (id === 'virote') {
+      haste(-7, 6, 1.8, '#8a5a34'); ponta(6, '#d8dce6', 5, 2.2);
+      ctx.strokeStyle = '#6b4a2b'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(-5, 0); ctx.lineTo(-8, -2.2); ctx.moveTo(-5, 0); ctx.lineTo(-8, 2.2); ctx.stroke();
+    } else if (id === 'pedra') {
+      ctx.fillStyle = '#8d8d96'; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(0, 0, 3.6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    } else if ((id === 'martelo_leve' || id === 'tridente') && this.images.weapons[id] && this.images.weapons[id].complete && this.images.weapons[id].naturalWidth > 0 && (this.wArmaExtra || {})[id]) {
+      const w = this.wArmaExtra[id][0];      // sprite diagonal (ponta para cima a direita): gira para apontar para +x
+      ctx.save(); ctx.rotate(Math.PI / 4); ctx.drawImage(this.images.weapons[id], -w / 2, -w / 2, w, w); ctx.restore();
     } else {      // dardo
       haste(-9, 5, 1.6, '#a8764a'); ponta(5, '#d8dce6', 6, 2.2);
       ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(-6, 0); ctx.lineTo(-10, -2.4); ctx.moveTo(-6, 0); ctx.lineTo(-10, 2.4); ctx.stroke();
@@ -913,31 +1100,36 @@ class Game {
     ctx.restore();
   }
 
-  // Armas caidas no chao: andar por cima para pegar de volta
-  atualizarArmasNoChao(dt) {
-    const p = this.player, L = this.armasNoChao;
-    for (let i = L.length - 1; i >= 0; i--) {
-      const a = L[i]; a.vida -= dt;
-      const dx = this.world ? this.world.wrapDelta(p.x - a.x) : (p.x - a.x);
-      if (a.vida <= 0) { L.splice(i, 1); this.marcarChaoSujo(); continue; }
-      if (Math.hypot(dx, p.y - a.y) < 24 && !p.isAttacking) {
-        if (this.inventory.addItem(a.id, 1)) {
-          L.splice(i, 1); this.marcarChaoSujo();
-          if (window.sounds && window.sounds.playRustle) window.sounds.playRustle();
-          this.addLog(`🗡️ Você pegou de volta: ${(this.inventory.itemDB[a.id] || {}).name || a.id}.`, 'action');
-          this.updateHUD();
-        }
-      }
-    }
-  }
-
-  drawArmaNoChao(ctx, a, sx, sy) {
+  // Miniatura do item largado: sprite da arma, forma da arma de arremesso ou o icone do item; anel da cor da raridade
+  drawItemNoChao(ctx, a, sx, sy) {
+    const C = window.SurittoCombate, it = (this.inventory && this.inventory.itemDB[a.id]) || {};
+    const COR = { common: '#ced4da', uncommon: '#51cf66', rare: '#339af0', epic: '#be4bdb', legendary: '#ff922b' };
     ctx.save();
-    ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(sx, sy, 8, 2.5, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.translate(sx, sy - 2); ctx.scale(1, 0.55); ctx.rotate(a.a);      // deitada no chao (achatada pela perspectiva)
     if (a.vida < 5) ctx.globalAlpha = Math.max(0, a.vida / 5);
-    this.desenharArmaArremessada(ctx, a.id);
+    ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(sx, sy, 9, 3, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = COR[it.rarity] || COR.common; ctx.globalAlpha *= 0.55; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.ellipse(sx, sy, 11, 4, 0, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = a.vida < 5 ? Math.max(0, a.vida / 5) : 1;
+    const img = this.imagemItem(a.id);
+    if (C.ARREMESSO[a.id] || a.id === 'flecha' || a.id === 'virote' || a.id === 'pedra') {      // arma de arremesso e municao: deitadas no chao
+      ctx.translate(sx, sy - 2); ctx.scale(1, 0.55); ctx.rotate(a.a); this.desenharArmaArremessada(ctx, a.id);
+    } else if (img && img.complete && img.naturalWidth > 0) {  // sprite da arma, em miniatura de pe
+      const k = 28 / Math.max(img.naturalWidth, img.naturalHeight), w = img.naturalWidth * k, h = img.naturalHeight * k;
+      ctx.drawImage(img, sx - w / 2, sy - 4 - h / 2, w, h);
+    } else {                                                   // qualquer outro item: o icone
+      ctx.font = '18px "Segoe UI Emoji", "Apple Color Emoji", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 3; ctx.shadowOffsetY = 1;
+      ctx.fillText(it.icon || '❔', sx, sy - 8); ctx.fillText(it.icon || '❔', sx, sy - 8);
+    }
     ctx.restore();
+    if (this.itemHover === a) {
+      ctx.save(); ctx.font = 'bold 11px Outfit, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      const tx = (it.name || a.id) + (a.n > 1 ? ' x' + a.n : '');
+      ctx.lineWidth = 3; ctx.strokeStyle = '#000'; ctx.fillStyle = '#ffe9a8'; ctx.strokeText(tx, sx, sy - 18); ctx.fillText(tx, sx, sy - 18); ctx.restore();
+    }
+    if (a.n > 1) {
+      ctx.save(); ctx.font = 'bold 10px Outfit, sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.lineWidth = 3; ctx.strokeStyle = '#000'; ctx.fillStyle = '#fff'; ctx.strokeText('x' + a.n, sx + 7, sy + 1); ctx.fillText('x' + a.n, sx + 7, sy + 1); ctx.restore();
+    }
   }
 
   // Arco, besta e funda na mao do boneco (desenhados por codigo, girados para o lado da mira; a mao vem do quadro medido)
@@ -1832,6 +2024,10 @@ class Game {
   }
 
   handleInteraction() {
+    // -2. Item largado no chao bem perto: pega o mais perto (aperte F de novo para o proximo)
+    const noChao = this.itemChaoMaisPerto(48);
+    if (noChao) { this.pegarItemChao(noChao); return; }
+
     // -1. Check near Campfire (Cooking Meat)
     for (const campfire of this.campfires) {
       const cdx = this.world ? this.world.wrapDelta(this.player.x - campfire.x) : (this.player.x - campfire.x);
@@ -2385,19 +2581,7 @@ class Game {
       }
     }
 
-    // Auto-pick fruits if player walks over them
-    for (let i = this.fruitsOnGround.length - 1; i >= 0; i--) {
-      const f = this.fruitsOnGround[i];
-      const fdx = this.world ? this.world.wrapDelta(this.player.x - f.x) : (this.player.x - f.x);
-      if (Math.hypot(fdx, this.player.y - f.y) < 22) {
-        this.fruitsOnGround.splice(i, 1);
-        const fi2 = f.item || 'fruit', fname2 = (this.inventory.itemDB[fi2] || {}).name || 'Fruto';
-        this.inventory.addItem(fi2, 1);
-        if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
-        this.addLog(`🍎 ${fname2} colhido automaticamente do solo!`, 'action');
-        this.updateHUD();
-      }
-    }
+    // Frutas no chao NAO sao mais pegas sozinhas: tecla F (handleInteraction) ou botao direito em cima (abrirMenuChao)
 
     // Update Player Attack Timer & Combo Decay
     if (this.player.isAttacking) {
@@ -2410,7 +2594,7 @@ class Game {
       }
     }
     this.atualizarProjeteis(dt);
-    this.atualizarArmasNoChao(dt);
+    this.atualizarItensNoChao(dt);
     // golpe guardado (clicou antes da hora) ou botao segurado: ataca de novo assim que a arma deixar
     if ((this.player.ataqueNaFila || (this.mouse.isLeftDown && this.player.segurandoAtaque)) &&
         performance.now() / 1000 >= (this.player.proxAtaque || 0)) {
@@ -2677,8 +2861,8 @@ class Game {
       draw: () => this.drawPlayer(ctx, screenCenterX, screenCenterY)
     });
 
-    for (const a of this.armasNoChao) {
-      renderList.push({ type: 'item', x: relX(a.x), y: a.y, draw: () => this.drawArmaNoChao(ctx, a, Math.round(relX(a.x) + screenCenterX), Math.round(a.y - this.camera.y + screenCenterY)) });
+    for (const a of this.itensNoChao) {
+      renderList.push({ type: 'item', x: relX(a.x), y: a.y, draw: () => this.drawItemNoChao(ctx, a, Math.round(relX(a.x) + screenCenterX), Math.round(a.y - this.camera.y + screenCenterY)) });
     }
 
     // Fruits on ground
@@ -3183,7 +3367,7 @@ class Game {
         const forma = (acao) => via8(acao) || frenteCosta(acao) || lado(acao);       // folha da acao na direcao do golpe (frente/costas ou lado)
         const corte1h = () => forma('attack_1h');
         set = mov === 'machadada' ? (forma('attack_2h') || corte1h())
-          : mov === 'estocada' ? ((w === 'lanca' ? (forma('thrust_2h') || lado('attack_2h')) : forma('thrust_1h')) || corte1h())
+          : mov === 'estocada' ? (((w === 'lanca' || C.ficha(w).duas) ? (forma('thrust_2h') || lado('attack_2h')) : forma('thrust_1h')) || corte1h())
           : mov === 'soco' ? (forma('punch') || corte1h())
           : mov === 'arremesso' ? (forma('throw') || corte1h())
           : mov === 'tiro' ? (forma(C.ficha(w).acao) || corte1h()) : corte1h();
@@ -3348,7 +3532,7 @@ class Game {
     const W_ARMA = { adaga: [15.8, 0.29, 0.713], espada_curta: [22.8, 0.214, 0.787], sword: [31.5, 0.174, 0.826],
       fire_sword: [31.5, 0.175, 0.825], clava: [27.2, 0.182, 0.821], machadinha: [24.8, 0.173, 0.73], axe: [35.8, 0.135, 0.79],
       lanca: [59.0, 0.417, 0.584] };
-    const wa = W_ARMA[this.player.equippedWeapon] || W_ARMA.sword, rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
+    const wa = W_ARMA[this.player.equippedWeapon] || (this.wArmaExtra || {})[this.player.equippedWeapon] || W_ARMA.sword, rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
     const wSize = wa[0] * rsc;
     const gripX = wSize * wa[1];
     const gripY = wSize * wa[2];

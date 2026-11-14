@@ -53,7 +53,10 @@
     saveSettlement(code, data) { this.settlements[code] = { ...(this.settlements[code] || {}), ...data }; return this._send('PUT', '/api/world/settlements/' + code, data); },
     saveCharacter(snapshot, keepalive) { return this._send('PUT', '/api/characters/' + encodeURIComponent(this.charName), snapshot, keepalive); },
     // regions: { "rx,ry": { plants, pop, hunger } }
-    saveGroundItems(items, keepalive) { return this._send('PUT', '/api/world/ground-items', { items }, keepalive); },
+    // itens no chao (multiplayer: o servidor manda; POST ao largar, DELETE ao pegar, GET para ver o que os outros fizeram)
+    listGroundItems() { return fetch('/api/world/ground-items', { cache: 'no-store' }).then(json).then(r => r.items || []); },
+    addGroundItem(it) { return this._send('POST', '/api/world/ground-items', it); },
+    takeGroundItem(id) { return fetch('/api/world/ground-items/' + id, { method: 'DELETE' }).then(r => (r.status === 404 ? { ok: false } : json(r))); },
     saveFauna(regions, keepalive) { return this._send('PUT', '/api/world/fauna', { regions }, keepalive); }
   };
 

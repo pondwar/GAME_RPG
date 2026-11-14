@@ -192,7 +192,6 @@ class SaveSystem {
   save() {
     try {
       this.adapter.save(this.buildSnapshot());
-      if (this.game.chaoSujo && this.game.salvarArmasNoChao) this.game.salvarArmasNoChao(document.visibilityState === 'hidden');
       this._sinceSave = 0;
       this._warned = false;
       return true;

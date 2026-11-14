@@ -171,6 +171,72 @@ class InventorySystem {
       funda: { id: 'funda', name: 'Funda', type: 'weapon', rarity: 'common', icon: '🪃', maxStack: 1,
         desc: 'Uma tira de couro que gira e arremessa pedras.', stats: 'Dano 1d4 impacto • Munição: pedra',
         equipType: 'weapon', equipId: 'funda' },
+      // <<armas-dnd
+      clava_grande: { id: 'clava_grande', name: 'Clava Grande', type: 'weapon', rarity: 'common', icon: '🏏', maxStack: 1,
+        desc: 'Tronco nodoso e pesado, de duas mãos. Esmaga tudo que acerta.', stats: 'Dano 1d8 impacto • Duas mãos',
+        equipType: 'weapon', equipId: 'clava_grande' },
+      martelo_leve: { id: 'martelo_leve', name: 'Martelo Leve', type: 'weapon', rarity: 'common', icon: '🔨', maxStack: 1,
+        desc: 'Martelo pequeno de ferro, leve e fácil de arremessar.', stats: 'Dano 1d4 impacto • Leve • Arremesso',
+        equipType: 'weapon', equipId: 'martelo_leve' },
+      maca: { id: 'maca', name: 'Maça de Ferro', type: 'weapon', rarity: 'common', icon: '🔨', maxStack: 1,
+        desc: 'Cabeça de ferro com rebarbas na ponta de um cabo de madeira.', stats: 'Dano 1d6 impacto',
+        equipType: 'weapon', equipId: 'maca' },
+      bordao: { id: 'bordao', name: 'Bordão', type: 'weapon', rarity: 'common', icon: '🦯', maxStack: 1,
+        desc: 'Cajado longo de madeira dura. Uma ou duas mãos.', stats: 'Dano 1d6 impacto (1d8 com duas mãos) • Versátil',
+        equipType: 'weapon', equipId: 'bordao' },
+      foice: { id: 'foice', name: 'Foice Curta', type: 'weapon', rarity: 'common', icon: '🌾', maxStack: 1,
+        desc: 'Lâmina curva de ceifar, de cabo curto.', stats: 'Dano 1d4 corte • Leve',
+        equipType: 'weapon', equipId: 'foice' },
+      machado_batalha: { id: 'machado_batalha', name: 'Machado de Batalha', type: 'weapon', rarity: 'common', icon: '🪓', maxStack: 1,
+        desc: 'Machado de uma lâmina larga, feito para a guerra.', stats: 'Dano 1d8 corte (1d10 com duas mãos) • Versátil',
+        equipType: 'weapon', equipId: 'machado_batalha' },
+      mangual: { id: 'mangual', name: 'Mangual', type: 'weapon', rarity: 'common', icon: '⛓️', maxStack: 1,
+        desc: 'Cabo com corrente e uma bola de ferro com espinhos.', stats: 'Dano 1d8 impacto',
+        equipType: 'weapon', equipId: 'mangual' },
+      glaive: { id: 'glaive', name: 'Glaive', type: 'weapon', rarity: 'common', icon: '⚔️', maxStack: 1,
+        desc: 'Haste longa com uma lâmina curva de um fio na ponta.', stats: 'Dano 1d10 corte • Alcance • Pesada • Duas mãos',
+        equipType: 'weapon', equipId: 'glaive' },
+      machado_grande: { id: 'machado_grande', name: 'Machado Grande', type: 'weapon', rarity: 'common', icon: '🪓', maxStack: 1,
+        desc: 'Machado enorme de duas mãos, com lâmina larga.', stats: 'Dano 1d12 corte • Pesada • Duas mãos',
+        equipType: 'weapon', equipId: 'machado_grande' },
+      montante: { id: 'montante', name: 'Montante', type: 'weapon', rarity: 'common', icon: '⚔️', maxStack: 1,
+        desc: 'Espada enorme de duas mãos, de lâmina longa e reta.', stats: 'Dano 2d6 corte • Pesada • Duas mãos',
+        equipType: 'weapon', equipId: 'montante' },
+      alabarda: { id: 'alabarda', name: 'Alabarda', type: 'weapon', rarity: 'common', icon: '⚔️', maxStack: 1,
+        desc: 'Haste longa com machado, ponta e gancho. Alcança longe.', stats: 'Dano 1d10 corte • Alcance • Pesada • Duas mãos',
+        equipType: 'weapon', equipId: 'alabarda' },
+      lanca_montada: { id: 'lanca_montada', name: 'Lança de Cavalaria', type: 'weapon', rarity: 'common', icon: '🔱', maxStack: 1,
+        desc: 'Lança longuíssima de cavaleiro, com guarda de mão.', stats: 'Dano 1d12 perfuração • Alcance • Montado: uma mão',
+        equipType: 'weapon', equipId: 'lanca_montada' },
+      malho: { id: 'malho', name: 'Malho', type: 'weapon', rarity: 'common', icon: '🔨', maxStack: 1,
+        desc: 'Marreta gigante de duas mãos. Cada pancada é um terremoto.', stats: 'Dano 2d6 impacto • Pesada • Duas mãos',
+        equipType: 'weapon', equipId: 'malho' },
+      maca_estrela: { id: 'maca_estrela', name: 'Maça-Estrela', type: 'weapon', rarity: 'common', icon: '🔨', maxStack: 1,
+        desc: 'Cabo de madeira com uma bola de ferro cheia de espinhos.', stats: 'Dano 1d8 perfuração',
+        equipType: 'weapon', equipId: 'maca_estrela' },
+      pique: { id: 'pique', name: 'Pique', type: 'weapon', rarity: 'common', icon: '🔱', maxStack: 1,
+        desc: 'Lança comprida de soldado, para segurar a linha.', stats: 'Dano 1d10 perfuração • Alcance • Pesada • Duas mãos',
+        equipType: 'weapon', equipId: 'pique' },
+      rapieira: { id: 'rapieira', name: 'Rapieira', type: 'weapon', rarity: 'common', icon: '🗡️', maxStack: 1,
+        desc: 'Lâmina fina e comprida, feita para estocadas rápidas.', stats: 'Dano 1d8 perfuração • Acuidade',
+        equipType: 'weapon', equipId: 'rapieira' },
+      cimitarra: { id: 'cimitarra', name: 'Cimitarra', type: 'weapon', rarity: 'common', icon: '🗡️', maxStack: 1,
+        desc: 'Lâmina curva de um fio, leve e ágil.', stats: 'Dano 1d6 corte • Leve • Acuidade',
+        equipType: 'weapon', equipId: 'cimitarra' },
+      tridente: { id: 'tridente', name: 'Tridente', type: 'weapon', rarity: 'common', icon: '🔱', maxStack: 1,
+        desc: 'Haste longa com três pontas. Pode ser arremessado.', stats: 'Dano 1d6 perfuração (1d8 com duas mãos) • Arremesso • Versátil',
+        equipType: 'weapon', equipId: 'tridente' },
+      picareta_guerra: { id: 'picareta_guerra', name: 'Picareta de Guerra', type: 'weapon', rarity: 'common', icon: '⛏️', maxStack: 1,
+        desc: 'Cabo de madeira com uma ponta curva de aço que fura armaduras.', stats: 'Dano 1d8 perfuração',
+        equipType: 'weapon', equipId: 'picareta_guerra' },
+      martelo_guerra: { id: 'martelo_guerra', name: 'Martelo de Guerra', type: 'weapon', rarity: 'common', icon: '🔨', maxStack: 1,
+        desc: 'Martelo de aço com uma ponta atrás. Uma ou duas mãos.', stats: 'Dano 1d8 impacto (1d10 com duas mãos) • Versátil',
+        equipType: 'weapon', equipId: 'martelo_guerra' },
+      chicote: { id: 'chicote', name: 'Chicote', type: 'weapon', rarity: 'common', icon: '➰', maxStack: 1,
+        desc: 'Tira de couro trançado. Acerta de longe, mas dói pouco.', stats: 'Dano 1d4 corte • Acuidade • Alcance',
+        equipType: 'weapon', equipId: 'chicote' },
+      // armas-dnd>>
+
       // armas so de arremesso (tecla Q; a propria arma voa e cai no chao; regras em js/armas.js)
       dardo: { id: 'dardo', name: 'Dardo', type: 'material', rarity: 'common', icon: '➳', maxStack: 20,
         desc: 'Dardo curto e leve. Aperte Q para arremessar; depois é só pegá-lo do chão.', stats: 'Dano 1d4 perfuração • Acuidade • Arremesso' },
@@ -537,7 +603,7 @@ class InventorySystem {
               <span>Compartimentos da Mochila (20 Slots)</span>
               <button class="inv-sort-btn" id="btn-inv-sort" title="Junta pilhas iguais e agrupa por tipo">⇅ Organizar</button>
             </div>
-            <div class="inv-help">Arraste para mover • Arraste para a barra 1–0 = atalho • Botão direito = usar/equipar • Shift+clique = dividir pilha</div>
+            <div class="inv-help">Arraste para mover • Arraste para a barra 1–0 = atalho • Arraste para fora da mochila = largar no chão • Botão direito = menu (usar, equipar, largar) • Shift+clique = dividir pilha</div>
             <div class="inv-grid" id="inv-grid">
               <!-- 20 slots dynamically injected -->
             </div>
@@ -616,6 +682,19 @@ class InventorySystem {
     const sortBtn = document.getElementById('btn-inv-sort');
     if (sortBtn) sortBtn.addEventListener('click', () => this.sortItems());
 
+    // Soltar fora da janela da mochila (no fundo escuro) = largar no chao; da mochila vai a pilha inteira
+    const fundo = document.getElementById('inventory-modal');
+    if (fundo) {
+      fundo.addEventListener('dragover', (e) => { if (!e.target.closest('.inv-window')) e.preventDefault(); });
+      fundo.addEventListener('drop', (e) => {
+        if (e.target.closest('.inv-window')) return;
+        e.preventDefault();
+        const d = this._drag(e); if (!d) return;
+        if (d.from === 'bag') this.dropItem(d.idx, 'tudo');
+        else if (d.from === 'equip') this.game.largarEquipado(d.type);
+      });
+    }
+
     // Equipment slot clicks (unequip); arrastar da mochila equipa, arrastar para a mochila guarda
     const equipSlots = document.querySelectorAll('.equip-slot');
     equipSlots.forEach(el => {
@@ -653,6 +732,7 @@ class InventorySystem {
     const modal = document.getElementById('inventory-modal');
     if (modal) modal.style.display = 'none';
     document.body.classList.remove('inv-open');
+    this.fecharMenuItem();
     this.selectedSlot = null;
   }
 
@@ -697,6 +777,15 @@ class InventorySystem {
     this.syncGamePlayerInventory();
     this.renderUI();
     return true;
+  }
+
+  // Cabe `count` deste item na mochila (juntando com pilhas e usando espacos vazios)?
+  cabe(itemId, count = 1) {
+    const d = this.itemDB[itemId];
+    if (!d) return false;
+    let livre = 0;
+    for (const sl of this.slots) livre += !sl ? d.maxStack : (sl.id === itemId ? Math.max(0, d.maxStack - sl.count) : 0);
+    return livre >= count;
   }
 
   removeItem(slotIdx, count = 1) {
@@ -838,25 +927,55 @@ class InventorySystem {
     }
   }
 
-  dropItem(slotIdx) {
+  // Largar no chao. qtd = numero ou 'tudo'. Fruta vira isca (fruitsOnGround, usada pela fauna); o resto vira item no chao
+  dropItem(slotIdx, qtd = 1) {
     const slot = this.slots[slotIdx];
     if (!slot) return;
     const itemData = this.itemDB[slot.id];
-
-    // Spawn item drop on ground in world
+    const n = qtd === 'tudo' ? slot.count : Math.max(1, Math.min(slot.count, qtd));
     if (slot.id === 'fruit' || slot.id.startsWith('fruit_')) {
-      this.game.fruitsOnGround.push({
-        item: slot.id,
-        x: this.game.player.x + (Math.random() - 0.5) * 30,
-        y: this.game.player.y + (Math.random() - 0.5) * 30,
-        bounceY: 0,
-        life: 180
-      });
+      for (let k = 0; k < n; k++) {
+        this.game.fruitsOnGround.push({
+          item: slot.id,
+          x: this.game.player.x + (Math.random() - 0.5) * 30,
+          y: this.game.player.y + (Math.random() - 0.5) * 30,
+          bounceY: 0,
+          life: 180
+        });
+      }
+      this.game.addLog(`Você largou ${n}x <b>${itemData.name}</b> no chão.`, 'tip');
+      this.removeItem(slotIdx, n);
+    } else {
+      this.game.largarDaMochila(slotIdx, n);
     }
-
-    this.game.addLog(`Você descartou 1x <b>${itemData.name}</b> no chão.`, 'tip');
-    this.removeItem(slotIdx, 1);
     this.renderUI();
+  }
+
+  // Menu do botao direito num item da mochila
+  abrirMenuItem(e, i) {
+    const slot = this.slots[i];
+    if (!slot) return;
+    const item = this.itemDB[slot.id];
+    this.fecharMenuItem();
+    const m = document.createElement('div');
+    m.id = 'inv-ctx'; m.className = 'inv-ctx';
+    const op = (txt, fn) => { const b = document.createElement('button'); b.innerHTML = txt; b.addEventListener('click', () => { this.fecharMenuItem(); fn(); }); m.appendChild(b); };
+    if (item.type === 'weapon' || item.type === 'offhand') op('⚔️ Equipar', () => this.useItem(i));
+    else if (item.type === 'consumable') op('⚡ Usar', () => this.useItem(i));
+    op(slot.count > 1 ? '🫳 Largar 1' : '🫳 Largar no chão', () => this.dropItem(i, 1));
+    if (slot.count > 1) op(`🫳 Largar tudo (x${slot.count})`, () => this.dropItem(i, 'tudo'));
+    document.body.appendChild(m);
+    const w = m.offsetWidth, h = m.offsetHeight;
+    m.style.left = Math.max(4, Math.min(e.clientX, window.innerWidth - w - 4)) + 'px';
+    m.style.top = Math.max(4, Math.min(e.clientY, window.innerHeight - h - 4)) + 'px';
+    this._menuFecha = (ev) => { if (!ev.target.closest || !ev.target.closest('#inv-ctx')) this.fecharMenuItem(); };
+    setTimeout(() => { document.addEventListener('mousedown', this._menuFecha); }, 0);
+  }
+
+  fecharMenuItem() {
+    const m = document.getElementById('inv-ctx');
+    if (m) m.remove();
+    if (this._menuFecha) { document.removeEventListener('mousedown', this._menuFecha); this._menuFecha = null; }
   }
 
   syncGamePlayerInventory() {
@@ -930,7 +1049,7 @@ class InventorySystem {
         this.renderUI();
       });
       // Botao direito: usa / equipa (como no WoW)
-      slotEl.addEventListener('contextmenu', (e) => { e.preventDefault(); if (slot) this.useItem(i); });
+      slotEl.addEventListener('contextmenu', (e) => { e.preventDefault(); if (slot) this.abrirMenuItem(e, i); });
       // Soltar aqui: item de outro compartimento, ou o item que estava equipado (guarda)
       slotEl.addEventListener('dragover', (e) => { e.preventDefault(); slotEl.classList.add('drop-target'); });
       slotEl.addEventListener('dragleave', () => slotEl.classList.remove('drop-target'));

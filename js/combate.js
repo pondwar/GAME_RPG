@@ -24,6 +24,30 @@
     fire_sword:   { mov: 'corte',     tempo: 1.10, anim: 0.52, alcance: 85,  folego: 7, extra: '1d6' },   // +1d6 de fogo
     lanca:        { mov: 'estocada',  tempo: 1.25, anim: 0.58, alcance: 120, folego: 7 },
     axe:          { mov: 'machadada', tempo: 1.50, anim: 0.75, alcance: 85,  folego: 9, dano: '1d8' },    // machado de lenhador, duas maos
+    // <<armas-dnd
+    clava_grande: { mov: 'machadada', tempo: 1.35, anim: 0.62, alcance: 90, folego: 8 },
+    martelo_leve: { mov: 'machadada', tempo: 0.95, anim: 0.48, alcance: 70, folego: 4 },
+    maca: { mov: 'machadada', tempo: 1.05, anim: 0.52, alcance: 75, folego: 5 },
+    bordao: { mov: 'corte', tempo: 1.00, anim: 0.50, alcance: 95, folego: 4 },
+    foice: { mov: 'corte', tempo: 0.85, anim: 0.45, alcance: 70, folego: 4 },
+    machado_batalha: { mov: 'machadada', tempo: 1.15, anim: 0.58, alcance: 80, folego: 7 },
+    mangual: { mov: 'machadada', tempo: 1.20, anim: 0.60, alcance: 80, folego: 6 },
+    glaive: { mov: 'machadada', tempo: 1.60, anim: 0.75, alcance: 125, folego: 9 },
+    machado_grande: { mov: 'machadada', tempo: 1.70, anim: 0.80, alcance: 90, folego: 10 },
+    montante: { mov: 'machadada', tempo: 1.60, anim: 0.78, alcance: 95, folego: 10 },
+    alabarda: { mov: 'machadada', tempo: 1.70, anim: 0.80, alcance: 130, folego: 10 },
+    lanca_montada: { mov: 'estocada', tempo: 1.50, anim: 0.65, alcance: 150, folego: 9, duas: true },
+    malho: { mov: 'machadada', tempo: 1.90, anim: 0.85, alcance: 85, folego: 11 },
+    maca_estrela: { mov: 'machadada', tempo: 1.10, anim: 0.55, alcance: 78, folego: 6 },
+    pique: { mov: 'estocada', tempo: 1.70, anim: 0.70, alcance: 165, folego: 9, duas: true },
+    rapieira: { mov: 'estocada', tempo: 0.80, anim: 0.38, alcance: 88, folego: 4 },
+    cimitarra: { mov: 'corte', tempo: 0.90, anim: 0.45, alcance: 80, folego: 5 },
+    tridente: { mov: 'estocada', tempo: 1.30, anim: 0.60, alcance: 110, folego: 7, duas: true },
+    picareta_guerra: { mov: 'machadada', tempo: 1.10, anim: 0.55, alcance: 75, folego: 6 },
+    martelo_guerra: { mov: 'machadada', tempo: 1.15, anim: 0.58, alcance: 78, folego: 7 },
+    chicote: { mov: 'corte', tempo: 0.90, anim: 0.50, alcance: 115, folego: 4 },
+    // armas-dnd>>
+
     // armas de longe (docs/PROJETEIS.md): acao = folha do boneco; proj = o que voa; mun = municao gasta (item da mochila);
     // alc = alcance normal (px do mundo; 1 passo do jogador ~ 76 px = 1,75 m); vel = px/s do projetil
     arco_curto:   { mov: 'tiro', acao: 'shoot_bow',   proj: 'flecha', mun: 'flecha', alc: 340, vel: 560, tempo: 1.00, anim: 1.00, alcance: 340, folego: 4 },
@@ -54,7 +78,9 @@
     machadinha: { alc: 260, vel: 480, giro: 1 },
     lanca:      { alc: 260, vel: 560, giro: 0 },
     azagaia:    { alc: 390, vel: 620, giro: 0 },
-    dardo:      { alc: 260, vel: 600, giro: 0 }
+    dardo:      { alc: 260, vel: 600, giro: 0 },
+    martelo_leve: { alc: 260, vel: 480, giro: 1 },
+    tridente:   { alc: 260, vel: 520, giro: 0 }
   };
   const ARREMESSO_FICHA = { tempo: 0.90, anim: 0.80, folego: 3 };
 

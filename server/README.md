@@ -45,7 +45,7 @@ npm run db:setup          # cria o banco "suritto" e aplica as migrações
 | `src/character_repo.js` | snapshot do personagem <-> tabelas `player.*` |
 | `scripts/import_blocks.js` | importa o JSON do Exportar |
 
-Rotas: `GET /api/health`, `GET|PUT /api/world/ground-items` (armas arremessadas caídas no chão), `GET|PUT /api/world/chunks`, `POST /api/world/chunks/merge`, `GET /api/world/settlements`,
+Rotas: `GET /api/health`, `GET|POST /api/world/ground-items` e `DELETE /api/world/ground-items/:id` (itens largados no chão), `GET|PUT /api/world/chunks`, `POST /api/world/chunks/merge`, `GET /api/world/settlements`,
 `PUT /api/world/settlements/:code`, `GET|PUT /api/characters/:nome`. Sem login ainda: realm `local`, conta `dev`.
 
 Os `code` das tabelas `ruleset` são os mesmos ids usados no JS (`woodcutting`, `sobrevivencia`, `wolf_pelt`...).
