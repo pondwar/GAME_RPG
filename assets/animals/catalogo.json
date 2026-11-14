@@ -1,15 +1,21 @@
 {
  "chicken": {
   "extra": "eat",
-  "v": 1
+  "dirs": 5,
+  "v": 5,
+  "extradirs": 5
  },
  "cow": {
   "extra": "eat",
-  "v": 1
+  "dirs": 5,
+  "v": 5,
+  "extradirs": 5
  },
  "sheep": {
   "extra": "eat",
-  "v": 1
+  "dirs": 5,
+  "v": 5,
+  "extradirs": 5
  },
  "pig": {
   "extra": "eat",
@@ -17,7 +23,9 @@
  },
  "horse": {
   "extra": "eat",
-  "v": 1
+  "dirs": 5,
+  "v": 3,
+  "extradirs": 5
  },
  "goat": {
   "extra": "eat",

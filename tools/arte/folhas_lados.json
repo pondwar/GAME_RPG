@@ -5,7 +5,7 @@
    "down_left": "espelhar"
   },
   "sentar": {
-   "left": "fonte_direita"
+   "left": "fonte_esquerda"
   },
   "andar": {
    "left": "fonte_esquerda"
@@ -14,19 +14,40 @@
    "left": "fonte_esquerda"
   },
   "abaixar": {
-   "left": "fonte_direita"
+   "left": "fonte_esquerda"
   },
   "espada": {
    "left": "fonte_esquerda"
   },
   "soco": {
-   "left": "fonte_direita"
+   "left": "fonte_esquerda"
   },
   "machado": {
-   "left": "fonte_direita"
+   "left": "fonte_esquerda"
   },
   "chute": {
    "left": "fonte_direita"
+  },
+  "estocada1": {
+   "left": "fonte_esquerda"
+  },
+  "estocada2": {
+   "left": "fonte_esquerda"
+  },
+  "arco": {
+   "left": "fonte_esquerda"
+  },
+  "besta2": {
+   "left": "fonte_esquerda"
+  },
+  "arremesso": {
+   "left": "fonte_esquerda"
+  },
+  "besta_mao": {
+   "left": "fonte_esquerda"
+  },
+  "funda": {
+   "left": "fonte_esquerda"
   }
  },
  "elfo": {

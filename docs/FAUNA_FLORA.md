@@ -1,5 +1,8 @@
 # Suritto: Fauna e Flora (projeto do ecossistema)
 
+> **REGRA DE OURO (obrigatória): tudo que se move, e toda ação, existe nas 8 direções** (baixo, cima, esquerda, direita e as 4 diagonais). Desenha-se 5 vistas da esquerda (frente, costas, lado, 3/4 frente, 3/4 costas) e o jogo espelha as 3 da direita. O objetivo é simular 3D com movimento fluido. Veja [REGRA_8_DIRECOES.md](REGRA_8_DIRECOES.md).
+
+
 Este documento é o plano de **quais animais e plantas existem em cada lugar do mundo**, por que, e o que cada um faz. A lista de **sprites a desenhar** (com prompts do Gemini) está em [`docs/arte/LISTA_SPRITES_FAUNA_FLORA.md`](arte/LISTA_SPRITES_FAUNA_FLORA.md).
 
 Nada aqui muda o código ainda. É o mapa para a gente seguir, pacote por pacote, do jeito que fizemos com o cervo e o lobo.

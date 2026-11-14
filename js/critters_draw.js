@@ -1535,6 +1535,8 @@
     const cf = ART.cat[kind], extra = cf.extra || 'eat', v = cf.v || 1;
     st = ART.sets[kind] = { extra, dirs: cf.dirs || 1, rows: {} };
     const names = st.dirs >= 5 ? ['down', 'up', 'left', 'down_left', 'up_left', extra] : ['left', extra];
+    st.extradirs = !!cf.extradirs;           // folha B: a acao tambem nas 5 vistas (<extra>_<direcao>)
+    if (st.extradirs) for (const d of ['down', 'up', 'left', 'down_left', 'up_left']) names.push(extra + '_' + d);
     for (const n of names) {
       st.rows[n] = [];
       for (let i = 0; i < 4; i++) { const im = new Image(); im.src = `assets/animals/${kind}_frames/${n}_${i}.png?v=${v}`; st.rows[n].push(im); }
@@ -1559,8 +1561,9 @@
     const st = artSet(e.kind); if (!st) return false;
     const doing = (st.extra === 'eat' && e.act === 'graze') || (st.extra === 'attack' && (e.act === 'charge' || e.act === 'pounce' || e.act === 'attack' || e.attacking)) || (st.extra === 'fly' && e.z > 4);
     let fc = e.hp === 0 ? { name: 'left', flip: e.direction === 'right' } : facing(e);     // caido (carcaca): sempre de lado
-    if (st.dirs < 5 || doing) fc = { name: 'left', flip: fc.name === 'left' ? fc.flip : (e._vx || 0) > 0 || (!e._vx && e.direction === 'right') };
-    const row = st.rows[doing ? st.extra : fc.name] || st.rows.left;
+    const acaoDirs = doing && st.extradirs && st.dirs >= 5 && e.hp !== 0;          // acao nas 5 vistas (folha B): vira para onde o bicho olha
+    if (st.dirs < 5 || (doing && !acaoDirs)) fc = { name: 'left', flip: fc.name === 'left' ? fc.flip : (e._vx || 0) > 0 || (!e._vx && e.direction === 'right') };
+    const row = st.rows[doing ? (acaoDirs ? st.extra + '_' + fc.name : st.extra) : fc.name] || st.rows[doing ? st.extra : 'left'] || st.rows.left;
     const img = row[(e.frameIndex || 0) % 4];
     if (!img || !img.complete || !img.naturalWidth) return false;
     const bw = e.width || 40, bh = e.height || 40, k = Math.min(bw / img.naturalWidth, bh / img.naturalHeight), w = img.naturalWidth * k, h = img.naturalHeight * k;   // cabe na caixa do bicho sem esticar

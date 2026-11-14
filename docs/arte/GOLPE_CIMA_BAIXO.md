@@ -1,5 +1,8 @@
 # Golpe de espada de cima para baixo (substitui o golpe "de sabre")
 
+> **REGRA DE OURO (obrigatória): tudo que se move, e toda ação, existe nas 8 direções** (baixo, cima, esquerda, direita e as 4 diagonais). Desenha-se 5 vistas da esquerda (frente, costas, lado, 3/4 frente, 3/4 costas) e o jogo espelha as 3 da direita. O objetivo é simular 3D com movimento fluido. Veja [REGRA_8_DIRECOES.md](../REGRA_8_DIRECOES.md).
+
+
 Problema: o vídeo atual sobe e avança na altura da cabeça, parece estocada/sabre.
 Correto (espada medieval): lâmina erguida ACIMA do ombro, desce em arco diagonal até o quadril oposto, depois volta.
 

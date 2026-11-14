@@ -26,7 +26,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'assets', 'player', 'racas')
-GOLPES = {'attack_1h', 'attack_2h', 'punch', 'kick'}
+GOLPES = {'attack_1h', 'attack_2h', 'thrust_1h', 'thrust_2h', 'punch', 'kick'}
 FRENTE = ('down', 'up')
 DIAG = ('down_right', 'down_left', 'up_right', 'up_left')
 # "para a frente" de um boneco na diagonal, na tela (x para o lado dele, y para baixo/cima): ~30 graus, encurtado
@@ -71,7 +71,8 @@ def medir(f, corpo, acao, d):
     #   de lado: o braco de perto (o maior, passa na frente do corpo);
     #   de frente, de costas e na diagonal: o lado da imagem onde fica a mao direita do personagem
     lado_img = LADO_MAO.get(d)
-    if acao == 'attack_1h' and d in ('left', 'right'): lado_img = -1 if d == 'left' else 1      # golpe de espada em 3/4: sempre o braco da mao direita (o que bate), nao o que fica caido
+    if acao in ('attack_1h', 'thrust_1h') and d in ('left', 'right'): lado_img = -1 if d == 'left' else 1      # golpe de espada em 3/4: sempre o braco da mao direita (o que bate), nao o que fica caido
+    if acao in GOLPES and d in ('down_left', 'down_right'): lado_img = -1 if d == 'down_left' else 1      # golpes na diagonal de frente (video 3/4): o braco que bate (mao direita) fica no lado ESQUERDO da imagem; a direita e o espelho
     if lado_img is None:
         i = max(comps, key=lambda i: st[i, cv2.CC_STAT_AREA])
     else:

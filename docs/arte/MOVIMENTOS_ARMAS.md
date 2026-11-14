@@ -1,5 +1,8 @@
 # Movimentos por arma (boneco SEM arma)
 
+> **REGRA DE OURO (obrigatória): tudo que se move, e toda ação, existe nas 8 direções** (baixo, cima, esquerda, direita e as 4 diagonais). Desenha-se 5 vistas da esquerda (frente, costas, lado, 3/4 frente, 3/4 costas) e o jogo espelha as 3 da direita. O objetivo é simular 3D com movimento fluido. Veja [REGRA_8_DIRECOES.md](../REGRA_8_DIRECOES.md).
+
+
 **Regra do Suritto:** toda arma nova começa pelo **movimento**. Primeiro desenhamos o boneco fazendo o golpe
 daquela arma, com as mãos vazias e fechadas no cabo invisível. Depois criamos o desenho da arma, e o jogo encaixa
 a arma na mão quadro a quadro. Assim cada arma tem um golpe só dela, e qualquer arma nova do mesmo tipo
@@ -20,20 +23,22 @@ Ordem de trabalho: **só o humano** até ficar completo. Depois as outras raças
 o cabelo ou a barba não estiverem verde chroma; o boneco estiver olhando para o lado errado; tiver mais de um boneco,
 texto, chão, sombra ou rastro de movimento.
 
-## Direções
+## Direções (OBRIGATÓRIO: as 8)
 
-Desenhamos 4 direções e o jogo espelha as outras, **igual ao andar** (assim a arma fica sempre na mesma mão
-andando e golpeando):
+**Todo golpe, de toda arma, precisa existir nas 8 direções.** Desenhamos 5 vistas (todas virando para a ESQUERDA) e o jogo
+espelha as 3 da direita, **igual ao andar** (assim a arma fica sempre na mesma mão andando e golpeando):
 
-| Desenhada | Espelhada pelo jogo |
+| Desenhada (vídeo/folha) | Espelhada pelo jogo |
 |---|---|
 | lado (perfil para a ESQUERDA, 90°) | direita (270°) |
 | frente (0°, baixo) | |
 | costas (180°, cima) | |
-| diagonal de frente para a esquerda | diagonal de frente para a direita |
-| diagonal de costas para a esquerda | diagonal de costas para a direita |
+| diagonal de frente para a esquerda (3/4 frente, 45°) | diagonal de frente para a direita (315°) |
+| diagonal de costas para a esquerda (3/4 costas, 135°) | diagonal de costas para a direita (225°) |
 
-Começamos sempre pelo **lado**. Quando você aprovar o golpe de lado rodando no jogo, fazemos as outras direções.
+Ordem de trabalho: **lado, frente, costas e depois as duas diagonais**. Uma arma só está pronta quando as 8 direções funcionam rodando no jogo.
+Não vale usar o golpe de lado numa diagonal (aparece sempre apontando para o mesmo canto). Até a arte 3/4 existir, a diagonal usa
+a folha de frente/costas, mas fica **anotada como pendência**.
 
 ## Catálogo de movimentos
 

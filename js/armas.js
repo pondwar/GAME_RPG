@@ -51,9 +51,9 @@
     martelo_guerra: A('Martelo de guerra', 'marcial', '1d8', 'impacto', 1, 15, { versatil: '1d10' }),
     chicote: A('Chicote', 'marcial', '1d4', 'corte', 1.5, 2, { acuidade: 1, alcance: 1 }),
     // ---- marciais a distancia ----
-    zarabatana: A('Zarabatana', 'marcial', '1', 'perfuracao', 0.5, 10, { municao: [7, 30], recarga: 1, distancia: 1 }),
+    // (zarabatana fora do jogo por decisao do dono: pouca gente usaria; a balestra e a besta pesada)
     besta_mao: A('Besta de mão', 'marcial', '1d6', 'perfuracao', 1.5, 75, { municao: [9, 36], leve: 1, recarga: 1, distancia: 1 }),
-    besta_pesada: A('Besta pesada', 'marcial', '1d10', 'perfuracao', 8, 50, { municao: [30, 120], pesada: 1, recarga: 1, duas_maos: 1, distancia: 1 }),
+    besta_pesada: A('Balestra (besta pesada)', 'marcial', '1d10', 'perfuracao', 8, 50, { municao: [30, 120], pesada: 1, recarga: 1, duas_maos: 1, distancia: 1 }),
     arco_longo: A('Arco longo', 'marcial', '1d8', 'perfuracao', 1, 50, { municao: [45, 180], pesada: 1, duas_maos: 1, distancia: 1 })
   };
 

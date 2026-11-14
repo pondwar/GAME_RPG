@@ -4,7 +4,9 @@
 # Folha NOVA (padrao): 4 colunas x 6 linhas = frente, costas, lado esquerdo, 3/4 frente esq., 3/4 costas esq., acao.
 #   O jogo espelha o lado esquerdo para fazer as 3 direcoes da direita (8 direcoes no total).
 # Folha ANTIGA: 4 colunas x 2 linhas (lado esquerdo + acao), use --2linhas.
-# Uso: python tools/arte/importar_animal.py <folha.png> <especie> [--fundo ciano] [--2linhas]
+# Folha B (acao nas 5 vistas, 4 colunas x 5 linhas): --acao-b. Entra como <acao>_<direcao>_<n>.png ao lado da folha A (importe a A primeiro);
+#   a escala e ajustada para o bicho ter o mesmo tamanho da folha A.
+# Uso: python tools/arte/importar_animal.py <folha.png> <especie> [--fundo ciano] [--2linhas] [--acao-b]
 import sys, os, json
 import numpy as np
 from PIL import Image
@@ -43,9 +45,10 @@ def maior_mancha(m, folga=3):
             sizes.append(cnt)
     return m & (lab == int(np.argmax(sizes)))
 H, W = fg.shape
-NL = 2 if '--2linhas' in sys.argv else 6
+ACAO_B = '--acao-b' in sys.argv
+NL = 5 if ACAO_B else (2 if '--2linhas' in sys.argv else 6)
 ch, cw = H // NL, W // 4
-NOMES = ['left', 'extra'] if NL == 2 else ['down', 'up', 'left', 'down_left', 'up_left', 'extra']
+NOMES = ['left', 'extra'] if NL == 2 else (['down', 'up', 'left', 'down_left', 'up_left'] if NL == 5 else ['down', 'up', 'left', 'down_left', 'up_left', 'extra'])
 cells = []                                                       # (linha, coluna, mascara, rgb)
 for r in range(NL):
     for c in range(4):
@@ -56,6 +59,29 @@ for r in range(NL):
         out = np.dstack([rgb, al * 255]).astype('uint8'); out[~al] = 0
         img = Image.fromarray(out, 'RGBA'); bb = img.getbbox()
         cells.append((r, c, img.crop(bb) if bb else img))
+if ACAO_B:
+    extra = D[kind][0] if kind in D else 'eat'
+    outd = os.path.join(root, 'assets', 'animals', kind + '_frames')
+    ref = [np.asarray(Image.open(os.path.join(outd, f'left_{i}.png'))) for i in range(4)]
+    refw = float(np.median([np.ptp((r[..., 3] > 0).any(0).nonzero()[0]) + 1 for r in ref])); TW, TH = Image.open(os.path.join(outd, 'left_0.png')).size
+    lw = float(np.median([q.width for r, c, q in cells if r == 2]))          # linha 3 = lado
+    k = refw / lw
+    # escala POR VISTA: a area do bicho na acao fica na mesma proporcao da area dele andando em todas as vistas
+    # (o Gemini desenha cada linha num tamanho; sem isso o bicho muda de tamanho ao comecar a comer)
+    areaA = {n: float(np.median([(np.asarray(Image.open(os.path.join(outd, f'{n}_{i}.png')))[..., 3] > 0).sum() for i in range(4)])) for n in NOMES}
+    areaB = {NOMES[r]: float(np.median([(np.asarray(q)[..., 3] > 0).sum() for rr, c, q in cells if rr == r])) for r in range(5)}
+    t = (k * k) * areaB['left'] / areaA['left']
+    ks = {n: ((t * areaA[n] / areaB[n]) ** 0.5) for n in NOMES}
+    print('escala por vista:', {n: round(v, 2) for n, v in ks.items()})
+    for r, c, q in cells:
+        kk = ks[NOMES[r]]; kk = min(kk, TW / q.width, TH / q.height)
+        q = q.resize((max(1, round(q.width * kk)), max(1, round(q.height * kk))), Image.NEAREST)
+        tela = Image.new('RGBA', (TW, TH), (0, 0, 0, 0)); tela.alpha_composite(q, ((TW - q.width) // 2, TH - q.height))
+        tela.save(os.path.join(outd, f'{extra}_{NOMES[r]}_{c}.png'))
+    cp = os.path.join(root, 'assets', 'animals', 'catalogo.json'); cat = json.load(open(cp, encoding='utf-8'))
+    cat[kind]['extradirs'] = 5; cat[kind]['v'] = cat[kind].get('v', 0) + 1
+    json.dump(cat, open(cp, 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
+    print(kind, 'folha B importada: acao', extra, 'em 5 vistas, escala', round(k, 2)); sys.exit(0)
 # tela comum a todos os quadros (pes embaixo, centrado): o bicho nao "pula" nem muda de escala entre vistas
 TW = max(q.width for _, _, q in cells); TH = max(q.height for _, _, q in cells)
 extra = D[kind][0] if kind in D else 'eat'

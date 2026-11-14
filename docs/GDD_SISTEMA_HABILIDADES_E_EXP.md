@@ -1,4 +1,7 @@
 # 📜 GDD — Sistema de Habilidades, Interdependência & Escalabilidade de EXP
+
+> **REGRA DE OURO (obrigatória): tudo que se move, e toda ação, existe nas 8 direções** (baixo, cima, esquerda, direita e as 4 diagonais). Desenha-se 5 vistas da esquerda (frente, costas, lado, 3/4 frente, 3/4 costas) e o jogo espelha as 3 da direita. O objetivo é simular 3D com movimento fluido. Veja [REGRA_8_DIRECOES.md](REGRA_8_DIRECOES.md).
+
 **Projeto**: Suritto RPG  
 **Versão**: 3.0 (Gamer Architecture Edition)  
 **Inspirações Centrais**: RuneScape (Progressão Orgânica), Tormenta20 / D&D 5e (Perícias e Testes D20), Lineage 2 (Encantamento de Armas +16) e Tibia/ArcheAge (Habitação e Terrenos).

@@ -1,0 +1,24 @@
+Crie UMA folha de sprites de um animal, em pixel art de RPG isométrico (câmera levemente de cima, como nos RPGs de mapa), estilo limpo e simples (menos detalhe que um personagem humano), no mesmo estilo e com o MESMO animal da folha de andar anexada (mesmo tamanho, mesmas cores e proporções).
+
+ANIMAL: {desc}.
+
+ESTA É A FOLHA DA AÇÃO. O animal precisa fazer a ação nas 8 direções do jogo; desenhamos 5 vistas da esquerda e o jogo espelha as da direita.
+
+FORMATO DA IMAGEM: proporção {ratio}. Grade exata de 4 colunas por 5 linhas = 20 quadros, todos do MESMO tamanho de célula, em grade uniforme, sem moldura e sem números. Cada quadro é uma célula de {cw} x {ch} pixels (a imagem toda tem cerca de {iw} x {ih} pixels).
+
+TAMANHO DO ANIMAL: em vista de lado ele ocupa cerca de {aw} x {ah} pixels dentro da célula, centrado, com as patas apoiadas na MESMA linha do chão em todos os quadros da mesma linha. Nada é cortado nas bordas da célula. O animal tem o MESMO tamanho nas 5 linhas.
+
+AÇÃO: {extra}
+
+LINHAS (todas com os 4 quadros da ação, na ordem):
+ Linha 1: ação DE FRENTE para quem vê (a cabeça virada para a câmera, olhando para baixo na tela).
+ Linha 2: ação DE COSTAS (de costas para a câmera, olhando para cima na tela).
+ Linha 3: ação DE LADO, perfil olhando para a ESQUERDA.
+ Linha 4: ação em 3/4 DE FRENTE virado para a ESQUERDA (vemos a frente e o lado esquerdo do animal, virado para baixo e para a esquerda).
+ Linha 5: ação em 3/4 DE COSTAS virado para a ESQUERDA (vemos as costas e o lado esquerdo do animal, virado para cima e para a esquerda).
+
+ESTILO: contorno escuro fino (marrom bem escuro, não preto), 3 tons por cor, luz vindo de cima e da esquerda em TODAS as linhas, cores naturais. Sem sombra no chão. Sem texto.
+
+FUNDO: {fundo} em toda a imagem, sem degradê, sem chão.
+
+O MESMO animal em todos os 20 quadros.

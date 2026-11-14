@@ -213,6 +213,20 @@ class Game {
       this.addLog('💾 Progresso carregado: personagem, skills e mochila restaurados.', 'system');
     }
 
+    // MODO TESTE DE ARMAS: abrir o jogo com ?testearmas=1 num personagem de teste ("<raca>-pondwar") troca a mochila pelas armas prontas.
+    // Nunca vale para "Aventureiro" nem "Pondwar". Sem o ?testearmas=1 nada muda.
+    try {
+      const nomeT = (window.SurittoServer && window.SurittoServer.charName) || '';
+      if (/[?&]testearmas=1/.test(location.search) && /^[a-z_]+-pondwar$/i.test(nomeT)) {
+        const ids = ['sword', 'axe', 'machadinha', 'clava', 'adaga', 'espada_curta', 'lanca', 'arco_curto', 'arco_longo', 'besta_leve', 'besta_pesada', 'besta_mao', 'funda'].filter((id) => this.inventory.itemDB[id]);
+        const mun = [['flecha', 60], ['virote', 60], ['pedra', 60]].filter((m) => this.inventory.itemDB[m[0]]);
+        this.inventory.slots = new Array(this.inventory.maxSlots).fill(null).map((_, i) => (ids[i] ? { id: ids[i], count: 1 } : (mun[i - ids.length] ? { id: mun[i - ids.length][0], count: mun[i - ids.length][1] } : null)));
+        this.inventory.renderUI();
+        this.addLog('⚔️ Modo teste de armas: a mochila agora tem só as armas prontas.', 'system');
+        this.saveSystem.save();
+      }
+    } catch (e) { console.warn('testearmas', e); }
+
     // Start game loop
     requestAnimationFrame((t) => this.loop(t));
   }
@@ -568,6 +582,7 @@ class Game {
   toggleSit() {
     this.player.isSitting = !this.player.isSitting;
     if (this.player.isSitting) {
+      this.player.sitStart = performance.now();
       this.player.moveTarget = null;
       this.player.vx = 0;
       this.player.vy = 0;
@@ -688,6 +703,16 @@ class Game {
     const falta = (p.proxAtaque || 0) - agora;
     if (falta > 0) { if (falta < 0.35) p.ataqueNaFila = true; return; }
     p.ataqueNaFila = false;
+    if (f.mov === 'tiro') {       // arma de longe gasta 1 municao da mochila por disparo
+      const si = this.inventory.slots.findIndex(sl => sl && sl.id === f.mun);
+      if (si < 0) {
+        p.proxAtaque = agora + 0.8;
+        const nm = this.inventory.itemDB[f.mun] ? this.inventory.itemDB[f.mun].name : f.mun;
+        this.addLog(`⚠️ Sem munição: você precisa de ${nm} na mochila.`, 'warning');
+        return;
+      }
+      this.inventory.removeItem(si, 1);
+    }
     p.proxAtaque = agora + f.tempo * (p.isExhausted ? 1.5 : 1);     // sem folego: golpes mais lentos
 
     p.stamina = Math.max(0, p.stamina - f.folego);
@@ -714,25 +739,134 @@ class Game {
     if (window.sounds) window.sounds.playSwordSlash(Math.max(0.7, Math.min(1.4, 1.5 - f.tempo * 0.5)));
   }
 
+  // ---- Armas de longe (docs/PROJETEIS.md): flecha, virote e pedra voam na direcao da mira (qualquer angulo = as 8 direcoes e mais)
+  dispararProjetil() {
+    const C = window.SurittoCombate, p = this.player, f = C.ficha(p.equippedWeapon);
+    const a = p.facingAngle || 0;
+    (this.projeteis = this.projeteis || []).push({ x: p.x + Math.cos(a) * 16, y: p.y + Math.sin(a) * 16, a, v: f.vel, ja: 0, max: f.alc, tipo: f.proj, w: p.equippedWeapon, vivo: true, fim: 0 });
+    if (window.sounds && window.sounds.playSwordSlash) window.sounds.playSwordSlash(1.4);
+  }
+
+  atualizarProjeteis(dt) {
+    if (!this.projeteis || !this.projeteis.length) return;
+    const p = this.player;
+    const wrap = (dx) => (this.world ? this.world.wrapDelta(dx) : dx);
+    const perto = (x, y, r) => {          // ha um bicho ao alcance desse ponto?
+      for (const l of this.wolves) if (Math.hypot(wrap(x - l.x), y - l.y) < r) return true;
+      for (const d of this.deers) if (Math.hypot(wrap(x - d.x), y - d.y) < r) return true;
+      for (const c of this.critters) if (Math.hypot(wrap(x - c.x), y - c.y + (c.z || 0)) < r + (c.kind === 'bear' ? 10 : 0)) return true;
+      return false;
+    };
+    for (const q of this.projeteis) {
+      if (q.vivo) {
+        let passo = q.v * dt;
+        while (passo > 0 && q.vivo) {                  // passos curtos: nao atravessa bicho pequeno
+          const s = Math.min(passo, 8); passo -= s;
+          q.x += Math.cos(q.a) * s; q.y += Math.sin(q.a) * s; q.ja += s;
+          if (perto(q.x, q.y, 18)) {
+            const wAnt = p.equippedWeapon;
+            p.equippedWeapon = q.w;                    // a rolagem usa a arma que atirou, mesmo se trocou depois
+            this.resolverGolpe({ x: q.x, y: q.y, r: 18 });
+            p.equippedWeapon = wAnt;
+            q.vivo = false; q.fim = 0.25;              // fica um instante cravado
+          } else if (q.ja >= q.max) { q.vivo = false; q.fim = 0.6; }
+        }
+      } else q.fim -= dt;
+    }
+    this.projeteis = this.projeteis.filter(q => q.vivo || q.fim > 0);
+  }
+
+  drawProjetil(ctx, q, sx, sy) {
+    const al = 34;                                  // altura do peito: o projetil voa acima do chao
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(sx, sy, 5, 2, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = q.vivo ? 1 : Math.min(1, Math.max(0, q.fim / 0.25));
+    ctx.translate(sx, sy - (q.vivo ? al : al * 0.5)); ctx.rotate(q.a);
+    if (q.tipo === 'pedra') {
+      ctx.fillStyle = '#8d8d96'; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(0, 0, 3.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    } else {
+      const L = q.tipo === 'virote' ? 13 : 22;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#301028'; ctx.lineWidth = 3.4; ctx.beginPath(); ctx.moveTo(-L / 2, 0); ctx.lineTo(L / 2, 0); ctx.stroke();
+      ctx.strokeStyle = '#a8764a'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(-L / 2, 0); ctx.lineTo(L / 2, 0); ctx.stroke();
+      ctx.fillStyle = '#c8ccd6'; ctx.beginPath(); ctx.moveTo(L / 2 + 4, 0); ctx.lineTo(L / 2 - 2, -2.4); ctx.lineTo(L / 2 - 2, 2.4); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = q.tipo === 'virote' ? '#6b4a2b' : '#e8e0d0'; ctx.lineWidth = 1.4;      // penas
+      ctx.beginPath(); ctx.moveTo(-L / 2 + 3, 0); ctx.lineTo(-L / 2 - 1, -2.6); ctx.moveTo(-L / 2 + 3, 0); ctx.lineTo(-L / 2 - 1, 2.6); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // Arco, besta e funda na mao do boneco (desenhados por codigo, girados para o lado da mira; a mao vem do quadro medido)
+  drawArmaDeTiro(ctx, drawX, drawY, targetW, targetH, socket) {
+    if (!socket) return;
+    const p = this.player, C = window.SurittoCombate, w = p.equippedWeapon, f = C.ficha(w);
+    const rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
+    const hx = drawX + targetW * socket.x, hy = drawY + targetH * socket.y;
+    const atk = p.isAttacking && p.attackDuration > 0;
+    const prog = atk ? 1 - p.attackTimer / p.attackDuration : -1;
+    const solta = (C.TEMPOS.tiro || {}).bate || 0.62;
+    const a = atk ? (p.facingAngle || 0) : Math.PI / 2;             // parado: a arma fica na vertical, na mao
+    const ax = Math.cos(a), ay = Math.sin(a), nx = -ay, ny = ax;
+    const k = rsc * (w === 'besta_mao' ? 0.62 : 1);
+    const pt = (x, y, t, u) => [x + ax * t + nx * u, y + ay * t + ny * u];
+    const linha = (pts, cor, lw) => {
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#301028'; ctx.lineWidth = lw + 2; ctx.beginPath(); pts.forEach((q, i) => (i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke();
+      ctx.strokeStyle = cor; ctx.lineWidth = lw; ctx.beginPath(); pts.forEach((q, i) => (i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke();
+    };
+    ctx.save();
+    if (f.proj === 'flecha') {                                    // arco
+      const L = (w === 'arco_longo' ? 24 : 18) * k, B = 6 * k;
+      const puxa = prog < 0 ? 0 : (prog < solta * 0.75 ? prog / (solta * 0.75) : (prog < solta ? 1 : Math.max(0, 1 - (prog - solta) * 8)));
+      const P = pt(hx, hy, -9 * k * puxa, 0);                     // onde a mao de tras puxa a corda
+      const tA = pt(hx, hy, -2 * k, -L), tB = pt(hx, hy, -2 * k, L), mid = pt(hx, hy, B, 0);
+      ctx.strokeStyle = '#301028'; ctx.lineWidth = 4.2; ctx.beginPath(); ctx.moveTo(tA[0], tA[1]); ctx.quadraticCurveTo(mid[0] + ax * B, mid[1] + ay * B, tB[0], tB[1]); ctx.stroke();
+      ctx.strokeStyle = '#8a5a34'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(tA[0], tA[1]); ctx.quadraticCurveTo(mid[0] + ax * B, mid[1] + ay * B, tB[0], tB[1]); ctx.stroke();
+      ctx.strokeStyle = '#e8e0d0'; ctx.lineWidth = 0.9; ctx.beginPath(); ctx.moveTo(tA[0], tA[1]); ctx.lineTo(P[0], P[1]); ctx.lineTo(tB[0], tB[1]); ctx.stroke();
+      if (atk && prog < solta) { const f1 = pt(hx, hy, 14 * k, 0); linha([P, f1], '#a8764a', 1.3); }   // flecha encaixada
+    } else if (f.proj === 'virote') {                              // besta (2 maos ou de mao)
+      const T = (w === 'besta_mao' ? 11 : w === 'besta_pesada' ? 18 : 15) * k, LB = (w === 'besta_mao' ? 8 : 12) * k;
+      const recua = (atk && prog > solta) ? Math.max(0, 1 - (prog - solta) * 6) * 2 : 0;
+      linha([pt(hx, hy, -T * 0.7, 0), pt(hx, hy, T, 0)], w === 'besta_pesada' ? '#5c4a3a' : '#8a5a34', 3.2 * k);   // coronha e trilho
+      const tA = pt(hx, hy, T * 0.85, -LB), tB = pt(hx, hy, T * 0.85, LB), me = pt(hx, hy, T * 0.85 + 4 * k, 0);
+      linha([tA, me, tB], '#6b4a2b', 2.2 * k);
+      const sc = pt(hx, hy, T * 0.85 - 3 * k * (prog >= 0 && prog < solta ? 1 : 0) - recua, 0);
+      ctx.strokeStyle = '#e8e0d0'; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.moveTo(tA[0], tA[1]); ctx.lineTo(sc[0], sc[1]); ctx.lineTo(tB[0], tB[1]); ctx.stroke();
+      if (atk && prog < solta) { const b0 = pt(hx, hy, 0, 0), b1 = pt(hx, hy, T * 0.9, 0); linha([b0, b1], '#c8ccd6', 1.4); }   // virote no trilho
+    } else if (f.proj === 'pedra' && atk && prog < solta) {        // funda: a pedra gira acima da cabeca
+      const t = performance.now() * 0.03, rr = 13 * k, cx = hx, cy = hy - 20 * k;
+      const sx = cx + Math.cos(t) * rr, sy = cy + Math.sin(t) * rr * 0.45;
+      linha([[hx, hy], [cx, cy], [sx, sy]], '#a8764a', 1.1);
+      ctx.fillStyle = '#8d8d96'; ctx.beginPath(); ctx.arc(sx, sy, 3, 0, Math.PI * 2); ctx.fill();
+    } else if (f.proj === 'pedra') {                               // funda parada: so a tira pendurada na mao
+      linha([[hx, hy], [hx + ax * 3, hy + 9 * k]], '#a8764a', 1.1);
+    }
+    ctx.restore();
+  }
+
   // O golpe chegou: arvore (machado), lobo, cervo ou bicho ao alcance. Rolagem pela ficha D&D (js/combate.js)
-  resolverGolpe() {
+  resolverGolpe(origem) {
     const C = window.SurittoCombate, p = this.player, w = p.equippedWeapon, f = C.ficha(w);
+    if (f.mov === 'tiro' && !origem) { this.dispararProjetil(); return; }      // arma de longe: no instante do disparo sai o projetil; o dano vem quando ele acerta
     const isFiery = w === 'fire_sword';
-    const dist = (x, y) => Math.hypot(this.world ? this.world.wrapDelta(p.x - x) : (p.x - x), p.y - y);
+    // origem = ponto onde o projetil acertou ({x, y, r}); sem ela, o golpe parte do jogador com o alcance da arma
+    const o = origem || p, alc = origem ? origem.r : f.alcance;
+    const dist = (x, y) => Math.hypot(this.world ? this.world.wrapDelta(o.x - x) : (o.x - x), o.y - y);
 
     // faiscas do golpe, na direcao do ataque
     const pColor = isFiery ? (Math.random() > 0.4 ? '#ff6b6b' : '#ffa94d') : '#74c0fc';
     for (let i = 0; i < 6; i++) {
       const pAngle = (p.facingAngle || 0) + (Math.random() - 0.5) * (f.mov === 'estocada' ? 0.4 : 1.5);
       const pDist = 25 + Math.random() * 35;
-      this.particles.push({ x: p.x + Math.cos(pAngle) * pDist, y: p.y - 15 + Math.sin(pAngle) * pDist,
+      this.particles.push({ x: (origem ? o.x : p.x + Math.cos(pAngle) * pDist), y: (origem ? o.y - 20 : p.y - 15 + Math.sin(pAngle) * pDist),
         vx: Math.cos(pAngle) * 90, vy: Math.sin(pAngle) * 90, life: 0.3, maxLife: 0.3, color: pColor, size: Math.random() * 3 + 1.5 });
     }
 
     // machado na arvore: corta lenha (sem rolagem)
-    if (w === 'axe' || w === 'machadinha') {
+    if (!origem && (w === 'axe' || w === 'machadinha')) {
       for (const tree of this.trees) {
-        if (dist(tree.x + tree.trunkOffset.x, tree.y + tree.trunkOffset.y) < Math.max(95, f.alcance)) {
+        if (dist(tree.x + tree.trunkOffset.x, tree.y + tree.trunkOffset.y) < Math.max(95, alc)) {
           this.chopTreeForWood(tree);
           return;
         }
@@ -748,7 +882,7 @@ class Game {
     // Lobos (Defesa 13, como no D&D)
     for (let i = this.wolves.length - 1; i >= 0; i--) {
       const wf = this.wolves[i];
-      if (dist(wf.x, wf.y) >= f.alcance) continue;
+      if (dist(wf.x, wf.y) >= alc) continue;
       const r = C.rolar(p, w, 13);
       mostrar(wf, r);
       if (!r.acertou) { this.addLog(`O lobo se esquivou! (${r.texto})`, 'warning'); return; }
@@ -774,7 +908,7 @@ class Game {
     // Cervos (Defesa 10): um golpe que acerta abate
     for (let i = this.deers.length - 1; i >= 0; i--) {
       const d = this.deers[i];
-      if (dist(d.x, d.y) >= f.alcance - 10) continue;
+      if (dist(d.x, d.y) >= alc - (origem ? 0 : 10)) continue;
       const r = C.rolar(p, w, 10);
       mostrar(d, r);
       if (!r.acertou) return;
@@ -795,8 +929,8 @@ class Game {
     const DEFESA = { rabbit: 13, fox: 13, boar: 11, bear: 11, crow: 12 };       // D&D 5e (urso pardo 11)
     for (let i = this.critters.length - 1; i >= 0; i--) {
       const c = this.critters[i];
-      const cdx = this.world ? this.world.wrapDelta(p.x - c.x) : (p.x - c.x);
-      if (Math.hypot(cdx, p.y - c.y + (c.z || 0)) > f.alcance + (c.kind === 'bear' ? 10 : 0)) continue;
+      const cdx = this.world ? this.world.wrapDelta(o.x - c.x) : (o.x - c.x);
+      if (Math.hypot(cdx, o.y - c.y + (c.z || 0)) > alc + (c.kind === 'bear' ? 10 : 0)) continue;
       const name = (window.CritterArt && window.CritterArt.names[c.kind]) || c.kind;
       const r = C.rolar(p, w, DEFESA[c.kind] || (FS[c.kind] && FS[c.kind].ac) || 12);
       mostrar(c, r);
@@ -861,7 +995,7 @@ class Game {
           this.skills.addXP('sobrevivencia', 8);
         }
         this.spawnDamageText(tx, ty - 32, '+1 Cogumelo Silvestre 🍄', '#ffd43b', 15);
-        if (window.sounds) window.sounds.playHarvest();
+        if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
         this.addLog(`🍄 Você colheu um cogumelo fresco que brotou no toco úmido do carvalho!`, 'action');
         this.updateHUD();
       } else {
@@ -1049,7 +1183,7 @@ class Game {
       });
     }
 
-    if (window.sounds) window.sounds.playHarvest();
+    if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
     if (this.skills) {
       this.skills.addXP('construction', 35);
       this.skills.addXP('sobrevivencia', 15);
@@ -1412,7 +1546,7 @@ class Game {
       life: 180
     });
 
-    if (window.sounds) window.sounds.playHarvest();
+    if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
     this.addLog(`🍎 Você jogou ${(this.inventory.itemDB[baitItem] || {}).name || 'um fruto'} no chão como isca! Cervos próximos vão farejar o aroma.`, 'action');
     this.updateHUD();
   }
@@ -1581,7 +1715,7 @@ class Game {
               if (hideId && !(c.kind === 'rabbit' || c.kind === 'fox' || c.kind === 'bear') ) this.inventory.addItem(hideId, 1);
               c.stage = 1;
               c.timer = 0;
-              if (window.sounds) window.sounds.playHarvest();
+              if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
               this.addLog(`🥩 Você esfolou a carcaça com maestria! (+${meatGain} Carnes de Caça${hideId && !(c.kind === 'rabbit' || c.kind === 'fox' || c.kind === 'bear') ? ', +1 Couro' : ''} guardados na Mochila)!`, 'action');
             } else {
               this.inventory.addItem('meat', 1);
@@ -1613,7 +1747,7 @@ class Game {
           const gotH = this.fauna.takePlant(p, 0.1), nH = Math.max(1, Math.round(3 * gotH)), idH = (p.set === 1 ? ['boldo', 'lemongrass', 'guaco'] : ['chamomile', 'mint', 'sage'])[Math.floor(p.seed * 3) % 3];
           this.inventory.addItem(idH, nH);
           if (this.skills) this.skills.addXP('hunter', 3);
-          if (window.sounds) window.sounds.playHarvest();
+          if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
           this.addLog(`🌿 Você colheu ${nH} ${window.CritterArt.herbName(p)}.`, 'action');
           this.updateHUD();
           return;
@@ -1623,7 +1757,7 @@ class Game {
         const n = p.kind === 'bush' ? Math.max(1, Math.round(4 * got)) : Math.max(1, Math.round(3 * got));
         this.inventory.addItem(p.kind === 'bush' ? 'berries' : 'mushroom', n);
         if (this.skills) this.skills.addXP('hunter', 3);
-        if (window.sounds) window.sounds.playHarvest();
+        if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
         this.addLog(p.kind === 'bush' ? `🫐 Você colheu ${n} punhado(s) de frutinhas do arbusto.` : `🍄 Você colheu ${n} cogumelo(s).`, 'action');
         this.updateHUD();
         return;
@@ -1671,7 +1805,7 @@ class Game {
         this.fruitsOnGround.splice(i, 1);
         const fi = f.item || 'fruit', fname = (this.inventory.itemDB[fi] || {}).name || 'Fruto Silvestre';
         this.inventory.addItem(fi, 1);
-        if (window.sounds) window.sounds.playHarvest();
+        if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
         this.addLog(`🧺 Você colheu 1 ${fname} do chão!`, 'action');
         this.updateHUD();
         return;
@@ -1698,7 +1832,7 @@ class Game {
           nearestTree.mushrooms = 0;
           this.inventory.addItem('fruit', 1);
           this.spawnDamageText(nearestTree.x, nearestTree.y + nearestTree.trunkOffset.y - 30, '+1 Cogumelo Silvestre 🍄', '#ffd43b', 15);
-          if (window.sounds) window.sounds.playHarvest();
+          if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
           this.addLog(`🍄 Você colheu um cogumelo fresco que brotou no toco do carvalho!`, 'action');
           this.updateHUD();
         } else {
@@ -1826,6 +1960,7 @@ class Game {
     }
 
     // Jump Physics Arc
+    if (this.player.gatherT > 0) this.player.gatherT -= dt;      // abaixar para colher (folha 'gather')
     if (this.player.isJumping) {
       this.player.jumpProgress += dt / this.player.jumpDuration;
       this.player.jumpOffset = Math.sin(Math.min(1, this.player.jumpProgress) * Math.PI) * 22;
@@ -2112,7 +2247,7 @@ class Game {
         this.fruitsOnGround.splice(i, 1);
         const fi2 = f.item || 'fruit', fname2 = (this.inventory.itemDB[fi2] || {}).name || 'Fruto';
         this.inventory.addItem(fi2, 1);
-        if (window.sounds) window.sounds.playHarvest();
+        if (window.sounds) window.sounds.playHarvest(); this.player.gatherT = 0.7;
         this.addLog(`🍎 ${fname2} colhido automaticamente do solo!`, 'action');
         this.updateHUD();
       }
@@ -2128,6 +2263,7 @@ class Game {
         if (g && !g.feito) { g.feito = true; this.resolverGolpe(); }
       }
     }
+    this.atualizarProjeteis(dt);
     // golpe guardado (clicou antes da hora) ou botao segurado: ataca de novo assim que a arma deixar
     if ((this.player.ataqueNaFila || (this.mouse.isLeftDown && this.player.segurandoAtaque)) &&
         performance.now() / 1000 >= (this.player.proxAtaque || 0)) {
@@ -2454,6 +2590,11 @@ class Game {
         if (Math.abs(px) > 900 || Math.abs(p.y - this.camera.y) > 700) continue;
         renderList.push({ type: 'plant', x: px, y: p.y, draw: () => window.CritterArt.plant(ctx, p, Math.round(px + screenCenterX), Math.round(p.y - this.camera.y + screenCenterY), this.fauna.plantLevel(p)) });
       }
+    }
+
+    // Flechas, virotes e pedras em voo
+    for (const q of (this.projeteis || [])) {
+      renderList.push({ type: 'proj', x: relX(q.x), y: q.y, draw: () => this.drawProjetil(ctx, q, Math.round(relX(q.x) + screenCenterX), Math.round(q.y - this.camera.y + screenCenterY)) });
     }
 
     // Wolves
@@ -2853,20 +2994,31 @@ class Game {
     // Boneco da raca (aldeao, com as cores da criacao, tools/arte/importar_folhas.py). Cada acao usa a folha dela
     // quando a raca ja tem; sem a folha, usa o parado da mesma direcao. Correr usa o andar.
     const rs = this.images.raca;
-    let avancoGolpe = 0, estocando = 0;          // estocada: o corpo avanca e a arma aponta reto para a frente
+    let avancoGolpe = 0, estocando = 0, estocadaProfunda = false;   // estocadaProfunda: estocada de frente/costas/diagonal (a arma aponta para a camera ou para longe: encurtada)
+              // estocada: o corpo avanca e a arma aponta reto para a frente
     if (rs && rs.idle) {
       const d8 = this.player.dir8;                   // diagonal, quando a raca ja tem a folha dela
       const pick = (acao, d) => (rs[acao] && ((d === dir && d8 && rs[acao][d8]) || rs[acao][d] || rs[acao].down)) || null;
       const lado = (acao) => (rs[acao] && rs[acao][sideDir]) || null;
+      // REGRA DAS 8 DIRECOES (docs/REGRA_8_DIRECOES.md): cada acao usa a folha da direcao exata (dir8) quando a raca ja tem; so se faltar cai no lado/frente/costas
+      const via8 = (acao) => (rs[acao] && this.player.dir8 && rs[acao][this.player.dir8]) || null;
       const parado = pick('idle', (dir === 'up' || dir === 'down') ? dir : sideDir);
       let set = null, idx = 0;
-      if (isSit) { set = (rs.sit && (rs.sit[dir] || rs.sit[sideDir] || rs.sit.down)) || parado; }
+      if (isSit) {
+        set = via8('sit') || (rs.sit && (rs.sit[dir] || rs.sit[sideDir] || rs.sit.down)) || parado;
+        if (set && set.length >= 7) { const st = (performance.now() - (this.player.sitStart || 0)) / 1000; idx = st < 0.5 ? Math.floor(st / 0.5 * 4) : 4 + (Math.floor(st * 2.5) % (set.length - 4)); }   // senta (4 quadros) e respira
+      }
       else if (jumpOff > 0 || this.player.isJumping) {
-        set = lado('jump');
+        set = via8('jump') || ((dir === 'up' || dir === 'down') && rs.jump && rs.jump[dir]) || lado('jump');
         const prog = this.player.jumpProgress || 0;
         // folha do pulo: 0 = agachado (impulso), 1 = esticado no ar. Os outros quadros sao agachados encolhidos
         // e pareciam um anao no ar: agacha so no comeco e no fim, o voo todo e o esticado
         idx = (set && set.length > 1 && prog > 0.15 && prog < 0.85) ? 1 : 0;
+        if (set && set.length >= 7) idx = Math.min(set.length - 1, Math.floor(Math.min(1, prog) * set.length));      // folha de video: todos os quadros, do impulso ao pouso
+        set = set || parado;
+      } else if (this.player.gatherT > 0 && rs.gather && !this.player.isMoving && !this.player.isAttacking) {
+        set = via8('gather') || ((dir === 'up' || dir === 'down') && rs.gather[dir]) || lado('gather');
+        if (set && set.length) idx = Math.min(set.length - 1, Math.floor((1 - this.player.gatherT / 0.7) * set.length));
         set = set || parado;
       } else if (this.player.isAttacking) {
         // movimento da arma (js/combate.js): machadada = golpe de cima (folha do machado, de duas maos);
@@ -2874,13 +3026,17 @@ class Game {
         const w = this.player.equippedWeapon, C = window.SurittoCombate, mov = C.ficha(w).mov;
         const f = sideDir === 'left' ? -1 : 1;
         // golpe de espada para baixo/cima usa a folha de frente/costas quando a raca tem (humano); senao a de lado
-        const frenteCosta = (acao) => ((dir === 'up' || dir === 'down') && rs[acao] && rs[acao][dir]) || null;
-        const corte1h = () => frenteCosta('attack_1h') || lado('attack_1h');
-        set = mov === 'machadada' ? (lado('attack_2h') || corte1h())
-          : mov === 'estocada' ? ((w === 'lanca' && lado('attack_2h')) || corte1h())
-          : mov === 'soco' ? (lado('punch') || corte1h()) : corte1h();
+        // diagonais (cima/baixo + esquerda/direita) usam a folha de costas/frente: o golpe de cima para baixo aparece certo, em vez do de lado
+        const d8g = this.player.dir8 || '', vg = (dir === 'up' || dir === 'down') ? dir : (d8g.startsWith('down_') ? 'down' : d8g.startsWith('up_') ? 'up' : null);
+        const frenteCosta = (acao) => (vg && rs[acao] && rs[acao][vg]) || null;
+        const forma = (acao) => via8(acao) || frenteCosta(acao) || lado(acao);       // folha da acao na direcao do golpe (frente/costas ou lado)
+        const corte1h = () => forma('attack_1h');
+        set = mov === 'machadada' ? (forma('attack_2h') || corte1h())
+          : mov === 'estocada' ? ((w === 'lanca' ? (forma('thrust_2h') || lado('attack_2h')) : forma('thrust_1h')) || corte1h())
+          : mov === 'soco' ? (forma('punch') || corte1h())
+          : mov === 'tiro' ? (forma(C.ficha(w).acao) || corte1h()) : corte1h();
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
-        if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w ? f : 0; }
+        if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w && (dir === 'left' || dir === 'right') && !(this.player.dir8 || '').includes('_') ? f : 0; estocadaProfunda = !!(q.estocando && w && !estocando); }
         if (!set || idx < 0) { set = parado; idx = 0; }   // antes e depois do golpe: a guarda (boneco parado)
       } else if (this.player.isMoving) { set = pick('walk', dir); idx = set ? Math.floor((this.player.stridePhase || 0) * set.length) % set.length : 0; }   // uma passada completa = todos os quadros da folha (4 ou 8)
       else set = pick('idle', dir);
@@ -2911,7 +3067,7 @@ class Game {
     // boneco da raca: a mao medida no proprio quadro ([x, y, angulo, atras, espelhar] em fracao da tela)
     const mao = rs && rs.idle && frame && frame.mao;
     const socket = mao ? (estocando ? { x: mao[0], y: mao[1], angle: Math.atan2(0.12, 1) + Math.PI / 4, behind: false, flip: estocando < 0, len: 1 }
-                               : { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4], len: mao[6] || 1 }) :
+                               : { x: mao[0], y: mao[1], angle: mao[2], behind: !!mao[3], flip: !!mao[4], len: (mao[6] || 1) * (estocadaProfunda ? 0.7 : 1) }) :
                    (socketTable[frameKey] ||
                    socketTable[`idle_${dir}_0`] ||
                    socketTable[`idle_${sideDir}_0`] ||
@@ -2979,6 +3135,7 @@ class Game {
 
   drawWeapon(ctx, px, py, drawX, drawY, targetW, targetH, frameKey, socket) {
     if (!this.player.equippedWeapon) return;
+    if (window.SurittoCombate.ficha(this.player.equippedWeapon).mov === 'tiro') { this.drawArmaDeTiro(ctx, drawX, drawY, targetW, targetH, socket); return; }
     const weaponImg = this.images.weapons[this.player.equippedWeapon];
     if (!weaponImg || !weaponImg.complete || weaponImg.naturalWidth <= 0) return;
 

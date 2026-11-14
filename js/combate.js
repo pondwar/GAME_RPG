@@ -23,7 +23,15 @@
     sword:        { mov: 'corte',     tempo: 1.10, anim: 0.52, alcance: 85,  folego: 7 },
     fire_sword:   { mov: 'corte',     tempo: 1.10, anim: 0.52, alcance: 85,  folego: 7, extra: '1d6' },   // +1d6 de fogo
     lanca:        { mov: 'estocada',  tempo: 1.25, anim: 0.58, alcance: 120, folego: 7 },
-    axe:          { mov: 'machadada', tempo: 1.50, anim: 0.75, alcance: 85,  folego: 9, dano: '1d8' }     // machado de lenhador, duas maos
+    axe:          { mov: 'machadada', tempo: 1.50, anim: 0.75, alcance: 85,  folego: 9, dano: '1d8' },    // machado de lenhador, duas maos
+    // armas de longe (docs/PROJETEIS.md): acao = folha do boneco; proj = o que voa; mun = municao gasta (item da mochila);
+    // alc = alcance normal (px do mundo; 1 passo do jogador ~ 76 px = 1,75 m); vel = px/s do projetil
+    arco_curto:   { mov: 'tiro', acao: 'shoot_bow',   proj: 'flecha', mun: 'flecha', alc: 340, vel: 560, tempo: 1.00, anim: 1.00, alcance: 340, folego: 4 },
+    arco_longo:   { mov: 'tiro', acao: 'shoot_bow',   proj: 'flecha', mun: 'flecha', alc: 520, vel: 640, tempo: 1.30, anim: 1.10, alcance: 520, folego: 5 },
+    besta_leve:   { mov: 'tiro', acao: 'shoot_xbow2', proj: 'virote', mun: 'virote', alc: 360, vel: 620, tempo: 1.60, anim: 1.00, alcance: 360, folego: 4 },
+    besta_pesada: { mov: 'tiro', acao: 'shoot_xbow2', proj: 'virote', mun: 'virote', alc: 450, vel: 700, tempo: 2.10, anim: 1.10, alcance: 450, folego: 6 },
+    besta_mao:    { mov: 'tiro', acao: 'shoot_xbow1', proj: 'virote', mun: 'virote', alc: 240, vel: 560, tempo: 1.20, anim: 0.90, alcance: 240, folego: 3 },
+    funda:        { mov: 'tiro', acao: 'sling',       proj: 'pedra',  mun: 'pedra',  alc: 260, vel: 420, tempo: 1.10, anim: 0.90, alcance: 260, folego: 3 }
   };
   const ESCALA = 2.5;
   const PADRAO = FICHA.sword;
@@ -34,7 +42,8 @@
     corte:     { alto: 0.18, bate: 0.45, volta: 0.80 },
     machadada: { alto: 0.12, bate: 0.58, volta: 0.88 },
     estocada:  { alto: 0.00, bate: 0.38, volta: 0.80, avanco: 7 },
-    soco:      { alto: 0.00, bate: 0.40, volta: 0.80, avanco: 3 }
+    soco:      { alto: 0.00, bate: 0.40, volta: 0.80, avanco: 3 },
+    tiro:      { alto: 0.00, bate: 0.62, volta: 0.95 }       // bate = o instante em que solta a corda / dispara / larga a pedra
   };
 
   const ficha = (w) => (w ? FICHA[w] || PADRAO : FICHA.punho);
@@ -98,6 +107,8 @@
     const T = TEMPOS[mov] || TEMPOS.corte, k = chaves(set, f);
     const sub = (a, b, t) => Math.round(a + (b - a) * Math.min(1, Math.max(0, t)));
     let idx, av = 0;
+    // folha completa de video (7+ quadros: guarda, preparo, golpe, volta): toca todos em ordem, para qualquer movimento
+    if (set.length >= 7) return { idx: prog < T.volta ? Math.min(set.length - 1, Math.floor(prog / T.volta * set.length)) : -1, avanco: 0, estocando: false };
     if (mov === 'estocada' || mov === 'soco') {
       // recua um pouco e estica de uma vez
       if (prog < T.bate) { idx = -1; av = -(T.avanco || 0) * 0.35 * (prog / T.bate); }

@@ -1,5 +1,8 @@
 # Lista de sprites: fauna e flora
 
+> **REGRA DE OURO (obrigatória): tudo que se move, e toda ação, existe nas 8 direções** (baixo, cima, esquerda, direita e as 4 diagonais). Desenha-se 5 vistas da esquerda (frente, costas, lado, 3/4 frente, 3/4 costas) e o jogo espelha as 3 da direita. O objetivo é simular 3D com movimento fluido. Veja [REGRA_8_DIRECOES.md](../REGRA_8_DIRECOES.md).
+
+
 > **ATUALIZADO (12/11/2026): use os prompts prontos.**
 > - Animais: [`PROMPTS_ANIMAIS.md`](PROMPTS_ANIMAIS.md) (107 especies, um prompt por bicho, com tamanho real do jogo). Folha **4 colunas x 6 linhas** (24 quadros): frente, costas, lado, 3/4 frente, 3/4 costas (todos virados para a esquerda) e a acao (pastar / atacar / voar). O jogo espelha para a direita e o bicho anda nas **8 direcoes**. Importar: `python tools/arte/importar_animal.py <folha.png> <especie>` (porco, hipopotamo e morsa: `--fundo ciano`; folha antiga de 2 linhas: `--2linhas`).
 > - Arvores: [`PROMPTS_ARVORES.md`](PROMPTS_ARVORES.md) (13 especies, **sem frutos**; o jogo poe os frutos por cima). Importar: `python tools/arte/importar_arvore.py <imagem.png> <especie> [--neve]`.

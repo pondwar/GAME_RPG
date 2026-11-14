@@ -1,9 +1,9 @@
 {
  "humano": {
-  "w": 350,
+  "w": 397,
   "h": 520,
   "corpo": 400,
-  "v": 1794526979,
+  "v": 1794607784,
   "ref": {
    "pele": "#c87e6c",
    "cabelo": "#3abe19",
@@ -42,27 +42,163 @@
      "humano/jump/left_0",
      "humano/jump/left_1",
      "humano/jump/left_2",
-     "humano/jump/left_3"
+     "humano/jump/left_3",
+     "humano/jump/left_4",
+     "humano/jump/left_5",
+     "humano/jump/left_6",
+     "humano/jump/left_7"
     ],
     "right": [
      "humano/jump/right_0",
      "humano/jump/right_1",
      "humano/jump/right_2",
-     "humano/jump/right_3"
+     "humano/jump/right_3",
+     "humano/jump/right_4",
+     "humano/jump/right_5",
+     "humano/jump/right_6",
+     "humano/jump/right_7"
+    ],
+    "down": [
+     "humano/jump/down_0",
+     "humano/jump/down_1",
+     "humano/jump/down_2",
+     "humano/jump/down_3",
+     "humano/jump/down_4",
+     "humano/jump/down_5",
+     "humano/jump/down_6",
+     "humano/jump/down_7"
+    ],
+    "up": [
+     "humano/jump/up_0",
+     "humano/jump/up_1",
+     "humano/jump/up_2",
+     "humano/jump/up_3",
+     "humano/jump/up_4",
+     "humano/jump/up_5",
+     "humano/jump/up_6",
+     "humano/jump/up_7"
+    ],
+    "down_left": [
+     "humano/jump/down_left_0",
+     "humano/jump/down_left_1",
+     "humano/jump/down_left_2",
+     "humano/jump/down_left_3",
+     "humano/jump/down_left_4",
+     "humano/jump/down_left_5",
+     "humano/jump/down_left_6",
+     "humano/jump/down_left_7"
+    ],
+    "down_right": [
+     "humano/jump/down_right_0",
+     "humano/jump/down_right_1",
+     "humano/jump/down_right_2",
+     "humano/jump/down_right_3",
+     "humano/jump/down_right_4",
+     "humano/jump/down_right_5",
+     "humano/jump/down_right_6",
+     "humano/jump/down_right_7"
+    ],
+    "up_left": [
+     "humano/jump/up_left_0",
+     "humano/jump/up_left_1",
+     "humano/jump/up_left_2",
+     "humano/jump/up_left_3",
+     "humano/jump/up_left_4",
+     "humano/jump/up_left_5",
+     "humano/jump/up_left_6",
+     "humano/jump/up_left_7"
+    ],
+    "up_right": [
+     "humano/jump/up_right_0",
+     "humano/jump/up_right_1",
+     "humano/jump/up_right_2",
+     "humano/jump/up_right_3",
+     "humano/jump/up_right_4",
+     "humano/jump/up_right_5",
+     "humano/jump/up_right_6",
+     "humano/jump/up_right_7"
     ]
    },
    "sit": {
-    "down": [
-     "humano/sit/down_0"
-    ],
-    "up": [
-     "humano/sit/up_0"
-    ],
     "left": [
-     "humano/sit/left_0"
+     "humano/sit/left_0",
+     "humano/sit/left_1",
+     "humano/sit/left_2",
+     "humano/sit/left_3",
+     "humano/sit/left_4",
+     "humano/sit/left_5",
+     "humano/sit/left_6",
+     "humano/sit/left_7"
     ],
     "right": [
-     "humano/sit/right_0"
+     "humano/sit/right_0",
+     "humano/sit/right_1",
+     "humano/sit/right_2",
+     "humano/sit/right_3",
+     "humano/sit/right_4",
+     "humano/sit/right_5",
+     "humano/sit/right_6",
+     "humano/sit/right_7"
+    ],
+    "down": [
+     "humano/sit/down_0",
+     "humano/sit/down_1",
+     "humano/sit/down_2",
+     "humano/sit/down_3",
+     "humano/sit/down_4",
+     "humano/sit/down_5",
+     "humano/sit/down_6",
+     "humano/sit/down_7"
+    ],
+    "up": [
+     "humano/sit/up_0",
+     "humano/sit/up_1",
+     "humano/sit/up_2",
+     "humano/sit/up_3",
+     "humano/sit/up_4",
+     "humano/sit/up_5",
+     "humano/sit/up_6",
+     "humano/sit/up_7"
+    ],
+    "down_left": [
+     "humano/sit/down_left_0",
+     "humano/sit/down_left_1",
+     "humano/sit/down_left_2",
+     "humano/sit/down_left_3",
+     "humano/sit/down_left_4",
+     "humano/sit/down_left_5",
+     "humano/sit/down_left_6",
+     "humano/sit/down_left_7"
+    ],
+    "down_right": [
+     "humano/sit/down_right_0",
+     "humano/sit/down_right_1",
+     "humano/sit/down_right_2",
+     "humano/sit/down_right_3",
+     "humano/sit/down_right_4",
+     "humano/sit/down_right_5",
+     "humano/sit/down_right_6",
+     "humano/sit/down_right_7"
+    ],
+    "up_left": [
+     "humano/sit/up_left_0",
+     "humano/sit/up_left_1",
+     "humano/sit/up_left_2",
+     "humano/sit/up_left_3",
+     "humano/sit/up_left_4",
+     "humano/sit/up_left_5",
+     "humano/sit/up_left_6",
+     "humano/sit/up_left_7"
+    ],
+    "up_right": [
+     "humano/sit/up_right_0",
+     "humano/sit/up_right_1",
+     "humano/sit/up_right_2",
+     "humano/sit/up_right_3",
+     "humano/sit/up_right_4",
+     "humano/sit/up_right_5",
+     "humano/sit/up_right_6",
+     "humano/sit/up_right_7"
     ]
    },
    "gather": {
@@ -70,13 +206,81 @@
      "humano/gather/left_0",
      "humano/gather/left_1",
      "humano/gather/left_2",
-     "humano/gather/left_3"
+     "humano/gather/left_3",
+     "humano/gather/left_4",
+     "humano/gather/left_5",
+     "humano/gather/left_6",
+     "humano/gather/left_7"
     ],
     "right": [
      "humano/gather/right_0",
      "humano/gather/right_1",
      "humano/gather/right_2",
-     "humano/gather/right_3"
+     "humano/gather/right_3",
+     "humano/gather/right_4",
+     "humano/gather/right_5",
+     "humano/gather/right_6",
+     "humano/gather/right_7"
+    ],
+    "down": [
+     "humano/gather/down_0",
+     "humano/gather/down_1",
+     "humano/gather/down_2",
+     "humano/gather/down_3",
+     "humano/gather/down_4",
+     "humano/gather/down_5",
+     "humano/gather/down_6",
+     "humano/gather/down_7"
+    ],
+    "up": [
+     "humano/gather/up_0",
+     "humano/gather/up_1",
+     "humano/gather/up_2",
+     "humano/gather/up_3",
+     "humano/gather/up_4",
+     "humano/gather/up_5",
+     "humano/gather/up_6",
+     "humano/gather/up_7"
+    ],
+    "down_left": [
+     "humano/gather/down_left_0",
+     "humano/gather/down_left_1",
+     "humano/gather/down_left_2",
+     "humano/gather/down_left_3",
+     "humano/gather/down_left_4",
+     "humano/gather/down_left_5",
+     "humano/gather/down_left_6",
+     "humano/gather/down_left_7"
+    ],
+    "down_right": [
+     "humano/gather/down_right_0",
+     "humano/gather/down_right_1",
+     "humano/gather/down_right_2",
+     "humano/gather/down_right_3",
+     "humano/gather/down_right_4",
+     "humano/gather/down_right_5",
+     "humano/gather/down_right_6",
+     "humano/gather/down_right_7"
+    ],
+    "up_left": [
+     "humano/gather/up_left_0",
+     "humano/gather/up_left_1",
+     "humano/gather/up_left_2",
+     "humano/gather/up_left_3",
+     "humano/gather/up_left_4",
+     "humano/gather/up_left_5",
+     "humano/gather/up_left_6",
+     "humano/gather/up_left_7"
+    ],
+    "up_right": [
+     "humano/gather/up_right_0",
+     "humano/gather/up_right_1",
+     "humano/gather/up_right_2",
+     "humano/gather/up_right_3",
+     "humano/gather/up_right_4",
+     "humano/gather/up_right_5",
+     "humano/gather/up_right_6",
+     "humano/gather/up_right_7"
     ]
    },
    "attack_1h": {
@@ -119,6 +323,46 @@
      "humano/attack_1h/up_5",
      "humano/attack_1h/up_6",
      "humano/attack_1h/up_7"
+    ],
+    "down_left": [
+     "humano/attack_1h/down_left_0",
+     "humano/attack_1h/down_left_1",
+     "humano/attack_1h/down_left_2",
+     "humano/attack_1h/down_left_3",
+     "humano/attack_1h/down_left_4",
+     "humano/attack_1h/down_left_5",
+     "humano/attack_1h/down_left_6",
+     "humano/attack_1h/down_left_7"
+    ],
+    "down_right": [
+     "humano/attack_1h/down_right_0",
+     "humano/attack_1h/down_right_1",
+     "humano/attack_1h/down_right_2",
+     "humano/attack_1h/down_right_3",
+     "humano/attack_1h/down_right_4",
+     "humano/attack_1h/down_right_5",
+     "humano/attack_1h/down_right_6",
+     "humano/attack_1h/down_right_7"
+    ],
+    "up_left": [
+     "humano/attack_1h/up_left_0",
+     "humano/attack_1h/up_left_1",
+     "humano/attack_1h/up_left_2",
+     "humano/attack_1h/up_left_3",
+     "humano/attack_1h/up_left_4",
+     "humano/attack_1h/up_left_5",
+     "humano/attack_1h/up_left_6",
+     "humano/attack_1h/up_left_7"
+    ],
+    "up_right": [
+     "humano/attack_1h/up_right_0",
+     "humano/attack_1h/up_right_1",
+     "humano/attack_1h/up_right_2",
+     "humano/attack_1h/up_right_3",
+     "humano/attack_1h/up_right_4",
+     "humano/attack_1h/up_right_5",
+     "humano/attack_1h/up_right_6",
+     "humano/attack_1h/up_right_7"
     ]
    },
    "punch": {
@@ -128,7 +372,9 @@
      "humano/punch/left_2",
      "humano/punch/left_3",
      "humano/punch/left_4",
-     "humano/punch/left_5"
+     "humano/punch/left_5",
+     "humano/punch/left_6",
+     "humano/punch/left_7"
     ],
     "right": [
      "humano/punch/right_0",
@@ -136,7 +382,69 @@
      "humano/punch/right_2",
      "humano/punch/right_3",
      "humano/punch/right_4",
-     "humano/punch/right_5"
+     "humano/punch/right_5",
+     "humano/punch/right_6",
+     "humano/punch/right_7"
+    ],
+    "down": [
+     "humano/punch/down_0",
+     "humano/punch/down_1",
+     "humano/punch/down_2",
+     "humano/punch/down_3",
+     "humano/punch/down_4",
+     "humano/punch/down_5",
+     "humano/punch/down_6",
+     "humano/punch/down_7"
+    ],
+    "up": [
+     "humano/punch/up_0",
+     "humano/punch/up_1",
+     "humano/punch/up_2",
+     "humano/punch/up_3",
+     "humano/punch/up_4",
+     "humano/punch/up_5",
+     "humano/punch/up_6",
+     "humano/punch/up_7"
+    ],
+    "down_left": [
+     "humano/punch/down_left_0",
+     "humano/punch/down_left_1",
+     "humano/punch/down_left_2",
+     "humano/punch/down_left_3",
+     "humano/punch/down_left_4",
+     "humano/punch/down_left_5",
+     "humano/punch/down_left_6",
+     "humano/punch/down_left_7"
+    ],
+    "down_right": [
+     "humano/punch/down_right_0",
+     "humano/punch/down_right_1",
+     "humano/punch/down_right_2",
+     "humano/punch/down_right_3",
+     "humano/punch/down_right_4",
+     "humano/punch/down_right_5",
+     "humano/punch/down_right_6",
+     "humano/punch/down_right_7"
+    ],
+    "up_left": [
+     "humano/punch/up_left_0",
+     "humano/punch/up_left_1",
+     "humano/punch/up_left_2",
+     "humano/punch/up_left_3",
+     "humano/punch/up_left_4",
+     "humano/punch/up_left_5",
+     "humano/punch/up_left_6",
+     "humano/punch/up_left_7"
+    ],
+    "up_right": [
+     "humano/punch/up_right_0",
+     "humano/punch/up_right_1",
+     "humano/punch/up_right_2",
+     "humano/punch/up_right_3",
+     "humano/punch/up_right_4",
+     "humano/punch/up_right_5",
+     "humano/punch/up_right_6",
+     "humano/punch/up_right_7"
     ]
    },
    "attack_2h": {
@@ -147,7 +455,8 @@
      "humano/attack_2h/left_3",
      "humano/attack_2h/left_4",
      "humano/attack_2h/left_5",
-     "humano/attack_2h/left_6"
+     "humano/attack_2h/left_6",
+     "humano/attack_2h/left_7"
     ],
     "right": [
      "humano/attack_2h/right_0",
@@ -156,7 +465,68 @@
      "humano/attack_2h/right_3",
      "humano/attack_2h/right_4",
      "humano/attack_2h/right_5",
-     "humano/attack_2h/right_6"
+     "humano/attack_2h/right_6",
+     "humano/attack_2h/right_7"
+    ],
+    "down": [
+     "humano/attack_2h/down_0",
+     "humano/attack_2h/down_1",
+     "humano/attack_2h/down_2",
+     "humano/attack_2h/down_3",
+     "humano/attack_2h/down_4",
+     "humano/attack_2h/down_5",
+     "humano/attack_2h/down_6",
+     "humano/attack_2h/down_7"
+    ],
+    "up": [
+     "humano/attack_2h/up_0",
+     "humano/attack_2h/up_1",
+     "humano/attack_2h/up_2",
+     "humano/attack_2h/up_3",
+     "humano/attack_2h/up_4",
+     "humano/attack_2h/up_5",
+     "humano/attack_2h/up_6",
+     "humano/attack_2h/up_7"
+    ],
+    "down_left": [
+     "humano/attack_2h/down_left_0",
+     "humano/attack_2h/down_left_1",
+     "humano/attack_2h/down_left_2",
+     "humano/attack_2h/down_left_3",
+     "humano/attack_2h/down_left_4",
+     "humano/attack_2h/down_left_5",
+     "humano/attack_2h/down_left_6",
+     "humano/attack_2h/down_left_7"
+    ],
+    "down_right": [
+     "humano/attack_2h/down_right_0",
+     "humano/attack_2h/down_right_1",
+     "humano/attack_2h/down_right_2",
+     "humano/attack_2h/down_right_3",
+     "humano/attack_2h/down_right_4",
+     "humano/attack_2h/down_right_5",
+     "humano/attack_2h/down_right_6",
+     "humano/attack_2h/down_right_7"
+    ],
+    "up_left": [
+     "humano/attack_2h/up_left_0",
+     "humano/attack_2h/up_left_1",
+     "humano/attack_2h/up_left_2",
+     "humano/attack_2h/up_left_3",
+     "humano/attack_2h/up_left_4",
+     "humano/attack_2h/up_left_5",
+     "humano/attack_2h/up_left_6",
+     "humano/attack_2h/up_left_7"
+    ],
+    "up_right": [
+     "humano/attack_2h/up_right_0",
+     "humano/attack_2h/up_right_1",
+     "humano/attack_2h/up_right_2",
+     "humano/attack_2h/up_right_3",
+     "humano/attack_2h/up_right_4",
+     "humano/attack_2h/up_right_5",
+     "humano/attack_2h/up_right_6",
+     "humano/attack_2h/up_right_7"
     ]
    },
    "kick": {
@@ -171,6 +541,580 @@
      "humano/kick/right_1",
      "humano/kick/right_2",
      "humano/kick/right_3"
+    ]
+   },
+   "thrust_1h": {
+    "left": [
+     "humano/thrust_1h/left_0",
+     "humano/thrust_1h/left_1",
+     "humano/thrust_1h/left_2",
+     "humano/thrust_1h/left_3",
+     "humano/thrust_1h/left_4",
+     "humano/thrust_1h/left_5",
+     "humano/thrust_1h/left_6",
+     "humano/thrust_1h/left_7"
+    ],
+    "right": [
+     "humano/thrust_1h/right_0",
+     "humano/thrust_1h/right_1",
+     "humano/thrust_1h/right_2",
+     "humano/thrust_1h/right_3",
+     "humano/thrust_1h/right_4",
+     "humano/thrust_1h/right_5",
+     "humano/thrust_1h/right_6",
+     "humano/thrust_1h/right_7"
+    ],
+    "down": [
+     "humano/thrust_1h/down_0",
+     "humano/thrust_1h/down_1",
+     "humano/thrust_1h/down_2",
+     "humano/thrust_1h/down_3",
+     "humano/thrust_1h/down_4",
+     "humano/thrust_1h/down_5",
+     "humano/thrust_1h/down_6",
+     "humano/thrust_1h/down_7"
+    ],
+    "up": [
+     "humano/thrust_1h/up_0",
+     "humano/thrust_1h/up_1",
+     "humano/thrust_1h/up_2",
+     "humano/thrust_1h/up_3",
+     "humano/thrust_1h/up_4",
+     "humano/thrust_1h/up_5",
+     "humano/thrust_1h/up_6",
+     "humano/thrust_1h/up_7"
+    ],
+    "down_left": [
+     "humano/thrust_1h/down_left_0",
+     "humano/thrust_1h/down_left_1",
+     "humano/thrust_1h/down_left_2",
+     "humano/thrust_1h/down_left_3",
+     "humano/thrust_1h/down_left_4",
+     "humano/thrust_1h/down_left_5",
+     "humano/thrust_1h/down_left_6",
+     "humano/thrust_1h/down_left_7"
+    ],
+    "down_right": [
+     "humano/thrust_1h/down_right_0",
+     "humano/thrust_1h/down_right_1",
+     "humano/thrust_1h/down_right_2",
+     "humano/thrust_1h/down_right_3",
+     "humano/thrust_1h/down_right_4",
+     "humano/thrust_1h/down_right_5",
+     "humano/thrust_1h/down_right_6",
+     "humano/thrust_1h/down_right_7"
+    ],
+    "up_left": [
+     "humano/thrust_1h/up_left_0",
+     "humano/thrust_1h/up_left_1",
+     "humano/thrust_1h/up_left_2",
+     "humano/thrust_1h/up_left_3",
+     "humano/thrust_1h/up_left_4",
+     "humano/thrust_1h/up_left_5",
+     "humano/thrust_1h/up_left_6",
+     "humano/thrust_1h/up_left_7"
+    ],
+    "up_right": [
+     "humano/thrust_1h/up_right_0",
+     "humano/thrust_1h/up_right_1",
+     "humano/thrust_1h/up_right_2",
+     "humano/thrust_1h/up_right_3",
+     "humano/thrust_1h/up_right_4",
+     "humano/thrust_1h/up_right_5",
+     "humano/thrust_1h/up_right_6",
+     "humano/thrust_1h/up_right_7"
+    ]
+   },
+   "thrust_2h": {
+    "left": [
+     "humano/thrust_2h/left_0",
+     "humano/thrust_2h/left_1",
+     "humano/thrust_2h/left_2",
+     "humano/thrust_2h/left_3",
+     "humano/thrust_2h/left_4",
+     "humano/thrust_2h/left_5",
+     "humano/thrust_2h/left_6",
+     "humano/thrust_2h/left_7"
+    ],
+    "right": [
+     "humano/thrust_2h/right_0",
+     "humano/thrust_2h/right_1",
+     "humano/thrust_2h/right_2",
+     "humano/thrust_2h/right_3",
+     "humano/thrust_2h/right_4",
+     "humano/thrust_2h/right_5",
+     "humano/thrust_2h/right_6",
+     "humano/thrust_2h/right_7"
+    ],
+    "down": [
+     "humano/thrust_2h/down_0",
+     "humano/thrust_2h/down_1",
+     "humano/thrust_2h/down_2",
+     "humano/thrust_2h/down_3",
+     "humano/thrust_2h/down_4",
+     "humano/thrust_2h/down_5",
+     "humano/thrust_2h/down_6",
+     "humano/thrust_2h/down_7"
+    ],
+    "up": [
+     "humano/thrust_2h/up_0",
+     "humano/thrust_2h/up_1",
+     "humano/thrust_2h/up_2",
+     "humano/thrust_2h/up_3",
+     "humano/thrust_2h/up_4",
+     "humano/thrust_2h/up_5",
+     "humano/thrust_2h/up_6",
+     "humano/thrust_2h/up_7"
+    ],
+    "down_left": [
+     "humano/thrust_2h/down_left_0",
+     "humano/thrust_2h/down_left_1",
+     "humano/thrust_2h/down_left_2",
+     "humano/thrust_2h/down_left_3",
+     "humano/thrust_2h/down_left_4",
+     "humano/thrust_2h/down_left_5",
+     "humano/thrust_2h/down_left_6",
+     "humano/thrust_2h/down_left_7"
+    ],
+    "down_right": [
+     "humano/thrust_2h/down_right_0",
+     "humano/thrust_2h/down_right_1",
+     "humano/thrust_2h/down_right_2",
+     "humano/thrust_2h/down_right_3",
+     "humano/thrust_2h/down_right_4",
+     "humano/thrust_2h/down_right_5",
+     "humano/thrust_2h/down_right_6",
+     "humano/thrust_2h/down_right_7"
+    ],
+    "up_left": [
+     "humano/thrust_2h/up_left_0",
+     "humano/thrust_2h/up_left_1",
+     "humano/thrust_2h/up_left_2",
+     "humano/thrust_2h/up_left_3",
+     "humano/thrust_2h/up_left_4",
+     "humano/thrust_2h/up_left_5",
+     "humano/thrust_2h/up_left_6",
+     "humano/thrust_2h/up_left_7"
+    ],
+    "up_right": [
+     "humano/thrust_2h/up_right_0",
+     "humano/thrust_2h/up_right_1",
+     "humano/thrust_2h/up_right_2",
+     "humano/thrust_2h/up_right_3",
+     "humano/thrust_2h/up_right_4",
+     "humano/thrust_2h/up_right_5",
+     "humano/thrust_2h/up_right_6",
+     "humano/thrust_2h/up_right_7"
+    ]
+   },
+   "shoot_bow": {
+    "left": [
+     "humano/shoot_bow/left_0",
+     "humano/shoot_bow/left_1",
+     "humano/shoot_bow/left_2",
+     "humano/shoot_bow/left_3",
+     "humano/shoot_bow/left_4",
+     "humano/shoot_bow/left_5",
+     "humano/shoot_bow/left_6",
+     "humano/shoot_bow/left_7"
+    ],
+    "right": [
+     "humano/shoot_bow/right_0",
+     "humano/shoot_bow/right_1",
+     "humano/shoot_bow/right_2",
+     "humano/shoot_bow/right_3",
+     "humano/shoot_bow/right_4",
+     "humano/shoot_bow/right_5",
+     "humano/shoot_bow/right_6",
+     "humano/shoot_bow/right_7"
+    ],
+    "down": [
+     "humano/shoot_bow/down_0",
+     "humano/shoot_bow/down_1",
+     "humano/shoot_bow/down_2",
+     "humano/shoot_bow/down_3",
+     "humano/shoot_bow/down_4",
+     "humano/shoot_bow/down_5",
+     "humano/shoot_bow/down_6",
+     "humano/shoot_bow/down_7"
+    ],
+    "up": [
+     "humano/shoot_bow/up_0",
+     "humano/shoot_bow/up_1",
+     "humano/shoot_bow/up_2",
+     "humano/shoot_bow/up_3",
+     "humano/shoot_bow/up_4",
+     "humano/shoot_bow/up_5",
+     "humano/shoot_bow/up_6",
+     "humano/shoot_bow/up_7"
+    ],
+    "down_left": [
+     "humano/shoot_bow/down_left_0",
+     "humano/shoot_bow/down_left_1",
+     "humano/shoot_bow/down_left_2",
+     "humano/shoot_bow/down_left_3",
+     "humano/shoot_bow/down_left_4",
+     "humano/shoot_bow/down_left_5",
+     "humano/shoot_bow/down_left_6",
+     "humano/shoot_bow/down_left_7"
+    ],
+    "down_right": [
+     "humano/shoot_bow/down_right_0",
+     "humano/shoot_bow/down_right_1",
+     "humano/shoot_bow/down_right_2",
+     "humano/shoot_bow/down_right_3",
+     "humano/shoot_bow/down_right_4",
+     "humano/shoot_bow/down_right_5",
+     "humano/shoot_bow/down_right_6",
+     "humano/shoot_bow/down_right_7"
+    ],
+    "up_left": [
+     "humano/shoot_bow/up_left_0",
+     "humano/shoot_bow/up_left_1",
+     "humano/shoot_bow/up_left_2",
+     "humano/shoot_bow/up_left_3",
+     "humano/shoot_bow/up_left_4",
+     "humano/shoot_bow/up_left_5",
+     "humano/shoot_bow/up_left_6",
+     "humano/shoot_bow/up_left_7"
+    ],
+    "up_right": [
+     "humano/shoot_bow/up_right_0",
+     "humano/shoot_bow/up_right_1",
+     "humano/shoot_bow/up_right_2",
+     "humano/shoot_bow/up_right_3",
+     "humano/shoot_bow/up_right_4",
+     "humano/shoot_bow/up_right_5",
+     "humano/shoot_bow/up_right_6",
+     "humano/shoot_bow/up_right_7"
+    ]
+   },
+   "shoot_xbow2": {
+    "left": [
+     "humano/shoot_xbow2/left_0",
+     "humano/shoot_xbow2/left_1",
+     "humano/shoot_xbow2/left_2",
+     "humano/shoot_xbow2/left_3",
+     "humano/shoot_xbow2/left_4",
+     "humano/shoot_xbow2/left_5",
+     "humano/shoot_xbow2/left_6",
+     "humano/shoot_xbow2/left_7"
+    ],
+    "right": [
+     "humano/shoot_xbow2/right_0",
+     "humano/shoot_xbow2/right_1",
+     "humano/shoot_xbow2/right_2",
+     "humano/shoot_xbow2/right_3",
+     "humano/shoot_xbow2/right_4",
+     "humano/shoot_xbow2/right_5",
+     "humano/shoot_xbow2/right_6",
+     "humano/shoot_xbow2/right_7"
+    ],
+    "down": [
+     "humano/shoot_xbow2/down_0",
+     "humano/shoot_xbow2/down_1",
+     "humano/shoot_xbow2/down_2",
+     "humano/shoot_xbow2/down_3",
+     "humano/shoot_xbow2/down_4",
+     "humano/shoot_xbow2/down_5",
+     "humano/shoot_xbow2/down_6",
+     "humano/shoot_xbow2/down_7"
+    ],
+    "up": [
+     "humano/shoot_xbow2/up_0",
+     "humano/shoot_xbow2/up_1",
+     "humano/shoot_xbow2/up_2",
+     "humano/shoot_xbow2/up_3",
+     "humano/shoot_xbow2/up_4",
+     "humano/shoot_xbow2/up_5",
+     "humano/shoot_xbow2/up_6",
+     "humano/shoot_xbow2/up_7"
+    ],
+    "down_left": [
+     "humano/shoot_xbow2/down_left_0",
+     "humano/shoot_xbow2/down_left_1",
+     "humano/shoot_xbow2/down_left_2",
+     "humano/shoot_xbow2/down_left_3",
+     "humano/shoot_xbow2/down_left_4",
+     "humano/shoot_xbow2/down_left_5",
+     "humano/shoot_xbow2/down_left_6",
+     "humano/shoot_xbow2/down_left_7"
+    ],
+    "down_right": [
+     "humano/shoot_xbow2/down_right_0",
+     "humano/shoot_xbow2/down_right_1",
+     "humano/shoot_xbow2/down_right_2",
+     "humano/shoot_xbow2/down_right_3",
+     "humano/shoot_xbow2/down_right_4",
+     "humano/shoot_xbow2/down_right_5",
+     "humano/shoot_xbow2/down_right_6",
+     "humano/shoot_xbow2/down_right_7"
+    ],
+    "up_left": [
+     "humano/shoot_xbow2/up_left_0",
+     "humano/shoot_xbow2/up_left_1",
+     "humano/shoot_xbow2/up_left_2",
+     "humano/shoot_xbow2/up_left_3",
+     "humano/shoot_xbow2/up_left_4",
+     "humano/shoot_xbow2/up_left_5",
+     "humano/shoot_xbow2/up_left_6",
+     "humano/shoot_xbow2/up_left_7"
+    ],
+    "up_right": [
+     "humano/shoot_xbow2/up_right_0",
+     "humano/shoot_xbow2/up_right_1",
+     "humano/shoot_xbow2/up_right_2",
+     "humano/shoot_xbow2/up_right_3",
+     "humano/shoot_xbow2/up_right_4",
+     "humano/shoot_xbow2/up_right_5",
+     "humano/shoot_xbow2/up_right_6",
+     "humano/shoot_xbow2/up_right_7"
+    ]
+   },
+   "shoot_xbow1": {
+    "left": [
+     "humano/shoot_xbow1/left_0",
+     "humano/shoot_xbow1/left_1",
+     "humano/shoot_xbow1/left_2",
+     "humano/shoot_xbow1/left_3",
+     "humano/shoot_xbow1/left_4",
+     "humano/shoot_xbow1/left_5",
+     "humano/shoot_xbow1/left_6",
+     "humano/shoot_xbow1/left_7"
+    ],
+    "right": [
+     "humano/shoot_xbow1/right_0",
+     "humano/shoot_xbow1/right_1",
+     "humano/shoot_xbow1/right_2",
+     "humano/shoot_xbow1/right_3",
+     "humano/shoot_xbow1/right_4",
+     "humano/shoot_xbow1/right_5",
+     "humano/shoot_xbow1/right_6",
+     "humano/shoot_xbow1/right_7"
+    ],
+    "down": [
+     "humano/shoot_xbow1/down_0",
+     "humano/shoot_xbow1/down_1",
+     "humano/shoot_xbow1/down_2",
+     "humano/shoot_xbow1/down_3",
+     "humano/shoot_xbow1/down_4",
+     "humano/shoot_xbow1/down_5",
+     "humano/shoot_xbow1/down_6",
+     "humano/shoot_xbow1/down_7"
+    ],
+    "up": [
+     "humano/shoot_xbow1/up_0",
+     "humano/shoot_xbow1/up_1",
+     "humano/shoot_xbow1/up_2",
+     "humano/shoot_xbow1/up_3",
+     "humano/shoot_xbow1/up_4",
+     "humano/shoot_xbow1/up_5",
+     "humano/shoot_xbow1/up_6",
+     "humano/shoot_xbow1/up_7"
+    ],
+    "down_left": [
+     "humano/shoot_xbow1/down_left_0",
+     "humano/shoot_xbow1/down_left_1",
+     "humano/shoot_xbow1/down_left_2",
+     "humano/shoot_xbow1/down_left_3",
+     "humano/shoot_xbow1/down_left_4",
+     "humano/shoot_xbow1/down_left_5",
+     "humano/shoot_xbow1/down_left_6",
+     "humano/shoot_xbow1/down_left_7"
+    ],
+    "down_right": [
+     "humano/shoot_xbow1/down_right_0",
+     "humano/shoot_xbow1/down_right_1",
+     "humano/shoot_xbow1/down_right_2",
+     "humano/shoot_xbow1/down_right_3",
+     "humano/shoot_xbow1/down_right_4",
+     "humano/shoot_xbow1/down_right_5",
+     "humano/shoot_xbow1/down_right_6",
+     "humano/shoot_xbow1/down_right_7"
+    ],
+    "up_left": [
+     "humano/shoot_xbow1/up_left_0",
+     "humano/shoot_xbow1/up_left_1",
+     "humano/shoot_xbow1/up_left_2",
+     "humano/shoot_xbow1/up_left_3",
+     "humano/shoot_xbow1/up_left_4",
+     "humano/shoot_xbow1/up_left_5",
+     "humano/shoot_xbow1/up_left_6",
+     "humano/shoot_xbow1/up_left_7"
+    ],
+    "up_right": [
+     "humano/shoot_xbow1/up_right_0",
+     "humano/shoot_xbow1/up_right_1",
+     "humano/shoot_xbow1/up_right_2",
+     "humano/shoot_xbow1/up_right_3",
+     "humano/shoot_xbow1/up_right_4",
+     "humano/shoot_xbow1/up_right_5",
+     "humano/shoot_xbow1/up_right_6",
+     "humano/shoot_xbow1/up_right_7"
+    ]
+   },
+   "throw": {
+    "left": [
+     "humano/throw/left_0",
+     "humano/throw/left_1",
+     "humano/throw/left_2",
+     "humano/throw/left_3",
+     "humano/throw/left_4",
+     "humano/throw/left_5",
+     "humano/throw/left_6",
+     "humano/throw/left_7"
+    ],
+    "right": [
+     "humano/throw/right_0",
+     "humano/throw/right_1",
+     "humano/throw/right_2",
+     "humano/throw/right_3",
+     "humano/throw/right_4",
+     "humano/throw/right_5",
+     "humano/throw/right_6",
+     "humano/throw/right_7"
+    ],
+    "down": [
+     "humano/throw/down_0",
+     "humano/throw/down_1",
+     "humano/throw/down_2",
+     "humano/throw/down_3",
+     "humano/throw/down_4",
+     "humano/throw/down_5",
+     "humano/throw/down_6",
+     "humano/throw/down_7"
+    ],
+    "up": [
+     "humano/throw/up_0",
+     "humano/throw/up_1",
+     "humano/throw/up_2",
+     "humano/throw/up_3",
+     "humano/throw/up_4",
+     "humano/throw/up_5",
+     "humano/throw/up_6",
+     "humano/throw/up_7"
+    ],
+    "down_left": [
+     "humano/throw/down_left_0",
+     "humano/throw/down_left_1",
+     "humano/throw/down_left_2",
+     "humano/throw/down_left_3",
+     "humano/throw/down_left_4",
+     "humano/throw/down_left_5",
+     "humano/throw/down_left_6",
+     "humano/throw/down_left_7"
+    ],
+    "down_right": [
+     "humano/throw/down_right_0",
+     "humano/throw/down_right_1",
+     "humano/throw/down_right_2",
+     "humano/throw/down_right_3",
+     "humano/throw/down_right_4",
+     "humano/throw/down_right_5",
+     "humano/throw/down_right_6",
+     "humano/throw/down_right_7"
+    ],
+    "up_left": [
+     "humano/throw/up_left_0",
+     "humano/throw/up_left_1",
+     "humano/throw/up_left_2",
+     "humano/throw/up_left_3",
+     "humano/throw/up_left_4",
+     "humano/throw/up_left_5",
+     "humano/throw/up_left_6",
+     "humano/throw/up_left_7"
+    ],
+    "up_right": [
+     "humano/throw/up_right_0",
+     "humano/throw/up_right_1",
+     "humano/throw/up_right_2",
+     "humano/throw/up_right_3",
+     "humano/throw/up_right_4",
+     "humano/throw/up_right_5",
+     "humano/throw/up_right_6",
+     "humano/throw/up_right_7"
+    ]
+   },
+   "sling": {
+    "left": [
+     "humano/sling/left_0",
+     "humano/sling/left_1",
+     "humano/sling/left_2",
+     "humano/sling/left_3",
+     "humano/sling/left_4",
+     "humano/sling/left_5",
+     "humano/sling/left_6",
+     "humano/sling/left_7"
+    ],
+    "right": [
+     "humano/sling/right_0",
+     "humano/sling/right_1",
+     "humano/sling/right_2",
+     "humano/sling/right_3",
+     "humano/sling/right_4",
+     "humano/sling/right_5",
+     "humano/sling/right_6",
+     "humano/sling/right_7"
+    ],
+    "down": [
+     "humano/sling/down_0",
+     "humano/sling/down_1",
+     "humano/sling/down_2",
+     "humano/sling/down_3",
+     "humano/sling/down_4",
+     "humano/sling/down_5",
+     "humano/sling/down_6",
+     "humano/sling/down_7"
+    ],
+    "up": [
+     "humano/sling/up_0",
+     "humano/sling/up_1",
+     "humano/sling/up_2",
+     "humano/sling/up_3",
+     "humano/sling/up_4",
+     "humano/sling/up_5",
+     "humano/sling/up_6",
+     "humano/sling/up_7"
+    ],
+    "down_left": [
+     "humano/sling/down_left_0",
+     "humano/sling/down_left_1",
+     "humano/sling/down_left_2",
+     "humano/sling/down_left_3",
+     "humano/sling/down_left_4",
+     "humano/sling/down_left_5",
+     "humano/sling/down_left_6",
+     "humano/sling/down_left_7"
+    ],
+    "down_right": [
+     "humano/sling/down_right_0",
+     "humano/sling/down_right_1",
+     "humano/sling/down_right_2",
+     "humano/sling/down_right_3",
+     "humano/sling/down_right_4",
+     "humano/sling/down_right_5",
+     "humano/sling/down_right_6",
+     "humano/sling/down_right_7"
+    ],
+    "up_left": [
+     "humano/sling/up_left_0",
+     "humano/sling/up_left_1",
+     "humano/sling/up_left_2",
+     "humano/sling/up_left_3",
+     "humano/sling/up_left_4",
+     "humano/sling/up_left_5",
+     "humano/sling/up_left_6",
+     "humano/sling/up_left_7"
+    ],
+    "up_right": [
+     "humano/sling/up_right_0",
+     "humano/sling/up_right_1",
+     "humano/sling/up_right_2",
+     "humano/sling/up_right_3",
+     "humano/sling/up_right_4",
+     "humano/sling/up_right_5",
+     "humano/sling/up_right_6",
+     "humano/sling/up_right_7"
     ]
    },
    "walk": {
@@ -258,39 +1202,39 @@
   },
   "maos": {
    "humano/idle/down_0": [
-    0.2746,
+    0.3001,
     0.7041,
     1.685,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/idle/up_0": [
-    0.7424,
+    0.715,
     0.6989,
     -0.666,
     1,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/idle/left_0": [
-    0.4779,
+    0.4817,
     0.7216,
     0.856,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/idle/right_0": [
-    0.5221,
+    0.5208,
     0.7216,
     0.856,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/idle/down_left_0": [
@@ -330,742 +1274,6988 @@
     0.832
    ],
    "humano/jump/left_0": [
-    0.4181,
-    0.7577,
-    1.282,
+    0.4653,
+    0.6413,
+    0.811,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/jump/left_1": [
-    0.7054,
-    0.6572,
-    1.658,
+    0.6878,
+    0.6789,
+    1.389,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/jump/left_2": [
-    0.3441,
-    0.8106,
-    1.018,
+    0.86,
+    0.5737,
+    2.323,
     0,
-    1,
-    0.0629,
+    0,
+    0.0554,
     1.0
    ],
    "humano/jump/left_3": [
-    0.6073,
-    0.725,
-    1.347,
+    0.8387,
+    0.4778,
+    2.302,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/left_4": [
+    0.7793,
+    0.548,
+    1.891,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/left_5": [
+    0.8242,
+    0.4611,
+    2.282,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/left_6": [
+    0.6742,
+    0.6693,
+    1.255,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/left_7": [
+    0.4778,
+    0.6333,
+    1.084,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/jump/right_0": [
-    0.5819,
-    0.7577,
-    1.282,
+    0.5347,
+    0.6413,
+    0.811,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/jump/right_1": [
-    0.2946,
-    0.6572,
-    1.658,
+    0.3097,
+    0.6789,
+    1.389,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/jump/right_2": [
-    0.6559,
-    0.8106,
-    1.018,
+    0.1375,
+    0.5737,
+    2.323,
     0,
-    0,
-    0.0629,
+    1,
+    0.0554,
     1.0
    ],
    "humano/jump/right_3": [
-    0.3927,
-    0.725,
-    1.347,
+    0.1613,
+    0.4778,
+    2.302,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
-   "humano/gather/left_0": [
-    0.308,
-    0.7179,
-    1.074,
+   "humano/jump/right_4": [
+    0.2181,
+    0.548,
+    1.891,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/right_5": [
+    0.1758,
+    0.4611,
+    2.282,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/right_6": [
+    0.3258,
+    0.6693,
+    1.255,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/right_7": [
+    0.5222,
+    0.6333,
+    1.084,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_0": [
+    0.2509,
+    0.6443,
+    1.695,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_1": [
+    0.1527,
+    0.5745,
+    1.059,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_2": [
+    0.1468,
+    0.4319,
+    -0.512,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_3": [
+    0.1676,
+    0.3316,
+    -0.603,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_4": [
+    0.1359,
+    0.3829,
+    0.248,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_5": [
+    0.1603,
+    0.4071,
+    0.94,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_6": [
+    0.1745,
+    0.5842,
+    1.193,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_7": [
+    0.2475,
+    0.6424,
+    1.807,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_0": [
+    0.7437,
+    0.6583,
+    1.513,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_1": [
+    0.7224,
+    0.4947,
+    0.992,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_2": [
+    0.6604,
+    0.3519,
+    0.341,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_3": [
+    0.772,
+    0.1413,
+    -0.608,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_4": [
+    0.9309,
+    0.173,
+    -0.343,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_5": [
+    0.7758,
+    0.4313,
+    1.122,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_6": [
+    0.7246,
+    0.5133,
+    0.707,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/up_7": [
+    0.7631,
+    0.6571,
+    1.4,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/jump/down_left_0": [
+    0.6204,
+    0.6929,
+    1.878,
+    0,
+    1,
+    0.0554,
+    1.097
+   ],
+   "humano/jump/down_left_1": [
+    0.8405,
+    0.6497,
+    2.346,
+    0,
+    1,
+    0.0554,
+    1.006
+   ],
+   "humano/jump/down_left_2": [
+    0.8299,
+    0.7379,
+    2.272,
+    0,
+    1,
+    0.0554,
+    1.046
+   ],
+   "humano/jump/down_left_3": [
+    0.4901,
+    0.4987,
+    0.476,
+    0,
+    1,
+    0.0554,
+    0.616
+   ],
+   "humano/jump/down_left_4": [
+    0.5936,
+    0.6153,
+    1.438,
+    0,
+    1,
+    0.0554,
+    0.861
+   ],
+   "humano/jump/down_left_5": [
+    0.7963,
+    0.6267,
+    2.297,
+    0,
+    0,
+    0.0554,
+    0.965
+   ],
+   "humano/jump/down_left_6": [
+    0.8605,
+    0.6389,
+    2.203,
+    0,
+    0,
+    0.0554,
+    0.91
+   ],
+   "humano/jump/down_left_7": [
+    0.4416,
+    0.6323,
+    1.275,
+    0,
+    1,
+    0.0554,
+    0.781
+   ],
+   "humano/jump/down_right_0": [
+    0.3796,
+    0.6929,
+    1.878,
+    0,
+    0,
+    0.0554,
+    1.097
+   ],
+   "humano/jump/down_right_1": [
+    0.1595,
+    0.6497,
+    2.346,
+    0,
+    0,
+    0.0554,
+    1.006
+   ],
+   "humano/jump/down_right_2": [
+    0.1701,
+    0.7379,
+    2.272,
+    0,
+    0,
+    0.0554,
+    1.046
+   ],
+   "humano/jump/down_right_3": [
+    0.5099,
+    0.4987,
+    0.476,
+    0,
+    0,
+    0.0554,
+    0.616
+   ],
+   "humano/jump/down_right_4": [
+    0.4064,
+    0.6153,
+    1.438,
+    0,
+    0,
+    0.0554,
+    0.861
+   ],
+   "humano/jump/down_right_5": [
+    0.2037,
+    0.6267,
+    2.297,
+    0,
+    1,
+    0.0554,
+    0.965
+   ],
+   "humano/jump/down_right_6": [
+    0.1395,
+    0.6389,
+    2.203,
+    0,
+    1,
+    0.0554,
+    0.91
+   ],
+   "humano/jump/down_right_7": [
+    0.5584,
+    0.6323,
+    1.275,
+    0,
+    0,
+    0.0554,
+    0.781
+   ],
+   "humano/jump/up_left_0": [
+    0.2187,
+    0.7039,
+    0.388,
+    1,
+    1,
+    0.0554,
+    0.744
+   ],
+   "humano/jump/up_left_1": [
+    0.2167,
+    0.6371,
+    -0.245,
+    1,
+    1,
+    0.0554,
+    1.073
+   ],
+   "humano/jump/up_left_2": [
+    0.2388,
+    0.5921,
+    -0.721,
+    1,
+    0,
+    0.0554,
+    0.962
+   ],
+   "humano/jump/up_left_3": [
+    0.2642,
+    0.3631,
+    -0.411,
+    1,
+    0,
+    0.0554,
+    0.794
+   ],
+   "humano/jump/up_left_4": [
+    0.2933,
+    0.3263,
+    -0.242,
+    1,
+    0,
+    0.0554,
+    0.726
+   ],
+   "humano/jump/up_left_5": [
+    0.7715,
+    0.3639,
+    1.576,
+    1,
+    0,
+    0.0554,
+    0.94
+   ],
+   "humano/jump/up_left_6": [
+    0.1807,
+    0.622,
+    -0.353,
+    1,
+    1,
+    0.0554,
+    1.11
+   ],
+   "humano/jump/up_left_7": [
+    0.201,
+    0.7058,
+    0.39,
+    1,
+    1,
+    0.0554,
+    0.743
+   ],
+   "humano/jump/up_right_0": [
+    0.7813,
+    0.7039,
+    0.388,
+    1,
+    0,
+    0.0554,
+    0.744
+   ],
+   "humano/jump/up_right_1": [
+    0.7833,
+    0.6371,
+    -0.245,
+    1,
+    0,
+    0.0554,
+    1.073
+   ],
+   "humano/jump/up_right_2": [
+    0.7612,
+    0.5921,
+    -0.721,
+    1,
+    1,
+    0.0554,
+    0.962
+   ],
+   "humano/jump/up_right_3": [
+    0.7358,
+    0.3631,
+    -0.411,
+    1,
+    1,
+    0.0554,
+    0.794
+   ],
+   "humano/jump/up_right_4": [
+    0.7067,
+    0.3263,
+    -0.242,
+    1,
+    1,
+    0.0554,
+    0.726
+   ],
+   "humano/jump/up_right_5": [
+    0.226,
+    0.3639,
+    1.576,
+    1,
+    1,
+    0.0554,
+    0.94
+   ],
+   "humano/jump/up_right_6": [
+    0.8193,
+    0.622,
+    -0.353,
+    1,
+    0,
+    0.0554,
+    1.11
+   ],
+   "humano/jump/up_right_7": [
+    0.799,
+    0.7058,
+    0.39,
+    1,
+    0,
+    0.0554,
+    0.743
+   ],
+   "humano/gather/left_0": [
+    0.468,
+    0.6606,
+    0.805,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/gather/left_1": [
-    0.3045,
-    0.7834,
-    0.826,
+    0.4924,
+    0.6697,
+    1.099,
     0,
     1,
-    0.0604,
+    0.0554,
     1.0
    ],
    "humano/gather/left_2": [
-    0.2517,
-    0.8318,
-    0.308,
+    0.432,
+    0.7606,
+    1.603,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/gather/left_3": [
-    0.2413,
-    0.7843,
-    0.93,
+    0.4245,
+    0.8213,
+    1.432,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/left_4": [
+    0.4288,
+    0.8212,
+    1.374,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/left_5": [
+    0.3442,
+    0.7395,
+    1.001,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/left_6": [
+    0.3322,
+    0.5916,
+    0.979,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/left_7": [
+    0.3392,
+    0.4976,
+    0.616,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/gather/right_0": [
-    0.692,
-    0.7179,
-    1.074,
+    0.532,
+    0.6606,
+    0.805,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/gather/right_1": [
-    0.6955,
-    0.7834,
-    0.826,
+    0.5101,
+    0.6697,
+    1.099,
     0,
     0,
-    0.0604,
+    0.0554,
     1.0
    ],
    "humano/gather/right_2": [
-    0.7483,
-    0.8318,
-    0.308,
+    0.5705,
+    0.7606,
+    1.603,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/gather/right_3": [
-    0.7559,
-    0.7843,
-    0.93,
+    0.578,
+    0.8213,
+    1.432,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
-   "humano/attack_1h/left_0": [
-    0.3055,
-    0.6757,
-    1.063,
+   "humano/gather/right_4": [
+    0.5737,
+    0.8212,
+    1.374,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/right_5": [
+    0.6584,
+    0.7395,
+    1.001,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/right_6": [
+    0.6678,
+    0.5916,
+    0.979,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/right_7": [
+    0.6608,
+    0.4976,
+    0.616,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_0": [
+    0.2833,
+    0.6866,
+    1.706,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_1": [
+    0.2451,
+    0.725,
+    1.719,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_2": [
+    0.1637,
+    0.827,
+    1.015,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_3": [
+    0.1812,
+    0.8288,
+    0.907,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_4": [
+    0.1552,
+    0.725,
+    1.161,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_5": [
+    0.2299,
+    0.5595,
+    0.52,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_6": [
+    0.2478,
+    0.5382,
+    1.183,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_7": [
+    0.2912,
+    0.6172,
+    1.35,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_0": [
+    0.7184,
+    0.691,
+    1.511,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_1": [
+    0.7448,
+    0.7254,
+    1.552,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_2": [
+    0.8263,
+    0.8242,
+    1.227,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_3": [
+    0.8176,
+    0.8261,
+    1.082,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_4": [
+    0.8438,
+    0.804,
+    0.897,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_5": [
+    0.7456,
+    0.5633,
+    0.182,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_6": [
+    0.7454,
+    0.3709,
+    -0.611,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/up_7": [
+    0.7361,
+    0.3519,
+    -0.583,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/gather/down_left_0": [
+    0.6175,
+    0.6865,
+    1.734,
+    0,
+    1,
+    0.0554,
+    1.032
+   ],
+   "humano/gather/down_left_1": [
+    0.7153,
+    0.6743,
+    2.044,
+    0,
+    1,
+    0.0554,
+    1.12
+   ],
+   "humano/gather/down_left_2": [
+    0.7673,
+    0.6326,
+    2.354,
+    0,
+    1,
+    0.0554,
+    1.001
+   ],
+   "humano/gather/down_left_3": [
+    0.3804,
+    0.8255,
+    2.097,
+    0,
+    1,
+    0.0554,
+    1.113
+   ],
+   "humano/gather/down_left_4": [
+    0.7607,
+    0.6367,
+    2.228,
+    0,
+    1,
+    0.0554,
+    1.068
+   ],
+   "humano/gather/down_left_5": [
+    0.799,
+    0.6666,
+    1.933,
+    0,
+    1,
+    0.0554,
+    1.112
+   ],
+   "humano/gather/down_left_6": [
+    0.7365,
+    0.6933,
+    1.534,
+    0,
+    1,
+    0.0554,
+    0.915
+   ],
+   "humano/gather/down_left_7": [
+    0.5982,
+    0.694,
+    1.45,
+    0,
+    1,
+    0.0554,
+    0.868
+   ],
+   "humano/gather/down_right_0": [
+    0.3825,
+    0.6865,
+    1.734,
+    0,
+    0,
+    0.0554,
+    1.032
+   ],
+   "humano/gather/down_right_1": [
+    0.2847,
+    0.6743,
+    2.044,
+    0,
+    0,
+    0.0554,
+    1.12
+   ],
+   "humano/gather/down_right_2": [
+    0.2302,
+    0.6326,
+    2.354,
+    0,
+    0,
+    0.0554,
+    1.001
+   ],
+   "humano/gather/down_right_3": [
+    0.6221,
+    0.8255,
+    2.097,
+    0,
+    0,
+    0.0554,
+    1.113
+   ],
+   "humano/gather/down_right_4": [
+    0.2368,
+    0.6367,
+    2.228,
+    0,
+    0,
+    0.0554,
+    1.068
+   ],
+   "humano/gather/down_right_5": [
+    0.201,
+    0.6666,
+    1.933,
+    0,
+    0,
+    0.0554,
+    1.112
+   ],
+   "humano/gather/down_right_6": [
+    0.2635,
+    0.6933,
+    1.534,
+    0,
+    0,
+    0.0554,
+    0.915
+   ],
+   "humano/gather/down_right_7": [
+    0.4018,
+    0.694,
+    1.45,
+    0,
+    0,
+    0.0554,
+    0.868
+   ],
+   "humano/gather/up_left_0": [
+    0.2191,
+    0.6994,
+    0.484,
+    1,
+    1,
+    0.0554,
+    0.71
+   ],
+   "humano/gather/up_left_1": [
+    0.1813,
+    0.733,
+    0.749,
+    1,
+    1,
+    0.0554,
+    0.647
+   ],
+   "humano/gather/up_left_2": [
+    0.2067,
+    0.6483,
+    -0.037,
+    1,
+    1,
+    0.0554,
+    0.959
+   ],
+   "humano/gather/up_left_3": [
+    0.2005,
+    0.6457,
+    -0.088,
+    1,
+    1,
+    0.0554,
+    0.989
+   ],
+   "humano/gather/up_left_4": [
+    0.201,
+    0.8212,
+    0.919,
+    1,
+    1,
+    0.0554,
+    0.625
+   ],
+   "humano/gather/up_left_5": [
+    0.1988,
+    0.5822,
+    -0.416,
+    1,
+    1,
+    0.0554,
+    1.12
+   ],
+   "humano/gather/up_left_6": [
+    0.2081,
+    0.5211,
+    -0.612,
+    1,
+    1,
+    0.0554,
+    1.087
+   ],
+   "humano/gather/up_left_7": [
+    0.166,
+    0.623,
+    -0.023,
+    1,
+    1,
+    0.0554,
+    0.951
+   ],
+   "humano/gather/up_right_0": [
+    0.7834,
+    0.6994,
+    0.484,
+    1,
+    0,
+    0.0554,
+    0.71
+   ],
+   "humano/gather/up_right_1": [
+    0.8187,
+    0.733,
+    0.749,
+    1,
+    0,
+    0.0554,
+    0.647
+   ],
+   "humano/gather/up_right_2": [
+    0.7933,
+    0.6483,
+    -0.037,
+    1,
+    0,
+    0.0554,
+    0.959
+   ],
+   "humano/gather/up_right_3": [
+    0.7995,
+    0.6457,
+    -0.088,
+    1,
+    0,
+    0.0554,
+    0.989
+   ],
+   "humano/gather/up_right_4": [
+    0.799,
+    0.8212,
+    0.919,
+    1,
+    0,
+    0.0554,
+    0.625
+   ],
+   "humano/gather/up_right_5": [
+    0.8012,
+    0.5822,
+    -0.416,
+    1,
+    0,
+    0.0554,
+    1.12
+   ],
+   "humano/gather/up_right_6": [
+    0.7944,
+    0.5211,
+    -0.612,
+    1,
+    0,
+    0.0554,
+    1.087
+   ],
+   "humano/gather/up_right_7": [
+    0.834,
+    0.623,
+    -0.023,
+    1,
+    0,
+    0.0554,
+    0.951
+   ],
+   "humano/attack_1h/left_0": [
+    0.4736,
+    0.7041,
+    0.876,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/left_1": [
-    0.2659,
-    0.4756,
-    0.679,
+    0.3173,
+    0.4263,
+    -0.716,
     0,
-    1,
-    0.0629,
+    0,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/left_2": [
-    0.2842,
-    0.4356,
-    -0.559,
+    0.4402,
+    0.253,
+    0.535,
     0,
-    1,
-    0.0629,
+    0,
+    0.0419,
     1.0
    ],
    "humano/attack_1h/left_3": [
-    0.2139,
-    0.4466,
-    -0.115,
+    0.3842,
+    0.3057,
+    0.217,
     0,
-    1,
-    0.0629,
+    0,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/left_4": [
-    0.3212,
-    0.4809,
-    0.256,
+    0.3199,
+    0.4307,
+    -0.584,
     0,
-    1,
-    0.0629,
+    0,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/left_5": [
-    0.271,
-    0.5018,
-    -0.424,
+    0.3256,
+    0.5632,
+    0.091,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/left_6": [
-    0.1683,
-    0.6326,
-    0.472,
+    0.3378,
+    0.6254,
+    0.445,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/left_7": [
-    0.327,
-    0.6981,
-    1.272,
+    0.4136,
+    0.6822,
+    0.766,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_0": [
-    0.6945,
-    0.6757,
-    1.063,
+    0.5238,
+    0.7041,
+    0.876,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_1": [
-    0.7341,
-    0.4756,
-    0.679,
+    0.6853,
+    0.4263,
+    -0.716,
     0,
-    0,
-    0.0629,
+    1,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_2": [
-    0.7158,
-    0.4356,
-    -0.559,
+    0.5598,
+    0.253,
+    0.535,
     0,
-    0,
-    0.0629,
+    1,
+    0.0419,
     1.0
    ],
    "humano/attack_1h/right_3": [
-    0.7832,
-    0.4466,
-    -0.115,
+    0.6158,
+    0.3057,
+    0.217,
     0,
-    0,
-    0.0629,
+    1,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_4": [
-    0.6788,
-    0.4809,
-    0.256,
+    0.6776,
+    0.4307,
+    -0.584,
     0,
-    0,
-    0.0629,
+    1,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_5": [
-    0.7319,
-    0.5018,
-    -0.424,
+    0.6719,
+    0.5632,
+    0.091,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_6": [
-    0.8317,
-    0.6326,
-    0.472,
+    0.6622,
+    0.6254,
+    0.445,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/right_7": [
-    0.673,
-    0.6981,
-    1.272,
+    0.5864,
+    0.6822,
+    0.766,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_0": [
-    0.2416,
-    0.6818,
+    0.2723,
+    0.6783,
     1.685,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_1": [
-    0.2275,
-    0.4096,
-    -0.759,
+    0.2586,
+    0.4057,
+    -0.765,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_2": [
-    0.2811,
-    0.3265,
-    -0.374,
+    0.3106,
+    0.3172,
+    -0.283,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_3": [
-    0.3232,
-    0.3096,
-    -0.101,
+    0.3431,
+    0.3057,
+    -0.108,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_4": [
-    0.2423,
-    0.4925,
-    0.787,
+    0.2687,
+    0.4902,
+    0.807,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_5": [
-    0.2333,
-    0.5233,
-    0.417,
+    0.2638,
+    0.52,
+    0.391,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_6": [
-    0.2351,
-    0.5949,
+    0.2627,
+    0.5929,
     1.685,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/down_7": [
-    0.2269,
-    0.6506,
+    0.258,
+    0.6487,
     1.685,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_0": [
-    0.7617,
-    0.6535,
+    0.7359,
+    0.652,
     -0.666,
     1,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_1": [
-    0.7641,
-    0.5062,
-    -0.097,
+    0.7317,
+    0.5045,
+    -0.108,
     1,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_2": [
-    0.771,
-    0.3747,
-    -0.618,
+    0.7396,
+    0.3811,
+    -0.735,
     1,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_3": [
-    0.727,
-    0.3028,
-    -0.474,
+    0.699,
+    0.3009,
+    -0.47,
     1,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_4": [
-    0.7683,
-    0.3603,
-    -0.708,
+    0.7402,
+    0.3583,
+    -0.711,
     1,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_5": [
-    0.7718,
-    0.4573,
-    -0.43,
+    0.741,
+    0.4556,
+    -0.44,
     1,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_6": [
-    0.7691,
-    0.5382,
-    0.355,
+    0.7359,
+    0.5365,
+    0.342,
     1,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_1h/up_7": [
-    0.7687,
-    0.6328,
+    0.7397,
+    0.6266,
     -0.666,
     1,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
-   "humano/punch/left_0": [
-    0.6461,
-    0.5462,
+   "humano/attack_1h/down_left_0": [
+    0.3404,
+    0.6963,
+    1.679,
+    0,
+    1,
+    0.0554,
+    1.001
+   ],
+   "humano/attack_1h/down_left_1": [
+    0.2914,
+    0.4898,
+    -0.547,
+    0,
+    1,
+    0.0554,
+    0.862
+   ],
+   "humano/attack_1h/down_left_2": [
+    0.3231,
+    0.2673,
+    -0.131,
+    0,
+    0,
+    0.0554,
+    1.014
+   ],
+   "humano/attack_1h/down_left_3": [
+    0.313,
+    0.2692,
+    -0.185,
+    0,
+    0,
+    0.0554,
+    1.044
+   ],
+   "humano/attack_1h/down_left_4": [
+    0.2499,
+    0.3793,
+    -0.381,
+    0,
+    0,
+    0.0554,
+    1.116
+   ],
+   "humano/attack_1h/down_left_5": [
+    0.3047,
+    0.564,
+    -0.229,
+    0,
+    1,
+    0.0554,
+    0.722
+   ],
+   "humano/attack_1h/down_left_6": [
+    0.2487,
+    0.6477,
+    1.097,
+    0,
+    1,
+    0.0554,
+    0.714
+   ],
+   "humano/attack_1h/down_left_7": [
+    0.3508,
+    0.7,
     1.726,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.028
+   ],
+   "humano/attack_1h/down_right_0": [
+    0.6621,
+    0.6963,
+    1.679,
+    0,
+    0,
+    0.0554,
+    1.001
+   ],
+   "humano/attack_1h/down_right_1": [
+    0.7086,
+    0.4898,
+    -0.547,
+    0,
+    0,
+    0.0554,
+    0.862
+   ],
+   "humano/attack_1h/down_right_2": [
+    0.6769,
+    0.2673,
+    -0.131,
+    0,
+    1,
+    0.0554,
+    1.014
+   ],
+   "humano/attack_1h/down_right_3": [
+    0.687,
+    0.2692,
+    -0.185,
+    0,
+    1,
+    0.0554,
+    1.044
+   ],
+   "humano/attack_1h/down_right_4": [
+    0.7527,
+    0.3793,
+    -0.381,
+    0,
+    1,
+    0.0554,
+    1.116
+   ],
+   "humano/attack_1h/down_right_5": [
+    0.6928,
+    0.564,
+    -0.229,
+    0,
+    0,
+    0.0554,
+    0.722
+   ],
+   "humano/attack_1h/down_right_6": [
+    0.7513,
+    0.6477,
+    1.097,
+    0,
+    0,
+    0.0554,
+    0.714
+   ],
+   "humano/attack_1h/down_right_7": [
+    0.6492,
+    0.7,
+    1.726,
+    0,
+    0,
+    0.0554,
+    1.028
+   ],
+   "humano/attack_1h/up_left_0": [
+    0.2284,
+    0.7126,
+    0.525,
+    1,
+    1,
+    0.0554,
+    0.698
+   ],
+   "humano/attack_1h/up_left_1": [
+    0.1837,
+    0.4874,
+    -0.54,
+    1,
+    1,
+    0.0554,
+    1.11
+   ],
+   "humano/attack_1h/up_left_2": [
+    0.2471,
+    0.291,
+    -0.317,
+    1,
+    0,
+    0.0554,
+    0.754
+   ],
+   "humano/attack_1h/up_left_3": [
+    0.2532,
+    0.3182,
+    0.012,
+    1,
+    0,
+    0.0554,
+    0.657
+   ],
+   "humano/attack_1h/up_left_4": [
+    0.2083,
+    0.3927,
+    -0.497,
+    1,
+    0,
+    0.0554,
+    0.835
+   ],
+   "humano/attack_1h/up_left_5": [
+    0.1888,
+    0.567,
+    -0.51,
+    1,
+    1,
+    0.0554,
+    1.116
+   ],
+   "humano/attack_1h/up_left_6": [
+    0.1281,
+    0.6772,
+    -0.115,
+    1,
+    1,
+    0.0554,
+    1.005
+   ],
+   "humano/attack_1h/up_left_7": [
+    0.2252,
+    0.7131,
+    0.438,
+    1,
+    1,
+    0.0554,
+    0.726
+   ],
+   "humano/attack_1h/up_right_0": [
+    0.7716,
+    0.7126,
+    0.525,
+    1,
+    0,
+    0.0554,
+    0.698
+   ],
+   "humano/attack_1h/up_right_1": [
+    0.8163,
+    0.4874,
+    -0.54,
+    1,
+    0,
+    0.0554,
+    1.11
+   ],
+   "humano/attack_1h/up_right_2": [
+    0.7529,
+    0.291,
+    -0.317,
+    1,
+    1,
+    0.0554,
+    0.754
+   ],
+   "humano/attack_1h/up_right_3": [
+    0.7443,
+    0.3182,
+    0.012,
+    1,
+    1,
+    0.0554,
+    0.657
+   ],
+   "humano/attack_1h/up_right_4": [
+    0.7892,
+    0.3927,
+    -0.497,
+    1,
+    1,
+    0.0554,
+    0.835
+   ],
+   "humano/attack_1h/up_right_5": [
+    0.8112,
+    0.567,
+    -0.51,
+    1,
+    0,
+    0.0554,
+    1.116
+   ],
+   "humano/attack_1h/up_right_6": [
+    0.8744,
+    0.6772,
+    -0.115,
+    1,
+    0,
+    0.0554,
+    1.005
+   ],
+   "humano/attack_1h/up_right_7": [
+    0.7748,
+    0.7131,
+    0.438,
+    1,
+    0,
+    0.0554,
+    0.726
+   ],
+   "humano/punch/left_0": [
+    0.4762,
+    0.7021,
+    0.874,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/punch/left_1": [
-    0.2879,
-    0.4451,
-    -0.466,
+    0.3804,
+    0.4477,
+    -0.672,
     0,
     1,
-    0.0453,
+    0.0238,
     1.0
    ],
    "humano/punch/left_2": [
-    0.2602,
-    0.4089,
-    -0.656,
+    0.5798,
+    0.5618,
+    1.915,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/left_3": [
-    0.249,
-    0.4181,
-    -0.637,
+    0.6693,
+    0.5836,
+    1.963,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/left_4": [
-    0.4735,
-    0.5419,
-    1.672,
+    0.7006,
+    0.5907,
+    1.919,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/left_5": [
-    0.6405,
-    0.526,
-    1.817,
+    0.3094,
+    0.4384,
+    -0.089,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/left_6": [
+    0.3592,
+    0.5218,
+    0.228,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/left_7": [
+    0.4075,
+    0.6333,
+    1.074,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/punch/right_0": [
-    0.3539,
-    0.5462,
-    1.726,
+    0.5238,
+    0.7021,
+    0.874,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/right_1": [
-    0.7121,
-    0.4451,
-    -0.466,
+    0.6196,
+    0.4477,
+    -0.672,
     0,
     0,
-    0.0453,
+    0.0238,
     1.0
    ],
    "humano/punch/right_2": [
-    0.7398,
-    0.4089,
-    -0.656,
+    0.4202,
+    0.5618,
+    1.915,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/right_3": [
-    0.7538,
-    0.4181,
-    -0.637,
+    0.3332,
+    0.5836,
+    1.963,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/right_4": [
-    0.5265,
-    0.5419,
-    1.672,
+    0.3019,
+    0.5907,
+    1.919,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/punch/right_5": [
-    0.3595,
-    0.526,
-    1.817,
+    0.6906,
+    0.4384,
+    -0.089,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
-   "humano/attack_2h/left_0": [
-    0.5251,
-    0.677,
-    1.411,
+   "humano/punch/right_6": [
+    0.6408,
+    0.5218,
+    0.228,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/right_7": [
+    0.595,
+    0.6333,
+    1.074,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_0": [
+    0.291,
+    0.6981,
+    1.703,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_1": [
+    0.2598,
+    0.6118,
+    1.303,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_2": [
+    0.2721,
+    0.5316,
+    0.754,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_3": [
+    0.2714,
+    0.5231,
+    0.799,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_4": [
+    0.3665,
+    0.4047,
+    -0.117,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_5": [
+    0.3629,
+    0.4089,
+    -0.222,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_6": [
+    0.2916,
+    0.5532,
+    0.371,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_7": [
+    0.2782,
+    0.6716,
+    1.541,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_0": [
+    0.7113,
+    0.6991,
+    1.439,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_1": [
+    0.7375,
+    0.4994,
+    -0.522,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_2": [
+    0.7302,
+    0.5013,
+    1.211,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_3": [
+    0.2509,
+    0.703,
+    1.44,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_4": [
+    0.8237,
+    0.3914,
+    0.131,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_5": [
+    0.8089,
+    0.4516,
+    0.021,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_6": [
+    0.7794,
+    0.6205,
+    1.064,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/up_7": [
+    0.7333,
+    0.693,
+    1.502,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/punch/down_left_0": [
+    0.3399,
+    0.6981,
+    1.69,
+    0,
+    1,
+    0.0554,
+    1.008
+   ],
+   "humano/punch/down_left_1": [
+    0.364,
+    0.5974,
+    0.77,
+    0,
+    1,
+    0.0554,
+    0.638
+   ],
+   "humano/punch/down_left_2": [
+    0.4333,
+    0.5655,
+    1.991,
+    0,
+    1,
+    0.0354,
+    1.121
+   ],
+   "humano/punch/down_left_3": [
+    0.3217,
+    0.4922,
+    0.718,
+    0,
+    1,
+    0.0544,
+    0.631
+   ],
+   "humano/punch/down_left_4": [
+    0.3022,
+    0.4431,
+    -0.245,
+    0,
+    1,
+    0.0554,
+    0.727
+   ],
+   "humano/punch/down_left_5": [
+    0.3022,
+    0.4389,
+    -0.223,
+    0,
+    1,
+    0.0542,
+    0.72
+   ],
+   "humano/punch/down_left_6": [
+    0.2665,
+    0.6208,
+    0.918,
+    0,
+    1,
+    0.0554,
+    0.665
+   ],
+   "humano/punch/down_left_7": [
+    0.3493,
+    0.6981,
+    1.704,
+    0,
+    1,
+    0.0554,
+    1.015
+   ],
+   "humano/punch/down_right_0": [
+    0.6627,
+    0.6981,
+    1.69,
+    0,
+    0,
+    0.0554,
+    1.008
+   ],
+   "humano/punch/down_right_1": [
+    0.6335,
+    0.5974,
+    0.77,
+    0,
+    0,
+    0.0554,
+    0.638
+   ],
+   "humano/punch/down_right_2": [
+    0.5642,
+    0.5655,
+    1.991,
+    0,
+    0,
+    0.0354,
+    1.121
+   ],
+   "humano/punch/down_right_3": [
+    0.6783,
+    0.4922,
+    0.718,
+    0,
+    0,
+    0.0544,
+    0.631
+   ],
+   "humano/punch/down_right_4": [
+    0.6978,
+    0.4431,
+    -0.245,
+    0,
+    0,
+    0.0554,
+    0.727
+   ],
+   "humano/punch/down_right_5": [
+    0.6978,
+    0.4389,
+    -0.223,
+    0,
+    0,
+    0.0542,
+    0.72
+   ],
+   "humano/punch/down_right_6": [
+    0.736,
+    0.6208,
+    0.918,
+    0,
+    0,
+    0.0554,
+    0.665
+   ],
+   "humano/punch/down_right_7": [
+    0.6532,
+    0.6981,
+    1.704,
+    0,
+    0,
+    0.0554,
+    1.015
+   ],
+   "humano/punch/up_left_0": [
+    0.2288,
+    0.7089,
+    0.503,
+    1,
+    1,
+    0.0554,
+    0.704
+   ],
+   "humano/punch/up_left_1": [
+    0.2191,
+    0.6064,
+    -0.127,
+    1,
+    1,
+    0.0554,
+    1.012
+   ],
+   "humano/punch/up_left_2": [
+    0.2309,
+    0.5576,
+    0.405,
+    1,
+    1,
+    0.0554,
+    0.737
+   ],
+   "humano/punch/up_left_3": [
+    0.3248,
+    0.4769,
+    -0.525,
+    1,
+    0,
+    0.0554,
+    0.85
+   ],
+   "humano/punch/up_left_4": [
+    0.2809,
+    0.4315,
+    -0.634,
+    1,
+    1,
+    0.0554,
+    1.078
+   ],
+   "humano/punch/up_left_5": [
+    0.2858,
+    0.4298,
+    -0.641,
+    1,
+    1,
+    0.0554,
+    1.075
+   ],
+   "humano/punch/up_left_6": [
+    0.2692,
+    0.5678,
+    -0.392,
+    1,
+    1,
+    0.0554,
+    1.118
+   ],
+   "humano/punch/up_left_7": [
+    0.214,
+    0.7021,
+    0.374,
+    1,
+    1,
+    0.0554,
+    0.749
+   ],
+   "humano/punch/up_right_0": [
+    0.7712,
+    0.7089,
+    0.503,
+    1,
+    0,
+    0.0554,
+    0.704
+   ],
+   "humano/punch/up_right_1": [
+    0.7784,
+    0.6064,
+    -0.127,
+    1,
+    0,
+    0.0554,
+    1.012
+   ],
+   "humano/punch/up_right_2": [
+    0.7691,
+    0.5576,
+    0.405,
+    1,
+    0,
+    0.0554,
+    0.737
+   ],
+   "humano/punch/up_right_3": [
+    0.6752,
+    0.4769,
+    -0.525,
+    1,
+    1,
+    0.0554,
+    0.85
+   ],
+   "humano/punch/up_right_4": [
+    0.7191,
+    0.4315,
+    -0.634,
+    1,
+    0,
+    0.0554,
+    1.078
+   ],
+   "humano/punch/up_right_5": [
+    0.7142,
+    0.4298,
+    -0.641,
+    1,
+    0,
+    0.0554,
+    1.075
+   ],
+   "humano/punch/up_right_6": [
+    0.7283,
+    0.5678,
+    -0.392,
+    1,
+    0,
+    0.0554,
+    1.118
+   ],
+   "humano/punch/up_right_7": [
+    0.786,
+    0.7021,
+    0.374,
+    1,
+    0,
+    0.0554,
+    0.749
+   ],
+   "humano/attack_2h/left_0": [
+    0.4715,
+    0.6907,
+    0.863,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/left_1": [
-    0.3932,
-    0.2662,
-    -0.046,
+    0.33,
+    0.5354,
+    -0.297,
     0,
-    0,
-    0.0629,
+    1,
+    0.0445,
     1.0
    ],
    "humano/attack_2h/left_2": [
-    0.3891,
-    0.2742,
-    -0.007,
+    0.3737,
+    0.2715,
+    -0.111,
     0,
     0,
-    0.0629,
+    0.0301,
     1.0
    ],
    "humano/attack_2h/left_3": [
-    0.3436,
-    0.3745,
-    -0.496,
+    0.365,
+    0.3057,
+    -0.16,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/left_4": [
-    0.2904,
-    0.7373,
-    0.819,
+    0.3348,
+    0.4288,
+    -0.688,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/left_5": [
-    0.3256,
-    0.5651,
-    -0.166,
+    0.3584,
+    0.5634,
+    0.081,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/left_6": [
-    0.3648,
-    0.4573,
-    -0.497,
+    0.5019,
+    0.685,
+    1.119,
     0,
     1,
-    0.0629,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/left_7": [
+    0.611,
+    0.687,
+    1.512,
+    0,
+    1,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/right_0": [
-    0.4721,
-    0.677,
-    1.411,
+    0.526,
+    0.6907,
+    0.863,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/right_1": [
-    0.6096,
-    0.2662,
-    -0.046,
+    0.67,
+    0.5354,
+    -0.297,
     0,
-    1,
-    0.0629,
+    0,
+    0.0445,
     1.0
    ],
    "humano/attack_2h/right_2": [
-    0.6138,
-    0.2742,
-    -0.007,
+    0.6263,
+    0.2715,
+    -0.111,
     0,
     1,
-    0.0629,
+    0.0301,
     1.0
    ],
    "humano/attack_2h/right_3": [
-    0.6593,
-    0.3745,
-    -0.496,
+    0.635,
+    0.3057,
+    -0.16,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/right_4": [
-    0.7096,
-    0.7373,
-    0.819,
+    0.6652,
+    0.4288,
+    -0.688,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/right_5": [
-    0.6744,
-    0.5651,
-    -0.166,
+    0.6441,
+    0.5634,
+    0.081,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/attack_2h/right_6": [
-    0.6352,
-    0.4573,
-    -0.497,
+    0.4981,
+    0.685,
+    1.119,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
+   "humano/attack_2h/right_7": [
+    0.3864,
+    0.687,
+    1.512,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_0": [
+    0.2895,
+    0.6962,
+    1.751,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_1": [
+    0.2202,
+    0.4872,
+    0.485,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_2": [
+    0.2927,
+    0.2942,
+    -0.107,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_3": [
+    0.306,
+    0.25,
+    -0.214,
+    0,
+    0,
+    0.0375,
+    1.0
+   ],
+   "humano/attack_2h/down_4": [
+    0.314,
+    0.4556,
+    0.809,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_5": [
+    0.3275,
+    0.5578,
+    0.897,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_6": [
+    0.3927,
+    0.6418,
+    2.093,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_7": [
+    0.3323,
+    0.6828,
+    1.667,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_0": [
+    0.7118,
+    0.6986,
+    1.542,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_1": [
+    0.7881,
+    0.4109,
+    -0.761,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_2": [
+    0.7119,
+    0.2864,
+    -0.29,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_3": [
+    0.6577,
+    0.2843,
+    0.002,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_4": [
+    0.741,
+    0.3941,
+    0.348,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_5": [
+    0.768,
+    0.4721,
+    0.746,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_6": [
+    0.7493,
+    0.5062,
+    0.678,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/up_7": [
+    0.7247,
+    0.6559,
+    1.639,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/attack_2h/down_left_0": [
+    0.3369,
+    0.6943,
+    1.701,
+    0,
+    1,
+    0.0554,
+    1.014
+   ],
+   "humano/attack_2h/down_left_1": [
+    0.352,
+    0.5144,
+    -0.014,
+    0,
+    1,
+    0.0554,
+    0.663
+   ],
+   "humano/attack_2h/down_left_2": [
+    0.3256,
+    0.2919,
+    -0.434,
+    0,
+    0,
+    0.0494,
+    1.121
+   ],
+   "humano/attack_2h/down_left_3": [
+    0.3864,
+    0.2731,
+    -0.192,
+    0,
+    0,
+    0.0554,
+    1.047
+   ],
+   "humano/attack_2h/down_left_4": [
+    0.335,
+    0.5588,
+    1.313,
+    0,
+    1,
+    0.0554,
+    0.799
+   ],
+   "humano/attack_2h/down_left_5": [
+    0.6066,
+    0.6582,
+    2.241,
+    0,
+    1,
+    0.0554,
+    1.062
+   ],
+   "humano/attack_2h/down_left_6": [
+    0.3269,
+    0.6116,
+    0.707,
+    0,
+    1,
+    0.0554,
+    0.63
+   ],
+   "humano/attack_2h/down_left_7": [
+    0.345,
+    0.6962,
+    1.743,
+    0,
+    1,
+    0.0554,
+    1.037
+   ],
+   "humano/attack_2h/down_right_0": [
+    0.6606,
+    0.6943,
+    1.701,
+    0,
+    0,
+    0.0554,
+    1.014
+   ],
+   "humano/attack_2h/down_right_1": [
+    0.648,
+    0.5144,
+    -0.014,
+    0,
+    0,
+    0.0554,
+    0.663
+   ],
+   "humano/attack_2h/down_right_2": [
+    0.6744,
+    0.2919,
+    -0.434,
+    0,
+    1,
+    0.0494,
+    1.121
+   ],
+   "humano/attack_2h/down_right_3": [
+    0.6136,
+    0.2731,
+    -0.192,
+    0,
+    1,
+    0.0554,
+    1.047
+   ],
+   "humano/attack_2h/down_right_4": [
+    0.6625,
+    0.5588,
+    1.313,
+    0,
+    0,
+    0.0554,
+    0.799
+   ],
+   "humano/attack_2h/down_right_5": [
+    0.3934,
+    0.6582,
+    2.241,
+    0,
+    0,
+    0.0554,
+    1.062
+   ],
+   "humano/attack_2h/down_right_6": [
+    0.6731,
+    0.6116,
+    0.707,
+    0,
+    0,
+    0.0554,
+    0.63
+   ],
+   "humano/attack_2h/down_right_7": [
+    0.655,
+    0.6962,
+    1.743,
+    0,
+    0,
+    0.0554,
+    1.037
+   ],
+   "humano/attack_2h/up_left_0": [
+    0.2232,
+    0.7071,
+    0.1,
+    1,
+    1,
+    0.0554,
+    0.879
+   ],
+   "humano/attack_2h/up_left_1": [
+    0.1635,
+    0.5089,
+    -0.41,
+    1,
+    1,
+    0.0554,
+    1.12
+   ],
+   "humano/attack_2h/up_left_2": [
+    0.2373,
+    0.3024,
+    -0.332,
+    1,
+    0,
+    0.0554,
+    0.76
+   ],
+   "humano/attack_2h/up_left_3": [
+    0.286,
+    0.3079,
+    -0.128,
+    1,
+    0,
+    0.0554,
+    0.691
+   ],
+   "humano/attack_2h/up_left_4": [
+    0.2988,
+    0.3993,
+    -0.26,
+    1,
+    0,
+    0.0554,
+    0.732
+   ],
+   "humano/attack_2h/up_left_5": [
+    0.2793,
+    0.4963,
+    -0.726,
+    1,
+    1,
+    0.0554,
+    1.033
+   ],
+   "humano/attack_2h/up_left_6": [
+    0.1996,
+    0.6687,
+    -0.153,
+    1,
+    1,
+    0.0554,
+    1.027
+   ],
+   "humano/attack_2h/up_left_7": [
+    0.2284,
+    0.7134,
+    0.406,
+    1,
+    1,
+    0.0554,
+    0.737
+   ],
+   "humano/attack_2h/up_right_0": [
+    0.7768,
+    0.7071,
+    0.1,
+    1,
+    0,
+    0.0554,
+    0.879
+   ],
+   "humano/attack_2h/up_right_1": [
+    0.8365,
+    0.5089,
+    -0.41,
+    1,
+    0,
+    0.0554,
+    1.12
+   ],
+   "humano/attack_2h/up_right_2": [
+    0.7627,
+    0.3024,
+    -0.332,
+    1,
+    1,
+    0.0554,
+    0.76
+   ],
+   "humano/attack_2h/up_right_3": [
+    0.714,
+    0.3079,
+    -0.128,
+    1,
+    1,
+    0.0554,
+    0.691
+   ],
+   "humano/attack_2h/up_right_4": [
+    0.7012,
+    0.3993,
+    -0.26,
+    1,
+    1,
+    0.0554,
+    0.732
+   ],
+   "humano/attack_2h/up_right_5": [
+    0.7207,
+    0.4963,
+    -0.726,
+    1,
+    0,
+    0.0554,
+    1.033
+   ],
+   "humano/attack_2h/up_right_6": [
+    0.8004,
+    0.6687,
+    -0.153,
+    1,
+    0,
+    0.0554,
+    1.027
+   ],
+   "humano/attack_2h/up_right_7": [
+    0.7716,
+    0.7134,
+    0.406,
+    1,
+    0,
+    0.0554,
+    0.737
+   ],
    "humano/kick/left_0": [
-    0.5454,
+    0.5388,
     0.5059,
     1.401,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/left_1": [
-    0.5634,
+    0.5572,
     0.5089,
     1.631,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/left_2": [
-    0.6083,
+    0.5943,
     0.5136,
     1.399,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/left_3": [
-    0.8205,
+    0.7813,
     0.5173,
     1.295,
     0,
     1,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/right_0": [
-    0.4546,
+    0.4612,
     0.5059,
     1.401,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/right_1": [
-    0.4366,
+    0.4428,
     0.5089,
     1.631,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/right_2": [
-    0.3917,
+    0.4057,
     0.5136,
     1.399,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
    ],
    "humano/kick/right_3": [
-    0.1795,
+    0.2162,
     0.5173,
     1.295,
     0,
     0,
-    0.0629,
+    0.0554,
     1.0
+   ],
+   "humano/thrust_1h/left_0": [
+    0.4726,
+    0.6931,
+    0.823,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_1": [
+    0.3636,
+    0.5798,
+    0.65,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_2": [
+    0.6446,
+    0.6321,
+    1.656,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_3": [
+    0.2258,
+    0.473,
+    -0.51,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_4": [
+    0.2258,
+    0.4748,
+    -0.505,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_5": [
+    0.2199,
+    0.4809,
+    -0.606,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_6": [
+    0.3139,
+    0.59,
+    0.381,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/left_7": [
+    0.348,
+    0.6206,
+    0.771,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_0": [
+    0.5274,
+    0.6931,
+    0.823,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_1": [
+    0.6364,
+    0.5798,
+    0.65,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_2": [
+    0.3579,
+    0.6321,
+    1.656,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_3": [
+    0.7742,
+    0.473,
+    -0.51,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_4": [
+    0.7742,
+    0.4748,
+    -0.505,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_5": [
+    0.7776,
+    0.4809,
+    -0.606,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_6": [
+    0.6887,
+    0.59,
+    0.381,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/right_7": [
+    0.652,
+    0.6206,
+    0.771,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_0": [
+    0.2913,
+    0.6962,
+    1.691,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_1": [
+    0.2643,
+    0.5866,
+    1.323,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_2": [
+    0.2581,
+    0.4868,
+    0.685,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_3": [
+    0.2667,
+    0.4185,
+    0.037,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_4": [
+    0.2745,
+    0.4237,
+    0.232,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_5": [
+    0.2771,
+    0.4275,
+    0.151,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_6": [
+    0.2509,
+    0.582,
+    0.947,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_7": [
+    0.2619,
+    0.6732,
+    1.319,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_0": [
+    0.7153,
+    0.6931,
+    1.49,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_1": [
+    0.7379,
+    0.5079,
+    1.311,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_2": [
+    0.7062,
+    0.3402,
+    -0.31,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_3": [
+    0.7539,
+    0.4502,
+    -0.457,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_4": [
+    0.7598,
+    0.5196,
+    0.499,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_5": [
+    0.7584,
+    0.5984,
+    1.132,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_6": [
+    0.7556,
+    0.6623,
+    1.491,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/up_7": [
+    0.7385,
+    0.6877,
+    1.421,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_1h/down_left_0": [
+    0.3293,
+    0.6872,
+    1.579,
+    0,
+    1,
+    0.0554,
+    0.942
+   ],
+   "humano/thrust_1h/down_left_1": [
+    0.312,
+    0.5499,
+    0.374,
+    0,
+    1,
+    0.0554,
+    0.616
+   ],
+   "humano/thrust_1h/down_left_2": [
+    0.2407,
+    0.4451,
+    -0.624,
+    0,
+    0,
+    0.0554,
+    1.083
+   ],
+   "humano/thrust_1h/down_left_3": [
+    0.2442,
+    0.4443,
+    -0.409,
+    0,
+    1,
+    0.0554,
+    0.793
+   ],
+   "humano/thrust_1h/down_left_4": [
+    0.2367,
+    0.4488,
+    -0.244,
+    0,
+    1,
+    0.0554,
+    0.727
+   ],
+   "humano/thrust_1h/down_left_5": [
+    0.2088,
+    0.4596,
+    0.363,
+    0,
+    1,
+    0.0297,
+    0.617
+   ],
+   "humano/thrust_1h/down_left_6": [
+    0.219,
+    0.6116,
+    0.887,
+    0,
+    1,
+    0.0554,
+    0.659
+   ],
+   "humano/thrust_1h/down_left_7": [
+    0.3231,
+    0.6905,
+    1.671,
+    0,
+    1,
+    0.0554,
+    0.996
+   ],
+   "humano/thrust_1h/down_right_0": [
+    0.6707,
+    0.6872,
+    1.579,
+    0,
+    0,
+    0.0554,
+    0.942
+   ],
+   "humano/thrust_1h/down_right_1": [
+    0.688,
+    0.5499,
+    0.374,
+    0,
+    0,
+    0.0554,
+    0.616
+   ],
+   "humano/thrust_1h/down_right_2": [
+    0.7593,
+    0.4451,
+    -0.624,
+    0,
+    1,
+    0.0554,
+    1.083
+   ],
+   "humano/thrust_1h/down_right_3": [
+    0.7558,
+    0.4443,
+    -0.409,
+    0,
+    0,
+    0.0554,
+    0.793
+   ],
+   "humano/thrust_1h/down_right_4": [
+    0.7633,
+    0.4488,
+    -0.244,
+    0,
+    0,
+    0.0554,
+    0.727
+   ],
+   "humano/thrust_1h/down_right_5": [
+    0.7886,
+    0.4596,
+    0.363,
+    0,
+    0,
+    0.0297,
+    0.617
+   ],
+   "humano/thrust_1h/down_right_6": [
+    0.781,
+    0.6116,
+    0.887,
+    0,
+    0,
+    0.0554,
+    0.659
+   ],
+   "humano/thrust_1h/down_right_7": [
+    0.6769,
+    0.6905,
+    1.671,
+    0,
+    0,
+    0.0554,
+    0.996
+   ],
+   "humano/thrust_1h/up_left_0": [
+    0.2292,
+    0.7109,
+    0.487,
+    1,
+    1,
+    0.0554,
+    0.709
+   ],
+   "humano/thrust_1h/up_left_1": [
+    0.219,
+    0.5986,
+    -0.123,
+    1,
+    1,
+    0.0554,
+    1.01
+   ],
+   "humano/thrust_1h/up_left_2": [
+    0.2167,
+    0.488,
+    -0.709,
+    1,
+    1,
+    0.0554,
+    1.043
+   ],
+   "humano/thrust_1h/up_left_3": [
+    0.2049,
+    0.4978,
+    -0.66,
+    1,
+    1,
+    0.0554,
+    1.067
+   ],
+   "humano/thrust_1h/up_left_4": [
+    0.2015,
+    0.5359,
+    -0.456,
+    1,
+    1,
+    0.0554,
+    1.121
+   ],
+   "humano/thrust_1h/up_left_5": [
+    0.211,
+    0.5821,
+    -0.211,
+    1,
+    1,
+    0.0554,
+    1.057
+   ],
+   "humano/thrust_1h/up_left_6": [
+    0.1838,
+    0.6371,
+    -0.125,
+    1,
+    1,
+    0.0554,
+    1.011
+   ],
+   "humano/thrust_1h/up_left_7": [
+    0.2332,
+    0.7126,
+    0.537,
+    1,
+    1,
+    0.0554,
+    0.694
+   ],
+   "humano/thrust_1h/up_right_0": [
+    0.7708,
+    0.7109,
+    0.487,
+    1,
+    0,
+    0.0554,
+    0.709
+   ],
+   "humano/thrust_1h/up_right_1": [
+    0.7785,
+    0.5986,
+    -0.123,
+    1,
+    0,
+    0.0554,
+    1.01
+   ],
+   "humano/thrust_1h/up_right_2": [
+    0.7808,
+    0.488,
+    -0.709,
+    1,
+    0,
+    0.0554,
+    1.043
+   ],
+   "humano/thrust_1h/up_right_3": [
+    0.7951,
+    0.4978,
+    -0.66,
+    1,
+    0,
+    0.0554,
+    1.067
+   ],
+   "humano/thrust_1h/up_right_4": [
+    0.7985,
+    0.5359,
+    -0.456,
+    1,
+    0,
+    0.0554,
+    1.121
+   ],
+   "humano/thrust_1h/up_right_5": [
+    0.7916,
+    0.5821,
+    -0.211,
+    1,
+    0,
+    0.0554,
+    1.057
+   ],
+   "humano/thrust_1h/up_right_6": [
+    0.8137,
+    0.6371,
+    -0.125,
+    1,
+    0,
+    0.0554,
+    1.011
+   ],
+   "humano/thrust_1h/up_right_7": [
+    0.7693,
+    0.7126,
+    0.537,
+    1,
+    0,
+    0.0554,
+    0.694
+   ],
+   "humano/thrust_2h/left_0": [
+    0.4774,
+    0.694,
+    0.922,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_1": [
+    0.6343,
+    0.6527,
+    1.952,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_2": [
+    0.6464,
+    0.6005,
+    1.774,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_3": [
+    0.342,
+    0.4179,
+    -0.456,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_4": [
+    0.3065,
+    0.4316,
+    -0.733,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_5": [
+    0.2864,
+    0.4493,
+    -0.482,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_6": [
+    0.3249,
+    0.5425,
+    -0.187,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/left_7": [
+    0.3943,
+    0.6521,
+    1.181,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_0": [
+    0.5226,
+    0.694,
+    0.922,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_1": [
+    0.3657,
+    0.6527,
+    1.952,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_2": [
+    0.3511,
+    0.6005,
+    1.774,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_3": [
+    0.658,
+    0.4179,
+    -0.456,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_4": [
+    0.6935,
+    0.4316,
+    -0.733,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_5": [
+    0.7136,
+    0.4493,
+    -0.482,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_6": [
+    0.6726,
+    0.5425,
+    -0.187,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/right_7": [
+    0.6057,
+    0.6521,
+    1.181,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_0": [
+    0.2876,
+    0.6923,
+    1.731,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_1": [
+    0.2977,
+    0.6341,
+    1.389,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_2": [
+    0.2464,
+    0.5442,
+    0.009,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_3": [
+    0.2743,
+    0.4681,
+    0.308,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_4": [
+    0.2838,
+    0.4139,
+    0.409,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_5": [
+    0.2943,
+    0.4035,
+    0.62,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_6": [
+    0.2682,
+    0.5837,
+    1.451,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_7": [
+    0.2706,
+    0.6702,
+    1.456,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_0": [
+    0.7153,
+    0.6931,
+    1.49,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_1": [
+    0.7379,
+    0.5079,
+    1.311,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_2": [
+    0.7062,
+    0.3402,
+    -0.31,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_3": [
+    0.7539,
+    0.4502,
+    -0.457,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_4": [
+    0.7598,
+    0.5196,
+    0.499,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_5": [
+    0.7584,
+    0.5984,
+    1.132,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_6": [
+    0.7556,
+    0.6623,
+    1.491,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/up_7": [
+    0.7385,
+    0.6877,
+    1.421,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/thrust_2h/down_left_0": [
+    0.333,
+    0.6808,
+    1.731,
+    0,
+    1,
+    0.0554,
+    1.03
+   ],
+   "humano/thrust_2h/down_left_1": [
+    0.2854,
+    0.5682,
+    1.54,
+    0,
+    1,
+    0.0554,
+    0.919
+   ],
+   "humano/thrust_2h/down_left_2": [
+    0.2986,
+    0.5755,
+    1.593,
+    0,
+    1,
+    0.0554,
+    0.95
+   ],
+   "humano/thrust_2h/down_left_3": [
+    0.2907,
+    0.5312,
+    0.167,
+    0,
+    1,
+    0.0554,
+    0.632
+   ],
+   "humano/thrust_2h/down_left_4": [
+    0.2666,
+    0.4983,
+    -0.096,
+    0,
+    1,
+    0.0554,
+    0.682
+   ],
+   "humano/thrust_2h/down_left_5": [
+    0.2683,
+    0.5128,
+    0.106,
+    0,
+    1,
+    0.0554,
+    0.641
+   ],
+   "humano/thrust_2h/down_left_6": [
+    0.29,
+    0.5723,
+    0.609,
+    0,
+    1,
+    0.0554,
+    0.621
+   ],
+   "humano/thrust_2h/down_left_7": [
+    0.3022,
+    0.6667,
+    1.49,
+    0,
+    1,
+    0.0554,
+    0.89
+   ],
+   "humano/thrust_2h/down_right_0": [
+    0.6695,
+    0.6808,
+    1.731,
+    0,
+    0,
+    0.0554,
+    1.03
+   ],
+   "humano/thrust_2h/down_right_1": [
+    0.7146,
+    0.5682,
+    1.54,
+    0,
+    0,
+    0.0554,
+    0.919
+   ],
+   "humano/thrust_2h/down_right_2": [
+    0.7014,
+    0.5755,
+    1.593,
+    0,
+    0,
+    0.0554,
+    0.95
+   ],
+   "humano/thrust_2h/down_right_3": [
+    0.7093,
+    0.5312,
+    0.167,
+    0,
+    0,
+    0.0554,
+    0.632
+   ],
+   "humano/thrust_2h/down_right_4": [
+    0.7334,
+    0.4983,
+    -0.096,
+    0,
+    0,
+    0.0554,
+    0.682
+   ],
+   "humano/thrust_2h/down_right_5": [
+    0.7317,
+    0.5128,
+    0.106,
+    0,
+    0,
+    0.0554,
+    0.641
+   ],
+   "humano/thrust_2h/down_right_6": [
+    0.71,
+    0.5723,
+    0.609,
+    0,
+    0,
+    0.0554,
+    0.621
+   ],
+   "humano/thrust_2h/down_right_7": [
+    0.7003,
+    0.6667,
+    1.49,
+    0,
+    0,
+    0.0554,
+    0.89
+   ],
+   "humano/thrust_2h/up_left_0": [
+    0.2292,
+    0.7109,
+    0.487,
+    1,
+    1,
+    0.0554,
+    0.709
+   ],
+   "humano/thrust_2h/up_left_1": [
+    0.219,
+    0.5986,
+    -0.123,
+    1,
+    1,
+    0.0554,
+    1.01
+   ],
+   "humano/thrust_2h/up_left_2": [
+    0.2167,
+    0.488,
+    -0.709,
+    1,
+    1,
+    0.0554,
+    1.043
+   ],
+   "humano/thrust_2h/up_left_3": [
+    0.2049,
+    0.4978,
+    -0.66,
+    1,
+    1,
+    0.0554,
+    1.067
+   ],
+   "humano/thrust_2h/up_left_4": [
+    0.2015,
+    0.5359,
+    -0.456,
+    1,
+    1,
+    0.0554,
+    1.121
+   ],
+   "humano/thrust_2h/up_left_5": [
+    0.211,
+    0.5821,
+    -0.211,
+    1,
+    1,
+    0.0554,
+    1.057
+   ],
+   "humano/thrust_2h/up_left_6": [
+    0.1838,
+    0.6371,
+    -0.125,
+    1,
+    1,
+    0.0554,
+    1.011
+   ],
+   "humano/thrust_2h/up_left_7": [
+    0.2332,
+    0.7126,
+    0.537,
+    1,
+    1,
+    0.0554,
+    0.694
+   ],
+   "humano/thrust_2h/up_right_0": [
+    0.7708,
+    0.7109,
+    0.487,
+    1,
+    0,
+    0.0554,
+    0.709
+   ],
+   "humano/thrust_2h/up_right_1": [
+    0.7785,
+    0.5986,
+    -0.123,
+    1,
+    0,
+    0.0554,
+    1.01
+   ],
+   "humano/thrust_2h/up_right_2": [
+    0.7808,
+    0.488,
+    -0.709,
+    1,
+    0,
+    0.0554,
+    1.043
+   ],
+   "humano/thrust_2h/up_right_3": [
+    0.7951,
+    0.4978,
+    -0.66,
+    1,
+    0,
+    0.0554,
+    1.067
+   ],
+   "humano/thrust_2h/up_right_4": [
+    0.7985,
+    0.5359,
+    -0.456,
+    1,
+    0,
+    0.0554,
+    1.121
+   ],
+   "humano/thrust_2h/up_right_5": [
+    0.7916,
+    0.5821,
+    -0.211,
+    1,
+    0,
+    0.0554,
+    1.057
+   ],
+   "humano/thrust_2h/up_right_6": [
+    0.8137,
+    0.6371,
+    -0.125,
+    1,
+    0,
+    0.0554,
+    1.011
+   ],
+   "humano/thrust_2h/up_right_7": [
+    0.7693,
+    0.7126,
+    0.537,
+    1,
+    0,
+    0.0554,
+    0.694
+   ],
+   "humano/shoot_bow/left_0": [
+    0.474,
+    0.6965,
+    0.864,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_1": [
+    0.3583,
+    0.6053,
+    0.761,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_2": [
+    0.299,
+    0.4666,
+    -0.482,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_3": [
+    0.2715,
+    0.4199,
+    -0.459,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_4": [
+    0.5861,
+    0.5712,
+    1.335,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_5": [
+    0.2997,
+    0.4842,
+    -0.245,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_6": [
+    0.3528,
+    0.6375,
+    0.313,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/left_7": [
+    0.475,
+    0.6988,
+    0.827,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_0": [
+    0.526,
+    0.6965,
+    0.864,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_1": [
+    0.6417,
+    0.6053,
+    0.761,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_2": [
+    0.701,
+    0.4666,
+    -0.482,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_3": [
+    0.726,
+    0.4199,
+    -0.459,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_4": [
+    0.4164,
+    0.5712,
+    1.335,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_5": [
+    0.6977,
+    0.4842,
+    -0.245,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_6": [
+    0.6472,
+    0.6375,
+    0.313,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/right_7": [
+    0.525,
+    0.6988,
+    0.827,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_0": [
+    0.2922,
+    0.7,
+    1.744,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_1": [
+    0.1785,
+    0.6229,
+    0.915,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_2": [
+    0.176,
+    0.4572,
+    0.028,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_3": [
+    0.8178,
+    0.4827,
+    0.513,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_4": [
+    0.8431,
+    0.4708,
+    0.717,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_5": [
+    0.1596,
+    0.531,
+    0.502,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_6": [
+    0.2125,
+    0.6755,
+    1.547,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_7": [
+    0.2935,
+    0.6981,
+    1.702,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_0": [
+    0.6985,
+    0.6934,
+    1.433,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_1": [
+    0.8623,
+    0.5594,
+    0.808,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_2": [
+    0.8195,
+    0.4611,
+    -0.059,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_3": [
+    0.1931,
+    0.4298,
+    -0.302,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_4": [
+    0.1933,
+    0.4295,
+    -0.288,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_5": [
+    0.2433,
+    0.457,
+    -0.315,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_6": [
+    0.84,
+    0.5864,
+    1.17,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/up_7": [
+    0.6986,
+    0.6953,
+    1.435,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_bow/down_left_0": [
+    0.6066,
+    0.7097,
+    1.696,
+    0,
+    1,
+    0.0554,
+    1.011
+   ],
+   "humano/shoot_bow/down_left_1": [
+    0.4859,
+    0.6289,
+    0.361,
+    0,
+    1,
+    0.0554,
+    0.617
+   ],
+   "humano/shoot_bow/down_left_2": [
+    0.3923,
+    0.472,
+    -0.527,
+    0,
+    1,
+    0.0554,
+    0.851
+   ],
+   "humano/shoot_bow/down_left_3": [
+    0.3508,
+    0.4177,
+    -0.771,
+    0,
+    0,
+    0.0554,
+    1.008
+   ],
+   "humano/shoot_bow/down_left_4": [
+    0.3525,
+    0.4207,
+    -0.737,
+    0,
+    0,
+    0.0554,
+    1.028
+   ],
+   "humano/shoot_bow/down_left_5": [
+    0.4771,
+    0.6008,
+    0.99,
+    0,
+    1,
+    0.0554,
+    0.683
+   ],
+   "humano/shoot_bow/down_left_6": [
+    0.5825,
+    0.6908,
+    1.612,
+    0,
+    1,
+    0.0554,
+    0.962
+   ],
+   "humano/shoot_bow/down_left_7": [
+    0.6148,
+    0.7065,
+    1.889,
+    0,
+    1,
+    0.0554,
+    1.101
+   ],
+   "humano/shoot_bow/down_right_0": [
+    0.3934,
+    0.7097,
+    1.696,
+    0,
+    0,
+    0.0554,
+    1.011
+   ],
+   "humano/shoot_bow/down_right_1": [
+    0.5166,
+    0.6289,
+    0.361,
+    0,
+    0,
+    0.0554,
+    0.617
+   ],
+   "humano/shoot_bow/down_right_2": [
+    0.6077,
+    0.472,
+    -0.527,
+    0,
+    0,
+    0.0554,
+    0.851
+   ],
+   "humano/shoot_bow/down_right_3": [
+    0.6492,
+    0.4177,
+    -0.771,
+    0,
+    1,
+    0.0554,
+    1.008
+   ],
+   "humano/shoot_bow/down_right_4": [
+    0.6475,
+    0.4207,
+    -0.737,
+    0,
+    1,
+    0.0554,
+    1.028
+   ],
+   "humano/shoot_bow/down_right_5": [
+    0.5229,
+    0.6008,
+    0.99,
+    0,
+    0,
+    0.0554,
+    0.683
+   ],
+   "humano/shoot_bow/down_right_6": [
+    0.4175,
+    0.6908,
+    1.612,
+    0,
+    0,
+    0.0554,
+    0.962
+   ],
+   "humano/shoot_bow/down_right_7": [
+    0.3852,
+    0.7065,
+    1.889,
+    0,
+    0,
+    0.0554,
+    1.101
+   ],
+   "humano/shoot_bow/up_left_0": [
+    0.2313,
+    0.7128,
+    0.504,
+    1,
+    1,
+    0.0554,
+    0.704
+   ],
+   "humano/shoot_bow/up_left_1": [
+    0.1401,
+    0.5347,
+    -0.335,
+    1,
+    1,
+    0.0554,
+    1.106
+   ],
+   "humano/shoot_bow/up_left_2": [
+    0.1729,
+    0.4318,
+    -0.755,
+    1,
+    1,
+    0.0554,
+    1.017
+   ],
+   "humano/shoot_bow/up_left_3": [
+    0.1938,
+    0.4307,
+    -0.721,
+    1,
+    1,
+    0.0554,
+    1.036
+   ],
+   "humano/shoot_bow/up_left_4": [
+    0.1934,
+    0.4293,
+    -0.738,
+    1,
+    1,
+    0.0554,
+    1.027
+   ],
+   "humano/shoot_bow/up_left_5": [
+    0.2384,
+    0.4568,
+    -0.755,
+    1,
+    1,
+    0.0554,
+    1.018
+   ],
+   "humano/shoot_bow/up_left_6": [
+    0.1751,
+    0.5831,
+    -0.182,
+    1,
+    1,
+    0.0554,
+    1.042
+   ],
+   "humano/shoot_bow/up_left_7": [
+    0.2323,
+    0.713,
+    0.457,
+    1,
+    1,
+    0.0554,
+    0.719
+   ],
+   "humano/shoot_bow/up_right_0": [
+    0.7687,
+    0.7128,
+    0.504,
+    1,
+    0,
+    0.0554,
+    0.704
+   ],
+   "humano/shoot_bow/up_right_1": [
+    0.8599,
+    0.5347,
+    -0.335,
+    1,
+    0,
+    0.0554,
+    1.106
+   ],
+   "humano/shoot_bow/up_right_2": [
+    0.8246,
+    0.4318,
+    -0.755,
+    1,
+    0,
+    0.0554,
+    1.017
+   ],
+   "humano/shoot_bow/up_right_3": [
+    0.8062,
+    0.4307,
+    -0.721,
+    1,
+    0,
+    0.0554,
+    1.036
+   ],
+   "humano/shoot_bow/up_right_4": [
+    0.8066,
+    0.4293,
+    -0.738,
+    1,
+    0,
+    0.0554,
+    1.027
+   ],
+   "humano/shoot_bow/up_right_5": [
+    0.7616,
+    0.4568,
+    -0.755,
+    1,
+    0,
+    0.0554,
+    1.018
+   ],
+   "humano/shoot_bow/up_right_6": [
+    0.8249,
+    0.5831,
+    -0.182,
+    1,
+    0,
+    0.0554,
+    1.042
+   ],
+   "humano/shoot_bow/up_right_7": [
+    0.7677,
+    0.713,
+    0.457,
+    1,
+    0,
+    0.0554,
+    0.719
+   ],
+   "humano/shoot_xbow2/left_0": [
+    0.4761,
+    0.7021,
+    0.877,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_1": [
+    0.3595,
+    0.6249,
+    0.365,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_2": [
+    0.332,
+    0.4945,
+    -0.443,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_3": [
+    0.3297,
+    0.4212,
+    -0.694,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_4": [
+    0.3301,
+    0.4224,
+    -0.659,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_5": [
+    0.3338,
+    0.4739,
+    -0.551,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_6": [
+    0.375,
+    0.6114,
+    0.594,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/left_7": [
+    0.4623,
+    0.6988,
+    0.829,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_0": [
+    0.5239,
+    0.7021,
+    0.877,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_1": [
+    0.6405,
+    0.6249,
+    0.365,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_2": [
+    0.668,
+    0.4945,
+    -0.443,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_3": [
+    0.6678,
+    0.4212,
+    -0.694,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_4": [
+    0.6673,
+    0.4224,
+    -0.659,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_5": [
+    0.6662,
+    0.4739,
+    -0.551,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_6": [
+    0.625,
+    0.6114,
+    0.594,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/right_7": [
+    0.5377,
+    0.6988,
+    0.829,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_0": [
+    0.2917,
+    0.702,
+    1.68,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_1": [
+    0.3409,
+    0.6442,
+    1.719,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_2": [
+    0.2784,
+    0.5197,
+    0.677,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_3": [
+    0.311,
+    0.4682,
+    0.964,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_4": [
+    0.3059,
+    0.4627,
+    0.841,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_5": [
+    0.2927,
+    0.5109,
+    0.731,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_6": [
+    0.3459,
+    0.6347,
+    1.802,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_7": [
+    0.2916,
+    0.702,
+    1.681,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_0": [
+    0.6983,
+    0.6915,
+    1.427,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_1": [
+    0.7692,
+    0.6,
+    1.775,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_2": [
+    0.2452,
+    0.424,
+    -0.739,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_3": [
+    0.2445,
+    0.4248,
+    -0.658,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_4": [
+    0.2734,
+    0.4239,
+    -0.605,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_5": [
+    0.2664,
+    0.4253,
+    -0.693,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_6": [
+    0.7685,
+    0.5569,
+    0.04,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/up_7": [
+    0.6983,
+    0.6935,
+    1.424,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow2/down_left_0": [
+    0.6067,
+    0.7097,
+    1.694,
+    0,
+    1,
+    0.0554,
+    1.01
+   ],
+   "humano/shoot_xbow2/down_left_1": [
+    0.5205,
+    0.6537,
+    1.436,
+    0,
+    1,
+    0.0554,
+    0.861
+   ],
+   "humano/shoot_xbow2/down_left_2": [
+    0.39,
+    0.5056,
+    -0.486,
+    0,
+    1,
+    0.0554,
+    0.83
+   ],
+   "humano/shoot_xbow2/down_left_3": [
+    0.3614,
+    0.4759,
+    0.979,
+    0,
+    1,
+    0.0338,
+    0.68
+   ],
+   "humano/shoot_xbow2/down_left_4": [
+    0.3592,
+    0.4788,
+    1.246,
+    0,
+    1,
+    0.0376,
+    0.769
+   ],
+   "humano/shoot_xbow2/down_left_5": [
+    0.5816,
+    0.5318,
+    2.326,
+    0,
+    1,
+    0.0554,
+    1.017
+   ],
+   "humano/shoot_xbow2/down_left_6": [
+    0.5713,
+    0.6564,
+    1.574,
+    0,
+    1,
+    0.0554,
+    0.939
+   ],
+   "humano/shoot_xbow2/down_left_7": [
+    0.6203,
+    0.7064,
+    1.88,
+    0,
+    1,
+    0.0554,
+    1.098
+   ],
+   "humano/shoot_xbow2/down_right_0": [
+    0.3933,
+    0.7097,
+    1.694,
+    0,
+    0,
+    0.0554,
+    1.01
+   ],
+   "humano/shoot_xbow2/down_right_1": [
+    0.4769,
+    0.6537,
+    1.436,
+    0,
+    0,
+    0.0554,
+    0.861
+   ],
+   "humano/shoot_xbow2/down_right_2": [
+    0.61,
+    0.5056,
+    -0.486,
+    0,
+    0,
+    0.0554,
+    0.83
+   ],
+   "humano/shoot_xbow2/down_right_3": [
+    0.6386,
+    0.4759,
+    0.979,
+    0,
+    0,
+    0.0338,
+    0.68
+   ],
+   "humano/shoot_xbow2/down_right_4": [
+    0.6408,
+    0.4788,
+    1.246,
+    0,
+    0,
+    0.0376,
+    0.769
+   ],
+   "humano/shoot_xbow2/down_right_5": [
+    0.4159,
+    0.5318,
+    2.326,
+    0,
+    0,
+    0.0554,
+    1.017
+   ],
+   "humano/shoot_xbow2/down_right_6": [
+    0.4261,
+    0.6564,
+    1.574,
+    0,
+    0,
+    0.0554,
+    0.939
+   ],
+   "humano/shoot_xbow2/down_right_7": [
+    0.3797,
+    0.7064,
+    1.88,
+    0,
+    0,
+    0.0554,
+    1.098
+   ],
+   "humano/shoot_xbow2/up_left_0": [
+    0.2322,
+    0.7111,
+    0.463,
+    1,
+    1,
+    0.0554,
+    0.717
+   ],
+   "humano/shoot_xbow2/up_left_1": [
+    0.2218,
+    0.6041,
+    -0.039,
+    1,
+    1,
+    0.0554,
+    0.96
+   ],
+   "humano/shoot_xbow2/up_left_2": [
+    0.2431,
+    0.4257,
+    -0.476,
+    1,
+    0,
+    0.0554,
+    0.825
+   ],
+   "humano/shoot_xbow2/up_left_3": [
+    0.244,
+    0.429,
+    -0.621,
+    1,
+    0,
+    0.0554,
+    0.903
+   ],
+   "humano/shoot_xbow2/up_left_4": [
+    0.2693,
+    0.4212,
+    -0.521,
+    1,
+    0,
+    0.0554,
+    0.848
+   ],
+   "humano/shoot_xbow2/up_left_5": [
+    0.2674,
+    0.4304,
+    -0.546,
+    1,
+    0,
+    0.0554,
+    0.861
+   ],
+   "humano/shoot_xbow2/up_left_6": [
+    0.2292,
+    0.5347,
+    -0.473,
+    1,
+    1,
+    0.0554,
+    1.12
+   ],
+   "humano/shoot_xbow2/up_left_7": [
+    0.2351,
+    0.7144,
+    0.567,
+    1,
+    1,
+    0.0554,
+    0.686
+   ],
+   "humano/shoot_xbow2/up_right_0": [
+    0.7678,
+    0.7111,
+    0.463,
+    1,
+    0,
+    0.0554,
+    0.717
+   ],
+   "humano/shoot_xbow2/up_right_1": [
+    0.7782,
+    0.6041,
+    -0.039,
+    1,
+    0,
+    0.0554,
+    0.96
+   ],
+   "humano/shoot_xbow2/up_right_2": [
+    0.7595,
+    0.4257,
+    -0.476,
+    1,
+    1,
+    0.0554,
+    0.825
+   ],
+   "humano/shoot_xbow2/up_right_3": [
+    0.756,
+    0.429,
+    -0.621,
+    1,
+    1,
+    0.0554,
+    0.903
+   ],
+   "humano/shoot_xbow2/up_right_4": [
+    0.7282,
+    0.4212,
+    -0.521,
+    1,
+    1,
+    0.0554,
+    0.848
+   ],
+   "humano/shoot_xbow2/up_right_5": [
+    0.7326,
+    0.4304,
+    -0.546,
+    1,
+    1,
+    0.0554,
+    0.861
+   ],
+   "humano/shoot_xbow2/up_right_6": [
+    0.7733,
+    0.5347,
+    -0.473,
+    1,
+    0,
+    0.0554,
+    1.12
+   ],
+   "humano/shoot_xbow2/up_right_7": [
+    0.7649,
+    0.7144,
+    0.567,
+    1,
+    0,
+    0.0554,
+    0.686
+   ],
+   "humano/shoot_xbow1/left_0": [
+    0.4765,
+    0.7023,
+    0.864,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_1": [
+    0.352,
+    0.5897,
+    0.2,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_2": [
+    0.3058,
+    0.4379,
+    -0.578,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_3": [
+    0.3052,
+    0.4103,
+    -0.635,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_4": [
+    0.3052,
+    0.4104,
+    -0.639,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_5": [
+    0.3222,
+    0.4896,
+    -0.144,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_6": [
+    0.3366,
+    0.6362,
+    0.38,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/left_7": [
+    0.4872,
+    0.7005,
+    1.107,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_0": [
+    0.5235,
+    0.7023,
+    0.864,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_1": [
+    0.6505,
+    0.5897,
+    0.2,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_2": [
+    0.6942,
+    0.4379,
+    -0.578,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_3": [
+    0.6923,
+    0.4103,
+    -0.635,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_4": [
+    0.6923,
+    0.4104,
+    -0.639,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_5": [
+    0.6803,
+    0.4896,
+    -0.144,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_6": [
+    0.6634,
+    0.6362,
+    0.38,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/right_7": [
+    0.5128,
+    0.7005,
+    1.107,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_0": [
+    0.2895,
+    0.6981,
+    1.667,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_1": [
+    0.2105,
+    0.5976,
+    0.822,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_2": [
+    0.8276,
+    0.7,
+    1.791,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_3": [
+    0.8254,
+    0.6981,
+    1.718,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_4": [
+    0.1913,
+    0.4716,
+    0.073,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_5": [
+    0.2113,
+    0.5889,
+    0.774,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_6": [
+    0.238,
+    0.6813,
+    1.535,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_7": [
+    0.2926,
+    0.6982,
+    1.649,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_0": [
+    0.7141,
+    0.6986,
+    1.535,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_1": [
+    0.7997,
+    0.5435,
+    0.462,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_2": [
+    0.2428,
+    0.6894,
+    1.46,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_3": [
+    0.1735,
+    0.6891,
+    1.502,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_4": [
+    0.1785,
+    0.6911,
+    1.503,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_5": [
+    0.7986,
+    0.556,
+    0.591,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_6": [
+    0.7621,
+    0.6775,
+    1.274,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/up_7": [
+    0.7116,
+    0.6986,
+    1.537,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/shoot_xbow1/down_left_0": [
+    0.6093,
+    0.7077,
+    1.746,
+    0,
+    1,
+    0.0554,
+    1.039
+   ],
+   "humano/shoot_xbow1/down_left_1": [
+    0.5456,
+    0.6653,
+    1.246,
+    0,
+    1,
+    0.0554,
+    0.769
+   ],
+   "humano/shoot_xbow1/down_left_2": [
+    0.4105,
+    0.5288,
+    -0.198,
+    0,
+    1,
+    0.0554,
+    0.711
+   ],
+   "humano/shoot_xbow1/down_left_3": [
+    0.3442,
+    0.4087,
+    -0.754,
+    0,
+    1,
+    0.0554,
+    0.982
+   ],
+   "humano/shoot_xbow1/down_left_4": [
+    0.357,
+    0.4396,
+    -0.541,
+    0,
+    1,
+    0.0554,
+    0.859
+   ],
+   "humano/shoot_xbow1/down_left_5": [
+    0.53,
+    0.6472,
+    0.789,
+    0,
+    1,
+    0.0554,
+    0.641
+   ],
+   "humano/shoot_xbow1/down_left_6": [
+    0.5956,
+    0.6942,
+    1.716,
+    0,
+    1,
+    0.0554,
+    1.022
+   ],
+   "humano/shoot_xbow1/down_left_7": [
+    0.5971,
+    0.7161,
+    1.558,
+    0,
+    1,
+    0.0554,
+    0.93
+   ],
+   "humano/shoot_xbow1/down_right_0": [
+    0.3907,
+    0.7077,
+    1.746,
+    0,
+    0,
+    0.0554,
+    1.039
+   ],
+   "humano/shoot_xbow1/down_right_1": [
+    0.4519,
+    0.6653,
+    1.246,
+    0,
+    0,
+    0.0554,
+    0.769
+   ],
+   "humano/shoot_xbow1/down_right_2": [
+    0.5895,
+    0.5288,
+    -0.198,
+    0,
+    0,
+    0.0554,
+    0.711
+   ],
+   "humano/shoot_xbow1/down_right_3": [
+    0.6583,
+    0.4087,
+    -0.754,
+    0,
+    0,
+    0.0554,
+    0.982
+   ],
+   "humano/shoot_xbow1/down_right_4": [
+    0.643,
+    0.4396,
+    -0.541,
+    0,
+    0,
+    0.0554,
+    0.859
+   ],
+   "humano/shoot_xbow1/down_right_5": [
+    0.4725,
+    0.6472,
+    0.789,
+    0,
+    0,
+    0.0554,
+    0.641
+   ],
+   "humano/shoot_xbow1/down_right_6": [
+    0.4044,
+    0.6942,
+    1.716,
+    0,
+    0,
+    0.0554,
+    1.022
+   ],
+   "humano/shoot_xbow1/down_right_7": [
+    0.4029,
+    0.7161,
+    1.558,
+    0,
+    0,
+    0.0554,
+    0.93
+   ],
+   "humano/shoot_xbow1/up_left_0": [
+    0.2339,
+    0.7147,
+    0.504,
+    1,
+    1,
+    0.0554,
+    0.704
+   ],
+   "humano/shoot_xbow1/up_left_1": [
+    0.2047,
+    0.571,
+    -0.278,
+    1,
+    1,
+    0.0554,
+    1.087
+   ],
+   "humano/shoot_xbow1/up_left_2": [
+    0.2359,
+    0.3852,
+    -0.598,
+    1,
+    0,
+    0.0554,
+    0.89
+   ],
+   "humano/shoot_xbow1/up_left_3": [
+    0.8354,
+    0.6836,
+    1.535,
+    1,
+    1,
+    0.0554,
+    0.653
+   ],
+   "humano/shoot_xbow1/up_left_4": [
+    0.1919,
+    0.4065,
+    -0.686,
+    1,
+    1,
+    0.0554,
+    1.054
+   ],
+   "humano/shoot_xbow1/up_left_5": [
+    0.1942,
+    0.595,
+    -0.252,
+    1,
+    1,
+    0.0554,
+    1.076
+   ],
+   "humano/shoot_xbow1/up_left_6": [
+    0.1986,
+    0.6964,
+    0.175,
+    1,
+    1,
+    0.0554,
+    0.839
+   ],
+   "humano/shoot_xbow1/up_left_7": [
+    0.2293,
+    0.7148,
+    0.479,
+    1,
+    1,
+    0.0554,
+    0.712
+   ],
+   "humano/shoot_xbow1/up_right_0": [
+    0.7687,
+    0.7147,
+    0.504,
+    1,
+    0,
+    0.0554,
+    0.704
+   ],
+   "humano/shoot_xbow1/up_right_1": [
+    0.7953,
+    0.571,
+    -0.278,
+    1,
+    0,
+    0.0554,
+    1.087
+   ],
+   "humano/shoot_xbow1/up_right_2": [
+    0.7641,
+    0.3852,
+    -0.598,
+    1,
+    1,
+    0.0554,
+    0.89
+   ],
+   "humano/shoot_xbow1/up_right_3": [
+    0.1621,
+    0.6836,
+    1.535,
+    1,
+    0,
+    0.0554,
+    0.653
+   ],
+   "humano/shoot_xbow1/up_right_4": [
+    0.8081,
+    0.4065,
+    -0.686,
+    1,
+    0,
+    0.0554,
+    1.054
+   ],
+   "humano/shoot_xbow1/up_right_5": [
+    0.8058,
+    0.595,
+    -0.252,
+    1,
+    0,
+    0.0554,
+    1.076
+   ],
+   "humano/shoot_xbow1/up_right_6": [
+    0.8014,
+    0.6964,
+    0.175,
+    1,
+    0,
+    0.0554,
+    0.839
+   ],
+   "humano/shoot_xbow1/up_right_7": [
+    0.7681,
+    0.7148,
+    0.479,
+    1,
+    0,
+    0.0554,
+    0.712
+   ],
+   "humano/throw/left_0": [
+    0.4737,
+    0.7021,
+    0.875,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_1": [
+    0.3868,
+    0.6634,
+    0.73,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_2": [
+    0.3439,
+    0.441,
+    -0.654,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_3": [
+    0.3875,
+    0.3863,
+    0.107,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_4": [
+    0.2641,
+    0.4634,
+    -0.092,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_5": [
+    0.2821,
+    0.4276,
+    -0.292,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_6": [
+    0.7175,
+    0.6831,
+    1.488,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/left_7": [
+    0.4377,
+    0.6905,
+    0.711,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_0": [
+    0.5263,
+    0.7021,
+    0.875,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_1": [
+    0.6132,
+    0.6634,
+    0.73,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_2": [
+    0.6561,
+    0.441,
+    -0.654,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_3": [
+    0.6125,
+    0.3863,
+    0.107,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_4": [
+    0.7334,
+    0.4634,
+    -0.092,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_5": [
+    0.7204,
+    0.4276,
+    -0.292,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_6": [
+    0.2825,
+    0.6831,
+    1.488,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/right_7": [
+    0.5648,
+    0.6905,
+    0.711,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_0": [
+    0.2912,
+    0.6962,
+    1.696,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_1": [
+    0.2468,
+    0.5909,
+    1.123,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_2": [
+    0.773,
+    0.6628,
+    1.21,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_3": [
+    0.7845,
+    0.6436,
+    1.066,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_4": [
+    0.7539,
+    0.6602,
+    1.517,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_5": [
+    0.2889,
+    0.5145,
+    0.647,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_6": [
+    0.2387,
+    0.6317,
+    1.243,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_7": [
+    0.3,
+    0.7022,
+    1.906,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_0": [
+    0.7156,
+    0.6968,
+    1.501,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_1": [
+    0.733,
+    0.5248,
+    0.182,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_2": [
+    0.2369,
+    0.6829,
+    1.312,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_3": [
+    0.2413,
+    0.6839,
+    1.423,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_4": [
+    0.2249,
+    0.6639,
+    1.289,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_5": [
+    0.2019,
+    0.6591,
+    1.39,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_6": [
+    0.7547,
+    0.5503,
+    0.499,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/up_7": [
+    0.7125,
+    0.697,
+    1.481,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/throw/down_left_0": [
+    0.5944,
+    0.7148,
+    1.491,
+    0,
+    1,
+    0.0554,
+    0.891
+   ],
+   "humano/throw/down_left_1": [
+    0.7742,
+    0.6925,
+    1.827,
+    0,
+    1,
+    0.0554,
+    1.078
+   ],
+   "humano/throw/down_left_2": [
+    0.748,
+    0.6827,
+    1.744,
+    0,
+    1,
+    0.0554,
+    1.037
+   ],
+   "humano/throw/down_left_3": [
+    0.6549,
+    0.6792,
+    1.844,
+    0,
+    1,
+    0.0554,
+    1.085
+   ],
+   "humano/throw/down_left_4": [
+    0.747,
+    0.7252,
+    1.817,
+    0,
+    1,
+    0.0554,
+    1.073
+   ],
+   "humano/throw/down_left_5": [
+    0.7992,
+    0.6819,
+    1.927,
+    0,
+    1,
+    0.0554,
+    1.111
+   ],
+   "humano/throw/down_left_6": [
+    0.834,
+    0.6427,
+    2.093,
+    0,
+    1,
+    0.0554,
+    1.114
+   ],
+   "humano/throw/down_left_7": [
+    0.6112,
+    0.7096,
+    1.761,
+    0,
+    1,
+    0.0554,
+    1.046
+   ],
+   "humano/throw/down_right_0": [
+    0.4056,
+    0.7148,
+    1.491,
+    0,
+    0,
+    0.0554,
+    0.891
+   ],
+   "humano/throw/down_right_1": [
+    0.2284,
+    0.6925,
+    1.827,
+    0,
+    0,
+    0.0554,
+    1.078
+   ],
+   "humano/throw/down_right_2": [
+    0.252,
+    0.6827,
+    1.744,
+    0,
+    0,
+    0.0554,
+    1.037
+   ],
+   "humano/throw/down_right_3": [
+    0.3451,
+    0.6792,
+    1.844,
+    0,
+    0,
+    0.0554,
+    1.085
+   ],
+   "humano/throw/down_right_4": [
+    0.253,
+    0.7252,
+    1.817,
+    0,
+    0,
+    0.0554,
+    1.073
+   ],
+   "humano/throw/down_right_5": [
+    0.2008,
+    0.6819,
+    1.927,
+    0,
+    0,
+    0.0554,
+    1.111
+   ],
+   "humano/throw/down_right_6": [
+    0.1685,
+    0.6427,
+    2.093,
+    0,
+    0,
+    0.0554,
+    1.114
+   ],
+   "humano/throw/down_right_7": [
+    0.3888,
+    0.7096,
+    1.761,
+    0,
+    0,
+    0.0554,
+    1.046
+   ],
+   "humano/throw/up_left_0": [
+    0.2293,
+    0.711,
+    0.478,
+    1,
+    1,
+    0.0554,
+    0.712
+   ],
+   "humano/throw/up_left_1": [
+    0.1835,
+    0.5291,
+    -0.386,
+    1,
+    1,
+    0.0554,
+    1.117
+   ],
+   "humano/throw/up_left_2": [
+    0.1945,
+    0.386,
+    -0.553,
+    1,
+    0,
+    0.0554,
+    0.865
+   ],
+   "humano/throw/up_left_3": [
+    0.3622,
+    0.4272,
+    -0.572,
+    1,
+    1,
+    0.0554,
+    1.101
+   ],
+   "humano/throw/up_left_4": [
+    0.2786,
+    0.4575,
+    -0.327,
+    1,
+    1,
+    0.0554,
+    1.103
+   ],
+   "humano/throw/up_left_5": [
+    0.2105,
+    0.3828,
+    -0.374,
+    1,
+    0,
+    0.0554,
+    0.777
+   ],
+   "humano/throw/up_left_6": [
+    0.1657,
+    0.5783,
+    -0.214,
+    1,
+    1,
+    0.0554,
+    1.058
+   ],
+   "humano/throw/up_left_7": [
+    0.2276,
+    0.7112,
+    0.443,
+    1,
+    1,
+    0.0554,
+    0.724
+   ],
+   "humano/throw/up_right_0": [
+    0.7707,
+    0.711,
+    0.478,
+    1,
+    0,
+    0.0554,
+    0.712
+   ],
+   "humano/throw/up_right_1": [
+    0.8165,
+    0.5291,
+    -0.386,
+    1,
+    0,
+    0.0554,
+    1.117
+   ],
+   "humano/throw/up_right_2": [
+    0.808,
+    0.386,
+    -0.553,
+    1,
+    1,
+    0.0554,
+    0.865
+   ],
+   "humano/throw/up_right_3": [
+    0.6378,
+    0.4272,
+    -0.572,
+    1,
+    0,
+    0.0554,
+    1.101
+   ],
+   "humano/throw/up_right_4": [
+    0.7214,
+    0.4575,
+    -0.327,
+    1,
+    0,
+    0.0554,
+    1.103
+   ],
+   "humano/throw/up_right_5": [
+    0.7895,
+    0.3828,
+    -0.374,
+    1,
+    1,
+    0.0554,
+    0.777
+   ],
+   "humano/throw/up_right_6": [
+    0.8343,
+    0.5783,
+    -0.214,
+    1,
+    0,
+    0.0554,
+    1.058
+   ],
+   "humano/throw/up_right_7": [
+    0.7724,
+    0.7112,
+    0.443,
+    1,
+    0,
+    0.0554,
+    0.724
+   ],
+   "humano/sling/left_0": [
+    0.4745,
+    0.7082,
+    0.845,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_1": [
+    0.5402,
+    0.7132,
+    0.741,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_2": [
+    0.5805,
+    0.7209,
+    0.929,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_3": [
+    0.5451,
+    0.7183,
+    1.021,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_4": [
+    0.5319,
+    0.7149,
+    0.956,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_5": [
+    0.588,
+    0.7209,
+    0.931,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_6": [
+    0.5846,
+    0.7175,
+    0.873,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/left_7": [
+    0.4687,
+    0.706,
+    0.873,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_0": [
+    0.5255,
+    0.7082,
+    0.845,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_1": [
+    0.4598,
+    0.7132,
+    0.741,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_2": [
+    0.4195,
+    0.7209,
+    0.929,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_3": [
+    0.4524,
+    0.7183,
+    1.021,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_4": [
+    0.4656,
+    0.7149,
+    0.956,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_5": [
+    0.412,
+    0.7209,
+    0.931,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_6": [
+    0.418,
+    0.7175,
+    0.873,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/right_7": [
+    0.5313,
+    0.706,
+    0.873,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_0": [
+    0.2916,
+    0.6981,
+    1.681,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_1": [
+    0.2462,
+    0.5528,
+    1.247,
+    0,
+    1,
+    0.0334,
+    1.0
+   ],
+   "humano/sling/down_2": [
+    0.7482,
+    0.6981,
+    1.748,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_3": [
+    0.7391,
+    0.704,
+    1.864,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_4": [
+    0.7391,
+    0.704,
+    1.864,
+    0,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_5": [
+    0.2495,
+    0.4382,
+    -0.541,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_6": [
+    0.2751,
+    0.5793,
+    0.992,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_7": [
+    0.2937,
+    0.6981,
+    1.697,
+    0,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_0": [
+    0.7126,
+    0.6984,
+    1.57,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_1": [
+    0.7938,
+    0.5479,
+    0.611,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_2": [
+    0.2216,
+    0.693,
+    1.495,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_3": [
+    0.2622,
+    0.6984,
+    1.57,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_4": [
+    0.2437,
+    0.6948,
+    1.514,
+    1,
+    1,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_5": [
+    0.8037,
+    0.4488,
+    0.061,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_6": [
+    0.7844,
+    0.5976,
+    0.822,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/up_7": [
+    0.7116,
+    0.6986,
+    1.537,
+    1,
+    0,
+    0.0554,
+    1.0
+   ],
+   "humano/sling/down_left_0": [
+    0.6176,
+    0.7045,
+    1.883,
+    0,
+    1,
+    0.0554,
+    1.099
+   ],
+   "humano/sling/down_left_1": [
+    0.7406,
+    0.72,
+    1.56,
+    0,
+    1,
+    0.0554,
+    0.931
+   ],
+   "humano/sling/down_left_2": [
+    0.7037,
+    0.7216,
+    1.603,
+    0,
+    1,
+    0.0554,
+    0.956
+   ],
+   "humano/sling/down_left_3": [
+    0.6868,
+    0.7237,
+    1.583,
+    0,
+    1,
+    0.0554,
+    0.945
+   ],
+   "humano/sling/down_left_4": [
+    0.6871,
+    0.7237,
+    1.577,
+    0,
+    1,
+    0.0554,
+    0.941
+   ],
+   "humano/sling/down_left_5": [
+    0.752,
+    0.7217,
+    1.591,
+    0,
+    1,
+    0.0554,
+    0.949
+   ],
+   "humano/sling/down_left_6": [
+    0.6707,
+    0.7083,
+    1.881,
+    0,
+    1,
+    0.0554,
+    1.098
+   ],
+   "humano/sling/down_left_7": [
+    0.6169,
+    0.7061,
+    1.849,
+    0,
+    1,
+    0.0554,
+    1.087
+   ],
+   "humano/sling/down_right_0": [
+    0.3824,
+    0.7045,
+    1.883,
+    0,
+    0,
+    0.0554,
+    1.099
+   ],
+   "humano/sling/down_right_1": [
+    0.2594,
+    0.72,
+    1.56,
+    0,
+    0,
+    0.0554,
+    0.931
+   ],
+   "humano/sling/down_right_2": [
+    0.2963,
+    0.7216,
+    1.603,
+    0,
+    0,
+    0.0554,
+    0.956
+   ],
+   "humano/sling/down_right_3": [
+    0.3132,
+    0.7237,
+    1.583,
+    0,
+    0,
+    0.0554,
+    0.945
+   ],
+   "humano/sling/down_right_4": [
+    0.3129,
+    0.7237,
+    1.577,
+    0,
+    0,
+    0.0554,
+    0.941
+   ],
+   "humano/sling/down_right_5": [
+    0.248,
+    0.7217,
+    1.591,
+    0,
+    0,
+    0.0554,
+    0.949
+   ],
+   "humano/sling/down_right_6": [
+    0.3319,
+    0.7083,
+    1.881,
+    0,
+    0,
+    0.0554,
+    1.098
+   ],
+   "humano/sling/down_right_7": [
+    0.3831,
+    0.7061,
+    1.849,
+    0,
+    0,
+    0.0554,
+    1.087
+   ],
+   "humano/sling/up_left_0": [
+    0.2321,
+    0.713,
+    0.467,
+    1,
+    1,
+    0.0554,
+    0.716
+   ],
+   "humano/sling/up_left_1": [
+    0.183,
+    0.5867,
+    -0.337,
+    1,
+    1,
+    0.0554,
+    1.106
+   ],
+   "humano/sling/up_left_2": [
+    0.2222,
+    0.4409,
+    -0.334,
+    1,
+    0,
+    0.0554,
+    0.761
+   ],
+   "humano/sling/up_left_3": [
+    0.2591,
+    0.5919,
+    -0.555,
+    1,
+    1,
+    0.0554,
+    1.106
+   ],
+   "humano/sling/up_left_4": [
+    0.3524,
+    0.7115,
+    0.072,
+    1,
+    1,
+    0.0554,
+    0.895
+   ],
+   "humano/sling/up_left_5": [
+    0.182,
+    0.4492,
+    -0.448,
+    1,
+    0,
+    0.0554,
+    0.811
+   ],
+   "humano/sling/up_left_6": [
+    0.2188,
+    0.6119,
+    -0.116,
+    1,
+    1,
+    0.0554,
+    1.006
+   ],
+   "humano/sling/up_left_7": [
+    0.2352,
+    0.7163,
+    0.561,
+    1,
+    1,
+    0.0554,
+    0.688
+   ],
+   "humano/sling/up_right_0": [
+    0.7704,
+    0.713,
+    0.467,
+    1,
+    0,
+    0.0554,
+    0.716
+   ],
+   "humano/sling/up_right_1": [
+    0.8195,
+    0.5867,
+    -0.337,
+    1,
+    0,
+    0.0554,
+    1.106
+   ],
+   "humano/sling/up_right_2": [
+    0.7778,
+    0.4409,
+    -0.334,
+    1,
+    1,
+    0.0554,
+    0.761
+   ],
+   "humano/sling/up_right_3": [
+    0.7409,
+    0.5919,
+    -0.555,
+    1,
+    0,
+    0.0554,
+    1.106
+   ],
+   "humano/sling/up_right_4": [
+    0.6476,
+    0.7115,
+    0.072,
+    1,
+    0,
+    0.0554,
+    0.895
+   ],
+   "humano/sling/up_right_5": [
+    0.818,
+    0.4492,
+    -0.448,
+    1,
+    1,
+    0.0554,
+    0.811
+   ],
+   "humano/sling/up_right_6": [
+    0.7812,
+    0.6119,
+    -0.116,
+    1,
+    0,
+    0.0554,
+    1.006
+   ],
+   "humano/sling/up_right_7": [
+    0.7673,
+    0.7163,
+    0.561,
+    1,
+    0,
+    0.0554,
+    0.688
    ],
    "humano/walk/down_0": [
     0.3409,
