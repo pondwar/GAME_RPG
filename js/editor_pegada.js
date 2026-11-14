@@ -151,7 +151,7 @@
         const r = await fetch('/api/dev/pegada', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.g.pegada) });
         if (!r.ok) throw new Error('HTTP ' + r.status);
         this.sujo = false; this.ui.info.textContent = 'Salvo em assets/weapons/items/_pegada.json ✔'; this.atualizarUI();
-      } catch (e) { this.ui.info.textContent = 'Não consegui salvar: ' + e.message + ' (o servidor precisa estar rodando).'; }
+      } catch (e) { this.ui.info.textContent = 'Não consegui salvar: ' + e.message + (/404/.test(e.message) ? '. O servidor está desatualizado: feche o servidor (porta 3000) e abra de novo, depois recarregue a página com Ctrl+F5. Seus ajustes continuam na tela.' : ' (o servidor precisa estar rodando).'); }
     }
   };
 
