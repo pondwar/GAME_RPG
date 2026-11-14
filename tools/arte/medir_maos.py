@@ -26,7 +26,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'assets', 'player', 'racas')
-GOLPES = {'attack_1h', 'attack_2h', 'thrust_1h', 'thrust_2h', 'punch', 'kick'}
+GOLPES = {'attack_1h', 'attack_2h', 'thrust_1h', 'thrust_2h', 'punch', 'kick', 'throw'}
 FRENTE = ('down', 'up')
 DIAG = ('down_right', 'down_left', 'up_right', 'up_left')
 # "para a frente" de um boneco na diagonal, na tela (x para o lado dele, y para baixo/cima): ~30 graus, encurtado

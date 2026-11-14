@@ -171,6 +171,11 @@ class InventorySystem {
       funda: { id: 'funda', name: 'Funda', type: 'weapon', rarity: 'common', icon: '🪃', maxStack: 1,
         desc: 'Uma tira de couro que gira e arremessa pedras.', stats: 'Dano 1d4 impacto • Munição: pedra',
         equipType: 'weapon', equipId: 'funda' },
+      // armas so de arremesso (tecla Q; a propria arma voa e cai no chao; regras em js/armas.js)
+      dardo: { id: 'dardo', name: 'Dardo', type: 'material', rarity: 'common', icon: '➳', maxStack: 20,
+        desc: 'Dardo curto e leve. Aperte Q para arremessar; depois é só pegá-lo do chão.', stats: 'Dano 1d4 perfuração • Acuidade • Arremesso' },
+      azagaia: { id: 'azagaia', name: 'Azagaia', type: 'material', rarity: 'common', icon: '➳', maxStack: 10,
+        desc: 'Lança leve feita para voar longe. Aperte Q para arremessar; depois é só pegá-la do chão.', stats: 'Dano 1d6 perfuração • Arremesso (9 m)' },
       flecha: { id: 'flecha', name: 'Flecha', type: 'material', rarity: 'common', icon: '➶', maxStack: 99,
         desc: 'Munição de arco. Cada disparo gasta uma.', stats: 'Munição de arco' },
       virote: { id: 'virote', name: 'Virote', type: 'material', rarity: 'common', icon: '➶', maxStack: 99,

@@ -112,6 +112,7 @@ class Game {
     // World Entities
     this.trees = [];
     this.fruitsOnGround = [];
+    this.armasNoChao = [];      // armas arremessadas que cairam no chao (tecla Q); pegam-se andando por cima
     this.deers = [];
     this.wolves = [];
     this.critters = [];          // coelhos, raposas, javalis, ursos e corvos (js/fauna.js)
@@ -219,7 +220,7 @@ class Game {
       const nomeT = (window.SurittoServer && window.SurittoServer.charName) || '';
       if (/[?&]testearmas=1/.test(location.search) && /^[a-z_]+-pondwar$/i.test(nomeT)) {
         const ids = ['sword', 'axe', 'machadinha', 'clava', 'adaga', 'espada_curta', 'lanca', 'arco_curto', 'arco_longo', 'besta_leve', 'besta_pesada', 'besta_mao', 'funda'].filter((id) => this.inventory.itemDB[id]);
-        const mun = [['flecha', 60], ['virote', 60], ['pedra', 60]].filter((m) => this.inventory.itemDB[m[0]]);
+        const mun = [['flecha', 60], ['virote', 60], ['pedra', 60], ['dardo', 10], ['azagaia', 5]].filter((m) => this.inventory.itemDB[m[0]]);
         this.inventory.slots = new Array(this.inventory.maxSlots).fill(null).map((_, i) => (ids[i] ? { id: ids[i], count: 1 } : (mun[i - ids.length] ? { id: mun[i - ids.length][0], count: mun[i - ids.length][1] } : null)));
         this.inventory.renderUI();
         this.addLog('⚔️ Modo teste de armas: a mochila agora tem só as armas prontas.', 'system');
@@ -394,6 +395,11 @@ class Game {
       // Build Campfire Key 'C'
       if (key === 'c') {
         this.buildCampfire();
+      }
+
+      // Arremessar a arma da mao (ou dardo/azagaia da mochila) Key 'Q'
+      if (key === 'q' && !building && !e.repeat) {
+        this.arremessar();
       }
 
       // Sit / Rest Key 'X'
@@ -747,6 +753,56 @@ class Game {
     if (window.sounds && window.sounds.playSwordSlash) window.sounds.playSwordSlash(1.4);
   }
 
+  // ---- Arremesso (tecla Q, docs/PROJETEIS.md): adaga, machadinha e lanca da mao, ou dardo/azagaia da mochila. A propria arma voa
+  // (nas 8 direcoes e em qualquer angulo), rola o d20 como ataque a distancia e cai no chao; anda-se por cima para pegar de volta.
+  arremessar() {
+    const C = window.SurittoCombate, p = this.player;
+    if (p.isSitting) { p.isSitting = false; this.updateHUD(); }
+    const agora = performance.now() / 1000;
+    if ((p.proxAtaque || 0) > agora || p.isAttacking) return;
+    let item = null, daMao = false;
+    if (p.equippedWeapon && C.ARREMESSO[p.equippedWeapon]) { item = p.equippedWeapon; daMao = true; }
+    else for (const id of ['azagaia', 'dardo']) if (this.inventory.slots.some(sl => sl && sl.id === id)) { item = id; break; }
+    if (!item) { this.addLog('⚠️ Nada para arremessar: equipe uma adaga, machadinha ou lança, ou leve dardos/azagaias na mochila.', 'warning'); p.proxAtaque = agora + 0.8; return; }
+    const F = C.ARREMESSO_FICHA;
+    p.proxAtaque = agora + F.tempo * (p.isExhausted ? 1.5 : 1);
+    p.stamina = Math.max(0, p.stamina - F.folego);
+    if (p.stamina <= 0 && !p.isExhausted) { p.isExhausted = true; p.isRunning = false; this.spawnDamageText(p.x, p.y - 36, '💧 EXAUSTO!', '#ff6b6b', 17); }
+    this.updateHUD();
+    if (this.mouse.worldX !== undefined && this.mouse.worldY !== undefined) {
+      const mdx = this.world ? this.world.wrapDelta(this.mouse.worldX - p.x) : (this.mouse.worldX - p.x);
+      const ang = Math.atan2(this.mouse.worldY - p.y, mdx);
+      this.updatePlayerDirectionFromAngle(ang);
+      p.facingAngle = ang;
+    }
+    p.isAttacking = true; p.attackDuration = F.anim; p.attackTimer = F.anim;
+    p.golpe = { w: item, mov: 'arremesso', arma: item, daMao, bate: F.anim * C.TEMPOS.arremesso.bate, feito: false };
+  }
+
+  // No instante em que a arma sai da mao: tira da mao/mochila e cria o projetil
+  lancarArma() {
+    const C = window.SurittoCombate, p = this.player, g = p.golpe, item = g.arma, T = C.ARREMESSO[item];
+    if (g.daMao) {
+      if (p.equippedWeapon !== item) return;
+      this.inventory.equipment.weapon = null; p.equippedWeapon = null; this.inventory.renderUI();
+    } else {
+      const si = this.inventory.slots.findIndex(sl => sl && sl.id === item);
+      if (si < 0) return;
+      this.inventory.removeItem(si, 1);
+    }
+    const a = p.facingAngle || 0;
+    (this.projeteis = this.projeteis || []).push({ x: p.x + Math.cos(a) * 16, y: p.y + Math.sin(a) * 16, a, v: T.vel, ja: 0, max: T.alc, tipo: 'arremesso', arma: item, giro: T.giro, w: item, vivo: true, fim: 0 });
+    if (window.sounds && window.sounds.playSwordSlash) window.sounds.playSwordSlash(1.2);
+  }
+
+  // A arma arremessada parou (acertou ou acabou o alcance): cai no chao
+  soltarArma(q) {
+    if (!q.arma) return;
+    const a = this.armasNoChao;
+    a.push({ id: q.arma, x: q.x, y: q.y, a: q.a + (q.giro ? Math.random() * 6.28 : 0), vida: 900 });
+    if (a.length > 40) a.shift();
+  }
+
   atualizarProjeteis(dt) {
     if (!this.projeteis || !this.projeteis.length) return;
     const p = this.player;
@@ -769,7 +825,8 @@ class Game {
             this.resolverGolpe({ x: q.x, y: q.y, r: 18 });
             p.equippedWeapon = wAnt;
             q.vivo = false; q.fim = 0.25;              // fica um instante cravado
-          } else if (q.ja >= q.max) { q.vivo = false; q.fim = 0.6; }
+            this.soltarArma(q);
+          } else if (q.ja >= q.max) { q.vivo = false; q.fim = 0.6; this.soltarArma(q); }
         }
       } else q.fim -= dt;
     }
@@ -782,7 +839,10 @@ class Game {
     ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(sx, sy, 5, 2, 0, 0, Math.PI * 2); ctx.fill();
     ctx.globalAlpha = q.vivo ? 1 : Math.min(1, Math.max(0, q.fim / 0.25));
     ctx.translate(sx, sy - (q.vivo ? al : al * 0.5)); ctx.rotate(q.a);
-    if (q.tipo === 'pedra') {
+    if (q.tipo === 'arremesso') {
+      if (q.giro) ctx.rotate(q.ja * 0.16);
+      this.desenharArmaArremessada(ctx, q.arma);
+    } else if (q.tipo === 'pedra') {
       ctx.fillStyle = '#8d8d96'; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.arc(0, 0, 3.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     } else {
@@ -794,6 +854,67 @@ class Game {
       ctx.strokeStyle = q.tipo === 'virote' ? '#6b4a2b' : '#e8e0d0'; ctx.lineWidth = 1.4;      // penas
       ctx.beginPath(); ctx.moveTo(-L / 2 + 3, 0); ctx.lineTo(-L / 2 - 1, -2.6); ctx.moveTo(-L / 2 + 3, 0); ctx.lineTo(-L / 2 - 1, 2.6); ctx.stroke();
     }
+    ctx.restore();
+  }
+
+  // Forma de cada arma arremessada, centrada na origem e apontando para +x (usada no voo e no chao)
+  desenharArmaArremessada(ctx, id) {
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const haste = (x0, x1, lw, cor) => { ctx.strokeStyle = '#301028'; ctx.lineWidth = lw + 2; ctx.beginPath(); ctx.moveTo(x0, 0); ctx.lineTo(x1, 0); ctx.stroke(); ctx.strokeStyle = cor; ctx.lineWidth = lw; ctx.beginPath(); ctx.moveTo(x0, 0); ctx.lineTo(x1, 0); ctx.stroke(); };
+    const ponta = (x, c, w, h) => { ctx.fillStyle = c; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + w, 0); ctx.lineTo(x, -h); ctx.lineTo(x, h); ctx.closePath(); ctx.fill(); ctx.stroke(); };
+    if (id === 'adaga') {
+      haste(-9, -4, 2.2, '#6b4a2b'); haste(-5, -3, 4.5, '#8d8d96'); ponta(-4, '#d8dce6', 14, 2.6);
+    } else if (id === 'machadinha') {
+      haste(-9, 7, 2.2, '#8a5a34');
+      ctx.fillStyle = '#c8ccd6'; ctx.strokeStyle = '#301028'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(3, 0); ctx.lineTo(5, -8); ctx.lineTo(10, -6); ctx.lineTo(9, 5); ctx.lineTo(5, 7); ctx.closePath(); ctx.fill(); ctx.stroke();
+    } else if (id === 'lanca') {
+      haste(-30, 14, 2.4, '#a8764a'); ponta(14, '#d8dce6', 9, 3.2);
+    } else if (id === 'azagaia') {
+      haste(-24, 12, 1.8, '#a8764a'); ponta(12, '#d8dce6', 8, 2.6);
+      ctx.strokeStyle = '#e8e0d0'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(-20, 0); ctx.lineTo(-24, -2.4); ctx.moveTo(-20, 0); ctx.lineTo(-24, 2.4); ctx.stroke();
+    } else {      // dardo
+      haste(-9, 5, 1.6, '#a8764a'); ponta(5, '#d8dce6', 6, 2.2);
+      ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(-6, 0); ctx.lineTo(-10, -2.4); ctx.moveTo(-6, 0); ctx.lineTo(-10, 2.4); ctx.stroke();
+    }
+  }
+
+  // A arma de arremesso na mao do boneco (preparo do lancamento): ponta para a frente, na mao medida do quadro
+  drawArmaNaMaoArremesso(ctx, drawX, drawY, targetW, targetH, socket, id) {
+    const p = this.player, rsc = (this.images.raca && this.images.raca.idle && this.images.raca.scale) || 1;
+    const hx = drawX + targetW * socket.x, hy = drawY + targetH * socket.y;
+    const prog = 1 - p.attackTimer / p.attackDuration;
+    const a = (p.facingAngle || 0) + (prog < 0.3 ? -0.9 * (1 - prog / 0.3) : 0);      // no preparo a ponta sobe um pouco, depois mira
+    const comp = id === 'lanca' ? 8 : id === 'azagaia' ? 6 : 0;                        // hastes compridas: a mao segura perto do meio
+    ctx.save(); ctx.translate(hx, hy); ctx.rotate(a); ctx.scale(rsc, rsc); ctx.translate(comp, 0);
+    this.desenharArmaArremessada(ctx, id);
+    ctx.restore();
+  }
+
+  // Armas caidas no chao: andar por cima para pegar de volta
+  atualizarArmasNoChao(dt) {
+    const p = this.player, L = this.armasNoChao;
+    for (let i = L.length - 1; i >= 0; i--) {
+      const a = L[i]; a.vida -= dt;
+      const dx = this.world ? this.world.wrapDelta(p.x - a.x) : (p.x - a.x);
+      if (a.vida <= 0) { L.splice(i, 1); continue; }
+      if (Math.hypot(dx, p.y - a.y) < 24 && !p.isAttacking) {
+        if (this.inventory.addItem(a.id, 1)) {
+          L.splice(i, 1);
+          if (window.sounds && window.sounds.playRustle) window.sounds.playRustle();
+          this.addLog(`🗡️ Você pegou de volta: ${(this.inventory.itemDB[a.id] || {}).name || a.id}.`, 'action');
+          this.updateHUD();
+        }
+      }
+    }
+  }
+
+  drawArmaNoChao(ctx, a, sx, sy) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(sx, sy, 8, 2.5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.translate(sx, sy - 2); ctx.scale(1, 0.55); ctx.rotate(a.a);      // deitada no chao (achatada pela perspectiva)
+    if (a.vida < 5) ctx.globalAlpha = Math.max(0, a.vida / 5);
+    this.desenharArmaArremessada(ctx, a.id);
     ctx.restore();
   }
 
@@ -848,6 +969,7 @@ class Game {
   // O golpe chegou: arvore (machado), lobo, cervo ou bicho ao alcance. Rolagem pela ficha D&D (js/combate.js)
   resolverGolpe(origem) {
     const C = window.SurittoCombate, p = this.player, w = p.equippedWeapon, f = C.ficha(w);
+    if (!origem && p.golpe && p.golpe.mov === 'arremesso') { this.lancarArma(); return; }      // arremesso: no instante certo a arma sai da mao
     if (f.mov === 'tiro' && !origem) { this.dispararProjetil(); return; }      // arma de longe: no instante do disparo sai o projetil; o dano vem quando ele acerta
     const isFiery = w === 'fire_sword';
     // origem = ponto onde o projetil acertou ({x, y, r}); sem ela, o golpe parte do jogador com o alcance da arma
@@ -2264,6 +2386,7 @@ class Game {
       }
     }
     this.atualizarProjeteis(dt);
+    this.atualizarArmasNoChao(dt);
     // golpe guardado (clicou antes da hora) ou botao segurado: ataca de novo assim que a arma deixar
     if ((this.player.ataqueNaFila || (this.mouse.isLeftDown && this.player.segurandoAtaque)) &&
         performance.now() / 1000 >= (this.player.proxAtaque || 0)) {
@@ -2529,6 +2652,10 @@ class Game {
       y: (this.architect && this.architect.playerSortY && this.architect.playerSortY()) || this.player.y,
       draw: () => this.drawPlayer(ctx, screenCenterX, screenCenterY)
     });
+
+    for (const a of this.armasNoChao) {
+      renderList.push({ type: 'item', x: relX(a.x), y: a.y, draw: () => this.drawArmaNoChao(ctx, a, Math.round(relX(a.x) + screenCenterX), Math.round(a.y - this.camera.y + screenCenterY)) });
+    }
 
     // Fruits on ground
     for (const f of this.fruitsOnGround) {
@@ -3023,7 +3150,7 @@ class Game {
       } else if (this.player.isAttacking) {
         // movimento da arma (js/combate.js): machadada = golpe de cima (folha do machado, de duas maos);
         // estocada = lanca na folha de duas maos (avanco agachado), adaga e espada curta na de uma mao; corte = uma mao
-        const w = this.player.equippedWeapon, C = window.SurittoCombate, mov = C.ficha(w).mov;
+        const w = this.player.equippedWeapon, C = window.SurittoCombate, gpl = this.player.golpe, mov = (gpl && gpl.mov === 'arremesso') ? 'arremesso' : C.ficha(w).mov;
         const f = sideDir === 'left' ? -1 : 1;
         // golpe de espada para baixo/cima usa a folha de frente/costas quando a raca tem (humano); senao a de lado
         // diagonais (cima/baixo + esquerda/direita) usam a folha de costas/frente: o golpe de cima para baixo aparece certo, em vez do de lado
@@ -3034,6 +3161,7 @@ class Game {
         set = mov === 'machadada' ? (forma('attack_2h') || corte1h())
           : mov === 'estocada' ? ((w === 'lanca' ? (forma('thrust_2h') || lado('attack_2h')) : forma('thrust_1h')) || corte1h())
           : mov === 'soco' ? (forma('punch') || corte1h())
+          : mov === 'arremesso' ? (forma('throw') || corte1h())
           : mov === 'tiro' ? (forma(C.ficha(w).acao) || corte1h()) : corte1h();
         const prog = 1.0 - (this.player.attackTimer / this.player.attackDuration);
         if (set) { const q = C.quadro(set, mov, prog, f); idx = q.idx; avancoGolpe = q.avanco * (rs.scale || 1); estocando = q.estocando && w && (dir === 'left' || dir === 'right') && !(this.player.dir8 || '').includes('_') ? f : 0; estocadaProfunda = !!(q.estocando && w && !estocando); }
@@ -3134,6 +3262,11 @@ class Game {
   }
 
   drawWeapon(ctx, px, py, drawX, drawY, targetW, targetH, frameKey, socket) {
+    const gA = this.player.golpe;
+    if (this.player.isAttacking && gA && gA.mov === 'arremesso') {      // arremesso: so a arma que vai voar fica na mao, ate soltar
+      if (!gA.feito && socket) this.drawArmaNaMaoArremesso(ctx, drawX, drawY, targetW, targetH, socket, gA.arma);
+      return;
+    }
     if (!this.player.equippedWeapon) return;
     if (window.SurittoCombate.ficha(this.player.equippedWeapon).mov === 'tiro') { this.drawArmaDeTiro(ctx, drawX, drawY, targetW, targetH, socket); return; }
     const weaponImg = this.images.weapons[this.player.equippedWeapon];

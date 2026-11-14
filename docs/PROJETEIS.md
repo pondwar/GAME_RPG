@@ -24,3 +24,10 @@ Zarabatana saiu do jogo (decisão do dono, nov/2026). Magias ficam para um bloco
 
 ## Estado (13/nov/2026)
 Folhas shoot_bow, shoot_xbow2, shoot_xbow1, throw e sling importadas nas 8 direcoes. Tiro funcionando no jogo (municao, voo, d20). Costas do arco/besta2 usam a diagonal de costas. Falta: arremesso de armas de corpo a corpo, desenhos finais das armas de longe, recuperar flechas.
+
+## Arremesso (13/nov/2026)
+- Tecla **Q** arremessa na direcao do mouse (qualquer angulo, 8 direcoes testadas). Joga a arma da mao se for adaga, machadinha ou lanca; senao, azagaia ou dardo da mochila (`js/combate.js`: `ARREMESSO`, `ARREMESSO_FICHA`).
+- A arma sai da mao no instante certo do movimento `throw`, voa (sem municao), rola o d20 de ataque como o arco e cai no chao no ponto de parada ou de impacto (`armasNoChao`). Anda-se por cima para pegar de volta (nao persiste ao recarregar o jogo).
+- Itens novos: `dardo` (pilha de 20) e `azagaia` (pilha de 10). O modo `?testearmas=1` entrega 10 dardos e 5 azagaias.
+- Desenho por codigo (`desenharArmaArremessada`): na mao durante o preparo, no ar (adaga e machadinha giram) e no chao. `medir_maos.py` agora trata `throw` como golpe, para achar a mao certa de frente e de costas.
+- Falta: desvantagem em alcance longo (D&D), martelo leve e tridente, arte final das armas, e persistir as armas caidas.

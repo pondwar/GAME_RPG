@@ -43,8 +43,20 @@
     machadada: { alto: 0.12, bate: 0.58, volta: 0.88 },
     estocada:  { alto: 0.00, bate: 0.38, volta: 0.80, avanco: 7 },
     soco:      { alto: 0.00, bate: 0.40, volta: 0.80, avanco: 3 },
-    tiro:      { alto: 0.00, bate: 0.62, volta: 0.95 }       // bate = o instante em que solta a corda / dispara / larga a pedra
+    tiro:      { alto: 0.00, bate: 0.62, volta: 0.95 },      // bate = o instante em que solta a corda / dispara / larga a pedra
+    arremesso: { alto: 0.00, bate: 0.55, volta: 0.95 }       // bate = o instante em que a arma sai da mao
   };
+
+  // Arremesso (tecla Q): a propria arma voa e cai no chao (da para pegar de volta). So entra o que o D&D marca como
+  // 'arremesso' (js/armas.js). alc = alcance normal em px (6 m ~ 260 px; azagaia 9 m ~ 390 px); vel = px/s; giro = gira no ar
+  const ARREMESSO = {
+    adaga:      { alc: 260, vel: 520, giro: 1 },
+    machadinha: { alc: 260, vel: 480, giro: 1 },
+    lanca:      { alc: 260, vel: 560, giro: 0 },
+    azagaia:    { alc: 390, vel: 620, giro: 0 },
+    dardo:      { alc: 260, vel: 600, giro: 0 }
+  };
+  const ARREMESSO_FICHA = { tempo: 0.90, anim: 0.80, folego: 3 };
 
   const ficha = (w) => (w ? FICHA[w] || PADRAO : FICHA.punho);
 
@@ -126,5 +138,5 @@
     return { idx, avanco: av * f, estocando: (mov === 'estocada' || mov === 'soco') && prog >= T.bate && prog < T.volta };
   }
 
-  window.SurittoCombate = { FICHA, TEMPOS, ESCALA, ficha, rolar, dado, chaves, quadro };
+  window.SurittoCombate = { FICHA, TEMPOS, ARREMESSO, ARREMESSO_FICHA, ESCALA, ficha, rolar, dado, chaves, quadro };
 })();
