@@ -48,3 +48,25 @@ Folhas shoot_bow, shoot_xbow2, shoot_xbow1, throw e sling importadas nas 8 direc
 `js/editor_pegada.js`: F9 no jogo (ou `?editor=1`). Trava o boneco numa pose (arma, ação, direção, momento) e deixa arrastar/girar a arma numa imagem ampliada.
 Ajustes ficam em `assets/weapons/items/_pegada.json`: `{ arma: { "acao_dir8[_quadro]": [dx, dy, giro°, comprimento, ordem] } }` (ordem 0 normal, 1 atrás, 2 na frente).
 O jogo aplica em `game.js` (`pegadaAjuste`, `drawWeapon`, `drawArmaDeTiro`). Salvar usa `PUT /api/dev/pegada` (servidor local).
+
+## RESUMO PARA NOVA CONVERSA (14/nov/2026) - ler isto primeiro
+**Estado**: commits `a249bf0` (sprites das armas + editor) e `7952609` (mão trocada, aviso 404, skills) no GitHub (main). game.js `?v=128`, editor_pegada.js `?v=2`. O usuário reiniciou o servidor 3000 e está testando as armas e o editor (F9).
+
+**Por quê do editor**: o usuário não gostou da "pegada" (como a mão segura a arma) e não sabe ajustar por código. Referências: RuneScape Classic (3D), Tibia (muito 2D), Ragnarok. Solução: editor visual + 3º eixo falso (comprimento = perspectiva, ordem atrás/na frente, giro). Opção 3 futura: 3D real (piloto Godot, ver `piloto-3d-pixel` na memória).
+
+**Editor (F9)**: painel à direita; escolhe arma, ação (parado/andando/golpe/arremesso), direção (grade 3x3), "Momento" (quadro), "Vale para" (só este quadro / toda a direção). Mouse: arrastar move; Shift ou botão direito gira; roda gira; Ctrl+roda muda comprimento. Teclas: setas 1 px, Q/E 5°, `[` `]` comprimento. Botões: Zerar, Copiar p/ lado oposto (espelha), Salvar. Dados em `_pegada.json` (busca `acao_dir_quadro`, depois `acao_dir`). Pendente: estender a armaduras e itens de uso.
+**Pontos de atenção**: arco andando para cima fica atrás do corpo (usar ordem "na frente"); o editor trava câmera em zoom 1 e bloqueia mouse/teclado do jogo enquanto ativo; 404 ao salvar = servidor velho, reiniciar + Ctrl+F5.
+
+**Mão trocada (corrigido)**: `medir_maos.py` às vezes pega a outra mão. `tools/arte/corrigir_maos.py` conserta 11 quadros do humano (thrust_1h left/right 2; attack_2h down_left/right 5; gather down_left/right 3; jump up_left/right 5; punch left/right 1; punch up 3) pela média dos vizinhos. **Rodar DEPOIS de `medir_maos.py`**. Só a adaga (estocada esq. 2 e 3) foi vista ao vivo; os outros 9 só por números.
+
+**Skills**: instaladas em `.claude/skills/` (só valem em conversa nova): `game-balance` (curva de custo das armas, dominância), `game-feel` (pausa no acerto, tremor, rastro, som), `economy-design` (fontes e ralos de ouro/itens, mercado). Vieram de rbergman/dark-matter-marketplace (plugins/game-dev/skills). Pedir pelo nome. NÃO instalados de propósito: Claude-Code-Game-Studios (pesado, espera Vite/TypeScript; só copiar ideias: art-bible, asset-spec/asset-audit, reverse-document), sprite-gen (usa codex/grok/openai, não PixelLab/ElevenLabs; só vista lateral). PixelLab só para tiles/efeitos pequenos e só se a licença for confirmada.
+
+**Pendências / próximos passos possíveis**
+1. Usuário termina de ajustar pegadas no editor e avisa; eu confiro `_pegada.json` e commito.
+2. Usar `game-balance` na tabela de armas (`js/armas.js`, `js/combate.js`) e `game-feel` nos golpes.
+3. 6 armas pesadas com movimento emprestado (montante, glaive, mangual, chicote...) -> vídeos Kaggle; besta de mão/balestra com coronha parecida com a besta leve.
+4. Vista de costas para arcos; recuperar flecha e penalidade de longo alcance (não feitos); outras raças além do humano.
+5. Escrever o `art-bible` do Suritto e checklist de assets (opcional).
+6. Atualizar `MEMORY.md` com FLUX, vigia, drop, editor de pegada (feito junto com este resumo).
+
+**Cuidado ao testar**: conferir `g.player.name` (usar `humano-pondwar`) antes de agir; salvamento desligado; servidor 3001 + `launch.json` temporário a apagar.
