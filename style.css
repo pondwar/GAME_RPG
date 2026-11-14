@@ -3021,3 +3021,29 @@ body.inv-open .hotbar { box-shadow: 0 0 0 2px rgba(240, 192, 90, 0.45), 0 6px 20
   font: 600 13px Outfit, sans-serif; cursor: pointer; }
 .inv-ctx button:hover { background: rgba(212, 160, 76, 0.28); }
 .inv-ctx-titulo { padding: 3px 10px 5px; font: 700 11px Outfit, sans-serif; color: #d4a04c; border-bottom: 1px solid rgba(138, 106, 58, 0.5); margin-bottom: 2px; }
+
+/* Tela de carregamento (js/game.js, SurittoLoading): cobre o jogo ate o boneco e o mundo ficarem 100% prontos */
+#loading-screen {
+  position: fixed; inset: 0; z-index: 100000;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at center, #2a1f17 0%, #1a1410 60%, #0d0a07 100%);
+  transition: opacity 0.4s ease;
+}
+#loading-screen.ld-sai { opacity: 0; pointer-events: none; }
+#loading-screen .ld-box { width: min(440px, calc(100vw - 32px)); text-align: center; }
+#loading-screen .ld-titulo {
+  font-family: 'Cinzel', serif; font-weight: 900; font-size: 46px; letter-spacing: 6px;
+  color: #d4a04c; text-shadow: 0 2px 0 #000, 0 0 18px rgba(212, 160, 76, 0.35);
+  margin-bottom: 18px;
+}
+#loading-screen .ld-texto { font-family: 'Outfit', sans-serif; font-size: 14px; color: #c9b38a; margin-bottom: 12px; }
+#loading-screen .ld-barra {
+  height: 18px; border: 2px solid #d4a04c; border-radius: 3px; background: #0d0a07;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.6); overflow: hidden;
+}
+#loading-screen .ld-enche {
+  width: 0%; height: 100%;
+  background: linear-gradient(180deg, #f0c674 0%, #d4a04c 50%, #8a6420 100%);
+  transition: width 0.15s linear;
+}
+#loading-screen .ld-pct { font-family: 'Cinzel', serif; font-weight: 700; font-size: 18px; color: #d4a04c; margin-top: 10px; }

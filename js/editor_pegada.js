@@ -1,7 +1,7 @@
 // Editor visual de pegada das armas (F9, ou abra o jogo com ?editor=1).
 // O boneco fica parado na pose escolhida (arma + acao + direcao + momento) e voce arrasta a arma na tela ampliada.
 // O ajuste vale so para aquela arma/acao/direcao (um quadro ou todos) e e gravado em assets/weapons/items/_pegada.json,
-// que o jogo le em js/game.js (pegadaAjuste). Ajuste = [dx, dy, giro em graus, comprimento (x), ordem 0 normal / 1 atras / 2 na frente].
+// que o jogo le em js/game.js (pegadaAjuste). Ajuste = [dx, dy, giro em graus, comprimento (x), ordem 0 normal / 1 atras / 2 na frente, virar fio 0/1 (opcional)].
 // Mouse: arrastar = move | Shift+arrastar ou botao direito = gira | roda = gira | Ctrl+roda = comprimento.
 // Teclado: setas = 1 px | Q e E = gira 5 graus | [ e ] = comprimento.
 (function () {
@@ -9,7 +9,7 @@
   const DIRMAIN = { right: 'right', down_right: 'right', down: 'down', down_left: 'down', left: 'left', up_left: 'up', up: 'up', up_right: 'right' };
   const OPOSTA = { right: 'left', left: 'right', up_left: 'up_right', up_right: 'up_left', down_left: 'down_right', down_right: 'down_left', up: 'up', down: 'down' };
   const GRADE = [['up_left', '↖'], ['up', '↑'], ['up_right', '↗'], ['left', '←'], [null, '●'], ['right', '→'], ['down_left', '↙'], ['down', '↓'], ['down_right', '↘']];
-  const ZERO = [0, 0, 0, 1, 0];
+  const ZERO = [0, 0, 0, 1, 0, 0];
   const PW = 400, PH = 400, SRC = 160, S = PW / SRC;     // area do jogo copiada (160 x 160) e ampliacao
 
   const E = window.EditorPegada = {
@@ -41,13 +41,14 @@
       const base = `${P.acao}_${P.d}`;
       return { base, quadro: `${base}_${P.idx}`, acao: P.acao, idx: P.idx };
     },
-    efetivo() { return (this.g.pegadaAjuste() || ZERO).slice(); },
+    efetivo() { const a = this.g.pegadaAjuste() || ZERO; return ZERO.map((z, i) => a[i] == null ? z : a[i]); },
     gravar(arr) {
       const k = this.chave(); if (!k) return;
       const t = (this.g.pegada[this.arma] = this.g.pegada[this.arma] || {});
       if (this.escopo === 'direcao') { for (const c of Object.keys(t)) if (c.startsWith(k.base + '_')) delete t[c]; }
       const alvo = this.escopo === 'direcao' ? k.base : k.quadro;
       const zero = arr.every((v, i) => v === ZERO[i]);
+      if (!arr[5]) arr = arr.slice(0, 5);          // sem "virar fio": guarda no formato antigo de 5 numeros
       if (zero) delete t[alvo]; else t[alvo] = arr.map(v => Math.round(v * 100) / 100);
       this.sujo = true; this.atualizarUI();
     },
@@ -99,6 +100,8 @@
       };
       slider('Esq/Dir', 0, -40, 40, 0.5); slider('Cima/Baixo', 1, -40, 40, 0.5); slider('Giro °', 2, -180, 180, 1); slider('Compr. ×', 3, 0.2, 2, 0.01);
       U.ord = sel([['0', 'Normal'], ['1', 'Atrás do corpo'], ['2', 'Na frente do corpo']], '0', v => this.mexer(4, Number(v))); linha('Ordem', U.ord);
+      U.fio = this.el('input'); U.fio.type = 'checkbox'; U.fio.onchange = () => this.mexer(5, U.fio.checked ? 1 : 0);
+      linha('Virar fio', U.fio, this.el('span', 'color:#a89a78', 'vira a lâmina para o outro lado do cabo (tecla V)'));
       const bt = (t, fn) => { const b = this.el('button', 'padding:5px 8px;background:#3a2d1c;color:#e8d9b5;border:1px solid #8a6a3a;cursor:pointer;border-radius:3px', t); b.onclick = fn; return b; };
       const bs = this.el('div', 'display:flex;flex-wrap:wrap;gap:6px;margin:8px 0');
       bs.appendChild(bt('Zerar este ajuste', () => this.gravar(ZERO.slice())));
@@ -114,7 +117,7 @@
       U.arma.value = this.arma; U.acao.value = this.acao; U.esc.value = this.escopo; U.prog.value = this.prog;
       for (const d of Object.keys(U.dirs)) U.dirs[d].style.background = d === this.d ? '#8a6a3a' : '#2a2118';
       for (let i = 0; i < 4; i++) { const [r, n] = U['s' + i]; if (document.activeElement !== n) { r.value = a[i]; n.value = a[i]; } }
-      U.ord.value = String(a[4] || 0);
+      U.ord.value = String(a[4] || 0); U.fio.checked = !!a[5];
       U.quadro.textContent = k ? `${k.acao} · quadro ${k.idx}` : '';
       U.salvar.textContent = this.sujo ? '💾 Salvar no arquivo *' : '💾 Salvar no arquivo';
     },
@@ -143,7 +146,7 @@
       const origem = this.escopo === 'direcao' ? k.base : k.quadro, a = t[origem]; if (!a) return;
       const dOp = OPOSTA[this.d], de = this.d, idx = k.idx, acao = k.acao;
       const alvo = this.escopo === 'direcao' ? `${acao}_${dOp}` : `${acao}_${dOp}_${idx}`;
-      t[alvo] = [-a[0], a[1], -a[2], a[3], a[4]]; this.sujo = true;
+      t[alvo] = a[5] ? [-a[0], a[1], -a[2], a[3], a[4], a[5]] : [-a[0], a[1], -a[2], a[3], a[4]]; this.sujo = true;
       this.ui.info.textContent = `Copiado ${de} → ${dOp} (${alvo}).`; this.atualizarUI();
     },
     async salvar() {
@@ -171,6 +174,7 @@
     else if (k === 'arrowup') E.mexer(1, -1, true); else if (k === 'arrowdown') E.mexer(1, 1, true);
     else if (k === 'q') E.mexer(2, -5, true); else if (k === 'e') E.mexer(2, 5, true);
     else if (k === '[') E.mexer(3, -0.03, true); else if (k === ']') E.mexer(3, 0.03, true);
+    else if (k === 'v') E.mexer(5, E.efetivo()[5] ? 0 : 1);
     else return;
     e.preventDefault();
   }, true);

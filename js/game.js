@@ -1,4 +1,66 @@
 // game.js - Main Engine with Y-Sorting, D20 rolls, Tibia-like movement, Deer AI & Ecology
+
+// Tela de carregamento: cobre o jogo ao entrar com o personagem e so sai com 100% pronto.
+// Conta duas coisas: 1) os quadros do boneco da raca (cada quadro = imagem + mascara + pintura), avisados por
+// ensureRaceSprite; 2) toda outra imagem que comecar a carregar enquanto a tela esta aberta (chao, arvores, bichos,
+// atlas...), pegas por um gancho no "src" das imagens. Sai quando tudo terminou e ficou parado por um instante.
+window.SurittoLoading = {
+  ativo: false, raca: 0, racaFeita: 0, img: 0, imgFeita: 0, mostrado: 0,
+  iniciar() {
+    if (this.ativo) return;
+    this.ativo = true; this.inicio = performance.now(); this.quadros = 0; this.parado = 0;
+    const el = this.el = document.createElement('div');
+    el.id = 'loading-screen';
+    el.innerHTML = '<div class="ld-box"><div class="ld-titulo">Suritto</div><div class="ld-texto">Preparando o mundo...</div>' +
+      '<div class="ld-barra"><div class="ld-enche"></div></div><div class="ld-pct">0%</div></div>';
+    document.body.appendChild(el);
+    this.enche = el.querySelector('.ld-enche'); this.pct = el.querySelector('.ld-pct'); this.texto = el.querySelector('.ld-texto');
+    // gancho no src: conta cada imagem nova (as do boneco marcam _semConta, porque ja entram pela conta da raca)
+    const d = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src'), L = this;
+    if (d && !this._gancho) {
+      this._gancho = d;
+      Object.defineProperty(HTMLImageElement.prototype, 'src', { configurable: true, enumerable: d.enumerable, get: d.get, set(v) {
+        if (L.ativo && !this._semConta && !this._contado) {
+          this._contado = true; L.img++;
+          const fim = () => { L.imgFeita++; this.removeEventListener('load', fim); this.removeEventListener('error', fim); };
+          this.addEventListener('load', fim); this.addEventListener('error', fim);
+        }
+        d.set.call(this, v);
+      } });
+    }
+    // enquanto carrega, teclado nao mexe no boneco (o mouse ja bate na tela por cima)
+    this._tecla = (e) => { if (L.ativo) { e.stopImmediatePropagation(); } };
+    window.addEventListener('keydown', this._tecla, true);
+    const conta = () => { if (!L.ativo) return; L.quadros++; requestAnimationFrame(conta); };
+    requestAnimationFrame(conta);
+    this._timer = setInterval(() => this.passo(), 100);
+  },
+  addRaca(n) { this.raca += n; },
+  tickRaca() { this.racaFeita++; },
+  passo() {
+    const g = window.game, total = this.raca + this.img, feito = this.racaFeita + this.imgFeita;
+    const racaPronta = !!(g && g.player && (!g.player.race || g._racaPronta));
+    let p = total ? Math.floor(feito / total * 100) : 0;
+    if (!racaPronta && this.raca === 0) p = Math.min(p, 5);           // a lista de quadros do boneco ainda nao chegou
+    p = Math.min(99, Math.max(this.mostrado, p));                      // a barra nunca volta para tras
+    this.mostrado = p;
+    this.enche.style.width = p + '%'; this.pct.textContent = p + '%';
+    this.texto.textContent = racaPronta ? 'Preparando o mundo...' : 'Pintando o seu personagem...';
+    const pronto = racaPronta && this.imgFeita >= this.img && this.quadros >= 5;
+    this.parado = pronto ? this.parado + 1 : 0;
+    if (this.parado >= 4 || performance.now() - this.inicio > 90000) this.fim();   // 0,4 s sem nada novo (ou 90 s de seguranca)
+  },
+  fim() {
+    if (!this.ativo) return;
+    this.ativo = false; clearInterval(this._timer);
+    window.removeEventListener('keydown', this._tecla, true);
+    if (this._gancho) { Object.defineProperty(HTMLImageElement.prototype, 'src', this._gancho); this._gancho = null; }
+    this.mostrado = 100; this.enche.style.width = '100%'; this.pct.textContent = '100%';
+    const el = this.el; el.classList.add('ld-sai');
+    setTimeout(() => el.remove(), 450);
+  }
+};
+
 class Game {
   constructor() {
     this.canvas = document.getElementById('gameCanvas');
@@ -1736,7 +1798,7 @@ class Game {
   // sem folha usa o boneco antigo. A chave muda quando muda a raca ou a aparencia, e ai pinta de novo.
   async ensureRaceSprite() {
     const p = this.player, Rr = window.SurittoRules;
-    if (!p.race || !window.SurittoPaint) return;
+    if (!p.race || !window.SurittoPaint) { this._racaPronta = true; return; }
     const key = p.race + '|' + JSON.stringify(p.appearance || {});
     if (this._raceKey === key) return;
     this._raceKey = key;
@@ -1744,19 +1806,20 @@ class Game {
       if (!this._raceManifest) this._raceManifest = await fetch('assets/player/racas/manifest.json', { cache: 'no-store' }).then(r => r.json());
     } catch (e) { this._raceManifest = {}; }
     const ent = this._raceManifest[p.race];
-    if (!ent) { this.images.raca = null; this._racaSemFolha = true; return; }
+    if (!ent) { this.images.raca = null; this._racaSemFolha = true; this._racaPronta = true; return; }
     this._racaSemFolha = false;
     const ap = p.appearance || {}, colors = {};
     for (const k of ['pele', 'cabelo', 'olhos']) if (ap[k]) colors[k] = ap[k];
     // cabelo verde sem cor escolhida (personagem antigo): usa a primeira cor da raca, nunca o verde
     if (ent.chroma && !colors.cabelo) { const c = ((Rr && Rr.COLORS[p.race]) || {}).cabelo; if (c && c[0][1]) colors.cabelo = c[0][1]; }
     const pic = { ref: ent.ref || {}, chroma: ent.chroma };
-    const load = (src) => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
+    const LD = window.SurittoLoading;   // tela de carregamento: cada quadro conta 3 (imagem, mascara e pintura)
+    const load = (src) => new Promise((ok, bad) => { const i = new Image(); i._semConta = true; i.onload = () => { if (LD) LD.tickRaca(); ok(i); }; i.onerror = bad; i.src = src; });
     const v = ent.v || 0, out = { scale: ((Rr && Rr.LOOKS[p.race]) || {}).scale || 1, corpo: ent.corpo || ent.h };
-    try {
-      // tudo em paralelo (~300 imagens): um por um demorava e o boneco antigo aparecia no comeco
-      await Promise.all(Object.entries(ent.acoes).map(([acao, dirs]) => { out[acao] = {}; return Promise.all(Object.entries(dirs).map(async ([dir, files]) => {
-          out[acao][dir] = await Promise.all(files.map(async (f) => {
+    // Em duas etapas: 1) parado e andando (o boneco aparece logo); 2) o resto (golpes, pulo, sentar...) por tras.
+    // Enquanto uma acao nao chega, o desenho usa o boneco parado (drawPlayer ja faz isso). Antes esperava os ~900 quadros.
+    const carregarAcoes = (lista) => Promise.all(lista.map(([acao, dirs]) => { const destino = {}; return Promise.all(Object.entries(dirs).map(async ([dir, files]) => {
+          destino[dir] = await Promise.all(files.map(async (f) => {
             const [img, mask] = await Promise.all([load(`assets/player/racas/${f}.png?v=${v}`), load(`assets/player/racas/${f}_mascara.png?v=${v}`)]);
             const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
             const cx = cv.getContext('2d', { willReadFrequently: true }); cx.drawImage(img, 0, 0);
@@ -1765,6 +1828,7 @@ class Game {
             const id = cx.getImageData(0, 0, cv.width, cv.height);
             window.SurittoPaint.paintData(id.data, mx.getImageData(0, 0, cv.width, cv.height).data, pic, colors);
             cx.putImageData(id, 0, 0);
+            if (LD) LD.tickRaca();
             cv.complete = true; cv.naturalWidth = cv.width; cv.naturalHeight = cv.height;   // o desenho trata como imagem
             cv.mao = (ent.maos || {})[f] || null;          // onde a mao segura a arma neste quadro (medir_maos.py)
             // punho recortado (pele da mascara num circulo em volta da mao): desenhado de novo POR CIMA da arma,
@@ -1786,9 +1850,16 @@ class Game {
             }
             return cv;
           }));
-      })); }));
-    } catch (e) { console.warn('boneco da raca', e); this._racaSemFolha = true; return; }   // falhou: volta o boneco antigo (melhor que sumir)
-    if (this._raceKey === key) this.images.raca = out;
+      })).then(() => { out[acao] = destino; }); }));      // a acao so entra quando todas as direcoes dela estao prontas
+    const PRIMEIRO = ['idle', 'walk'], todas = Object.entries(ent.acoes);
+    if (LD) { let n = 0; for (const [, dirs] of todas) for (const files of Object.values(dirs)) n += files.length; LD.addRaca(n * 3); }
+    try {
+      await carregarAcoes(todas.filter(([a]) => PRIMEIRO.includes(a)));
+    } catch (e) { console.warn('boneco da raca', e); this._racaSemFolha = true; this._racaPronta = true; return; }   // falhou: volta o boneco antigo (melhor que sumir)
+    if (this._raceKey !== key) return;
+    this.images.raca = out;
+    carregarAcoes(todas.filter(([a]) => !PRIMEIRO.includes(a))).catch(e => console.warn('boneco da raca (acoes extras)', e))
+      .finally(() => { this._racaPronta = true; });        // todas as acoes pintadas: a tela de carregamento pode sair
   }
 
   // Ficha do personagem (js/ruleset.js): raca, classe e atributos -> PV, PM, Defesa, bonus de ataque e modificadores
@@ -3527,7 +3598,7 @@ class Game {
     ctx.fillText(tag, px, tagY);
   }
 
-  // Ajuste de pegada da arma equipada neste quadro: [dx, dy, giro em graus, comprimento (x), ordem 0=normal 1=atras 2=na frente] ou null
+  // Ajuste de pegada da arma equipada neste quadro: [dx, dy, giro em graus, comprimento (x), ordem 0=normal 1=atras 2=na frente, virar fio 0/1] ou null
   pegadaAjuste() {
     const t = this.pegada && this.pegada[this.player.equippedWeapon], P = this._pose;
     if (!t || !P) return null;
@@ -3607,6 +3678,8 @@ class Game {
     // A imagem da arma e diagonal (ponta para cima a direita): gira o eixo para x, encolhe, desgira
     const ln = ((socket && socket.len) || 1) * (aj ? aj[3] : 1);
     if (ln !== 1) { ctx.rotate(-Math.PI / 4); ctx.scale(ln, 1); ctx.rotate(Math.PI / 4); }
+    // virar o fio (editor de pegada, item 5): espelha a arma em torno do proprio cabo (a diagonal), a mao continua no mesmo lugar
+    if (aj && aj[5]) { ctx.rotate(-Math.PI / 4); ctx.scale(1, -1); ctx.rotate(Math.PI / 4); }
     ctx.drawImage(weaponImg, -gripX, -gripY, wSize, wSize);
 
     ctx.restore();
@@ -4019,5 +4092,6 @@ class Game {
 window.addEventListener('DOMContentLoaded', async () => {
   if (window.SurittoServer) await window.SurittoServer.connect();
   if (window.CharacterScreen) await window.CharacterScreen.run();     // escolher / criar personagem (js/character_creation.js)
+  window.SurittoLoading.iniciar();                                     // tela de carregamento ate o boneco e o mundo ficarem 100%
   window.game = new Game();
 });
