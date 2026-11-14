@@ -113,6 +113,12 @@ class Game {
     this.trees = [];
     this.fruitsOnGround = [];
     this.armasNoChao = [];      // armas arremessadas que cairam no chao (tecla Q); pegam-se andando por cima
+    this.chaoSujo = false; this._chaoTimer = null;
+    try {      // ao abrir: o que estava no chao volta (banco; sem servidor, o navegador)
+      const S = window.SurittoServer, ok = window.SurittoCombate.ARREMESSO;
+      const lista = S && S.online ? S.groundItems : JSON.parse(localStorage.getItem('suritto_ground_v1') || 'null');
+      if (Array.isArray(lista)) this.armasNoChao = lista.filter(i => i && ok[i.item] && isFinite(i.x) && isFinite(i.y) && i.vida > 0).map(i => ({ id: i.item, x: i.x, y: i.y, a: i.a || 0, vida: i.vida }));
+    } catch (e) { console.warn('armas no chao', e); }
     this.deers = [];
     this.wolves = [];
     this.critters = [];          // coelhos, raposas, javalis, ursos e corvos (js/fauna.js)
@@ -801,6 +807,22 @@ class Game {
     const a = this.armasNoChao;
     a.push({ id: q.arma, x: q.x, y: q.y, a: q.a + (q.giro ? Math.random() * 6.28 : 0), vida: 900 });
     if (a.length > 40) a.shift();
+    this.marcarChaoSujo();
+  }
+
+  // As armas no chao vao para o banco (world.ground_item) logo depois de mudar e junto com o autosave
+  marcarChaoSujo() {
+    this.chaoSujo = true;
+    if (!this._chaoTimer) this._chaoTimer = setTimeout(() => { this._chaoTimer = null; this.salvarArmasNoChao(false); }, 1500);
+  }
+
+  salvarArmasNoChao(keepalive) {
+    if (this.saveSystem && this.saveSystem._resetting) return;
+    this.chaoSujo = false;
+    const lista = this.armasNoChao.map(a => ({ item: a.id, x: Math.round(a.x * 10) / 10, y: Math.round(a.y * 10) / 10, a: Math.round(a.a * 100) / 100, vida: Math.max(1, Math.round(a.vida)) }));
+    try { localStorage.setItem('suritto_ground_v1', JSON.stringify(lista)); } catch (e) { }
+    const S = window.SurittoServer;
+    if (S && S.online) S.saveGroundItems(lista, !!keepalive).catch(() => { this.chaoSujo = true; });
   }
 
   atualizarProjeteis(dt) {
@@ -897,10 +919,10 @@ class Game {
     for (let i = L.length - 1; i >= 0; i--) {
       const a = L[i]; a.vida -= dt;
       const dx = this.world ? this.world.wrapDelta(p.x - a.x) : (p.x - a.x);
-      if (a.vida <= 0) { L.splice(i, 1); continue; }
+      if (a.vida <= 0) { L.splice(i, 1); this.marcarChaoSujo(); continue; }
       if (Math.hypot(dx, p.y - a.y) < 24 && !p.isAttacking) {
         if (this.inventory.addItem(a.id, 1)) {
-          L.splice(i, 1);
+          L.splice(i, 1); this.marcarChaoSujo();
           if (window.sounds && window.sounds.playRustle) window.sounds.playRustle();
           this.addLog(`🗡️ Você pegou de volta: ${(this.inventory.itemDB[a.id] || {}).name || a.id}.`, 'action');
           this.updateHUD();

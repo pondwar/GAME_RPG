@@ -41,11 +41,11 @@ npm run db:setup          # cria o banco "suritto" e aplica as migrações
 |---|---|
 | `server.js` | HTTP: arquivos do jogo + rotas `/api/*` (só escuta em 127.0.0.1; nunca entrega `server/` nem arquivos ocultos) |
 | `src/db.js` | pool do PostgreSQL, transação, id do realm |
-| `src/world_repo.js` | chunks de construção, vilas, recursos do mundo |
+| `src/world_repo.js` | chunks de construção, vilas, recursos do mundo, itens soltos no chão |
 | `src/character_repo.js` | snapshot do personagem <-> tabelas `player.*` |
 | `scripts/import_blocks.js` | importa o JSON do Exportar |
 
-Rotas: `GET /api/health`, `GET|PUT /api/world/chunks`, `POST /api/world/chunks/merge`, `GET /api/world/settlements`,
+Rotas: `GET /api/health`, `GET|PUT /api/world/ground-items` (armas arremessadas caídas no chão), `GET|PUT /api/world/chunks`, `POST /api/world/chunks/merge`, `GET /api/world/settlements`,
 `PUT /api/world/settlements/:code`, `GET|PUT /api/characters/:nome`. Sem login ainda: realm `local`, conta `dev`.
 
 Os `code` das tabelas `ruleset` são os mesmos ids usados no JS (`woodcutting`, `sobrevivencia`, `wolf_pelt`...).

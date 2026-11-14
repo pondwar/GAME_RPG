@@ -13,6 +13,7 @@
     chunks: [],                     // [{ id: "cx,cy", blocks: [[chave, bloco]...] }]
     settlements: {},                // code -> { name, signature, ... }
     character: null,                // snapshot do personagem (ou null se ainda nao existe no banco)
+    groundItems: null,              // armas caidas no chao: [{ item, x, y, a, vida }]; null = servidor sem a rota
     fauna: null,                    // { "rx,ry": { plants, pop, hunger } } do ecossistema (js/fauna.js); null = servidor sem a rota (antigo)
 
     // Chamado antes de criar o Game: descobre se o servidor esta no ar e ja traz o mundo e o personagem
@@ -31,6 +32,7 @@
         this.character = c;
         // ecossistema: servidor antigo (sem a rota) nao impede o jogo de abrir, a fauna fica no navegador
         try { const f = await withTimeout(fetch('/api/world/fauna', { cache: 'no-store' }).then(json), TIMEOUT); this.fauna = f.regions || {}; } catch (e) { this.fauna = null; }
+        try { const gi = await withTimeout(fetch('/api/world/ground-items', { cache: 'no-store' }).then(json), TIMEOUT); this.groundItems = gi.items || []; } catch (e) { this.groundItems = null; }
         this.online = true;
         console.info(`[Servidor] conectado (realm "${this.realm}"): ${this.chunks.length} chunks, ${s.length} vila(s), personagem ${c ? 'carregado' : 'novo'}.`);
       } catch (e) {
@@ -51,6 +53,7 @@
     saveSettlement(code, data) { this.settlements[code] = { ...(this.settlements[code] || {}), ...data }; return this._send('PUT', '/api/world/settlements/' + code, data); },
     saveCharacter(snapshot, keepalive) { return this._send('PUT', '/api/characters/' + encodeURIComponent(this.charName), snapshot, keepalive); },
     // regions: { "rx,ry": { plants, pop, hunger } }
+    saveGroundItems(items, keepalive) { return this._send('PUT', '/api/world/ground-items', { items }, keepalive); },
     saveFauna(regions, keepalive) { return this._send('PUT', '/api/world/fauna', { regions }, keepalive); }
   };
 

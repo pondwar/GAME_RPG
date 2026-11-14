@@ -78,6 +78,10 @@ async function api(req, res, url) {
     try { return send(res, 200, await climaReal(lat, lon)); }
     catch (e) { return send(res, 502, { error: 'clima indisponivel: ' + e.message }); }
   }
+  if (p === '/api/world/ground-items') {                              // armas arremessadas caidas no chao
+    if (m === 'GET') return send(res, 200, { items: await world.listGroundItems(REALM) });
+    if (m === 'PUT') { const b = await readJson(req); return send(res, 200, { ok: true, ...(await world.saveGroundItems(REALM, b.items || [])) }); }
+  }
   if (m === 'GET' && p === '/api/world/settlements') return send(res, 200, await world.listSettlements(REALM));
   if (p === '/api/world/fauna') {                                   // ecossistema por regiao (js/fauna.js)
     if (m === 'GET') return send(res, 200, { regions: await world.listFauna(REALM) });

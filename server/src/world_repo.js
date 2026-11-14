@@ -122,3 +122,31 @@ export async function saveFauna(realm, regions) {
     [rid, JSON.stringify(clean)]);
   return { written: r.rowCount };
 }
+
+// Itens soltos no chao do mapa (armas arremessadas). Lista inteira do realm: { item, x, y, a, vida (segundos restantes) }
+export async function listGroundItems(realm) {
+  const rid = await realmId(realm);
+  await pool.query('DELETE FROM world.ground_item WHERE realm_id = $1 AND expires_at <= now()', [rid]);
+  const { rows } = await pool.query(
+    'SELECT item_code, x, y, angle, EXTRACT(EPOCH FROM expires_at - now()) AS vida FROM world.ground_item WHERE realm_id = $1 ORDER BY id', [rid]);
+  return rows.map(r => ({ item: r.item_code, x: r.x, y: r.y, a: r.angle, vida: Math.round(Number(r.vida)) }));
+}
+
+// Troca a lista do realm pela enviada (ate 200 itens; item que nao existe em ruleset.item e ignorado)
+export async function saveGroundItems(realm, items) {
+  const rid = await realmId(realm);
+  const clean = (Array.isArray(items) ? items : []).slice(0, 200).filter(i =>
+    i && typeof i.item === 'string' && Number.isFinite(i.x) && Number.isFinite(i.y) && Number.isFinite(i.vida) && i.vida > 0)
+    .map(i => ({ item: i.item, x: i.x, y: i.y, a: Number.isFinite(i.a) ? i.a : 0, vida: Math.min(86400, Math.round(i.vida)) }));
+  return tx(async c => {
+    await c.query('DELETE FROM world.ground_item WHERE realm_id = $1', [rid]);
+    if (!clean.length) return { written: 0 };
+    const r = await c.query(
+      `INSERT INTO world.ground_item (realm_id, item_code, x, y, angle, expires_at)
+       SELECT $1, i.item, i.x, i.y, i.a, now() + make_interval(secs => i.vida)
+       FROM jsonb_to_recordset($2::jsonb) AS i(item text, x real, y real, a real, vida integer)
+       JOIN ruleset.item it ON it.code = i.item`,
+      [rid, JSON.stringify(clean)]);
+    return { written: r.rowCount };
+  });
+}
